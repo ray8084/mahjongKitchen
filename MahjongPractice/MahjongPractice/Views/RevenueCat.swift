@@ -32,13 +32,14 @@ public struct AppStoreHistory {
 // -----------------------------------------------------------------------------------------
 
 class RevenueCat {
-    var viewController: UIViewController!
+    let defaults = UserDefaults.standard
+    var gameDelegate: GameDelegate!
+    var package2021: Purchases.Package!
+    var purchased2021 = false
     var purchaseMenu: PurchaseMenu!
     var price2021 = 0.0
-    var package2021: Purchases.Package!
-    var gameDelegate: GameDelegate!
-    var purchased2021 = false
-    let defaults = UserDefaults.standard
+    var responseTimeoutSeconds = 360.0
+    var viewController: UIViewController!
     var waitFor2021Timer: Timer!
     
     init(viewController: UIViewController, gameDelegate: GameDelegate) {
@@ -50,13 +51,13 @@ class RevenueCat {
     
     func start() {
         print("RevenueCat.start")
-        //if is2021Purchased() {
-        //    gameDelegate.enable2021()
-        //    gameDelegate.load2021()
-        //} else {
+        if is2021Purchased() {
+            gameDelegate.enable2021()
+            gameDelegate.load2021()
+        } else {
             getPrice2021()
             viewController.show(self.purchaseMenu, sender: viewController)
-        //}
+        }
     }
     
     func getPrice2021() {
@@ -71,18 +72,17 @@ class RevenueCat {
     
     func purchase2021() {
         Purchases.shared.purchasePackage(package2021) { (transaction, purchaserInfo, error, userCancelled) in
+            self.purchaseMenu.purchaseTimer.invalidate()
             if error != nil {
                 self.purchaseMenu.alertForPurchase.dismiss(animated: false, completion: {
                     self.purchaseMenu.showErrorMessage(error: error! as NSError)
                 })
             } else if transaction != nil {
-                self.purchaseMenu.closeAlert()
                 if transaction?.transactionState == .purchased {
                     self.completePurchase2021()
                 }
             }
             if error == nil && purchaserInfo != nil && self.purchased2021 == false {
-                self.purchaseMenu.closeAlert()
                 if purchaserInfo?.entitlements["Patterns2021"]?.isActive == true {
                     self.completePurchase2021()
                 }
@@ -93,7 +93,9 @@ class RevenueCat {
     func completePurchase2021() {
         purchased2021 = true
         defaults.set(purchased2021, forKey: "purchased2021")
-        purchaseMenu.close()
+        purchaseMenu.alertForPurchase.dismiss(animated: true, completion: {
+            self.purchaseMenu.close()
+        })
         gameDelegate.enable2021()
         gameDelegate.load2021()
     }
@@ -177,16 +179,16 @@ class RevenueCat {
 // -----------------------------------------------------------------------------------------
 
 class PurchaseMenu: UIViewController {
-    var revenueCat: RevenueCat!
-    var purchaseButton = UIButton()
-    var alertForRestore = UIAlertController()
-    var purchaseView = UIView()
-    var backgroundImageView: UIImageView!
-    var settingsViewController: SettingsViewController!
-    var loaded = false
     var alertForPurchase = UIAlertController()
+    var alertForRestore = UIAlertController()
+    var backgroundImageView: UIImageView!
+    var loaded = false
+    var purchaseButton = UIButton()
+    var purchaseTimer = Timer()
+    var purchaseView = UIView()
     var restoreTimer = Timer()
-    var responseTimeoutSeconds = 10.0
+    var revenueCat: RevenueCat!
+    var settingsViewController: SettingsViewController!
     
     init(revenueCat: RevenueCat) {
         super.init(nibName: nil, bundle: nil)
@@ -359,7 +361,7 @@ class PurchaseMenu: UIViewController {
     }
 
     @objc func purchaseButtonAction(sender: UIButton!) {
-        showConnectMessage()
+        showConnectMessageForPurchase()
         revenueCat.purchase2021()
     }
     
@@ -368,10 +370,12 @@ class PurchaseMenu: UIViewController {
         purchaseButton.isEnabled = true
     }
 
-    func showConnectMessage() {
+    func showConnectMessageForPurchase() {
+        purchaseTimer = Timer.scheduledTimer(timeInterval: revenueCat.responseTimeoutSeconds, target: self, selector: #selector(purchaseTimeout), userInfo: nil, repeats: false)
         let title = "App Store Connect"
-        let message = "Please Wait..."
+        let message = "Please Wait...\n"
         alertForPurchase = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        addActivityIndicator(alert: alertForPurchase)
         present(alertForPurchase, animated: false, completion: nil)
     }
     
@@ -386,6 +390,7 @@ class PurchaseMenu: UIViewController {
     }
     
     func showConnectMessageForRestore() {
+        restoreTimer = Timer.scheduledTimer(timeInterval: revenueCat.responseTimeoutSeconds, target: self, selector: #selector(restoreTimeout), userInfo: nil, repeats: false)
         let title = "App Store Connect"
         let message = "Please Wait...\n"
         alertForRestore = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -410,7 +415,6 @@ class PurchaseMenu: UIViewController {
         let alert = UIAlertController(title: "Restore Purchase", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "2021", style: .default, handler: {(action:UIAlertAction) in
             self.showConnectMessageForRestore()
-            self.restoreTimer = Timer.scheduledTimer(timeInterval: self.responseTimeoutSeconds, target: self, selector: #selector(self.restoreTimeout), userInfo: nil, repeats: false)
             self.revenueCat.restore2021()
         }));
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action:UIAlertAction) in
@@ -418,6 +422,12 @@ class PurchaseMenu: UIViewController {
         present(alert, animated: false, completion: nil)
     }
 
+    @objc func purchaseTimeout() {
+        alertForPurchase.dismiss(animated: true, completion: {
+            self.showErrorMessage(error: "Purchase Timeout")
+        })
+    }
+    
     @objc func restoreTimeout() {
         alertForRestore.dismiss(animated: true, completion: {
             self.showErrorMessage(error: "Restore Timeout")
