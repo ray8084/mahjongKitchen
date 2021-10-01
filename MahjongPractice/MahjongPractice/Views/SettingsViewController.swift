@@ -85,15 +85,6 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
         print("Settings.addYear \(maj.enable2020) \(maj.enable2021)")
 
         yearBottom = 40 + yOffset
-        if maj.enable2020 == false && maj.enable2021 == false {
-            let note = UILabel(frame: CGRect(x: xOffset, y: yearBottom + 10, width: 450, height: 22))
-            note.text = "2018, 2019 and 2020 are included with 2021 Pattern Access."
-            note.lineBreakMode = .byWordWrapping
-            note.numberOfLines = 0
-            note.font = UIFont.systemFont(ofSize: 16)
-            scrollView.addSubview(note)
-            yearBottom = Int(note.frame.origin.y + note.frame.height)
-        }
         
         let line = addLine(x: xOffset, y: yearBottom + 10)
         yearBottom = Int(line.frame.origin.y + line.frame.height)
@@ -114,7 +105,18 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
         
         let line2 = addLine(x: xOffset, y: yearBottom + 10)
         yearBottom = Int(line2.frame.origin.y + line2.frame.height)
-    }   
+
+        if maj.enable2020 == false && maj.enable2021 == false {
+            let note = UILabel(frame: CGRect(x: xOffset, y: yearBottom + 10, width: 450, height: 22))
+            note.text = "* 2018, 2019 and 2020 are included with 2021"
+            note.lineBreakMode = .byWordWrapping
+            note.numberOfLines = 0
+            note.font = UIFont.systemFont(ofSize: 16)
+            scrollView.addSubview(note)
+            yearBottom = Int(note.frame.origin.y + note.frame.height)
+        }
+
+    }
 
     @objc private func changeYear(sender: UISegmentedControl) {
         switch( sender.selectedSegmentIndex ) {

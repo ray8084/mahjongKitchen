@@ -151,14 +151,23 @@ class RevenueCat {
             case Year.y2018:
                 if is2018Purchased() {
                     gameDelegate.changeYear(YearSegment.segment2018)
+                } else {
+                    purchaseMenu.settingsViewController = settingsViewController
+                    showPurchaseMenu(settingsViewController)
                 }
             case Year.y2019:
                 if is2019Purchased() {
                     gameDelegate.changeYear(YearSegment.segment2019)
+                } else {
+                    purchaseMenu.settingsViewController = settingsViewController
+                    showPurchaseMenu(settingsViewController)
                 }
             case Year.y2020:
                 if is2020Purchased() {
                     gameDelegate.changeYear(YearSegment.segment2020)
+                } else {
+                    purchaseMenu.settingsViewController = settingsViewController
+                    showPurchaseMenu(settingsViewController)
                 }
             case Year.y2021:
                 if is2021Purchased() {
