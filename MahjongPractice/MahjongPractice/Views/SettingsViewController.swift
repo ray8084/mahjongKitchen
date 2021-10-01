@@ -115,7 +115,6 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
             scrollView.addSubview(note)
             yearBottom = Int(note.frame.origin.y + note.frame.height)
         }
-
     }
 
     @objc private func changeYear(sender: UISegmentedControl) {

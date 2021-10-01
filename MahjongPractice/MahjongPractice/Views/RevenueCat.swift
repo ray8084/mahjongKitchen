@@ -145,6 +145,7 @@ class RevenueCat {
     func is2017Trial() -> Bool { return !is2020Purchased() && !is2021Purchased() }
     
     func changeYear(year: Int, settingsViewController: SettingsViewController) {
+        purchaseMenu.settingsViewController = settingsViewController
         switch(year) {
             case Year.y2017:
                 gameDelegate.changeYear(YearSegment.segment2017)
@@ -152,34 +153,29 @@ class RevenueCat {
                 if is2018Purchased() {
                     gameDelegate.changeYear(YearSegment.segment2018)
                 } else {
-                    purchaseMenu.settingsViewController = settingsViewController
-                    showPurchaseMenu(settingsViewController)
+                    purchaseMenu.oldYearMessage("2018")
                 }
             case Year.y2019:
                 if is2019Purchased() {
                     gameDelegate.changeYear(YearSegment.segment2019)
                 } else {
-                    purchaseMenu.settingsViewController = settingsViewController
-                    showPurchaseMenu(settingsViewController)
+                    purchaseMenu.oldYearMessage("2019")
                 }
             case Year.y2020:
                 if is2020Purchased() {
                     gameDelegate.changeYear(YearSegment.segment2020)
                 } else {
-                    purchaseMenu.settingsViewController = settingsViewController
-                    showPurchaseMenu(settingsViewController)
+                    purchaseMenu.oldYearMessage("2020")
                 }
             case Year.y2021:
                 if is2021Purchased() {
                     gameDelegate.changeYear(YearSegment.segment2021)
                 } else {
-                    purchaseMenu.settingsViewController = settingsViewController
                     showPurchaseMenu(settingsViewController)
                 }
             default:
                 gameDelegate.changeYear(YearSegment.segment2017)
         }
-
     }
 }
 
@@ -461,7 +457,15 @@ class PurchaseMenu: UIViewController {
         activityIndicator.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -20).isActive = true
     }
     
-    
+    func oldYearMessage(_ year: String) {
+        let message = year + " is included with 2021"
+        let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: {(action:UIAlertAction) in
+            self.settingsViewController.select2021()
+            self.settingsViewController.show(self, sender: self.settingsViewController)
+        }));
+        self.settingsViewController.present(alert, animated: false, completion: nil)
+    }
     
     
 }
