@@ -633,7 +633,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         }
         if yearLabel == nil {
             yearLabel = UILabel()
-            yearLabel.frame = CGRect(x: helpButtonLocationX() - 40, y: controlPanelLocationY() - buttonSize() - buttonSize() - 10, width: 150, height: 100)
+            yearLabel.frame = CGRect(x: helpButtonLocationX() - 80, y: controlPanelLocationY() - buttonSize() - buttonSize() - 10, width: 150, height: 100)
             yearLabel.font = UIFont.systemFont(ofSize: 40, weight: UIFont.Weight.bold)
             yearLabel.textColor = .white
             yearLabel.alpha = 0.5

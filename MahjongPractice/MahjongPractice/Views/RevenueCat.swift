@@ -99,7 +99,9 @@ class RevenueCat {
     }
     
     @objc func restore2021() {
-        restore2021RevenueCat()
+        purchaseMenu.alertForPurchase.dismiss(animated: true, completion: {
+            self.purchaseMenu.showRestoreMenu()
+        })
     }
     
     func restore2021RevenueCat() {
@@ -114,7 +116,7 @@ class RevenueCat {
                 
             } else {
                 self.purchaseMenu.alertForPurchase.dismiss(animated: true, completion: {
-                    self.purchaseMenu.showErrorMessage(error: "Purchase 2021 Access before using restore")
+                    self.purchaseMenu.showErrorMessage(error: "2021 Pattern Access receipt not found. For help contact support@eightbam.com")
                 })
             }
         }
@@ -398,5 +400,17 @@ class PurchaseMenu: UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: {(action:UIAlertAction) in }));
         present(alert, animated: false, completion: nil)
     }
+    
+    @objc func showRestoreMenu() {
+        let message = "Restore after deleting or to run on your iPhone and iPad. If you purchased 2020 you need to purchase 2021 separately. Be patient and retry if the App Store is busy. For help contact support@eightbam.com."
+        let alert = UIAlertController(title: "Restore Purchase", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "2021", style: .default, handler: {(action:UIAlertAction) in
+            self.revenueCat.restore2021RevenueCat()
+        }));
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action:UIAlertAction) in
+        }));
+        present(alert, animated: false, completion: nil)
+    }
+
     
 }
