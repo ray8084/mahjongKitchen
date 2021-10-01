@@ -1,0 +1,6 @@
+framework module Pods_MahjongPractice {
+  umbrella header "Pods-MahjongPractice-umbrella.h"
+
+  export *
+  module * { export * }
+}
