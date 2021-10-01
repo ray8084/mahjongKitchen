@@ -1,0 +1,404 @@
+//
+//  RevenueCat.swift
+//  MahjongPractice
+//
+//  Created by Ray Meyer on 9/25/21.
+//
+
+import UIKit
+import Purchases
+
+protocol GameDelegate {
+    func loadGame()
+    func load2020()
+    func load2021()
+    func enable2020()
+    func enable2021()
+    func changeYear(_ segment: Int)
+}
+
+public struct AppStoreHistory {
+    public static let Patterns2020 = "com.eightbam.mahjong2019.patterns2020"
+    public static let Patterns2021 = "com.eightbam.mahjong2019.patterns2021"
+    private static let productIdentifiers: Set<ProductIdentifier> = [AppStoreHistory.Patterns2020, AppStoreHistory.Patterns2021]
+    public static let store = IAPHelper(productIds: AppStoreHistory.productIdentifiers)
+}
+
+
+// -----------------------------------------------------------------------------------------
+//
+//  RevenueCat
+//
+// -----------------------------------------------------------------------------------------
+
+class RevenueCat {
+    var viewController: UIViewController!
+    var purchaseMenu: PurchaseMenu!
+    var price2021 = 0.0
+    var package2021: Purchases.Package!
+    var gameDelegate: GameDelegate!
+    var purchased2021 = false
+    let defaults = UserDefaults.standard
+    var waitFor2021Timer: Timer!
+    
+    init(viewController: UIViewController, gameDelegate: GameDelegate) {
+        self.viewController = viewController
+        self.gameDelegate = gameDelegate
+        self.purchaseMenu = PurchaseMenu(revenueCat: self)
+        purchased2021 = defaults.bool(forKey: "purchased2021")
+    }
+    
+    func start() {
+        print("RevenueCat.start")
+        //if is2021Purchased() {
+        //    gameDelegate.enable2021()
+        //    gameDelegate.load2021()
+        //} else {
+            // fetch2021()
+            viewController.show(self.purchaseMenu, sender: viewController)
+        //}
+    }
+    
+    func fetch2021() {
+        Purchases.shared.offerings { (offerings, error) in
+            if let package = offerings?.current?.lifetime {
+                self.package2021 = package
+                self.price2021 = Double(truncating: package.product.price)
+                self.purchaseMenu.updatePrice(self.price2021)
+            }
+        }
+    }
+    
+    func purchase2021() {
+        Purchases.shared.purchasePackage(package2021) { (transaction, purchaserInfo, error, userCancelled) in
+            if error != nil {
+                self.purchaseMenu.alertForPurchase.dismiss(animated: false, completion: {
+                    self.purchaseMenu.showErrorMessage(error: error! as NSError)
+                })
+            } else if transaction != nil {
+                self.purchaseMenu.closeAlert()
+                if transaction?.transactionState == .purchased {
+                    self.completePurchase2021()
+                }
+            }
+            if error == nil && purchaserInfo != nil && self.purchased2021 == false {
+                self.purchaseMenu.closeAlert()
+                if purchaserInfo?.entitlements["Patterns2021"]?.isActive == true {
+                    self.completePurchase2021()
+                }
+            }
+        }
+    }
+    
+    func completePurchase2021() {
+        self.purchased2021 = true
+        self.defaults.set(self.purchased2021, forKey: "purchased2021")
+        self.purchaseMenu.close()
+        self.gameDelegate.enable2021()
+        self.gameDelegate.load2021()
+    }
+    
+    @objc func restore2021() {
+        restore2021RevenueCat()
+    }
+    
+    func restore2021RevenueCat() {
+        Purchases.shared.restoreTransactions { (info, error) in
+            if let e = error {
+                self.purchaseMenu.alertForPurchase.dismiss(animated: true, completion: {
+                    self.purchaseMenu.showErrorMessage(error: e as NSError)
+                })
+            } else if info?.entitlements["Patterns2021"]?.isActive == true {
+                self.purchaseMenu.closeAlert()
+                self.completePurchase2021()
+                
+            } else {
+                self.purchaseMenu.alertForPurchase.dismiss(animated: true, completion: {
+                    self.purchaseMenu.showErrorMessage(error: "Purchase 2021 Access before using restore")
+                })
+            }
+        }
+    }
+    
+
+    
+    func is2021Purchased() -> Bool {
+        let history2021 = AppStoreHistory.store.isProductPurchased(AppStoreHistory.Patterns2021)
+        return history2021 || purchased2021
+    }
+
+    func is2020Purchased() -> Bool {
+        let history2020 = AppStoreHistory.store.isProductPurchased(AppStoreHistory.Patterns2020)
+        return history2020 || is2021Purchased()
+    }
+    
+    func is2019Purchased() -> Bool { is2020Purchased() || is2021Purchased() }
+    func is2018Purchased() -> Bool { is2020Purchased() || is2021Purchased() }
+    func is2017Trial() -> Bool { return !is2020Purchased() && !is2021Purchased() }
+    
+    func changeYear(year: Int, settingsViewController: SettingsViewController) {
+        switch(year) {
+            case Year.y2017:
+                gameDelegate.changeYear(YearSegment.segment2017)
+            case Year.y2018:
+                if is2018Purchased() {
+                    gameDelegate.changeYear(YearSegment.segment2018)
+                }
+            case Year.y2019:
+                if is2019Purchased() {
+                    gameDelegate.changeYear(YearSegment.segment2019)
+                }
+            case Year.y2020:
+                if is2020Purchased() {
+                    gameDelegate.changeYear(YearSegment.segment2020)
+                }
+            case Year.y2021:
+                if is2021Purchased() {
+                    gameDelegate.changeYear(YearSegment.segment2021)
+                } else {
+                    purchaseMenu.settingsViewController = settingsViewController
+                    settingsViewController.show(self.purchaseMenu, sender: settingsViewController)
+                }
+            default:
+                gameDelegate.changeYear(YearSegment.segment2017)
+        }
+
+    }
+}
+
+
+// -----------------------------------------------------------------------------------------
+//
+//  Purchase Menu
+//
+// -----------------------------------------------------------------------------------------
+
+class PurchaseMenu: UIViewController {
+    var revenueCat: RevenueCat!
+    var purchaseButton = UIButton()
+    var alertForRestore = UIAlertController()
+    var purchaseView = UIView()
+    var backgroundImageView: UIImageView!
+    var settingsViewController: SettingsViewController!
+    var loaded = false
+    var alertForPurchase = UIAlertController()
+    
+    init(revenueCat: RevenueCat) {
+        super.init(nibName: nil, bundle: nil)
+        self.revenueCat = revenueCat
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override var shouldAutorotate: Bool {
+        return true
+    }
+    
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        return .landscape
+    }
+        
+    override func loadView() {
+        view = UIView()
+     }
+
+    func addPurchaseView() {
+        purchaseView.backgroundColor = .white
+        let x = Int(width() - 550) / 2
+        let y = Int(height() - 300) / 2
+        purchaseView.frame = CGRect(x: x, y: y, width: 550, height: 300)
+        purchaseView.layer.cornerRadius = 20
+        view.addSubview(purchaseView)
+    }
+    
+    func setBackground(){
+        view.backgroundColor = revenueCat.viewController.view.backgroundColor
+        backgroundImageView?.removeFromSuperview()
+        let background = UIImage(named: "TRANS-ICON-WHITE.png")
+        backgroundImageView = UIImageView(frame: view.bounds)
+        backgroundImageView.contentMode =  UIView.ContentMode.scaleAspectFill
+        backgroundImageView.clipsToBounds = true
+        backgroundImageView.image = background
+        backgroundImageView.center = view.center
+        backgroundImageView.alpha = 0.15
+        view.addSubview(backgroundImageView)
+        view.sendSubviewToBack(backgroundImageView)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("PurchaseMeny.viewDidAppear")
+        if loaded == false {
+            let yOffset = Int(height() - 300) / 2
+            setBackground()
+            addPurchaseView()
+            addCloseButton(y: yOffset + 20)
+            addTitle("2021 Pattern Access", y: yOffset + 10)
+            addLabel("Access to 2021 Patterns with suggested hands,\n filters, stats, and more. One time purchase for 2021.", y: yOffset + 55, height: 60)
+            addPurchaseButton(y: yOffset + 120)
+            addRestoreButton(y: yOffset + 180)
+            addLabel("Contact support@eightbam.com", y: yOffset + 260, height: 30)
+            loaded = true
+        }
+    }
+    
+    func addCloseButton(y: Int) {
+        let x = Int(purchaseView.frame.maxX - 50)
+        let closeButton = UIButton(frame: CGRect(x: x, y: y, width: 30, height: 30))
+        let image = UIImage(named: "iconfinder_circle-02_600789.png")
+        closeButton.setImage(image, for: .normal)
+        closeButton.imageView?.contentMode = .scaleAspectFit
+        closeButton.addTarget(self, action: #selector(closeButtonAction), for: .touchUpInside)
+        self.view.addSubview(closeButton)
+    }
+    
+    @objc func closeButtonAction(sender: UIButton!) {
+        if revenueCat.is2017Trial() {
+            show2017Trial()
+        } else {
+            validateYear()
+            revenueCat.gameDelegate.loadGame()
+            close()
+        }
+    }
+    
+    func validateYear() {
+        if settingsViewController != nil {
+            if settingsViewController.is2021Selected() && !revenueCat.is2021Purchased() {
+                settingsViewController.select2020()
+            }
+            if settingsViewController.is2020Selected() && !revenueCat.is2020Purchased() {
+                settingsViewController.select2017()
+            }
+            if settingsViewController.is2019Selected() && !revenueCat.is2020Purchased() {
+                settingsViewController.select2017()
+            }
+            if settingsViewController.is2018Selected() && !revenueCat.is2020Purchased() {
+                settingsViewController.select2017()
+            }
+        }
+    }
+    
+    func close() {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func closeAlert() {
+        alertForPurchase.dismiss(animated: true, completion: nil)
+    }
+    
+    func width() -> Int {
+        Int(view.frame.width)
+    }
+    
+    func height() -> Int {
+        Int(view.frame.height)
+    }
+    
+    func show2017Trial() {
+        let alert = UIAlertController(title: "2017 is available as a free trial with limited feautures", message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "2017", style: .default, handler: {(action:UIAlertAction) in
+            if self.settingsViewController != nil {
+                self.settingsViewController.select2017()
+            }
+            self.revenueCat.gameDelegate.loadGame()
+            self.dismiss(animated: true, completion: nil)
+        }));
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action:UIAlertAction) in
+        }));
+        present(alert, animated: false, completion: nil)
+    }
+    
+    func addTitle(_ text: String, y: Int) {
+        let offset = (width() - 400) / 2
+        let title = UILabel(frame: CGRect(x: offset, y: y, width: 400, height: 55))
+        title.text = text
+        title.font = UIFont.boldSystemFont(ofSize: 24)
+        title.textAlignment = .center
+        title.textColor = .black
+        title.backgroundColor = .white
+        view.addSubview(title)
+    }
+    
+    func addLabel(_ text: String, y: Int, height: Int) {
+        let offset = (width() - 490) / 2
+        let label = UITextView(frame: CGRect(x: offset, y: y, width: 490, height: height))
+        label.text = text
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .center
+        label.textColor = .black
+        label.backgroundColor = .white
+        view.addSubview(label)
+    }
+    
+    func addPurchaseButton(y: Int) {
+        purchaseButton = UIButton(frame: CGRect(x: (width()-300)/2, y: y, width: 300, height: 50))
+        purchaseButton.layer.cornerRadius = 5
+        purchaseButton.titleLabel!.font = UIFont.systemFont(ofSize: 20)
+        if revenueCat.price2021 == 0.0 {
+            purchaseButton.setTitle("Connecting...", for: .normal)
+            purchaseButton.isEnabled = false
+        } else {
+            purchaseButton.setTitle("$\(revenueCat.price2021)", for: .normal)
+            purchaseButton.isEnabled = true
+        }
+        purchaseButton.backgroundColor = UIColor(red: 255/255, green: 153/255, blue: 0, alpha: 1.0);
+        purchaseButton.setTitleColor(.black, for: .normal)
+        purchaseButton.addTarget(self, action: #selector(purchaseButtonAction), for: .touchUpInside)
+        view.addSubview(purchaseButton)
+    }
+
+    @objc func purchaseButtonAction(sender: UIButton!) {
+        showConnectMessage()
+        revenueCat.purchase2021()
+    }
+    
+    func updatePrice(_ price: Double) {
+        purchaseButton.setTitle("$\(price)", for: .normal)
+        purchaseButton.isEnabled = true
+    }
+
+    func showConnectMessage() {
+        let title = "App Store Connect"
+        let message = "Please Wait..."
+        alertForPurchase = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        present(alertForPurchase, animated: false, completion: nil)
+    }
+    
+    func addRestoreButton(y: Int) {
+        let button = UIButton(frame: CGRect(x: (width()-300)/2, y: y, width: 300, height: 50))
+        button.layer.cornerRadius = 5
+        button.titleLabel!.font = UIFont.systemFont(ofSize: 20)
+        button.setTitle("Restore Purchase", for: .normal)
+        button.backgroundColor = .lightGray
+        button.addTarget(self, action: #selector(restore2021), for: .touchUpInside)
+        view.addSubview(button)
+    }
+    
+    @objc func restore2021() {
+        showConnectMessage()
+        revenueCat.restore2021()
+    }
+    
+    func showConnectMessageForRestore() {
+        let title = "App Store Connect"
+        let message = "Please Wait..."
+        alertForRestore = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alertForRestore.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action:UIAlertAction) in }));
+        present(alertForRestore, animated: false, completion: nil)
+    }
+ 
+    func showErrorMessage(error: NSError) {
+        let alert = UIAlertController(title: "", message: error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: {(action:UIAlertAction) in }));
+        present(alert, animated: false, completion: nil)
+    }
+    
+    func showErrorMessage(error: String) {
+        let alert = UIAlertController(title: "", message: error, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: {(action:UIAlertAction) in }));
+        present(alert, animated: false, completion: nil)
+    }
+    
+}

@@ -1,0 +1,285 @@
+//
+//  CardView.swift
+//  Mahjong2017
+//
+//  Created by Ray on 8/15/16.
+//  Copyright © 2017 EightBam LLC. All rights reserved.
+//
+
+import UIKit
+
+class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    var cardView: UITableView  = UITableView()
+    var maj: Maj!
+    var columnWidth: CGFloat = 0
+    var location: CGFloat = 0
+    var lp: UILongPressGestureRecognizer! = nil
+    let cellHeight: CGFloat = 20.0
+    var root: UIViewController!
+    var sorted = true
+    var maxRows = 12
+    var isHidden = true
+    let darkBamboo:UIColor = UIColor(red: 114/255, green: 123/255, blue: 102/255, alpha: 1.0)
+    
+    func showCard(_ rootView: UIViewController, x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, bgcolor: UIColor, maj: Maj) {
+        self.maj = maj
+        if location != y {
+            location = y
+            var cardHeight = height
+            let maxHeight = CGFloat(maxRows) * cellHeight
+            if cardHeight > maxHeight {
+                cardHeight = maxHeight
+            }
+            cardView.frame         =   CGRect(x: x, y: y, width: width, height: cardHeight);
+            cardView.delegate      =   self
+            cardView.dataSource    =   self
+            cardView.register(UITableViewCell.self, forCellReuseIdentifier: "cardViewCell")
+            cardView.backgroundColor = UIColor.clear
+            cardView.separatorColor = UIColor(white: 0, alpha: 0)
+            columnWidth = width / 3.0
+            root = rootView
+            addLongPress()
+        }
+        filter(maj)
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        
+        let title = "Error: 701 PatternView MemoryWarning"
+        let message = "Contact support@eightbam.com"
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
+        }));
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func addLongPress() {
+        lp = UILongPressGestureRecognizer(target: self, action: #selector(CardView.longPress))
+        lp.minimumPressDuration = 0.6;
+        lp.allowableMovement = 100.0;
+        cardView.addGestureRecognizer(lp)
+    }
+    
+    @objc func longPress(_ sender: UILongPressGestureRecognizer) {
+        switch sender.state {
+        case .began:
+            let touchPoint = sender.location(in: cardView)
+            if let indexPath = cardView.indexPathForRow(at: touchPoint) {
+                cardView.tag = indexPath.row + 100
+                hideButton(cardView)
+            }
+            break
+        default:
+            break
+        }
+    }
+
+    func update(_ maj: Maj) {
+        if isHidden == false {
+            self.maj = maj
+            maj.card.match(maj.east.tiles + (maj.east.rack?.tiles)!, ignoreFilters: false)
+            sort(maj)
+            cardView.reloadData()
+        }
+    }
+    
+    func updateRackFilter(_ maj: Maj) {
+        if maj.isGameOver() {
+            maj.card.clearRackFilter()
+            maj.card.match(maj.east.tiles + (maj.east.rack?.tiles)!, ignoreFilters: false)
+            sort(maj)
+            cardView.reloadData()
+        }
+        else if isHidden == false && maj.letterPatternRackFilterPending {
+            maj.card.rackFilter(maj.east.rack!)
+            maj.card.match(maj.east.tiles + (maj.east.rack?.tiles)!, ignoreFilters: false)
+            sort(maj)
+            cardView.reloadData()
+            maj.letterPatternRackFilterPending = false
+        }
+    }
+    
+    func toggleSort(_ maj: Maj) {
+        if sorted == false {
+            maj.card.letterPatterns.sort(by: { $0.matchCount > $1.matchCount })
+            sorted = true
+        }
+        else {
+            maj.card.letterPatterns.sort(by: { $0.id < $1.id })
+            sorted = false
+        }
+    }
+    
+    func sort(_ maj: Maj) {
+        if sorted == true {
+            maj.card.letterPatterns.sort(by: { $0.matchCount == $1.matchCount ? $0.id < $1.id : $0.matchCount > $1.matchCount} )
+        }
+    }
+    
+    func filter(_ maj: Maj) {
+        for p in maj.card.letterPatterns {
+            switch p.family {
+            case Family.year: p.filterOut = maj.east.filterOutYears
+            case Family.f2468: p.filterOut = maj.east.filterOut2468
+            case Family.likeNumbers: p.filterOut = maj.east.filterOutLikeNumbers
+            case Family.addition: p.filterOut = maj.east.filterOutAdditionHands
+            case Family.quints: p.filterOut = maj.east.filterOutQuints
+            case Family.run: p.filterOut = maj.east.filterOutRuns
+            case Family.f13579: p.filterOut = maj.east.filterOut13579
+            case Family.winds: p.filterOut = maj.east.filterOutWinds
+            case Family.f369: p.filterOut = maj.east.filterOut369
+            case Family.pairs: p.filterOut = maj.east.filterOutPairs
+            default: p.filterOut = false
+            }
+            if maj.east.filterOutConcealed && p.concealed {
+                p.filterOut = true
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        var count = 0
+        for p in maj.card.letterPatterns {
+            if p.matchCount > 0 {
+                count+=1
+            }
+        }
+        if count > maxRows {
+            count = maxRows
+        }
+        if maj.isGameOver() {
+            count = 1
+        }
+        return count
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cardViewCell")! as UITableViewCell
+        cell.backgroundColor = UIColor.clear
+        cell.textLabel!.font = cell.textLabel!.font.withSize(16)
+        cell.selectionStyle = .none
+
+        let index = indexPath.row
+        
+        // column 1 patterns
+        let col1 = getLabel(cell, x: 0, width: col1Width(), tag: 1)
+        col1?.attributedText = maj.card.text(index)
+ 
+        // column 2 notes
+        let col2 = getLabel(cell, x: col1Width(), width: col2Width(), tag: 2)
+        col2?.attributedText = maj.card.note(index)
+        
+        // column 3 matching tiles
+        let col3 = getLabel(cell, x: col1Width() + col2Width() + 5, width: col3Width(), tag: 3)
+        col3?.attributedText = maj.card.matchCountText(index)
+        
+        // column 4 wins
+        let col4 = getLabel(cell, x: col1Width() + col2Width() + col3Width() + 5, width: col4Width(), tag: 4)
+        col4?.attributedText =  maj.card.winCountText(index)
+        
+        addHideButton(cell, x: col1Width() + col2Width() + col3Width() + col4Width() + 5, width: hideButtonWidth(), tag: index+100)
+        return cell
+    }
+    
+    func width() -> CGFloat {
+        return cardView.frame.width
+    }
+    
+    func isNarrow() -> Bool {
+        return cardView.frame.width < 600
+    }
+    
+    func col1Width() -> CGFloat {
+        let col1 = isNarrow() ? 200 : width() * 0.32
+        return col1 > 300 ? 300 : col1
+    }
+    
+    func col2Width() -> CGFloat {
+        let col2 = isNarrow() ? 190 : width() * 0.33
+        return col2 > 300 ? 300 : col2
+    }
+    
+    func col3Width() -> CGFloat {
+        let col3 = isNarrow() ? 60 : width() * 0.08
+        return col3 > 100 ? 100 : col3
+    }
+    
+    func col4Width() -> CGFloat {
+        let col4 = isNarrow() ? 110 : width() * 0.16
+        return col4 > 110 ? 110 : col4
+    }
+    
+    func hideButtonWidth() -> CGFloat {
+        let button = isNarrow() ? 60 : width() * 0.10
+        return button > 100 ? 100 : button
+    }
+    
+    func getLabel(_ cell: UITableViewCell, x: CGFloat, width: CGFloat, tag: Int) -> UILabel? {
+        var label = UILabel()
+        var found = false
+        for v in cell.subviews {
+            if v.tag == tag {
+                label = v as! UILabel
+                found = true
+                break
+            }
+        }
+        if found == false {
+            label.frame = CGRect(x: x, y: 0, width: width, height: rowHeight())
+            label.font = label.font.withSize(16)
+            label.tag = tag
+            cell.addSubview(label)
+        }
+        return label
+    }
+
+    func addHideButton(_ cell: UITableViewCell, x: CGFloat, width: CGFloat, tag: Int) {
+        var found = false
+        for v in cell.subviews {
+            if v.tag >= 100 {
+                v.tag = tag
+                found = true
+                break
+            }
+        }
+        if found == false {
+            let button = UIButton()
+            button.frame = CGRect(x: x, y: 0, width: width, height: rowHeight())
+            button.tag = tag
+            button.setTitle("[hide]", for: .normal)
+            button.setTitleColor(UIColor.darkGray, for: .normal)
+            button.addTarget(self, action: #selector(CardView.hideButton), for: .touchUpInside)
+            cell.addSubview(button)
+        }
+    }
+    
+    @objc func hideButton(_ sender: UIView) {
+        let alert = UIAlertController(title: "Hide this pattern for this game", message: maj.card.text(sender.tag-100).string, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Hide", style: .default, handler: {(action:UIAlertAction) in
+            self.maj.card.hidePattern(sender.tag-100)
+            self.update(self.maj)
+        }));
+        
+        alert.addAction(UIAlertAction(title: "Unhide All", style: .default, handler: {(action:UIAlertAction) in
+            self.maj.card.unhideAll()
+            self.update(self.maj)
+        }));
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil));
+        root.present(alert, animated: true, completion: nil)
+    }
+    
+    func rowHeight() -> CGFloat  {
+        return cellHeight
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return cellHeight
+    }
+}
