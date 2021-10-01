@@ -8,7 +8,6 @@
 import UIKit
 
 class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, SettingsDelegate, ValidationViewDelegate  {
-    func redealDelegate() -> Maj { return maj } // todo
     
     var revenueCat: RevenueCat!
     var backgroundImageView: UIImageView!
@@ -74,7 +73,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         maj.loadSavedValues()
         tileMatchView.loadPatterns(maj: maj, letterPatterns: maj.card.letterPatterns)
         lastMaj = Maj(maj)
-        // loadDefaults()
         revenueCat = RevenueCat(viewController: self, gameDelegate: self)
     }
      
@@ -120,6 +118,10 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         }
     }
 
+    func getMaj() -> Maj {
+        return maj
+    }
+    
     
     // -----------------------------------------------------------------------------------------
     //
@@ -127,25 +129,9 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     //
     // -----------------------------------------------------------------------------------------
     
-    func loadGame() {
-        redeal()
-        //showGame()
-        //showBottomView()
-        //showTableButton()
-        //yearLabel.isHidden = false
-        //versionLabel.isHidden = false
-        //controlPanel.isHidden = false
-        //addMenuButton()
-    }
-
-    func load2020() {
-        changeYear(YearSegment.segment2020)
-        loadGame()
-    }
-    
     func load2021() {
         changeYear(YearSegment.segment2021)
-        loadGame()
+        redeal()
     }
     
     func enable2020() {maj.enable2020 = true}
@@ -227,16 +213,16 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         self.tileMatchView.update(maj)
         
         alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
-            //if (self.maj.enable2021 == false) && (self.maj.enable2020 == false){
-                // self.show2021Menu()
+            if (self.maj.enable2021 == false) && (self.maj.enable2020 == false){
+                self.revenueCat.showPurchaseMenu(self)
             //} else if self.maj.shuffleWithSeed {
                 // self.showShuffleMenu()
             //} else if win && (self.maj.card.getTotalWinCount() > 2 ) {
                 // AppStore.store.requestReview()
             //    self.redeal()
-            //} else {
+            } else {
                 self.redeal()
-            //}
+            }
         }));
         
         alert.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
@@ -623,7 +609,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             controlPanel.addTarget(self, action: #selector(controlPanelValueChanged), for: .valueChanged)
             view.addSubview(controlPanel)
         }
-        //showBottomView()
         if versionLabel == nil {
             versionLabel = UILabel()
             versionLabel.frame = CGRect(x: controlPanel.frame.origin.x + controlPanel.frame.width + 15, y: controlPanelLocationY(), width: 100, height: controlPanelHeight())

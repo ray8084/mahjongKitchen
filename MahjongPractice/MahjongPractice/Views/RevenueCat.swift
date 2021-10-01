@@ -9,8 +9,7 @@ import UIKit
 import Purchases
 
 protocol GameDelegate {
-    func loadGame()
-    func load2020()
+    func redeal()
     func load2021()
     func enable2020()
     func enable2021()
@@ -56,8 +55,12 @@ class RevenueCat {
             gameDelegate.load2021()
         } else {
             getPrice2021()
-            viewController.show(self.purchaseMenu, sender: viewController)
+            showPurchaseMenu(viewController)
         }
+    }
+    
+    func showPurchaseMenu(_ viewController: UIViewController) {
+        viewController.show(purchaseMenu, sender: viewController)
     }
     
     func getPrice2021() {
@@ -162,7 +165,7 @@ class RevenueCat {
                     gameDelegate.changeYear(YearSegment.segment2021)
                 } else {
                     purchaseMenu.settingsViewController = settingsViewController
-                    settingsViewController.show(self.purchaseMenu, sender: settingsViewController)
+                    showPurchaseMenu(settingsViewController)
                 }
             default:
                 gameDelegate.changeYear(YearSegment.segment2017)
@@ -265,7 +268,7 @@ class PurchaseMenu: UIViewController {
             show2017Trial()
         } else {
             validateYear()
-            revenueCat.gameDelegate.loadGame()
+            revenueCat.gameDelegate.redeal()
             close()
         }
     }
@@ -313,7 +316,7 @@ class PurchaseMenu: UIViewController {
             if self.settingsViewController != nil {
                 self.settingsViewController.select2017()
             }
-            self.revenueCat.gameDelegate.loadGame()
+            self.revenueCat.gameDelegate.redeal()
             self.dismiss(animated: true, completion: nil)
         }));
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action:UIAlertAction) in

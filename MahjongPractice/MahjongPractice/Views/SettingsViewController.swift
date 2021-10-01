@@ -9,10 +9,11 @@
 import UIKit
 
 protocol SettingsDelegate {
-    func changeYear(_ segmentIndex: Int)
-    func updateViews()
-    func redealDelegate() -> Maj
     func changeTileImages()
+    func changeYear(_ segmentIndex: Int)
+    func getMaj() -> Maj
+    func redeal()
+    func updateViews()
 }
 
 class SettingsViewController: NarrowViewController, UITextFieldDelegate {
@@ -124,14 +125,6 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
             case YearSegment.segment2021: revenueCat.changeYear(year: Year.y2021, settingsViewController: self)
             default: revenueCat.changeYear(year: Year.y2017, settingsViewController: self)
         }
-        // revenueCat.changeYear( sender.selectedSegmentIndex )
-        /*let iapStateMachine = settingsDelegate.getInAppPurchaseStateMachine();
-        if iapStateMachine.canChangeYear(sender.selectedSegmentIndex) {
-            settingsDelegate.changeYear(sender.selectedSegmentIndex)
-            settingsDelegate.updateViews()
-        } else {
-            iapStateMachine.showPurchaseMenu(viewController: self)
-        }*/
     }
     
     private func setOriginWithOffset(_ frame: CGRect, x: Int, y: Int) -> CGRect {
@@ -392,9 +385,10 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
     // -----------------------------------------------------------------------------------------
     
     @objc private func changeDuplicate(sender: UISwitch) {
-         maj.setShuffleWithSeed( !maj.shuffleWithSeed )
-         keywordTextEdit.isHidden = !maj.shuffleWithSeed
-         maj = settingsDelegate.redealDelegate()
+        maj.setShuffleWithSeed( !maj.shuffleWithSeed )
+        keywordTextEdit.isHidden = !maj.shuffleWithSeed
+        settingsDelegate.redeal()
+        maj = settingsDelegate.getMaj()
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
@@ -403,7 +397,8 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
 
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         maj.setShuffleSeed( textField.text ?? "" )
-        maj = settingsDelegate.redealDelegate()
+        settingsDelegate.redeal()
+        maj = settingsDelegate.getMaj()
         return true
     }
 
