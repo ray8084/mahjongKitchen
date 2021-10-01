@@ -54,12 +54,12 @@ class RevenueCat {
         //    gameDelegate.enable2021()
         //    gameDelegate.load2021()
         //} else {
-            // fetch2021()
+            getPrice2021()
             viewController.show(self.purchaseMenu, sender: viewController)
         //}
     }
     
-    func fetch2021() {
+    func getPrice2021() {
         Purchases.shared.offerings { (offerings, error) in
             if let package = offerings?.current?.lifetime {
                 self.package2021 = package
@@ -119,9 +119,7 @@ class RevenueCat {
             }
         }
     }
-    
 
-    
     func is2021Purchased() -> Bool {
         let history2021 = AppStoreHistory.store.isProductPurchased(AppStoreHistory.Patterns2021)
         return history2021 || purchased2021
