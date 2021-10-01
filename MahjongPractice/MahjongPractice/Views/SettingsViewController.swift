@@ -106,7 +106,7 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
         let line2 = addLine(x: xOffset, y: yearBottom + 10)
         yearBottom = Int(line2.frame.origin.y + line2.frame.height)
 
-        if maj.enable2020 == false && maj.enable2021 == false {
+        /*if maj.enable2020 == false && maj.enable2021 == false {
             let note = UILabel(frame: CGRect(x: xOffset, y: yearBottom + 10, width: 450, height: 22))
             note.text = "* 2018, 2019 and 2020 are included with 2021"
             note.lineBreakMode = .byWordWrapping
@@ -114,7 +114,7 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
             note.font = UIFont.systemFont(ofSize: 16)
             scrollView.addSubview(note)
             yearBottom = Int(note.frame.origin.y + note.frame.height)
-        }
+        }*/
     }
 
     @objc private func changeYear(sender: UISegmentedControl) {
