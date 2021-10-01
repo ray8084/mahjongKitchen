@@ -91,32 +91,40 @@ class RevenueCat {
     }
     
     func completePurchase2021() {
-        self.purchased2021 = true
-        self.defaults.set(self.purchased2021, forKey: "purchased2021")
-        self.purchaseMenu.close()
-        self.gameDelegate.enable2021()
-        self.gameDelegate.load2021()
+        purchased2021 = true
+        defaults.set(purchased2021, forKey: "purchased2021")
+        purchaseMenu.close()
+        gameDelegate.enable2021()
+        gameDelegate.load2021()
     }
     
     func restore2021() {
         Purchases.shared.restoreTransactions { (info, error) in
+            self.purchaseMenu.restoreTimer.invalidate()
             if let e = error {
-                self.purchaseMenu.alertForPurchase.dismiss(animated: true, completion: {
+                self.purchaseMenu.alertForRestore.dismiss(animated: true, completion: {
                     self.purchaseMenu.showErrorMessage(error: e as NSError)
                 })
             } else if info?.entitlements["Patterns2021"]?.isActive == true {
-                self.purchaseMenu.closeAlert()
-                self.completePurchase2021()
-                
+                self.completeRestore2021()
             } else {
-                self.purchaseMenu.restoreTimer.invalidate()
-                self.purchaseMenu.alertForPurchase.dismiss(animated: true, completion: {
+                self.purchaseMenu.alertForRestore.dismiss(animated: true, completion: {
                     self.purchaseMenu.showErrorMessage(error: "2021 Pattern Access receipt not found. For help contact support@eightbam.com")
                 })
             }
         }
     }
 
+    func completeRestore2021() {
+        purchased2021 = true
+        defaults.set(self.purchased2021, forKey: "purchased2021")
+        purchaseMenu.alertForRestore.dismiss(animated: true, completion: {
+            self.purchaseMenu.close()
+        })
+        gameDelegate.enable2021()
+        gameDelegate.load2021()
+    }
+    
     func is2021Purchased() -> Bool {
         let history2021 = AppStoreHistory.store.isProductPurchased(AppStoreHistory.Patterns2021)
         return history2021 || purchased2021
@@ -285,6 +293,10 @@ class PurchaseMenu: UIViewController {
         alertForPurchase.dismiss(animated: true, completion: nil)
     }
     
+    func closeAlertForRestore() {
+        alertForRestore.dismiss(animated: true, completion: nil)
+    }
+    
     func width() -> Int {
         Int(view.frame.width)
     }
@@ -375,8 +387,9 @@ class PurchaseMenu: UIViewController {
     
     func showConnectMessageForRestore() {
         let title = "App Store Connect"
-        let message = "Please Wait..."
+        let message = "Please Wait...\n"
         alertForRestore = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        addActivityIndicator(alert: alertForRestore)
         present(alertForRestore, animated: false, completion: nil)
     }
  
@@ -398,7 +411,7 @@ class PurchaseMenu: UIViewController {
         alert.addAction(UIAlertAction(title: "2021", style: .default, handler: {(action:UIAlertAction) in
             self.showConnectMessageForRestore()
             self.restoreTimer = Timer.scheduledTimer(timeInterval: self.responseTimeoutSeconds, target: self, selector: #selector(self.restoreTimeout), userInfo: nil, repeats: false)
-            // self.revenueCat.restore2021()
+            self.revenueCat.restore2021()
         }));
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action:UIAlertAction) in
         }));
@@ -410,5 +423,23 @@ class PurchaseMenu: UIViewController {
             self.showErrorMessage(error: "Restore Timeout")
         })
     }
+    
+    func addActivityIndicator(alert: UIAlertController) {
+        var activityIndicator = UIActivityIndicatorView(style: .gray)
+        if #available(iOS 12.0, *) {
+            if self.traitCollection.userInterfaceStyle == .dark {
+                activityIndicator = UIActivityIndicatorView(style: .white)
+            }
+        }
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.isUserInteractionEnabled = false
+        activityIndicator.startAnimating()
+        alert.view.addSubview(activityIndicator)
+        activityIndicator.centerXAnchor.constraint(equalTo: alert.view.centerXAnchor, constant: 0).isActive = true
+        activityIndicator.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -20).isActive = true
+    }
+    
+    
+    
     
 }

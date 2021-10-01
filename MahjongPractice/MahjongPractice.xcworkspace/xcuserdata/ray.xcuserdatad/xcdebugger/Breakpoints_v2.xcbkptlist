@@ -14,9 +14,9 @@
             filePath = "MahjongPractice/Views/RevenueCat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
-            landmarkName = "restore2021RevenueCat()"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "restore2021()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
