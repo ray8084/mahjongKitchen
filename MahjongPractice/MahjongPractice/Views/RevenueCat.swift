@@ -98,13 +98,7 @@ class RevenueCat {
         self.gameDelegate.load2021()
     }
     
-    @objc func restore2021() {
-        purchaseMenu.alertForPurchase.dismiss(animated: true, completion: {
-            self.purchaseMenu.showRestoreMenu()
-        })
-    }
-    
-    func restore2021RevenueCat() {
+    func restore2021() {
         Purchases.shared.restoreTransactions { (info, error) in
             if let e = error {
                 self.purchaseMenu.alertForPurchase.dismiss(animated: true, completion: {
@@ -115,6 +109,7 @@ class RevenueCat {
                 self.completePurchase2021()
                 
             } else {
+                self.purchaseMenu.restoreTimer.invalidate()
                 self.purchaseMenu.alertForPurchase.dismiss(animated: true, completion: {
                     self.purchaseMenu.showErrorMessage(error: "2021 Pattern Access receipt not found. For help contact support@eightbam.com")
                 })
@@ -182,6 +177,8 @@ class PurchaseMenu: UIViewController {
     var settingsViewController: SettingsViewController!
     var loaded = false
     var alertForPurchase = UIAlertController()
+    var restoreTimer = Timer()
+    var responseTimeoutSeconds = 10.0
     
     init(revenueCat: RevenueCat) {
         super.init(nibName: nil, bundle: nil)
@@ -372,20 +369,14 @@ class PurchaseMenu: UIViewController {
         button.titleLabel!.font = UIFont.systemFont(ofSize: 20)
         button.setTitle("Restore Purchase", for: .normal)
         button.backgroundColor = .lightGray
-        button.addTarget(self, action: #selector(restore2021), for: .touchUpInside)
+        button.addTarget(self, action: #selector(showRestoreMenu), for: .touchUpInside)
         view.addSubview(button)
-    }
-    
-    @objc func restore2021() {
-        showConnectMessage()
-        revenueCat.restore2021()
     }
     
     func showConnectMessageForRestore() {
         let title = "App Store Connect"
         let message = "Please Wait..."
         alertForRestore = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alertForRestore.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action:UIAlertAction) in }));
         present(alertForRestore, animated: false, completion: nil)
     }
  
@@ -405,12 +396,19 @@ class PurchaseMenu: UIViewController {
         let message = "Restore after deleting or to run on your iPhone and iPad. If you purchased 2020 you need to purchase 2021 separately. Be patient and retry if the App Store is busy. For help contact support@eightbam.com."
         let alert = UIAlertController(title: "Restore Purchase", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "2021", style: .default, handler: {(action:UIAlertAction) in
-            self.revenueCat.restore2021RevenueCat()
+            self.showConnectMessageForRestore()
+            self.restoreTimer = Timer.scheduledTimer(timeInterval: self.responseTimeoutSeconds, target: self, selector: #selector(self.restoreTimeout), userInfo: nil, repeats: false)
+            // self.revenueCat.restore2021()
         }));
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action:UIAlertAction) in
         }));
         present(alert, animated: false, completion: nil)
     }
 
+    @objc func restoreTimeout() {
+        alertForRestore.dismiss(animated: true, completion: {
+            self.showErrorMessage(error: "Restore Timeout")
+        })
+    }
     
 }
