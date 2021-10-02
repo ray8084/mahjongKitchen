@@ -1338,43 +1338,10 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     // -----------------------------------------------------------------------------------------
     
     func changeYear(_ segmentIndex: Int) {
-        switch segmentIndex {
-            case YearSegment.segment2017:
-                maj.setYearSegment(segment: segmentIndex)
-            case YearSegment.segment2018, YearSegment.segment2019, YearSegment.segment2020:
-                if isActive2020() || isActive2021() {
-                    maj.setYearSegment(segment: segmentIndex)
-                } else {
-                    // show2021Menu()
-                }
-            case YearSegment.segment2021:
-                if maj.enable2021 {
-                    maj.setYearSegment(segment: segmentIndex)
-                } else {
-                    // show2021Menu()
-                }
-            default: break
-                // show2021Menu()
-        }
+        maj.setYearSegment(segment: segmentIndex)
         tileMatchView.loadPatterns(maj: maj, letterPatterns: maj.card.letterPatterns)
         yearLabel?.text = maj.getYearText()
         updateViews()
-    }
-    
-    func isActive2020() -> Bool {
-        let purchased = revenueCat.is2020Purchased()
-        if purchased {
-            maj.enable2020 = true
-        }
-        return purchased || maj.override2020
-    }
-    
-    func isActive2021() -> Bool {
-        let purchased = revenueCat.is2021Purchased()
-        if purchased {
-            maj.enable2021 = true
-        }
-        return purchased || maj.override2021
     }
     
     
