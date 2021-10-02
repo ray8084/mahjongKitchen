@@ -11,7 +11,6 @@ import Purchases
 protocol GameDelegate {
     func redeal()
     func load2021()
-    func enable2020()
     func enable2021()
     func changeYear(_ segment: Int)
 }
@@ -51,8 +50,7 @@ class RevenueCat {
     func start() {
         print("RevenueCat.start")
         if is2021Purchased() {
-            gameDelegate.enable2021()
-            gameDelegate.load2021()
+            gameDelegate.redeal()
         } else {
             getPrice2021()
             showPurchaseMenu(viewController)

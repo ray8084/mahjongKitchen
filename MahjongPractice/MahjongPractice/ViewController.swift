@@ -134,8 +134,9 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         redeal()
     }
     
-    func enable2020() {maj.enable2020 = true}
-    func enable2021() {maj.enable2021 = true}
+    func enable2021() {
+        maj.enable2021 = true
+    }
     
     func showGame() {
         if maj.isCharlestonActive() {
