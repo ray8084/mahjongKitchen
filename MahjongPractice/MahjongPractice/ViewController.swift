@@ -235,6 +235,19 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         present(alert, animated: true, completion: nil)
     }
         
+    func newGameAction() {
+        if (self.maj.enable2021 == false) && (self.maj.enable2020 == false){
+            self.revenueCat.showPurchaseMenu(self)
+        } else if self.maj.shuffleWithSeed {
+            self.showShuffleKeywordMenu()
+        //} else if win && (self.maj.card.getTotalWinCount() > 2 ) {
+            // AppStore.store.requestReview()
+        //    self.redeal()
+        } else {
+            self.redeal()
+        }
+    }
+        
     func eastWon() {
         cardView.updateRackFilter(maj)
         tileMatchView.updateRackFilter(maj)
@@ -781,7 +794,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
-            self.redeal()
+            self.newGameAction()
         }));
         
         alert.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
@@ -800,11 +813,35 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         
         if self.maj.enable2021 == false {
             alert.addAction(UIAlertAction(title: "2021 Pattern Access", style: .default, handler: {(action:UIAlertAction) in
-                // self.show2021Menu()
+                self.revenueCat.showPurchaseMenu(self)
             }));
         }
         
         alert.addAction(UIAlertAction(title: "Continue", style: .cancel, handler: {(action:UIAlertAction) in
+        }));
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    
+    // -----------------------------------------------------------------------------------------
+    //
+    //  Shuffle Keyword
+    //
+    // -----------------------------------------------------------------------------------------
+    
+    func showShuffleKeywordMenu() {
+        let title = "Duplicate Enabled"
+        let message = "Duplicate mode is enabled with keyword \(maj.shuffleSeed).  Every hand will be the same every time for all users with this keyword."
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Disable Duplicate", style: .default, handler: {(action:UIAlertAction) in
+            self.maj.setShuffleWithSeed(false)
+            self.redeal()
+        }));
+        
+        alert.addAction(UIAlertAction(title: "Continue", style: .default, handler: {(action:UIAlertAction) in
+            self.redeal()
         }));
         
         present(alert, animated: true, completion: nil)
