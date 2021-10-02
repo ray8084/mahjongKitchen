@@ -50,6 +50,7 @@ class RevenueCat {
     func start() {
         print("RevenueCat.start")
         if is2021Purchased() {
+            gameDelegate.enable2021()
             gameDelegate.redeal()
         } else {
             getPrice2021()

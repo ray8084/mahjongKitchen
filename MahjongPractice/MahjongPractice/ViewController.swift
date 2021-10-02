@@ -136,6 +136,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     
     func enable2021() {
         maj.enable2021 = true
+        maj.enable2020 = true
     }
     
     func showGame() {
@@ -1369,7 +1370,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
-                self.redeal()
+                self.newGameAction(false)
             }));
             
             alert.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
@@ -1408,6 +1409,9 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         }
         showGame()
         showDiscard()
+        if maj.wall.tiles.count == 98 {
+            showBottomView()
+        }
         botView.update(maj)
         if maj.isWinBotEnabled() && maj.botWon() {
             botWon()
