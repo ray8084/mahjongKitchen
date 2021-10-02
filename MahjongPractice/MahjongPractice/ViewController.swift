@@ -213,16 +213,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         self.tileMatchView.update(maj)
         
         alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
-            if (self.maj.enable2021 == false) && (self.maj.enable2020 == false){
-                self.revenueCat.showPurchaseMenu(self)
-            //} else if self.maj.shuffleWithSeed {
-                // self.showShuffleMenu()
-            //} else if win && (self.maj.card.getTotalWinCount() > 2 ) {
-                // AppStore.store.requestReview()
-            //    self.redeal()
-            } else {
-                self.redeal()
-            }
+            self.newGameAction(win)
         }));
         
         alert.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
@@ -235,14 +226,14 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         present(alert, animated: true, completion: nil)
     }
         
-    func newGameAction() {
+    func newGameAction(_ win: Bool) {
         if (self.maj.enable2021 == false) && (self.maj.enable2020 == false){
             self.revenueCat.showPurchaseMenu(self)
         } else if self.maj.shuffleWithSeed {
             self.showShuffleKeywordMenu()
-        //} else if win && (self.maj.card.getTotalWinCount() > 2 ) {
-            // AppStore.store.requestReview()
-        //    self.redeal()
+        } else if win && (self.maj.card.getTotalWinCount() > 2 ) {
+            AppStoreHistory.store.requestReview()
+            self.redeal()
         } else {
             self.redeal()
         }
@@ -794,7 +785,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
-            self.newGameAction()
+            self.newGameAction(false)
         }));
         
         alert.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
