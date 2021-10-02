@@ -618,7 +618,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         if versionLabel == nil {
             versionLabel = UILabel()
             versionLabel.frame = CGRect(x: controlPanel.frame.origin.x + controlPanel.frame.width + 15, y: controlPanelLocationY(), width: 100, height: controlPanelHeight())
-            versionLabel.tintColor = UIColor.black
+            versionLabel.textColor = UIColor.black
             versionLabel.text = "v" + (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "")
             view.addSubview(versionLabel)
         }

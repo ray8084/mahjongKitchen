@@ -154,6 +154,7 @@
 		714252DE2707A24D001AE6F0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 714252DD2707A24D001AE6F0 /* StoreKit.framework */; };
 		714252E12707A80B001AE6F0 /* StoreKitTestCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 714252E02707A80B001AE6F0 /* StoreKitTestCertificate.cer */; };
 		714252E32708033A001AE6F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 714252E22708033A001AE6F0 /* LaunchScreen.storyboard */; };
+		714252E527080ACE001AE6F0 /* iconfinder_circle-26_600774.png in Resources */ = {isa = PBXBuildFile; fileRef = 714252E427080ACE001AE6F0 /* iconfinder_circle-26_600774.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -329,6 +330,7 @@
 		714252DF2707A70B001AE6F0 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
 		714252E02707A80B001AE6F0 /* StoreKitTestCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = StoreKitTestCertificate.cer; sourceTree = "<group>"; };
 		714252E22708033A001AE6F0 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		714252E427080ACE001AE6F0 /* iconfinder_circle-26_600774.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconfinder_circle-26_600774.png"; sourceTree = "<group>"; };
 		8A035980D389C5C22DDD03CB /* Pods-MahjongPractice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MahjongPractice.release.xcconfig"; path = "Target Support Files/Pods-MahjongPractice/Pods-MahjongPractice.release.xcconfig"; sourceTree = "<group>"; };
 		A668A2FB6B118FAF6D0F3252 /* Pods_MahjongPractice_MahjongPracticeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MahjongPractice_MahjongPracticeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3B66BE8F9ED207F6CA2AB29 /* Pods-MahjongPractice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MahjongPractice.debug.xcconfig"; path = "Target Support Files/Pods-MahjongPractice/Pods-MahjongPractice.debug.xcconfig"; sourceTree = "<group>"; };
@@ -563,6 +565,7 @@
 				714251FD27079FE8001AE6F0 /* flowernew.png */,
 				7142521F27079FEB001AE6F0 /* green.png */,
 				7142520027079FE9001AE6F0 /* iconfinder_circle-02_600789.png */,
+				714252E427080ACE001AE6F0 /* iconfinder_circle-26_600774.png */,
 				7142520127079FE9001AE6F0 /* joker.png */,
 				7142521127079FEA001AE6F0 /* north.png */,
 				714251F927079FE8001AE6F0 /* northnew.png */,
@@ -778,6 +781,7 @@
 				7142529927079FED001AE6F0 /* 4craknew.png in Resources */,
 				7142528727079FED001AE6F0 /* charles13.png in Resources */,
 				7142527427079FED001AE6F0 /* 8dot.png in Resources */,
+				714252E527080ACE001AE6F0 /* iconfinder_circle-26_600774.png in Resources */,
 				7142527B27079FED001AE6F0 /* 9bam.png in Resources */,
 				7142526E27079FED001AE6F0 /* bots1.png in Resources */,
 				7142523A27079FED001AE6F0 /* red.png in Resources */,
