@@ -348,6 +348,7 @@ class PurchaseMenu: UIViewController {
         label.textAlignment = .center
         label.textColor = .black
         label.backgroundColor = .white
+        label.isUserInteractionEnabled = false
         view.addSubview(label)
     }
     
