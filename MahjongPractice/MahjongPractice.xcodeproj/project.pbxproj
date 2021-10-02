@@ -14,7 +14,6 @@
 		714251A227078624001AE6F0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714251A127078624001AE6F0 /* ViewController.swift */; };
 		714251A527078624001AE6F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 714251A327078624001AE6F0 /* Main.storyboard */; };
 		714251A727078626001AE6F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 714251A627078626001AE6F0 /* Assets.xcassets */; };
-		714251AA27078626001AE6F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 714251A827078626001AE6F0 /* LaunchScreen.storyboard */; };
 		714251B527078626001AE6F0 /* MahjongPracticeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714251B427078626001AE6F0 /* MahjongPracticeTests.swift */; };
 		714251BF27078626001AE6F0 /* MahjongPracticeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714251BE27078626001AE6F0 /* MahjongPracticeUITests.swift */; };
 		714251C127078626001AE6F0 /* MahjongPracticeUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714251C027078626001AE6F0 /* MahjongPracticeUITestsLaunchTests.swift */; };
@@ -154,6 +153,7 @@
 		714252DC2707A0FF001AE6F0 /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252DB2707A0FF001AE6F0 /* IAPHelper.swift */; };
 		714252DE2707A24D001AE6F0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 714252DD2707A24D001AE6F0 /* StoreKit.framework */; };
 		714252E12707A80B001AE6F0 /* StoreKitTestCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 714252E02707A80B001AE6F0 /* StoreKitTestCertificate.cer */; };
+		714252E32708033A001AE6F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 714252E22708033A001AE6F0 /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -185,7 +185,6 @@
 		714251A127078624001AE6F0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		714251A427078624001AE6F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		714251A627078626001AE6F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		714251A927078626001AE6F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		714251AB27078626001AE6F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		714251B027078626001AE6F0 /* MahjongPracticeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MahjongPracticeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		714251B427078626001AE6F0 /* MahjongPracticeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MahjongPracticeTests.swift; sourceTree = "<group>"; };
@@ -329,6 +328,7 @@
 		714252DD2707A24D001AE6F0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		714252DF2707A70B001AE6F0 /* Configuration.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
 		714252E02707A80B001AE6F0 /* StoreKitTestCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = StoreKitTestCertificate.cer; sourceTree = "<group>"; };
+		714252E22708033A001AE6F0 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8A035980D389C5C22DDD03CB /* Pods-MahjongPractice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MahjongPractice.release.xcconfig"; path = "Target Support Files/Pods-MahjongPractice/Pods-MahjongPractice.release.xcconfig"; sourceTree = "<group>"; };
 		A668A2FB6B118FAF6D0F3252 /* Pods_MahjongPractice_MahjongPracticeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MahjongPractice_MahjongPracticeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3B66BE8F9ED207F6CA2AB29 /* Pods-MahjongPractice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MahjongPractice.debug.xcconfig"; path = "Target Support Files/Pods-MahjongPractice/Pods-MahjongPractice.debug.xcconfig"; sourceTree = "<group>"; };
@@ -406,8 +406,8 @@
 				7142519D27078624001AE6F0 /* AppDelegate.swift */,
 				714251A127078624001AE6F0 /* ViewController.swift */,
 				714251A327078624001AE6F0 /* Main.storyboard */,
+				714252E22708033A001AE6F0 /* LaunchScreen.storyboard */,
 				714251A627078626001AE6F0 /* Assets.xcassets */,
-				714251A827078626001AE6F0 /* LaunchScreen.storyboard */,
 				714251AB27078626001AE6F0 /* Info.plist */,
 				714251CD27079FA4001AE6F0 /* Views */,
 				714251CE27079FAD001AE6F0 /* Maj */,
@@ -730,7 +730,6 @@
 				7142523927079FED001AE6F0 /* 4bamnew.png in Resources */,
 				7142523F27079FED001AE6F0 /* 5bam.png in Resources */,
 				7142523C27079FED001AE6F0 /* 1bamnew.png in Resources */,
-				714251AA27078626001AE6F0 /* LaunchScreen.storyboard in Resources */,
 				7142529C27079FED001AE6F0 /* bots2.png in Resources */,
 				714252A027079FED001AE6F0 /* blind3.png in Resources */,
 				7142527527079FED001AE6F0 /* charles14.png in Resources */,
@@ -811,6 +810,7 @@
 				7142524627079FED001AE6F0 /* 5bamnew.png in Resources */,
 				7142528227079FED001AE6F0 /* sort1.png in Resources */,
 				7142524A27079FED001AE6F0 /* 9dot.png in Resources */,
+				714252E32708033A001AE6F0 /* LaunchScreen.storyboard in Resources */,
 				7142529627079FED001AE6F0 /* arrow_down.png in Resources */,
 				7142525327079FED001AE6F0 /* 8bam.png in Resources */,
 				7142525727079FED001AE6F0 /* draw2.png in Resources */,
@@ -1025,14 +1025,6 @@
 				714251A427078624001AE6F0 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		714251A827078626001AE6F0 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				714251A927078626001AE6F0 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

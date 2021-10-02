@@ -734,7 +734,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         cardView.showCard(self, x: cardMarginX(), y: cardLocationY(), width: cardWidth(), height: cardHeight(), bgcolor: self.getBackgroundColor(), maj: maj)
         view.addSubview(cardView.cardView)
         cardView.update(maj)
-        // view.bringSubview(toFront: controlPanel)
     }
    
     func hideCard() {
@@ -1344,6 +1343,45 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         yearLabel?.text = maj.getYearText()
         updateViews()
     }
+        
+    
+    // -----------------------------------------------------------------------------------------
+    //
+    //  Bot Win
+    //
+    // -----------------------------------------------------------------------------------------
+        
+    func botWon() {
+        addLoss()
+        maj.discardLastDiscard()
+        showDiscard()
+        showDiscardTable()
+        maj.rackOpponentHands()
+        botView.update(maj)
+        showBotWinMenu()
+    }
+    
+    func showBotWinMenu() {
+        let bot = maj.getWinningBot()
+        if bot != nil {
+            let title = "\(bot!.name) declared Mahjong\n"
+            let message = maj.getWinningBotPattern() + "\n" + maj.getWinningBotPatternNote()
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
+                self.redeal()
+            }));
+            
+            alert.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
+                self.replay()
+            }));
+            
+            alert.addAction(UIAlertAction(title: "Review", style: .cancel, handler: {(action:UIAlertAction) in
+            }));
+            
+            present(alert, animated: true, completion: nil)
+        }
+    }
     
     
     // -----------------------------------------------------------------------------------------
@@ -1354,7 +1392,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     
     func nextState() -> Bool {
         if maj.isWinBotEnabled() && maj.botWon() {
-            // winBotWon()
+            botWon()
         } else if maj.isGameOver(){
             eastWon()
         } else {
@@ -1372,7 +1410,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         showDiscard()
         botView.update(maj)
         if maj.isWinBotEnabled() && maj.botWon() {
-            // winBotWon()
+            botWon()
         }
         return true
     }
