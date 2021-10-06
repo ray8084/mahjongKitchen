@@ -77,7 +77,8 @@ class RevenueCat {
             self.purchaseMenu.purchaseTimer.invalidate()
             if error != nil {
                 self.purchaseMenu.alertForPurchase.dismiss(animated: false, completion: {
-                    self.purchaseMenu.showErrorMessage(error: error! as NSError)
+                    let message = (error! as NSError).localizedDescription
+                    self.purchaseMenu.showRetryPurchase(error: message)
                 })
             } else if transaction != nil {
                 if transaction?.transactionState == .purchased {
@@ -87,6 +88,8 @@ class RevenueCat {
             if error == nil && purchaserInfo != nil && self.purchased2021 == false {
                 if purchaserInfo?.entitlements["Patterns2021"]?.isActive == true {
                     self.completePurchase2021()
+                } else {
+                    self.purchaseMenu.showRetryPurchase(error: "Entitlement is not active. For help contact support@eightbam.com")
                 }
             }
         }
@@ -107,13 +110,13 @@ class RevenueCat {
             self.purchaseMenu.restoreTimer.invalidate()
             if let e = error {
                 self.purchaseMenu.alertForRestore.dismiss(animated: true, completion: {
-                    self.purchaseMenu.showErrorMessage(error: e as NSError)
+                    self.purchaseMenu.showRetryRestore(error: (e as NSError).localizedDescription)
                 })
             } else if info?.entitlements["Patterns2021"]?.isActive == true {
                 self.completeRestore2021()
             } else {
                 self.purchaseMenu.alertForRestore.dismiss(animated: true, completion: {
-                    self.purchaseMenu.showErrorMessage(error: "2021 Pattern Access receipt not found. For help contact support@eightbam.com")
+                    self.purchaseMenu.showRetryRestore(error: "Entitlement is not active. For help contact support@eightbam.com")
                 })
             }
         }
@@ -409,6 +412,26 @@ class PurchaseMenu: UIViewController {
     func showErrorMessage(error: NSError) {
         let alert = UIAlertController(title: "", message: error.localizedDescription, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: {(action:UIAlertAction) in }));
+        present(alert, animated: false, completion: nil)
+    }
+    
+    func showRetryRestore(error: String) {
+        let alert = UIAlertController(title: "", message: error, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in }));
+        alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: {(action:UIAlertAction) in
+            self.showConnectMessageForRestore()
+            self.revenueCat.restore2021()
+        }));
+        present(alert, animated: false, completion: nil)
+    }
+    
+    func showRetryPurchase(error: String) {
+        let alert = UIAlertController(title: "", message: error, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in }));
+        alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: {(action:UIAlertAction) in
+            self.showConnectMessageForPurchase()
+            self.revenueCat.purchase2021()
+        }));
         present(alert, animated: false, completion: nil)
     }
     
