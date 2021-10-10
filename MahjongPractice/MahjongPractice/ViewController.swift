@@ -56,6 +56,8 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     var menuButton: UIButton!
     var settingsButton: UIButton!
     var helpButton: UIButton!
+    var sortButton1: UIButton!
+    var sortButton2: UIButton!
     var controlPanel: UISegmentedControl!
     var versionLabel: UILabel!
     var yearLabel: UILabel!
@@ -151,7 +153,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         }
         showHand()
         showLabel()
-        showSideButtons()
+        showButtons()
         showControlPanel()
         cardView.update(maj)
         tileMatchView.update(maj)
@@ -528,14 +530,15 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     
     // -----------------------------------------------------------------------------------------
     //
-    //  Side buttons
+    //  Buttons
     //
     // -----------------------------------------------------------------------------------------
     
-    func showSideButtons() {
+    func showButtons() {
         addHelpButton()
         addSettingsButton()
         addMenuButton()
+        addSortButton()
     }
     
     func addHelpButton() {
@@ -579,6 +582,39 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         }
     }
     
+    func addSortButton() {
+        if sortButton1 == nil {
+            sortButton1 = UIButton()
+            let x = controlPanelLocationX()
+            let y = charlestonTop()
+            sortButton1.frame = CGRect(x: x, y: y,  width: buttonSize() + 20, height: buttonSize())
+            sortButton1.layer.cornerRadius = 5
+            sortButton1.titleLabel!.font = UIFont(name: "Chalkduster", size: 16)!
+            sortButton1.backgroundColor = .white
+            sortButton1.alpha = 0.8
+            sortButton1.setTitle("Sort", for: .normal)
+            sortButton1.setTitleColor(.black, for: .normal)
+            sortButton1.addTarget(self, action: #selector(sortButtonAction), for: .touchUpInside)
+            view.addSubview(sortButton1)
+        }
+        if sortButton2 == nil {
+            sortButton2 = UIButton()
+            let x = controlPanelLocationX() + ((tileWidth() + space) * 9)
+            let y = charlestonTop()
+            sortButton2.frame = CGRect(x: x, y: y,  width: buttonSize() + 20, height: buttonSize())
+            sortButton2.layer.cornerRadius = 5
+            sortButton2.titleLabel!.font = UIFont(name: "Chalkduster", size: 16)!
+            sortButton2.backgroundColor = .white
+            sortButton2.alpha = 0.8
+            sortButton2.setTitle("Sort", for: .normal)
+            sortButton2.setTitleColor(.black, for: .normal)
+            sortButton2.addTarget(self, action: #selector(sortButtonAction), for: .touchUpInside)
+            view.addSubview(sortButton2)
+        }
+        sortButton1.isHidden = !maj.isCharlestonActive()
+        sortButton2.isHidden = maj.isCharlestonActive()
+    }
+    
     @objc func helpButtonAction(sender: UIButton!) {
         let help = HelpTableController(frame: view.frame, narrowViewDelegate: self)
         show(help, sender: self)
@@ -591,6 +627,21 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     
     @objc func menuButtonAction(sender: UIButton!) {
         showSystemMenu()
+    }
+    
+    @objc func sortButtonAction(sender: UIButton!) {
+        if maj.hideSortMessage == false {
+            let message = "Sorting alternates between sorting by suits and sorting by numbers"
+            let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
+                self.maj.userSort()
+                self.showHand()
+            }));
+            present(alert, animated: false, completion: nil)
+        } else {
+            self.maj.userSort()
+            self.showHand()
+        }
     }
 
     func helpButtonLocationX() -> CGFloat { return viewWidth() - buttonSize() - 15 - 30 }

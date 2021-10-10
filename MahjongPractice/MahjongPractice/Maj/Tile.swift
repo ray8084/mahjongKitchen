@@ -15,6 +15,7 @@ class Tile {
     var jokerId = 0
     var id = 0
     var sortId = 0
+    var sortNumbers = 0
     var jokerFlag = false
     
     func copy(_ copy: Tile) {
@@ -26,18 +27,20 @@ class Tile {
         jokerId = copy.jokerId
         id = copy.id
         sortId = copy.sortId
+        sortNumbers = copy.sortNumbers
         jokerFlag = copy.jokerFlag
     }
     
     init() {
     }
     
-    init(named: String, num: Int, suit: String, id: Int, sortId: Int) {
+    init(named: String, num: Int, suit: String, id: Int, sortId: Int, sortNum: Int) {
         self.name = named
         self.number = num
         self.suit = suit
         self.id = id
         self.sortId = sortId
+        self.sortNumbers = sortNum
     }
     
     init(_ tile: Tile) {
@@ -46,6 +49,7 @@ class Tile {
         self.suit = tile.suit
         self.id = tile.id
         self.sortId = tile.sortId
+        self.sortNumbers = tile.sortNumbers
         self.jokerSuit = tile.jokerSuit
         self.jokerNumber = tile.jokerNumber
         self.jokerId = tile.jokerId

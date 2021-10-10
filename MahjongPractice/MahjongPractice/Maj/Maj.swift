@@ -38,6 +38,11 @@ class TileStyle {
     static let largeFont = 1
 }
 
+class SortStyle {
+    static let suits = 0
+    static let num = 1
+}
+
 class Maj {
     var override2020 = false   // make this false for release
     var override2021 = false   // make this false for release
@@ -59,7 +64,9 @@ class Maj {
     var shuffleWithSeed = false
     var shuffleSeed = ""
     var disableTapToDiscard = false
-        
+    var sortStyle = SortStyle.suits
+    var hideSortMessage = false
+            
     var wall = Deck()
     var replayWall = Deck()
     var card: Card = Card()
@@ -141,6 +148,7 @@ class Maj {
         shuffleSeed = copy.shuffleSeed
         shuffleWithSeed = copy.shuffleWithSeed
         disableTapToDiscard = copy.disableTapToDiscard
+        hideSortMessage = copy.hideSortMessage
      }
     
   
@@ -201,6 +209,7 @@ class Maj {
         shuffleSeed = defaults.string(forKey: "shuffleSeed") ?? ""
         shuffleWithSeed = defaults.bool(forKey: "shuffleWithSeed")
         disableTapToDiscard = defaults.bool(forKey: "disableTapToDiscard")
+        hideSortMessage = defaults.bool(forKey: "hideSortMessage")
     }
     
     func loadPatterns(_ letterPatterns: [LetterPattern]) {
@@ -462,6 +471,24 @@ class Maj {
         clearMessages()
         // winBot.replay(maj: self)
         // selectWinBot()
+    }
+    
+    
+    // --------------------------------------------------------------
+    //  Sorting
+    
+    func userSort() {
+        switch(sortStyle) {
+            case SortStyle.suits:
+                east.sortNumbers()
+                sortStyle = SortStyle.num
+            case SortStyle.num:
+                east.sort()
+                sortStyle = SortStyle.suits
+            default: break
+        }
+        hideSortMessage = true
+        defaults.set(hideSortMessage, forKey: "hideSortMessage")
     }
      
     

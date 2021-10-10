@@ -417,7 +417,7 @@ class PurchaseMenu: UIViewController {
     
     func showRetryRestore(error: String) {
         let alert = UIAlertController(title: "", message: error, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in }));
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action:UIAlertAction) in }));
         alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: {(action:UIAlertAction) in
             self.showConnectMessageForRestore()
             self.revenueCat.restore2021()
@@ -427,7 +427,7 @@ class PurchaseMenu: UIViewController {
     
     func showRetryPurchase(error: String) {
         let alert = UIAlertController(title: "", message: error, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in }));
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action:UIAlertAction) in }));
         alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: {(action:UIAlertAction) in
             self.showConnectMessageForPurchase()
             self.revenueCat.purchase2021()
