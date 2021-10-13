@@ -193,6 +193,7 @@ class PurchaseMenu: UIViewController {
     var alertForRestore = UIAlertController()
     var backgroundImageView: UIImageView!
     var loaded = false
+    var monthlyButton = UIButton()
     var purchaseButton = UIButton()
     var purchaseTimer = Timer()
     var purchaseView = UIView()
@@ -250,12 +251,13 @@ class PurchaseMenu: UIViewController {
             let yOffset = Int(height() - 300) / 2
             setBackground()
             addPurchaseView()
+            addTitle("2021 Pattern Access", y: yOffset)
+            addLabel("Buy 2021 Pattern Access with a one time purchase OR buy Monthly Pattern Access and cancel anytime. Both plans include all features: suggested hands, filters, stats and more.", y: yOffset + 37, height: 65)
+            addPurchaseButton(y: yOffset + 118)
+            addMonthlyButton(y: yOffset + 168)
+            addRestoreButton(y: yOffset + 218)
+            addLabel("Contact support@eightbam.com", y: yOffset + 265, height: 30)
             addCloseButton(y: yOffset + 20)
-            addTitle("2021 Pattern Access", y: yOffset + 10)
-            addLabel("Access to 2021 Patterns with suggested hands,\n filters, stats, and more. One time purchase for 2021.", y: yOffset + 55, height: 60)
-            addPurchaseButton(y: yOffset + 120)
-            addRestoreButton(y: yOffset + 180)
-            addLabel("Contact support@eightbam.com", y: yOffset + 260, height: 30)
             loaded = true
         }
     }
@@ -343,8 +345,8 @@ class PurchaseMenu: UIViewController {
     }
     
     func addLabel(_ text: String, y: Int, height: Int) {
-        let offset = (width() - 490) / 2
-        let label = UITextView(frame: CGRect(x: offset, y: y, width: 490, height: height))
+        let offset = (width() - 455) / 2
+        let label = UITextView(frame: CGRect(x: offset, y: y, width: 455, height: height))
         label.text = text
         label.font = UIFont.systemFont(ofSize: 16)
         label.textAlignment = .center
@@ -355,20 +357,37 @@ class PurchaseMenu: UIViewController {
     }
     
     func addPurchaseButton(y: Int) {
-        purchaseButton = UIButton(frame: CGRect(x: (width()-300)/2, y: y, width: 300, height: 50))
+        purchaseButton = UIButton(frame: CGRect(x: (width()-300)/2, y: y, width: 300, height: 40))
         purchaseButton.layer.cornerRadius = 5
         purchaseButton.titleLabel!.font = UIFont.systemFont(ofSize: 20)
         if revenueCat.price2021 == 0.0 {
             purchaseButton.setTitle("Connecting...", for: .normal)
             purchaseButton.isEnabled = false
         } else {
-            purchaseButton.setTitle("$\(revenueCat.price2021)", for: .normal)
+            purchaseButton.setTitle("$\(revenueCat.price2021) for 2021", for: .normal)
             purchaseButton.isEnabled = true
         }
         purchaseButton.backgroundColor = UIColor(red: 255/255, green: 153/255, blue: 0, alpha: 1.0);
         purchaseButton.setTitleColor(.black, for: .normal)
         purchaseButton.addTarget(self, action: #selector(purchaseButtonAction), for: .touchUpInside)
         view.addSubview(purchaseButton)
+    }
+    
+    func addMonthlyButton(y: Int) {
+        monthlyButton = UIButton(frame: CGRect(x: (width()-300)/2, y: y, width: 300, height: 40))
+        monthlyButton.layer.cornerRadius = 5
+        monthlyButton.titleLabel!.font = UIFont.systemFont(ofSize: 20)
+        //if revenueCat.price2021 == 0.0 {
+        //    monthlyButton.setTitle("$.99 / Month", for: .normal)
+        //    monthlyButton.isEnabled = false
+        //} else {
+            monthlyButton.setTitle("$0.99 per month", for: .normal)
+            monthlyButton.isEnabled = true
+        //}
+        monthlyButton.backgroundColor = UIColor(red: 255/255, green: 153/255, blue: 0, alpha: 1.0);
+        monthlyButton.setTitleColor(.black, for: .normal)
+        // monthlyButton.addTarget(self, action: #selector(purchaseButtonAction), for: .touchUpInside)
+        view.addSubview(monthlyButton)
     }
 
     @objc func purchaseButtonAction(sender: UIButton!) {
@@ -377,7 +396,7 @@ class PurchaseMenu: UIViewController {
     }
     
     func updatePrice(_ price: Double) {
-        purchaseButton.setTitle("$\(price)", for: .normal)
+        purchaseButton.setTitle("$\(price) for 2021", for: .normal)
         purchaseButton.isEnabled = true
     }
 
@@ -391,7 +410,7 @@ class PurchaseMenu: UIViewController {
     }
     
     func addRestoreButton(y: Int) {
-        let button = UIButton(frame: CGRect(x: (width()-300)/2, y: y, width: 300, height: 50))
+        let button = UIButton(frame: CGRect(x: (width()-300)/2, y: y, width: 300, height: 40))
         button.layer.cornerRadius = 5
         button.titleLabel!.font = UIFont.systemFont(ofSize: 20)
         button.setTitle("Restore Purchase", for: .normal)

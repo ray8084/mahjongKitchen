@@ -360,7 +360,7 @@ class HelpTableController: NarrowViewController, UITableViewDelegate, UITableVie
     
     private func addSortingTiles() {
         let chapter = HelpChapter("Sorting Tiles", xOffset: xOffset, width: view.frame.width)
-        chapter.addLabel("Sort your tiles for the hand you are playing. Follow the tile moving instructions above. Move each tile into position as needed.")
+        chapter.addLabel("Your hand will be sorted by suit after the deal. The Sort Button will sort again alternating between suits and numbers. Tap twice to resort with the same method. For additional sorting move each tile into position as needed.")
         chapter.addScreenShot("sort1.png")
         chapter.addScreenShot("sort2.png")
         chapter.expandBody(30)

@@ -631,7 +631,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     
     @objc func sortButtonAction(sender: UIButton!) {
         if maj.hideSortMessage == false {
-            let message = "Sorting alternates between sorting by suits and sorting by numbers"
+            let message = "Sort alternates between suits and numbers. Tap twice to resort with same method."
             let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
                 self.maj.userSort()
