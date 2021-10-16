@@ -33,12 +33,14 @@ class RevenueCat {
     let defaults = UserDefaults.standard
     var gameDelegate: GameDelegate!
     var package2021: Purchases.Package!
+    var packageMonthly: Purchases.Package!
     var purchased2021 = false
+    var purchasedMonthly = false
     var purchaseMenu: PurchaseMenu!
     var price2021 = 0.0
+    var priceMonthly = 0.0
     var responseTimeoutSeconds = 360.0
     var viewController: UIViewController!
-    var waitFor2021Timer: Timer!
     
     init(viewController: UIViewController, gameDelegate: GameDelegate) {
         self.viewController = viewController
@@ -67,7 +69,12 @@ class RevenueCat {
             if let package = offerings?.current?.lifetime {
                 self.package2021 = package
                 self.price2021 = Double(truncating: package.product.price)
-                self.purchaseMenu.updatePrice(self.price2021)
+                self.purchaseMenu.updatePrice2021(self.price2021)
+            }
+            if let package = offerings?.current?.monthly {
+                self.packageMonthly = package
+                self.priceMonthly = Double(truncating: package.product.price)
+                self.purchaseMenu.updatePriceMonthly(self.priceMonthly)
             }
         }
     }
@@ -377,13 +384,13 @@ class PurchaseMenu: UIViewController {
         monthlyButton = UIButton(frame: CGRect(x: (width()-220)/2, y: y, width: 220, height: 44))
         monthlyButton.layer.cornerRadius = 5
         monthlyButton.titleLabel!.font = UIFont.systemFont(ofSize: 20)
-        //if revenueCat.price2021 == 0.0 {
-        //    monthlyButton.setTitle("$.99 / Month", for: .normal)
-        //    monthlyButton.isEnabled = false
-        //} else {
-            monthlyButton.setTitle("$0.99 Per Month", for: .normal)
+        if revenueCat.priceMonthly == 0.0 {
+            monthlyButton.setTitle("Connecting...", for: .normal)
+            monthlyButton.isEnabled = false
+        } else {
+            monthlyButton.setTitle("$\(revenueCat.priceMonthly) Per Month", for: .normal)
             monthlyButton.isEnabled = true
-        //}
+        }
         monthlyButton.backgroundColor = UIColor(red: 255/255, green: 153/255, blue: 0, alpha: 1.0);
         monthlyButton.setTitleColor(.black, for: .normal)
         // monthlyButton.addTarget(self, action: #selector(purchaseButtonAction), for: .touchUpInside)
@@ -395,11 +402,16 @@ class PurchaseMenu: UIViewController {
         revenueCat.purchase2021()
     }
     
-    func updatePrice(_ price: Double) {
+    func updatePrice2021(_ price: Double) {
         purchaseButton.setTitle("$\(price) for 2021", for: .normal)
         purchaseButton.isEnabled = true
     }
-
+    
+    func updatePriceMonthly(_ price: Double) {
+        monthlyButton.setTitle("$\(price) Per Month", for: .normal)
+        monthlyButton.isEnabled = true
+    }
+    
     func showConnectMessageForPurchase() {
         purchaseTimer = Timer.scheduledTimer(timeInterval: revenueCat.responseTimeoutSeconds, target: self, selector: #selector(purchaseTimeout), userInfo: nil, repeats: false)
         let title = "App Store Connect"
