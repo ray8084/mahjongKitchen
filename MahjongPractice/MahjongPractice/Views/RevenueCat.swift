@@ -251,11 +251,11 @@ class PurchaseMenu: UIViewController {
             let yOffset = Int(height() - 300) / 2
             setBackground()
             addPurchaseView()
-            addTitle("2021 Pattern Access", y: yOffset)
-            addLabel("Buy 2021 Pattern Access with a one time purchase OR buy Monthly Pattern Access and cancel anytime. Both plans include all features: suggested hands, filters, stats and more.", y: yOffset + 37, height: 65)
-            addPurchaseButton(y: yOffset + 118)
-            addMonthlyButton(y: yOffset + 168)
-            addRestoreButton(y: yOffset + 218)
+            addTitle("2021 Access", y: yOffset)
+            addLabel("Buy 2021 with a one time purchase OR pay per month and cancel anytime. Both plans include all features.", y: yOffset + 37, height: 65)
+            addPurchaseButton(y: yOffset + 95)
+            addMonthlyButton(y: yOffset + 155)
+            addRestoreButton(y: yOffset + 215)
             addLabel("Contact support@eightbam.com", y: yOffset + 265, height: 30)
             addCloseButton(y: yOffset + 20)
             loaded = true
@@ -357,7 +357,7 @@ class PurchaseMenu: UIViewController {
     }
     
     func addPurchaseButton(y: Int) {
-        purchaseButton = UIButton(frame: CGRect(x: (width()-300)/2, y: y, width: 300, height: 40))
+        purchaseButton = UIButton(frame: CGRect(x: (width()-220)/2, y: y, width: 220, height: 44))
         purchaseButton.layer.cornerRadius = 5
         purchaseButton.titleLabel!.font = UIFont.systemFont(ofSize: 20)
         if revenueCat.price2021 == 0.0 {
@@ -374,14 +374,14 @@ class PurchaseMenu: UIViewController {
     }
     
     func addMonthlyButton(y: Int) {
-        monthlyButton = UIButton(frame: CGRect(x: (width()-300)/2, y: y, width: 300, height: 40))
+        monthlyButton = UIButton(frame: CGRect(x: (width()-220)/2, y: y, width: 220, height: 44))
         monthlyButton.layer.cornerRadius = 5
         monthlyButton.titleLabel!.font = UIFont.systemFont(ofSize: 20)
         //if revenueCat.price2021 == 0.0 {
         //    monthlyButton.setTitle("$.99 / Month", for: .normal)
         //    monthlyButton.isEnabled = false
         //} else {
-            monthlyButton.setTitle("$0.99 per month", for: .normal)
+            monthlyButton.setTitle("$0.99 Per Month", for: .normal)
             monthlyButton.isEnabled = true
         //}
         monthlyButton.backgroundColor = UIColor(red: 255/255, green: 153/255, blue: 0, alpha: 1.0);
@@ -410,7 +410,7 @@ class PurchaseMenu: UIViewController {
     }
     
     func addRestoreButton(y: Int) {
-        let button = UIButton(frame: CGRect(x: (width()-300)/2, y: y, width: 300, height: 40))
+        let button = UIButton(frame: CGRect(x: (width()-220)/2, y: y, width: 220, height: 44))
         button.layer.cornerRadius = 5
         button.titleLabel!.font = UIFont.systemFont(ofSize: 20)
         button.setTitle("Restore Purchase", for: .normal)
