@@ -32,10 +32,10 @@ public struct AppStoreHistory {
 class RevenueCat {
     let defaults = UserDefaults.standard
     var gameDelegate: GameDelegate!
+    var monthlyActive = false
     var package2021: Purchases.Package!
     var packageMonthly: Purchases.Package!
     var purchased2021 = false
-    var purchasedMonthly = false
     var purchaseMenu: PurchaseMenu!
     var price2021 = 0.0
     var priceMonthly = 0.0
@@ -47,11 +47,12 @@ class RevenueCat {
         self.gameDelegate = gameDelegate
         self.purchaseMenu = PurchaseMenu(revenueCat: self)
         purchased2021 = defaults.bool(forKey: "purchased2021")
+        monthlyActive = defaults.bool(forKey: "monthlyActive")
     }
     
     func start() {
         print("RevenueCat.start")
-        if is2021Purchased() {
+        if is2021Purchased() || monthlyActive {
             gameDelegate.enable2021()
             gameDelegate.redeal()
         } else {
@@ -79,8 +80,22 @@ class RevenueCat {
         }
     }
     
+    func getMonthlyActive() {
+        Purchases.shared.purchaserInfo { (info, error) in
+            if info != nil {
+                if info?.entitlements["Monthly"]?.isActive == true {
+                    self.monthlyActive = true
+                } else {
+                    self.monthlyActive = false
+                }
+                self.defaults.set(self.monthlyActive, forKey: "monthlyActive")
+                print("MonthlyActive \(self.monthlyActive)")
+            }
+        }
+    }
+    
     func purchase2021() {
-        Purchases.shared.purchasePackage(package2021) { (transaction, purchaserInfo, error, userCancelled) in
+        Purchases.shared.purchasePackage(package2021) { (transaction, info, error, userCancelled) in
             self.purchaseMenu.purchaseTimer.invalidate()
             if error != nil {
                 self.purchaseMenu.alertForPurchase.dismiss(animated: false, completion: {
@@ -92,8 +107,8 @@ class RevenueCat {
                     self.completePurchase2021()
                 }
             }
-            if error == nil && purchaserInfo != nil && self.purchased2021 == false {
-                if purchaserInfo?.entitlements["Patterns2021"]?.isActive == true {
+            if error == nil && info != nil && self.purchased2021 == false {
+                if info?.entitlements["Patterns2021"]?.isActive == true {
                     self.completePurchase2021()
                 } else {
                     self.purchaseMenu.showRetryPurchase2021(error: "Entitlement is not active. For help contact support@eightbam.com")
@@ -115,7 +130,7 @@ class RevenueCat {
                     self.completePurchaseMonthly()
                 }
             }
-            if error == nil && purchaserInfo != nil && self.purchasedMonthly == false {
+            if error == nil && purchaserInfo != nil && self.monthlyActive == false {
                 if purchaserInfo?.entitlements["Monthly"]?.isActive == true {
                     self.completePurchaseMonthly()
                 } else {
@@ -136,7 +151,8 @@ class RevenueCat {
     }
     
     func completePurchaseMonthly() {
-        purchasedMonthly = true
+        monthlyActive = true
+        defaults.set(monthlyActive, forKey: "monthlyActive")
         purchaseMenu.alertForPurchase.dismiss(animated: true, completion: {
             self.purchaseMenu.close()
         })
