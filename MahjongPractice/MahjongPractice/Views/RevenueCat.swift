@@ -11,7 +11,8 @@ import Purchases
 protocol GameDelegate {
     func redeal()
     func load2021()
-    func enable2021()
+    func enable2021(_ enable: Bool)
+    func enable2020(_ enable: Bool)
     func changeYear(_ segment: Int)
 }
 
@@ -53,8 +54,11 @@ class RevenueCat {
     func start() {
         print("RevenueCat.start")
         if is2021Purchased() || monthlyActive {
-            gameDelegate.enable2021()
+            gameDelegate.enable2021(true)
+            gameDelegate.enable2020(true)
             gameDelegate.redeal()
+            getPrice2021()
+            refreshPurchaseInfo()
         } else {
             getPrice2021()
             showPurchaseMenu(viewController)
@@ -80,13 +84,19 @@ class RevenueCat {
         }
     }
     
-    func getMonthlyActive() {
+    func refreshPurchaseInfo() {
+        print("refresh")
         Purchases.shared.purchaserInfo { (info, error) in
             if info != nil {
+                print(info)
                 if info?.entitlements["Monthly"]?.isActive == true {
                     self.monthlyActive = true
+                    self.gameDelegate.enable2021(true)
+                    self.gameDelegate.enable2020(true)
                 } else {
                     self.monthlyActive = false
+                    self.gameDelegate.enable2021(self.is2021Purchased())
+                    self.gameDelegate.enable2020(self.is2020Purchased())
                 }
                 self.defaults.set(self.monthlyActive, forKey: "monthlyActive")
                 print("MonthlyActive \(self.monthlyActive)")
@@ -146,7 +156,8 @@ class RevenueCat {
         purchaseMenu.alertForPurchase.dismiss(animated: true, completion: {
             self.purchaseMenu.close()
         })
-        gameDelegate.enable2021()
+        gameDelegate.enable2021(true)
+        gameDelegate.enable2020(true)
         gameDelegate.load2021()
     }
     
@@ -156,7 +167,8 @@ class RevenueCat {
         purchaseMenu.alertForPurchase.dismiss(animated: true, completion: {
             self.purchaseMenu.close()
         })
-        gameDelegate.enable2021()
+        gameDelegate.enable2021(true)
+        gameDelegate.enable2020(true)
         gameDelegate.load2021()
     }
     
@@ -183,7 +195,8 @@ class RevenueCat {
         purchaseMenu.alertForRestore.dismiss(animated: true, completion: {
             self.purchaseMenu.close()
         })
-        gameDelegate.enable2021()
+        gameDelegate.enable2021(true)
+        gameDelegate.enable2020(true)
         gameDelegate.load2021()
     }
     
@@ -207,25 +220,25 @@ class RevenueCat {
             case Year.y2017:
                 gameDelegate.changeYear(YearSegment.segment2017)
             case Year.y2018:
-                if is2018Purchased() {
+                if is2018Purchased() || monthlyActive {
                     gameDelegate.changeYear(YearSegment.segment2018)
                 } else {
                     purchaseMenu.oldYearMessage("2018")
                 }
             case Year.y2019:
-                if is2019Purchased() {
+                if is2019Purchased() || monthlyActive {
                     gameDelegate.changeYear(YearSegment.segment2019)
                 } else {
                     purchaseMenu.oldYearMessage("2019")
                 }
             case Year.y2020:
-                if is2020Purchased() {
+                if is2020Purchased() || monthlyActive {
                     gameDelegate.changeYear(YearSegment.segment2020)
                 } else {
                     purchaseMenu.oldYearMessage("2020")
                 }
             case Year.y2021:
-                if is2021Purchased() {
+                if is2021Purchased() || monthlyActive {
                     gameDelegate.changeYear(YearSegment.segment2021)
                 } else {
                     showPurchaseMenu(settingsViewController)

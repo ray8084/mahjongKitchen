@@ -136,9 +136,12 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         redeal()
     }
     
-    func enable2021() {
-        maj.enable2021 = true
-        maj.enable2020 = true
+    func enable2021(_ enable: Bool) {
+        maj.enable2021 = enable
+    }
+    
+    func enable2020(_ enable: Bool) {
+        maj.enable2020 = enable
     }
     
     func showGame() {
@@ -231,6 +234,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
         
     func newGameAction(_ win: Bool) {
+        self.revenueCat.refreshPurchaseInfo()
         if (self.maj.enable2021 == false) && (self.maj.enable2020 == false){
             self.revenueCat.showPurchaseMenu(self)
         } else if self.maj.shuffleWithSeed {
