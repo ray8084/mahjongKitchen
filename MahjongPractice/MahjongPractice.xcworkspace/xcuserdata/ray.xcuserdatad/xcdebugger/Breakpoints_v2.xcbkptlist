@@ -14,8 +14,8 @@
             filePath = "MahjongPractice/Views/RevenueCat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "182"
-            endingLineNumber = "182"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
             landmarkName = "restore2021()"
             landmarkType = "7">
          </BreakpointContent>
@@ -46,8 +46,8 @@
             filePath = "MahjongPractice/Views/RevenueCat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "219"
-            endingLineNumber = "219"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
             landmarkName = "changeYear(year:settingsViewController:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -62,8 +62,8 @@
             filePath = "MahjongPractice/Views/RevenueCat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "235"
-            endingLineNumber = "235"
+            startingLineNumber = "234"
+            endingLineNumber = "234"
             landmarkName = "changeYear(year:settingsViewController:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -174,8 +174,8 @@
             filePath = "MahjongPractice/Views/RevenueCat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "121"
-            endingLineNumber = "121"
+            startingLineNumber = "120"
+            endingLineNumber = "120"
             landmarkName = "purchase2021()"
             landmarkType = "7">
          </BreakpointContent>
@@ -190,8 +190,8 @@
             filePath = "MahjongPractice/Views/RevenueCat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
             landmarkName = "getPrice2021()"
             landmarkType = "7">
          </BreakpointContent>
@@ -206,8 +206,8 @@
             filePath = "MahjongPractice/Views/RevenueCat.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "refreshPurchaseInfo()"
             landmarkType = "7">
          </BreakpointContent>

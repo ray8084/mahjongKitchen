@@ -57,12 +57,11 @@ class RevenueCat {
             gameDelegate.enable2021(true)
             gameDelegate.enable2020(true)
             gameDelegate.redeal()
-            getPrice2021()
-            refreshPurchaseInfo()
         } else {
-            getPrice2021()
             showPurchaseMenu(viewController)
         }
+        getPrice2021()
+        refreshPurchaseInfo()
     }
     
     func showPurchaseMenu(_ viewController: UIViewController) {
