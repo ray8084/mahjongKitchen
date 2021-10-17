@@ -85,7 +85,7 @@ class RevenueCat {
             if error != nil {
                 self.purchaseMenu.alertForPurchase.dismiss(animated: false, completion: {
                     let message = (error! as NSError).localizedDescription
-                    self.purchaseMenu.showRetryPurchase(error: message)
+                    self.purchaseMenu.showRetryPurchase2021(error: message)
                 })
             } else if transaction != nil {
                 if transaction?.transactionState == .purchased {
@@ -96,7 +96,30 @@ class RevenueCat {
                 if purchaserInfo?.entitlements["Patterns2021"]?.isActive == true {
                     self.completePurchase2021()
                 } else {
-                    self.purchaseMenu.showRetryPurchase(error: "Entitlement is not active. For help contact support@eightbam.com")
+                    self.purchaseMenu.showRetryPurchase2021(error: "Entitlement is not active. For help contact support@eightbam.com")
+                }
+            }
+        }
+    }
+    
+    func purchaseMonthly() {
+        Purchases.shared.purchasePackage(packageMonthly) { (transaction, purchaserInfo, error, userCancelled) in
+            self.purchaseMenu.purchaseTimer.invalidate()
+            if error != nil {
+                self.purchaseMenu.alertForPurchase.dismiss(animated: false, completion: {
+                    let message = (error! as NSError).localizedDescription
+                    self.purchaseMenu.showRetryPurchaseMonthly(error: message)
+                })
+            } else if transaction != nil {
+                if transaction?.transactionState == .purchased {
+                    self.completePurchaseMonthly()
+                }
+            }
+            if error == nil && purchaserInfo != nil && self.purchasedMonthly == false {
+                if purchaserInfo?.entitlements["Monthly"]?.isActive == true {
+                    self.completePurchaseMonthly()
+                } else {
+                    self.purchaseMenu.showRetryPurchaseMonthly(error: "Entitlement is not active. For help contact support@eightbam.com")
                 }
             }
         }
@@ -105,6 +128,15 @@ class RevenueCat {
     func completePurchase2021() {
         purchased2021 = true
         defaults.set(purchased2021, forKey: "purchased2021")
+        purchaseMenu.alertForPurchase.dismiss(animated: true, completion: {
+            self.purchaseMenu.close()
+        })
+        gameDelegate.enable2021()
+        gameDelegate.load2021()
+    }
+    
+    func completePurchaseMonthly() {
+        purchasedMonthly = true
         purchaseMenu.alertForPurchase.dismiss(animated: true, completion: {
             self.purchaseMenu.close()
         })
@@ -376,7 +408,7 @@ class PurchaseMenu: UIViewController {
         }
         purchaseButton.backgroundColor = UIColor(red: 255/255, green: 153/255, blue: 0, alpha: 1.0);
         purchaseButton.setTitleColor(.black, for: .normal)
-        purchaseButton.addTarget(self, action: #selector(purchaseButtonAction), for: .touchUpInside)
+        purchaseButton.addTarget(self, action: #selector(purchase2021ButtonAction), for: .touchUpInside)
         view.addSubview(purchaseButton)
     }
     
@@ -393,13 +425,18 @@ class PurchaseMenu: UIViewController {
         }
         monthlyButton.backgroundColor = UIColor(red: 255/255, green: 153/255, blue: 0, alpha: 1.0);
         monthlyButton.setTitleColor(.black, for: .normal)
-        // monthlyButton.addTarget(self, action: #selector(purchaseButtonAction), for: .touchUpInside)
+        monthlyButton.addTarget(self, action: #selector(purchaseMonthlyButtonAction), for: .touchUpInside)
         view.addSubview(monthlyButton)
     }
 
-    @objc func purchaseButtonAction(sender: UIButton!) {
+    @objc func purchase2021ButtonAction(sender: UIButton!) {
         showConnectMessageForPurchase()
         revenueCat.purchase2021()
+    }
+    
+    @objc func purchaseMonthlyButtonAction(sender: UIButton!) {
+        showConnectMessageForPurchase()
+        revenueCat.purchaseMonthly()
     }
     
     func updatePrice2021(_ price: Double) {
@@ -456,12 +493,22 @@ class PurchaseMenu: UIViewController {
         present(alert, animated: false, completion: nil)
     }
     
-    func showRetryPurchase(error: String) {
+    func showRetryPurchase2021(error: String) {
         let alert = UIAlertController(title: "", message: error, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action:UIAlertAction) in }));
         alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: {(action:UIAlertAction) in
             self.showConnectMessageForPurchase()
             self.revenueCat.purchase2021()
+        }));
+        present(alert, animated: false, completion: nil)
+    }
+    
+    func showRetryPurchaseMonthly(error: String) {
+        let alert = UIAlertController(title: "", message: error, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action:UIAlertAction) in }));
+        alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: {(action:UIAlertAction) in
+            self.showConnectMessageForPurchase()
+            self.revenueCat.purchaseMonthly()
         }));
         present(alert, animated: false, completion: nil)
     }
