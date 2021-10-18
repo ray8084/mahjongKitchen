@@ -234,7 +234,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
         
     func newGameAction(_ win: Bool) {
-        self.revenueCat.showPurchaseMenu(self)
         self.revenueCat.refreshPurchaseInfo()
         if (self.maj.enable2021 == false) && (self.maj.enable2020 == false){
             self.revenueCat.showPurchaseMenu(self)
