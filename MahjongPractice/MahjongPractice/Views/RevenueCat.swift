@@ -288,12 +288,15 @@ class PurchaseMenu: UIViewController {
     var backgroundImageView: UIImageView!
     var loaded = false
     var monthlyButton = UIButton()
+    var planText = UITextView()
     var purchaseButton = UIButton()
     var purchaseTimer = Timer()
     var purchaseView = UIView()
+    var restoreButton = UIButton()
     var restoreTimer = Timer()
     var revenueCat: RevenueCat!
     var settingsViewController: SettingsViewController!
+    var yOffset = 0
     
     init(revenueCat: RevenueCat) {
         super.init(nibName: nil, bundle: nil)
@@ -342,15 +345,15 @@ class PurchaseMenu: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         print("PurchaseMeny.viewDidAppear")
         if loaded == false {
-            let yOffset = Int(height() - 300) / 2
+            yOffset = Int(height() - 300) / 2
             setBackground()
             addPurchaseView()
-            addTitle("2021 Access", y: yOffset)
-            addLabel("Buy 2021 with a one time purchase OR pay per month and cancel anytime. Both plans include all features.", y: yOffset + 37, height: 65)
+            addTitle("2021 Pattern Access", y: yOffset)
+            planText = addText("Buy 2021 Pattern Access with a one time purchase.", y: yOffset + 37, height: 65)
             addPurchaseButton(y: yOffset + 95)
+            addRestoreButton(y: yOffset + 155)
             addMonthlyButton(y: yOffset + 155)
-            addRestoreButton(y: yOffset + 215)
-            addLabel("support@eightbam.com", y: yOffset + 265, height: 30)
+            let _ = addText("support@eightbam.com", y: yOffset + 265, height: 30)
             addCloseButton(y: yOffset + 20)
             loaded = true
         }
@@ -438,7 +441,7 @@ class PurchaseMenu: UIViewController {
         view.addSubview(title)
     }
     
-    func addLabel(_ text: String, y: Int, height: Int) {
+    func addText(_ text: String, y: Int, height: Int) -> UITextView {
         let offset = (width() - 455) / 2
         let label = UITextView(frame: CGRect(x: offset, y: y, width: 455, height: height))
         label.text = text
@@ -448,6 +451,7 @@ class PurchaseMenu: UIViewController {
         label.backgroundColor = .white
         label.isUserInteractionEnabled = false
         view.addSubview(label)
+        return label
     }
     
     func addPurchaseButton(y: Int) {
@@ -474,9 +478,11 @@ class PurchaseMenu: UIViewController {
         if revenueCat.priceMonthly == 0.0 {
             monthlyButton.setTitle("Connecting...", for: .normal)
             monthlyButton.isEnabled = false
+            monthlyButton.isHidden = true
         } else {
-            monthlyButton.setTitle("$\(revenueCat.priceMonthly) Per Month", for: .normal)
-            monthlyButton.isEnabled = true
+            // monthlyButton.setTitle("$\(revenueCat.priceMonthly) Per Month", for: .normal)
+            // monthlyButton.isEnabled = true
+            updatePriceMonthly(revenueCat.priceMonthly)
         }
         monthlyButton.backgroundColor = UIColor(red: 255/255, green: 153/255, blue: 0, alpha: 1.0);
         monthlyButton.setTitleColor(.black, for: .normal)
@@ -502,6 +508,10 @@ class PurchaseMenu: UIViewController {
     func updatePriceMonthly(_ price: Double) {
         monthlyButton.setTitle("$\(price) Per Month", for: .normal)
         monthlyButton.isEnabled = true
+        monthlyButton.isHidden = false
+        planText.text = "Buy 2021 with a one time purchase OR pay per month and cancel anytime. Both plans include all features."
+        restoreButton.removeFromSuperview()
+        addRestoreButton(y: yOffset + 215)
     }
     
     func showConnectMessageForPurchase() {
@@ -514,13 +524,13 @@ class PurchaseMenu: UIViewController {
     }
     
     func addRestoreButton(y: Int) {
-        let button = UIButton(frame: CGRect(x: (width()-220)/2, y: y, width: 220, height: 44))
-        button.layer.cornerRadius = 5
-        button.titleLabel!.font = UIFont.systemFont(ofSize: 20)
-        button.setTitle("Restore Purchase", for: .normal)
-        button.backgroundColor = .lightGray
-        button.addTarget(self, action: #selector(showRestoreMenu), for: .touchUpInside)
-        view.addSubview(button)
+        restoreButton = UIButton(frame: CGRect(x: (width()-220)/2, y: y, width: 220, height: 44))
+        restoreButton.layer.cornerRadius = 5
+        restoreButton.titleLabel!.font = UIFont.systemFont(ofSize: 20)
+        restoreButton.setTitle("Restore Purchase", for: .normal)
+        restoreButton.backgroundColor = .lightGray
+        restoreButton.addTarget(self, action: #selector(showRestoreMenu), for: .touchUpInside)
+        view.addSubview(restoreButton)
     }
     
     func showConnectMessageForRestore() {
