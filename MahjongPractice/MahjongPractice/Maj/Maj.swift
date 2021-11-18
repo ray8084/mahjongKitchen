@@ -100,6 +100,7 @@ class Maj {
     var windTileStyle = TileStyle.classic
     var dotTileStyle = TileStyle.classic
     var bamTileStyle = TileStyle.classic
+    var alternateRedDragon = false
     
     // --------------------------------------------------------------
     //  copy
@@ -149,6 +150,7 @@ class Maj {
         shuffleWithSeed = copy.shuffleWithSeed
         disableTapToDiscard = copy.disableTapToDiscard
         hideSortMessage = copy.hideSortMessage
+        alternateRedDragon = copy.alternateRedDragon
      }
     
   
@@ -206,6 +208,7 @@ class Maj {
         windTileStyle = defaults.integer(forKey: "windTileStyle")
         dotTileStyle = defaults.integer(forKey: "dotTileStyle")
         bamTileStyle = defaults.integer(forKey: "bamTileStyle")
+        alternateRedDragon = defaults.bool(forKey: "alternateRedDragon")
         shuffleSeed = defaults.string(forKey: "shuffleSeed") ?? ""
         shuffleWithSeed = defaults.bool(forKey: "shuffleWithSeed")
         disableTapToDiscard = defaults.bool(forKey: "disableTapToDiscard")
@@ -433,6 +436,10 @@ class Maj {
         defaults.set(disableTapToDiscard, forKey: "disableTapToDiscard")
     }
     
+    func setAlternateRedDragon(_ enable: Bool) {
+        alternateRedDragon = enable
+        defaults.set(alternateRedDragon, forKey: "alternateRedDragon")
+    }
     
     // --------------------------------------------------------------
     //  dealing

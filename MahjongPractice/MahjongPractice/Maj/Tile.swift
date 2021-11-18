@@ -129,6 +129,9 @@ class Tile {
         if id == 35 && maj.flowerTileStyle == TileStyle.largeFont {
             image = Tile.getImageNew(id)
         }
+        if id == 30 && maj.alternateRedDragon {
+            image = "redAlt.png"
+        }
         return image
     }
     

@@ -466,6 +466,13 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
         segment.addTarget(self, action: #selector(changeTileImages), for: .valueChanged)
         scrollView.addSubview(segment)
         
+        let dragonItems = ["Red Dragon", "Alternate"]
+        let dragonSegment = UISegmentedControl(items: dragonItems)
+        dragonSegment.selectedSegmentIndex = maj.dotTileStyle
+        dragonSegment.frame = setOriginWithOffset(segment.frame, x: Int(segment.frame.width) + 20, y: top + 55)
+        dragonSegment.addTarget(self, action: #selector(changeRedDragon), for: .valueChanged)
+        scrollView.addSubview(dragonSegment)
+        
         if #available(iOS 13.0, *) {
             // default
         } else {
@@ -480,7 +487,8 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
         addTile(maj.crakTileStyle == TileStyle.classic ? "1crak.png" : "1craknew.png", x: 54*4, y: tilesOffset)
         addTile(maj.crakTileStyle == TileStyle.classic ? "2crak.png" : "2craknew.png", x: 54*5, y: tilesOffset)
         addTile(maj.windTileStyle == TileStyle.classic ? "north.png" : "northnew.png", x: 54*6, y: tilesOffset)
-        addTile(maj.flowerTileStyle == TileStyle.classic ? "f1.png" : "flowernew.png",    x: 54*7, y: tilesOffset)
+        addTile(maj.flowerTileStyle == TileStyle.classic ? "f1.png" : "flowernew.png", x: 54*7, y: tilesOffset)
+        addTile(maj.alternateRedDragon ? "redAlt.png" : "red.png", x: 54*8, y: tilesOffset)
         tilesBottom = tilesOffset + tileHeight
     }
     
@@ -512,6 +520,14 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
             tileImages[6].image = UIImage(named: maj.windTileStyle == TileStyle.classic ? "north.png" : "northnew.png" )
             tileImages[7].image = UIImage(named: maj.flowerTileStyle == TileStyle.classic ? "f1.png" : "flowernew.png" )
         }
+    }
+    
+    @objc private func changeRedDragon(sender: UISegmentedControl) {
+        maj.setAlternateRedDragon(sender.selectedSegmentIndex == 1)
+        if tileImages.count == 9 {
+            tileImages[8].image = UIImage(named: maj.alternateRedDragon ? "redAlt.png" : "red.png" )
+        }
+        settingsDelegate.changeTileImages()
     }
     
 }
