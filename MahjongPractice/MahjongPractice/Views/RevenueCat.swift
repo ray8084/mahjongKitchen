@@ -70,15 +70,19 @@ class RevenueCat {
     
     func getPrice2021() {
         Purchases.shared.offerings { (offerings, error) in
-            if let package = offerings?.current?.lifetime {
-                self.package2021 = package
-                self.price2021 = Double(truncating: package.product.price)
-                self.purchaseMenu.updatePrice2021(self.price2021)
-            }
-            if let package = offerings?.current?.monthly {
-                self.packageMonthly = package
-                self.priceMonthly = Double(truncating: package.product.price)
-                self.purchaseMenu.updatePriceMonthly(self.priceMonthly)
+            if let packages = offerings?.offering(identifier: "default")?.availablePackages {
+                for package in packages {
+                    if package.product.productIdentifier == "com.eightbam.mahjong2019.patterns2021" {
+                        self.package2021 = package
+                        self.price2021 = Double(truncating: package.product.price)
+                        self.purchaseMenu.updatePrice2021(self.price2021)
+                    }
+                    if package.product.productIdentifier == "com.eightbam.mahjongpractice.monthly" {
+                        self.packageMonthly = package
+                        self.priceMonthly = Double(truncating: package.product.price)
+                        self.purchaseMenu.updatePriceMonthly(self.priceMonthly)
+                    }
+                }
             }
         }
     }
@@ -480,8 +484,6 @@ class PurchaseMenu: UIViewController {
             monthlyButton.isEnabled = false
             monthlyButton.isHidden = true
         } else {
-            // monthlyButton.setTitle("$\(revenueCat.priceMonthly) Per Month", for: .normal)
-            // monthlyButton.isEnabled = true
             updatePriceMonthly(revenueCat.priceMonthly)
         }
         monthlyButton.backgroundColor = UIColor(red: 255/255, green: 153/255, blue: 0, alpha: 1.0);
