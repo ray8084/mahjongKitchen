@@ -36,12 +36,15 @@ class RevenueCat {
     var monthlyActive = false
     var package2021: Purchases.Package!
     var packageMonthly: Purchases.Package!
+    var packageMonthlyTrial: Purchases.Package!
     var purchased2021 = false
     var purchaseMenu: PurchaseMenu!
     var price2021 = 0.0
     var priceMonthly = 0.0
+    var priceMonthlyTrial = 0.0
     var responseTimeoutSeconds = 360.0
     var viewController: UIViewController!
+    var monthlyTrialOption = false
     
     init(viewController: UIViewController, gameDelegate: GameDelegate) {
         self.viewController = viewController
@@ -81,6 +84,11 @@ class RevenueCat {
                         self.packageMonthly = package
                         self.priceMonthly = Double(truncating: package.product.price)
                         self.purchaseMenu.updatePriceMonthly(self.priceMonthly)
+                    }
+                    if package.product.productIdentifier == "com.eightbam.mahjongpractice.monthlyTrial" {
+                        self.packageMonthlyTrial = package
+                        self.priceMonthlyTrial = Double(truncating: package.product.price)
+                        self.monthlyTrialOption = true
                     }
                 }
             }
@@ -151,6 +159,30 @@ class RevenueCat {
             }
         }
     }
+    
+    func purchaseMonthlyTrial() {
+        Purchases.shared.purchasePackage(packageMonthlyTrial) { (transaction, purchaserInfo, error, userCancelled) in
+            self.purchaseMenu.purchaseTimer.invalidate()
+            if error != nil {
+                self.purchaseMenu.alertForPurchase.dismiss(animated: false, completion: {
+                    // let message = (error! as NSError).localizedDescription
+                    // self.purchaseMenu.showRetryPurchaseMonthlyTrial(error: message)
+                })
+            } else if transaction != nil {
+                if transaction?.transactionState == .purchased {
+                    // self.completePurchaseMonthlyTrial()
+                }
+            }
+            //if error == nil && purchaserInfo != nil && self.monthlyTrailActive == false {
+            //    if purchaserInfo?.entitlements["MonthlyTrial"]?.isActive == true {
+                    // self.completePurchaseMonthlyTrial()
+            //    } else {
+                    // self.purchaseMenu.showRetryPurchaseMonthlyTrial(error: "The in-app purchase for Monthly Access is not active. For help contact support@eightbam.com")
+            //    }
+            //}
+        }
+    }
+    
     
     func completePurchase2021() {
         purchased2021 = true
@@ -375,7 +407,7 @@ class PurchaseMenu: UIViewController {
     
     @objc func closeButtonAction(sender: UIButton!) {
         if revenueCat.is2017Trial() {
-            show2017Trial()
+            showTrialMenu()
         } else {
             validateYear()
             revenueCat.gameDelegate.redeal()
@@ -420,15 +452,26 @@ class PurchaseMenu: UIViewController {
         Int(view.frame.height)
     }
     
-    func show2017Trial() {
-        let alert = UIAlertController(title: "2017 is available as a free trial with limited feautures", message: "", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "2017", style: .default, handler: {(action:UIAlertAction) in
-            if self.settingsViewController != nil {
-                self.settingsViewController.select2017()
-            }
-            self.revenueCat.gameDelegate.redeal()
-            self.dismiss(animated: true, completion: nil)
-        }));
+    func showTrialMenu() {
+        var title = "2017 is available as a free trial with limited feautures"
+        if revenueCat.monthlyTrialOption {
+            title = "Free Trial for 3 days, then $\(revenueCat.priceMonthly) Per Month. Cancel anytime."
+        }
+        let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        if revenueCat.monthlyTrialOption {
+            alert.addAction(UIAlertAction(title: "Free Trial", style: .default, handler: {(action:UIAlertAction) in
+                self.showConnectMessageForPurchase()
+                self.revenueCat.purchaseMonthlyTrial()
+            }));
+        } else {
+            alert.addAction(UIAlertAction(title: "2017", style: .default, handler: {(action:UIAlertAction) in
+                if self.settingsViewController != nil {
+                    self.settingsViewController.select2017()
+                }
+                self.revenueCat.gameDelegate.redeal()
+                self.dismiss(animated: true, completion: nil)
+            }));
+        }
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action:UIAlertAction) in
         }));
         present(alert, animated: false, completion: nil)
