@@ -34,6 +34,7 @@ class RevenueCat {
     let defaults = UserDefaults.standard
     var gameDelegate: GameDelegate!
     var monthlyActive = false
+    var monthlyTrialActive = false
     var package2021: Purchases.Package!
     var packageMonthly: Purchases.Package!
     var packageMonthlyTrial: Purchases.Package!
@@ -52,11 +53,12 @@ class RevenueCat {
         self.purchaseMenu = PurchaseMenu(revenueCat: self)
         purchased2021 = defaults.bool(forKey: "purchased2021")
         monthlyActive = defaults.bool(forKey: "monthlyActive")
+        monthlyTrialActive = defaults.bool(forKey: "monthlyTrialActive")
     }
     
     func start() {
         print("RevenueCat.start")
-        if is2021Purchased() || monthlyActive {
+        if is2021Purchased() || monthlyActive || monthlyTrialActive {
             gameDelegate.enable2021(true)
             gameDelegate.enable2020(true)
             gameDelegate.redeal()
@@ -108,7 +110,13 @@ class RevenueCat {
                     self.gameDelegate.enable2021(self.is2021Purchased())
                     self.gameDelegate.enable2020(self.is2020Purchased())
                 }
+                if info?.entitlements["MonthlyTrial"]?.isActive == true {
+                    self.monthlyTrialActive = true
+                    self.gameDelegate.enable2021(true)
+                    self.gameDelegate.enable2020(true)
+                }
                 self.defaults.set(self.monthlyActive, forKey: "monthlyActive")
+                self.defaults.set(self.monthlyTrialActive, forKey: "monthlyTrialActive")
                 print("MonthlyActive \(self.monthlyActive)")
             }
         }
@@ -136,7 +144,7 @@ class RevenueCat {
             }
         }
     }
-    
+
     func purchaseMonthly() {
         Purchases.shared.purchasePackage(packageMonthly) { (transaction, purchaserInfo, error, userCancelled) in
             self.purchaseMenu.purchaseTimer.invalidate()
@@ -165,21 +173,21 @@ class RevenueCat {
             self.purchaseMenu.purchaseTimer.invalidate()
             if error != nil {
                 self.purchaseMenu.alertForPurchase.dismiss(animated: false, completion: {
-                    // let message = (error! as NSError).localizedDescription
-                    // self.purchaseMenu.showRetryPurchaseMonthlyTrial(error: message)
+                    let message = (error! as NSError).localizedDescription
+                    self.purchaseMenu.showRetryPurchaseMonthlyTrial(error: message)
                 })
             } else if transaction != nil {
                 if transaction?.transactionState == .purchased {
-                    // self.completePurchaseMonthlyTrial()
+                    self.completePurchaseMonthlyTrial()
                 }
             }
-            //if error == nil && purchaserInfo != nil && self.monthlyTrailActive == false {
-            //    if purchaserInfo?.entitlements["MonthlyTrial"]?.isActive == true {
-                    // self.completePurchaseMonthlyTrial()
-            //    } else {
-                    // self.purchaseMenu.showRetryPurchaseMonthlyTrial(error: "The in-app purchase for Monthly Access is not active. For help contact support@eightbam.com")
-            //    }
-            //}
+            if error == nil && purchaserInfo != nil && self.monthlyTrialActive == false {
+                if purchaserInfo?.entitlements["MonthlyTrial"]?.isActive == true {
+                     self.completePurchaseMonthlyTrial()
+                } else {
+                     self.purchaseMenu.showRetryPurchaseMonthlyTrial(error: "The in-app purchase for Free Trial Monthly Access is not active. For help contact support@eightbam.com")
+                }
+            }
         }
     }
     
@@ -198,6 +206,17 @@ class RevenueCat {
     func completePurchaseMonthly() {
         monthlyActive = true
         defaults.set(monthlyActive, forKey: "monthlyActive")
+        purchaseMenu.alertForPurchase.dismiss(animated: true, completion: {
+            self.purchaseMenu.close()
+        })
+        gameDelegate.enable2021(true)
+        gameDelegate.enable2020(true)
+        gameDelegate.load2021()
+    }
+    
+    func completePurchaseMonthlyTrial() {
+        monthlyTrialActive = true
+        defaults.set(monthlyTrialActive, forKey: "monthlyTrialActive")
         purchaseMenu.alertForPurchase.dismiss(animated: true, completion: {
             self.purchaseMenu.close()
         })
@@ -454,10 +473,12 @@ class PurchaseMenu: UIViewController {
     
     func showTrialMenu() {
         var title = "2017 is available as a free trial with limited feautures"
+        var message = ""
         if revenueCat.monthlyTrialOption {
-            title = "Free Trial for 3 days, then $\(revenueCat.priceMonthly) Per Month. Cancel anytime."
+            title = "Free Trial\nMonthly Subscription"
+            message = "A free trial is available for 3 days then $\(revenueCat.priceMonthlyTrial) per month. Cancel anytime."
         }
-        let alert = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         if revenueCat.monthlyTrialOption {
             alert.addAction(UIAlertAction(title: "Free Trial", style: .default, handler: {(action:UIAlertAction) in
                 self.showConnectMessageForPurchase()
@@ -472,7 +493,7 @@ class PurchaseMenu: UIViewController {
                 self.dismiss(animated: true, completion: nil)
             }));
         }
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action:UIAlertAction) in
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action:UIAlertAction) in
         }));
         present(alert, animated: false, completion: nil)
     }
@@ -629,6 +650,16 @@ class PurchaseMenu: UIViewController {
         alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: {(action:UIAlertAction) in
             self.showConnectMessageForPurchase()
             self.revenueCat.purchaseMonthly()
+        }));
+        present(alert, animated: false, completion: nil)
+    }
+    
+    func showRetryPurchaseMonthlyTrial(error: String) {
+        let alert = UIAlertController(title: "", message: error, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action:UIAlertAction) in }));
+        alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: {(action:UIAlertAction) in
+            self.showConnectMessageForPurchase()
+            self.revenueCat.purchaseMonthlyTrial()
         }));
         present(alert, animated: false, completion: nil)
     }

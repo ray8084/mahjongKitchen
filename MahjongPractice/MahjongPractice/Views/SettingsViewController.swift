@@ -468,7 +468,7 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
         
         let dragonItems = ["Red Dragon", "Alternate"]
         let dragonSegment = UISegmentedControl(items: dragonItems)
-        dragonSegment.selectedSegmentIndex = maj.dotTileStyle
+        dragonSegment.selectedSegmentIndex = maj.alternateRedDragon ? 1 : 0
         dragonSegment.frame = setOriginWithOffset(segment.frame, x: Int(segment.frame.width) + 20, y: top + 55)
         dragonSegment.addTarget(self, action: #selector(changeRedDragon), for: .valueChanged)
         scrollView.addSubview(dragonSegment)

@@ -54,6 +54,61 @@
           "type" : "RecurringSubscription"
         }
       ]
+    },
+    {
+      "id" : "5CE49C72",
+      "localizations" : [
+
+      ],
+      "name" : "",
+      "subscriptions" : [
+
+      ]
+    },
+    {
+      "id" : "75E20CD3",
+      "localizations" : [
+
+      ],
+      "name" : "",
+      "subscriptions" : [
+
+      ]
+    },
+    {
+      "id" : "74166C7B",
+      "localizations" : [
+
+      ],
+      "name" : "MonthlyTrial",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "displayPrice" : "1.99",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "2B33E695",
+          "introductoryOffer" : {
+            "internalID" : "23134247",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P3D"
+          },
+          "localizations" : [
+            {
+              "description" : "",
+              "displayName" : "",
+              "locale" : "en_US"
+            }
+          ],
+          "productID" : "com.eightbam.mahjongpractice.monthlyTrial",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "MonthlyTrial",
+          "subscriptionGroupID" : "74166C7B",
+          "type" : "RecurringSubscription"
+        }
+      ]
     }
   ],
   "version" : {
