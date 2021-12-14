@@ -85,13 +85,16 @@ class RevenueCat {
                     if package.product.productIdentifier == "com.eightbam.mahjongpractice.monthly" {
                         self.packageMonthly = package
                         self.priceMonthly = Double(truncating: package.product.price)
+                        if self.priceMonthly > 1.50 && self.priceMonthly < 2.00 {
+                            self.priceMonthly = 1.99
+                        }
                         self.purchaseMenu.updatePriceMonthly(self.priceMonthly)
                     }
-                    if package.product.productIdentifier == "com.eightbam.mahjongpractice.monthlyTrial" {
-                        self.packageMonthlyTrial = package
-                        self.priceMonthlyTrial = Double(truncating: package.product.price)
-                        self.monthlyTrialOption = true
-                    }
+                    //if package.product.productIdentifier == "com.eightbam.mahjongpractice.monthlyTrial" {
+                    //    self.packageMonthlyTrial = package
+                    //    self.priceMonthlyTrial = Double(truncating: package.product.price)
+                    //    self.monthlyTrialOption = true
+                    //}
                 }
             }
         }
