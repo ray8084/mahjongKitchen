@@ -52,6 +52,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     let discardRow = 2
     var winCounted = false
     var lossCounted = false
+    var rackingInProgress = false
     
     var menuButton: UIButton!
     var settingsButton: UIButton!
@@ -1204,6 +1205,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             } else {
                 // showDebugMessage(errorNumber: DebugError.moveToDiscard, description: "MoveToDiscard")
             }
+            rackingInProgress = false
         }
         return moved
     }
@@ -1215,7 +1217,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             let endIndex = getTileIndex(end)
             if startIndex < maj.east.tiles.count {
                 let tile = maj.east.tiles.remove(at: startIndex)
-                if tile.isJoker() && maj.east.rack?.tiles.count == 0 {
+                if tile.isJoker() && !rackingInProgress {
                     showJokerExposeLastMessage()
                     maj.east.tiles.append(tile)
                 } else {
@@ -1228,6 +1230,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                         maj.card.match(maj.east.tiles + (maj.east.rack?.tiles)!, ignoreFilters: false)
                         gameOver()
                     }
+                    rackingInProgress = true
                     showHand()
                     showRack()
                     maj.letterPatternRackFilterPending = true
@@ -1255,7 +1258,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     
     func showJokerExposeLastMessage() {
         let title = "Joker"
-        let message = "Expose tiles before Jokers"
+        let message = "Please expose numbers, dragons, flowers and wind tiles before jokers.\n This is not a Mahjong rule, it just helps our app reliabliy identify jokers. Jokers replace the tile to the left."
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
@@ -1325,6 +1328,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 maj.card.match(maj.east.tiles + (maj.east.rack?.tiles)!, ignoreFilters: false)
                 gameOver()
             }
+            rackingInProgress = true
         }
         return moved
     }

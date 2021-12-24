@@ -26,7 +26,7 @@ class Rack: Hand {
                 }
             }
             if validation != "" {
-                validation += " cannot be exposed until declaring MahJong.  Search online reference for American MahJong rules.  Return tiles to your hand to continue."
+                validation += " cannot be exposed until declaring MahJong. Search online reference for American MahJong rules. Return tiles to your hand to continue.\n If you are exposing jokers - Jokers replace the tile to the left, so place jokers to the right in each set of numbers, dragons, flowers and wind tiles. This is not a Mahjong rule it just helps our app reliably identify jokers."
             }
         }
         return validation
