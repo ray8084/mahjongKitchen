@@ -45,7 +45,7 @@ class SortStyle {
 
 class Maj {
     var override2020 = false   // make this false for release
-    var override2021 = true   // make this false for release
+    var override2021 = false   // make this false for release
     var unlockedWarning = false // warning when barryOverride default is true
     var winBotEnabled = false
     var state = State.east
