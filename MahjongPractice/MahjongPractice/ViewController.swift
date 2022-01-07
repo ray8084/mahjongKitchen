@@ -125,6 +125,10 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         return maj
     }
     
+    func override2021() -> Bool {
+        return maj.override2021
+    }
+    
     
     // -----------------------------------------------------------------------------------------
     //

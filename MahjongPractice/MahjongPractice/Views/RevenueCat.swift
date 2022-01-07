@@ -14,6 +14,7 @@ protocol GameDelegate {
     func enable2021(_ enable: Bool)
     func enable2020(_ enable: Bool)
     func changeYear(_ segment: Int)
+    func override2021() -> Bool
 }
 
 public struct AppStoreHistory {
@@ -58,7 +59,7 @@ class RevenueCat {
     
     func start() {
         print("RevenueCat.start")
-        if is2021Purchased() || monthlyActive || monthlyTrialActive {
+        if is2021Purchased() || monthlyActive {
             gameDelegate.enable2021(true)
             gameDelegate.enable2020(true)
             gameDelegate.redeal()
@@ -286,7 +287,7 @@ class RevenueCat {
     
     func is2021Purchased() -> Bool {
         let history2021 = AppStoreHistory.store.isProductPurchased(AppStoreHistory.Patterns2021)
-        return history2021 || purchased2021
+        return history2021 || purchased2021 || gameDelegate.override2021()
     }
 
     func is2020Purchased() -> Bool {
