@@ -45,7 +45,7 @@ class SortStyle {
 
 class Maj {
     var override2020 = false   // make this false for release
-    var override2021 = true   // make this false for release
+    var override2021 = false   // make this false for release
     var unlockedWarning = false // warning when barryOverride default is true
     var winBotEnabled = false
     var state = State.east
@@ -165,6 +165,7 @@ class Maj {
         west.rack = Rack("West")
         north.rack = Rack("North")
         if override2020 { defaults.set(override2020, forKey: "barryOverride") }
+        if override2021 { defaults.set(override2021, forKey: "override2021") }
         loadSavedValues()
         setYearSegment(segment: getYearSegment())
         deal()
@@ -203,6 +204,7 @@ class Maj {
         card.loadSavedValues()
         card.showLosses = showLosses
         override2020 = defaults.bool( forKey: "barryOverride" )
+        override2021 = defaults.bool(forKey: "override2021")
         crakTileStyle = defaults.integer(forKey: "crakTileStyle")
         flowerTileStyle = defaults.integer(forKey: "flowerTileStyle")
         windTileStyle = defaults.integer(forKey: "windTileStyle")
