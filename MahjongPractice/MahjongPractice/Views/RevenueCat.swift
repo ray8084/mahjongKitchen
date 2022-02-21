@@ -32,6 +32,7 @@ public struct AppStoreHistory {
 // -----------------------------------------------------------------------------------------
 
 class RevenueCat {
+    var show2022 = false
     let defaults = UserDefaults.standard
     var gameDelegate: GameDelegate!
     var monthlyActive = false
@@ -55,6 +56,10 @@ class RevenueCat {
         purchased2021 = defaults.bool(forKey: "purchased2021")
         monthlyActive = defaults.bool(forKey: "monthlyActive")
         monthlyTrialActive = defaults.bool(forKey: "monthlyTrialActive")
+    }
+    
+    func getCurrentYear() -> String {
+        return show2022 ? "2022" : "2021"
     }
     
     func start() {
@@ -407,8 +412,8 @@ class PurchaseMenu: UIViewController {
             yOffset = Int(height() - 300) / 2
             setBackground()
             addPurchaseView()
-            addTitle("2021 Pattern Access", y: yOffset)
-            planText = addText("Buy 2021 Pattern Access with a one time purchase.", y: yOffset + 37, height: 65)
+            addTitle("\(revenueCat.getCurrentYear()) Pattern Access", y: yOffset)
+            planText = addText("Buy \(revenueCat.getCurrentYear()) Pattern Access with a one time purchase.", y: yOffset + 37, height: 65)
             addPurchaseButton(y: yOffset + 95)
             addRestoreButton(y: yOffset + 155)
             addMonthlyButton(y: yOffset + 155)
@@ -579,7 +584,7 @@ class PurchaseMenu: UIViewController {
         monthlyButton.setTitle("$\(price) Per Month", for: .normal)
         monthlyButton.isEnabled = true
         monthlyButton.isHidden = false
-        planText.text = "Buy 2021 with a one time purchase OR pay per month and cancel anytime. Both plans include all features."
+        planText.text = "Buy \(revenueCat.getCurrentYear()) with a one time purchase OR pay per month and cancel anytime. Both plans include all features."
         restoreButton.removeFromSuperview()
         addRestoreButton(y: yOffset + 215)
     }
