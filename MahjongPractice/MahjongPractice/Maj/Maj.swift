@@ -66,6 +66,7 @@ class Maj {
     var disableTapToDiscard = false
     var sortStyle = SortStyle.suits
     var hideSortMessage = false
+    var techSupportDebug = false
             
     var wall = Deck()
     var replayWall = Deck()
@@ -149,6 +150,7 @@ class Maj {
         shuffleSeed = copy.shuffleSeed
         shuffleWithSeed = copy.shuffleWithSeed
         disableTapToDiscard = copy.disableTapToDiscard
+        techSupportDebug = copy.techSupportDebug
         hideSortMessage = copy.hideSortMessage
         alternateRedDragon = copy.alternateRedDragon
      }
@@ -214,6 +216,7 @@ class Maj {
         shuffleSeed = defaults.string(forKey: "shuffleSeed") ?? ""
         shuffleWithSeed = defaults.bool(forKey: "shuffleWithSeed")
         disableTapToDiscard = defaults.bool(forKey: "disableTapToDiscard")
+        techSupportDebug = defaults.bool(forKey: "techSupportDebug")
         hideSortMessage = defaults.bool(forKey: "hideSortMessage")
     }
     
@@ -441,6 +444,11 @@ class Maj {
     func setAlternateRedDragon(_ enable: Bool) {
         alternateRedDragon = enable
         defaults.set(alternateRedDragon, forKey: "alternateRedDragon")
+    }
+    
+    func setTechSupportDebug(_ enable: Bool) {
+        techSupportDebug = enable
+        defaults.set(techSupportDebug, forKey: "techSupportDebug")
     }
     
     // --------------------------------------------------------------
