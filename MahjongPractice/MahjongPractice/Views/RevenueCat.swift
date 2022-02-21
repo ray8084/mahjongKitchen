@@ -66,6 +66,10 @@ class RevenueCat {
         return show2022 ? "2022" : "2021"
     }
     
+    func getCurrentPrice() -> Double {
+        return show2022 ? price2022 : price2021
+    }
+    
     func start() {
         print("RevenueCat.start")
         if is2021Purchased() || monthlyActive {
@@ -75,7 +79,7 @@ class RevenueCat {
         } else {
             showPurchaseMenu(viewController)
         }
-        getPrice2021()
+        getPrices()
         refreshPurchaseInfo()
     }
     
@@ -83,14 +87,23 @@ class RevenueCat {
         viewController.show(purchaseMenu, sender: viewController)
     }
     
-    func getPrice2021() {
+    func getPrices() {
         Purchases.shared.offerings { (offerings, error) in
             if let packages = offerings?.offering(identifier: "default")?.availablePackages {
                 for package in packages {
                     if package.product.productIdentifier == "com.eightbam.mahjong2019.patterns2021" {
                         self.package2021 = package
                         self.price2021 = Double(truncating: package.product.price)
-                        self.purchaseMenu.updatePrice2021(self.price2021)
+                        if self.show2022 == false {
+                            self.purchaseMenu.updatePurchaseButton(self.price2021)
+                        }
+                    }
+                    if package.product.productIdentifier == "com.eightbam.mahjongpractice.patterns2022" {
+                        self.package2022 = package
+                        self.price2022 = Double(truncating: package.product.price)
+                        if self.show2022 == true {
+                            self.purchaseMenu.updatePurchaseButton(self.price2022)
+                        }
                     }
                     if package.product.productIdentifier == "com.eightbam.mahjongpractice.monthly" {
                         self.packageMonthly = package
@@ -546,7 +559,7 @@ class PurchaseMenu: UIViewController {
             purchaseButton.setTitle("Connecting...", for: .normal)
             purchaseButton.isEnabled = false
         } else {
-            let price = revenueCat.price2021
+            let price = revenueCat.getCurrentPrice()
             let year = revenueCat.getCurrentYear()
             purchaseButton.setTitle("$\(price) for \(year)", for: .normal)
             purchaseButton.isEnabled = true
@@ -584,7 +597,7 @@ class PurchaseMenu: UIViewController {
         revenueCat.purchaseMonthly()
     }
     
-    func updatePrice2021(_ price: Double) {
+    func updatePurchaseButton(_ price: Double) {
         let year = revenueCat.getCurrentYear()
         purchaseButton.setTitle("$\(price) for \(year)", for: .normal)
         purchaseButton.isEnabled = true
