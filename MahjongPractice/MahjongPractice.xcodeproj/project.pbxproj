@@ -156,6 +156,7 @@
 		714252E12707A80B001AE6F0 /* StoreKitTestCertificate.cer in Resources */ = {isa = PBXBuildFile; fileRef = 714252E02707A80B001AE6F0 /* StoreKitTestCertificate.cer */; };
 		714252E32708033A001AE6F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 714252E22708033A001AE6F0 /* LaunchScreen.storyboard */; };
 		714252E527080ACE001AE6F0 /* iconfinder_circle-26_600774.png in Resources */ = {isa = PBXBuildFile; fileRef = 714252E427080ACE001AE6F0 /* iconfinder_circle-26_600774.png */; };
+		716E74E827C44CFC0031145C /* Card2022.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716E74E727C44CFC0031145C /* Card2022.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -333,6 +334,7 @@
 		714252E02707A80B001AE6F0 /* StoreKitTestCertificate.cer */ = {isa = PBXFileReference; lastKnownFileType = file; path = StoreKitTestCertificate.cer; sourceTree = "<group>"; };
 		714252E22708033A001AE6F0 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		714252E427080ACE001AE6F0 /* iconfinder_circle-26_600774.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconfinder_circle-26_600774.png"; sourceTree = "<group>"; };
+		716E74E727C44CFC0031145C /* Card2022.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card2022.swift; sourceTree = "<group>"; };
 		8A035980D389C5C22DDD03CB /* Pods-MahjongPractice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MahjongPractice.release.xcconfig"; path = "Target Support Files/Pods-MahjongPractice/Pods-MahjongPractice.release.xcconfig"; sourceTree = "<group>"; };
 		A668A2FB6B118FAF6D0F3252 /* Pods_MahjongPractice_MahjongPracticeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MahjongPractice_MahjongPracticeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3B66BE8F9ED207F6CA2AB29 /* Pods-MahjongPractice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MahjongPractice.debug.xcconfig"; path = "Target Support Files/Pods-MahjongPractice/Pods-MahjongPractice.debug.xcconfig"; sourceTree = "<group>"; };
@@ -466,6 +468,7 @@
 				714252A32707A023001AE6F0 /* Card2019.swift */,
 				714252AB2707A023001AE6F0 /* Card2020.swift */,
 				714252A42707A023001AE6F0 /* Card2021.swift */,
+				716E74E727C44CFC0031145C /* Card2022.swift */,
 				714252A22707A023001AE6F0 /* Deck.swift */,
 				714252AE2707A023001AE6F0 /* DiscardTable.swift */,
 				714252AD2707A023001AE6F0 /* Hand.swift */,
@@ -969,6 +972,7 @@
 				714252B82707A024001AE6F0 /* TileIdListList.swift in Sources */,
 				714252C22707A024001AE6F0 /* LetterPattern.swift in Sources */,
 				714252BE2707A024001AE6F0 /* Hand.swift in Sources */,
+				716E74E827C44CFC0031145C /* Card2022.swift in Sources */,
 				714252D02707A04B001AE6F0 /* CardView.swift in Sources */,
 				714252D62707A04C001AE6F0 /* HelpChapter.swift in Sources */,
 				714252C12707A024001AE6F0 /* TileIdMapList.swift in Sources */,
@@ -1161,7 +1165,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 26UUUMB93E;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MahjongPractice/Info.plist;
@@ -1193,7 +1197,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 26UUUMB93E;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MahjongPractice/Info.plist;

@@ -12,7 +12,9 @@ var show2022 = false
 
 protocol GameDelegate {
     func redeal()
+    func load2022()
     func load2021()
+    func enable2022(_ enable: Bool)
     func enable2021(_ enable: Bool)
     func enable2020(_ enable: Bool)
     func changeYear(_ segment: Int)
@@ -276,17 +278,14 @@ class RevenueCat {
         if info?.entitlements["Patterns2022"]?.isActive == true {
             purchased2022 = true
             defaults.set(purchased2022, forKey: "purchased2022")
-            purchaseMenu.showMessage("Restored 2022 Pattern Access")
         }
         if info?.entitlements["Patterns2021"]?.isActive == true {
             purchased2021 = true
             defaults.set(purchased2021, forKey: "purchased2021")
-            purchaseMenu.showMessage("Restored 2021 Pattern Access")
         }
         if info?.entitlements["Monthly"]?.isActive == true {
             monthlyActive = true
             defaults.set(self.monthlyActive, forKey: "monthlyActive")
-            purchaseMenu.showMessage("Restored Monthly Access")
         }
         return purchased2022 || purchased2021 || monthlyActive
     }
@@ -294,14 +293,17 @@ class RevenueCat {
     func completeRestore() {
         if purchased2022 || purchased2021 || monthlyActive {
             purchaseMenu.alertForRestore.dismiss(animated: true, completion: {
-                self.purchaseMenu.close()
+                self.purchaseMenu.showRestorationSuccess()
             })
         }
-        // gameDelegate.enable2022(purchased2022)
-        gameDelegate.enable2021(purchased2021)
+        gameDelegate.enable2022(purchased2022 || monthlyActive)
+        gameDelegate.enable2021(purchased2022 || purchased2021 || monthlyActive)
         gameDelegate.enable2020(purchased2022 || purchased2021 || monthlyActive)
-        gameDelegate.load2021()
-        // gameDelegate.load2022()
+        if purchased2022 || monthlyActive {
+            gameDelegate.load2022()
+        } else if purchased2021 {
+            gameDelegate.load2021()
+        }
     }
     
     func restore2021() {
@@ -766,6 +768,25 @@ class PurchaseMenu: UIViewController {
         present(alert, animated: false, completion: nil)
     }
     
+    func showRestorationSuccess() {
+        let title = "Restore Purchases - Success"
+        var message = ""
+        if revenueCat.purchased2022 {
+            message += "2022 Pattern Access\n"
+        }
+        if revenueCat.purchased2021 {
+            message += "2021 Pattern Access\n"
+        }
+        if revenueCat.monthlyActive {
+            message += "Monthly Access\n"
+        }
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: {(action:UIAlertAction) in
+            self.close()
+        }));
+        present(alert, animated: false, completion: nil)
+    }
+        
     @objc func showRestoreMenu() {
         let message = "Restore previous purchases on a new device, a second device or after deleting and reinstalling. For help support@eightbam.com."
         let alert = UIAlertController(title: "Restore Purchase", message: message, preferredStyle: .alert)

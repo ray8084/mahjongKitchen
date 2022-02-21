@@ -89,7 +89,7 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
         let line = addLine(x: xOffset, y: yearBottom + 10)
         yearBottom = Int(line.frame.origin.y + line.frame.height)
         
-        let items = ["2017", "2018", "2019", "2020", "2021"]
+        let items = ["2017", "2018", "2019", "2020", "2021", "2022"]
         yearSegmentControl = UISegmentedControl(items: items)
         yearSegmentControl.selectedSegmentIndex = maj.getYearSegment()
         yearSegmentControl.frame = CGRect(x: xOffset, y: yearBottom + 10, width: maxWidth, height: Int(yearSegmentControl.frame.height))
@@ -114,6 +114,7 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
             case YearSegment.segment2019: revenueCat.changeYear(year: Year.y2019, settingsViewController: self)
             case YearSegment.segment2020: revenueCat.changeYear(year: Year.y2020, settingsViewController: self)
             case YearSegment.segment2021: revenueCat.changeYear(year: Year.y2021, settingsViewController: self)
+            case YearSegment.segment2022: revenueCat.changeYear(year: Year.y2022, settingsViewController: self)
             default: revenueCat.changeYear(year: Year.y2017, settingsViewController: self)
         }
     }
@@ -130,11 +131,13 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
     func select2019() { yearSegmentControl.selectedSegmentIndex = YearSegment.segment2019}
     func select2020() { yearSegmentControl.selectedSegmentIndex = YearSegment.segment2020}
     func select2021() { yearSegmentControl.selectedSegmentIndex = YearSegment.segment2021}
+    func select2022() { yearSegmentControl.selectedSegmentIndex = YearSegment.segment2022}
     func is2017Selected() -> Bool { return yearSegmentControl.selectedSegmentIndex == YearSegment.segment2017 }
     func is2018Selected() -> Bool { return yearSegmentControl.selectedSegmentIndex == YearSegment.segment2018 }
     func is2019Selected() -> Bool { return yearSegmentControl.selectedSegmentIndex == YearSegment.segment2019 }
     func is2020Selected() -> Bool { return yearSegmentControl.selectedSegmentIndex == YearSegment.segment2020 }
     func is2021Selected() -> Bool { return yearSegmentControl.selectedSegmentIndex == YearSegment.segment2021 }
+    func is2022Selected() -> Bool { return yearSegmentControl.selectedSegmentIndex == YearSegment.segment2022 }
     
     
     // -----------------------------------------------------------------------------------------

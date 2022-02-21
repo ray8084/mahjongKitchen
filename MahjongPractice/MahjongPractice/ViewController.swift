@@ -143,12 +143,21 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         redeal()
     }
     
-    func enable2021(_ enable: Bool) {
-        maj.enable2021 = enable
+    func load2022() {
+        changeYear(YearSegment.segment2022)
+        redeal()
     }
     
     func enable2020(_ enable: Bool) {
         maj.enable2020 = enable
+    }
+    
+    func enable2021(_ enable: Bool) {
+        maj.enable2021 = enable
+    }
+    
+    func enable2022(_ enable: Bool) {
+        maj.enable2022 = enable
     }
     
     func showGame() {
