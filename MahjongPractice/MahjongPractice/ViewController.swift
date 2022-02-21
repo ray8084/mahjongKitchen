@@ -7,6 +7,8 @@
 
 import UIKit
 
+enum ErrorId: Int { case swapInHand = 801, toCharlestonOut, swapInRack, toRack, toDiscard, charlestonToHand, rackToDiscard }
+
 class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, SettingsDelegate, ValidationViewDelegate  {
     
     var revenueCat: RevenueCat!
@@ -1151,7 +1153,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             showHand()
             swapped = true
         } else {
-            // showDebugMessage(errorNumber: DebugError.swapInHand, description: "SwapInHand")
+            showDebugMessage(ErrorId.swapInHand)
         }
         return swapped
     }
@@ -1167,7 +1169,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             markJoker(tile, index: endIndex)
             swapped = true
         } else {
-            // showDebugMessage(errorNumber: DebugError.swapInRack, description: "SwapInRack")
+            showDebugMessage(ErrorId.swapInRack)
         }
         return swapped
     }
@@ -1188,7 +1190,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 }
                 moved = true
             } else {
-                // showDebugMessage(errorNumber: DebugError.moveToCharlestonOut, description: "MoveToCharlestonOut")
+                showDebugMessage(ErrorId.toCharlestonOut)
             }
         }
         return moved
@@ -1207,7 +1209,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 tileMatchView.update(maj)
                 moved = true
             } else {
-                // showDebugMessage(errorNumber: DebugError.moveToDiscard, description: "MoveToDiscard")
+                showDebugMessage(ErrorId.toDiscard)
             }
             rackingInProgress = false
         }
@@ -1248,7 +1250,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                     }
                 }
             } else {
-                // showDebugMessage(errorNumber: DebugError.moveToRack, description: "MoveToRack")
+                showDebugMessage(ErrorId.toRack)
             }
         }
         return moved
@@ -1285,7 +1287,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             botView.update(maj)
             label.text = maj.stateLabel()
         } else {
-            // showDebugMessage(errorNumber: DebugError.removeFromCharlestonOut, description: "CharlestonToHand")
+            showDebugMessage(ErrorId.charlestonToHand)
         }
         return removed
     }
@@ -1349,7 +1351,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 tileMatchView.update(maj)
                 moved = true
             } else {
-                // showDebugMessage(errorNumber: DebugError.moveFromRackToDiscard, description: "RackToDiscard")
+                showDebugMessage(ErrorId.rackToDiscard)
             }
         }
         return moved
@@ -1392,6 +1394,27 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     
     @objc func handleTapGestureDiscard(_ sender: UITapGestureRecognizer) {
         let _ = maj.isCharlestonActive() ? nextCharleston() : nextState()
+    }
+    
+    func showDebugMessage(_ errorId: ErrorId) {
+        if maj.techSupportDebug {
+            let title = "ErrorId: \(errorId.rawValue)"
+            var message = "Unknown"
+            switch(errorId) {
+                case .charlestonToHand: message = "Error moving from charleston to hand."
+                case .rackToDiscard: message = "Error moving from rack to discard."
+                case .swapInHand: message = "Error swapping in hand."
+                case .swapInRack: message = "Error swapping in rack."
+                case .toCharlestonOut: message = "Error moving to charleston out."
+                case .toDiscard: message = "Error moving to discard."
+                case .toRack: message = "Error moving to rack."
+            }
+            message += " Take a screenshot if possible and contact support@eightbam.com."
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Continue", style: .default, handler: {(action:UIAlertAction) in
+            }));
+            present(alert, animated: true, completion: nil)
+        }
     }
     
     

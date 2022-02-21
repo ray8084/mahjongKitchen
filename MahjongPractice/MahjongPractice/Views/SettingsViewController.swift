@@ -320,9 +320,11 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
         settingsBottom = Int(tapSwitch.frame.origin.y + tapSwitch.frame.height)
         addTapToDiscardHelpButton(x: xOffset + maxWidth - 60, y: nextOffset)
                 
-        //nextOffset = settingsBottom + 10
-        //let techSupportSwitch = addSwitch("Tech Support Debug Messages", y: nextOffset)
-        //settingsBottom = Int(techSupportSwitch.frame.origin.y + techSupportSwitch.frame.height)
+        nextOffset = settingsBottom + 10
+        let techSupportSwitch = addSwitch("Tech Support Debug Messages", y: nextOffset)
+        techSupportSwitch.isOn = maj.techSupportDebug
+        techSupportSwitch.addTarget(self, action: #selector(changeTechSupportDebug), for: .valueChanged)
+        settingsBottom = Int(techSupportSwitch.frame.origin.y + techSupportSwitch.frame.height)
                 
         let line  = addLine(x: xOffset, y: settingsBottom + 30)
         settingsBottom = Int(line.frame.origin.y + line.frame.height)
@@ -336,6 +338,10 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
         scrollView.addSubview(filterSwitch)
         addLabel(text, x: 60, y: y)
         return filterSwitch
+    }
+    
+    @objc private func changeTechSupportDebug(sender: UISwitch) {
+        maj.setTechSupportDebug( !maj.techSupportDebug )
     }
 
     
