@@ -32,7 +32,7 @@ public struct AppStoreHistory {
 // -----------------------------------------------------------------------------------------
 
 class RevenueCat {
-    var show2022 = false
+    var show2022 = true
     let defaults = UserDefaults.standard
     var gameDelegate: GameDelegate!
     var monthlyActive = false
@@ -252,6 +252,49 @@ class RevenueCat {
         gameDelegate.enable2021(true)
         gameDelegate.enable2020(true)
         gameDelegate.load2021()
+    }
+    
+    func restoreAll() {
+        Purchases.shared.restoreTransactions { (info, error) in
+            self.purchaseMenu.restoreTimer.invalidate()
+            if let e = error {
+                self.purchaseMenu.alertForRestore.dismiss(animated: true, completion: {
+                    self.purchaseMenu.showRetryRestoreAll(error: (e as NSError).localizedDescription)
+                })
+            } else if self.findEntitlements(info) {
+                // todo
+            } else {
+                self.purchaseMenu.alertForRestore.dismiss(animated: true, completion: {
+                    self.purchaseMenu.showRetryRestoreAll(error: "In-app purchases are not active. For help contact support@eightbam.com")
+                })
+            }
+        }
+    }
+    
+    func findEntitlements(_ info: Purchases.PurchaserInfo?) -> Bool {
+        if info?.entitlements["Patterns2022"]?.isActive == true {
+            purchased2022 = true
+            defaults.set(purchased2022, forKey: "purchased2022")
+        }
+        if info?.entitlements["Patterns2021"]?.isActive == true {
+            purchased2021 = true
+            defaults.set(purchased2021, forKey: "purchased2021")
+        }
+        if info?.entitlements["Monthly"]?.isActive == true {
+            monthlyActive = true
+            defaults.set(self.monthlyActive, forKey: "monthlyActive")
+        }
+        if purchased2022 || purchased2021 || monthlyActive {
+            purchaseMenu.alertForRestore.dismiss(animated: true, completion: {
+                self.purchaseMenu.close()
+            })
+        }
+        // gameDelegate.enable2022(purchased2022)
+        gameDelegate.enable2021(purchased2021)
+        gameDelegate.enable2020(purchased2022 || purchased2021 || monthlyActive)
+        gameDelegate.load2021()
+        // gameDelegate.load2022()
+        return purchased2022 || purchased2021 || monthlyActive
     }
     
     func restore2021() {
@@ -627,7 +670,7 @@ class PurchaseMenu: UIViewController {
         restoreButton = UIButton(frame: CGRect(x: (width()-220)/2, y: y, width: 220, height: 44))
         restoreButton.layer.cornerRadius = 5
         restoreButton.titleLabel!.font = UIFont.systemFont(ofSize: 20)
-        restoreButton.setTitle("Restore Purchase", for: .normal)
+        restoreButton.setTitle("Restore Purchases", for: .normal)
         restoreButton.backgroundColor = .lightGray
         restoreButton.addTarget(self, action: #selector(showRestoreMenu), for: .touchUpInside)
         view.addSubview(restoreButton)
@@ -654,6 +697,16 @@ class PurchaseMenu: UIViewController {
         alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: {(action:UIAlertAction) in
             self.showConnectMessageForRestore()
             self.revenueCat.restore2021()
+        }));
+        present(alert, animated: false, completion: nil)
+    }
+    
+    func showRetryRestoreAll(error: String) {
+        let alert = UIAlertController(title: "", message: error, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action:UIAlertAction) in }));
+        alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: {(action:UIAlertAction) in
+            self.showConnectMessageForRestore()
+            self.revenueCat.restoreAll()
         }));
         present(alert, animated: false, completion: nil)
     }
@@ -705,6 +758,18 @@ class PurchaseMenu: UIViewController {
     }
     
     @objc func showRestoreMenu() {
+        let message = "Restore previous purchases on a new device, a second device or after deleting and reinstalling. For help support@eightbam.com."
+        let alert = UIAlertController(title: "Restore Purchase", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Restore", style: .default, handler: {(action:UIAlertAction) in
+            self.showConnectMessageForRestore()
+            self.revenueCat.restoreAll()
+        }));
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action:UIAlertAction) in
+        }));
+        present(alert, animated: false, completion: nil)
+    }
+        
+    @objc func showRestoreMenuOld() {
         let message = "Restore 2021 Access or Monthly Access on a new device, a second device or after deleting. For help  support@eightbam.com."
         let alert = UIAlertController(title: "Restore Purchase", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "2021 Access", style: .default, handler: {(action:UIAlertAction) in
