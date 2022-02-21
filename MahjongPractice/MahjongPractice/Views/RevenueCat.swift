@@ -436,7 +436,9 @@ class PurchaseMenu: UIViewController {
             planText = addText("Buy \(revenueCat.getCurrentYear()) Pattern Access with a one time purchase.", y: yOffset + 37, height: 65)
             addPurchaseButton(y: yOffset + 95)
             addRestoreButton(y: yOffset + 155)
-            addMonthlyButton(y: yOffset + 155)
+            if revenueCat.show2022 == false {
+                addMonthlyButton(y: yOffset + 155)
+            }
             let _ = addText("support@eightbam.com", y: yOffset + 265, height: 30)
             addCloseButton(y: yOffset + 20)
             loaded = true
