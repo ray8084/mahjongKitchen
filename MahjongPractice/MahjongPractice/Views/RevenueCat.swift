@@ -38,11 +38,14 @@ class RevenueCat {
     var monthlyActive = false
     var monthlyTrialActive = false
     var package2021: Purchases.Package!
+    var package2022: Purchases.Package!
     var packageMonthly: Purchases.Package!
     var packageMonthlyTrial: Purchases.Package!
     var purchased2021 = false
+    var purchased2022 = false
     var purchaseMenu: PurchaseMenu!
     var price2021 = 0.0
+    var price2022 = 0.0
     var priceMonthly = 0.0
     var priceMonthlyTrial = 0.0
     var responseTimeoutSeconds = 360.0
@@ -54,6 +57,7 @@ class RevenueCat {
         self.gameDelegate = gameDelegate
         self.purchaseMenu = PurchaseMenu(revenueCat: self)
         purchased2021 = defaults.bool(forKey: "purchased2021")
+        purchased2022 = defaults.bool(forKey: "purchased2022")
         monthlyActive = defaults.bool(forKey: "monthlyActive")
         monthlyTrialActive = defaults.bool(forKey: "monthlyTrialActive")
     }
@@ -93,6 +97,9 @@ class RevenueCat {
                         self.priceMonthly = Double(truncating: package.product.price)
                         if self.priceMonthly > 1.50 && self.priceMonthly < 2.00 {
                             self.priceMonthly = 1.99
+                        }
+                        if self.priceMonthly > 2.50 && self.priceMonthly < 3.00 {
+                            self.priceMonthly = 2.99
                         }
                         self.purchaseMenu.updatePriceMonthly(self.priceMonthly)
                     }
@@ -539,7 +546,9 @@ class PurchaseMenu: UIViewController {
             purchaseButton.setTitle("Connecting...", for: .normal)
             purchaseButton.isEnabled = false
         } else {
-            purchaseButton.setTitle("$\(revenueCat.price2021) for 2021", for: .normal)
+            let price = revenueCat.price2021
+            let year = revenueCat.getCurrentYear()
+            purchaseButton.setTitle("$\(price) for \(year)", for: .normal)
             purchaseButton.isEnabled = true
         }
         purchaseButton.backgroundColor = UIColor(red: 255/255, green: 153/255, blue: 0, alpha: 1.0);
@@ -576,7 +585,8 @@ class PurchaseMenu: UIViewController {
     }
     
     func updatePrice2021(_ price: Double) {
-        purchaseButton.setTitle("$\(price) for 2021", for: .normal)
+        let year = revenueCat.getCurrentYear()
+        purchaseButton.setTitle("$\(price) for \(year)", for: .normal)
         purchaseButton.isEnabled = true
     }
     
