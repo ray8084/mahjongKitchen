@@ -8,6 +8,8 @@
 import UIKit
 import Purchases
 
+var show2022 = false
+
 protocol GameDelegate {
     func redeal()
     func load2021()
@@ -32,7 +34,6 @@ public struct AppStoreHistory {
 // -----------------------------------------------------------------------------------------
 
 class RevenueCat {
-    var show2022 = true
     let defaults = UserDefaults.standard
     var gameDelegate: GameDelegate!
     var monthlyActive = false
@@ -94,14 +95,14 @@ class RevenueCat {
                     if package.product.productIdentifier == "com.eightbam.mahjong2019.patterns2021" {
                         self.package2021 = package
                         self.price2021 = Double(truncating: package.product.price)
-                        if self.show2022 == false {
+                        if show2022 == false {
                             self.purchaseMenu.updatePurchaseButton(self.price2021)
                         }
                     }
                     if package.product.productIdentifier == "com.eightbam.mahjongpractice.patterns2022" {
                         self.package2022 = package
                         self.price2022 = Double(truncating: package.product.price)
-                        if self.show2022 == true {
+                        if show2022 == true {
                             self.purchaseMenu.updatePurchaseButton(self.price2022)
                         }
                     }
@@ -262,7 +263,7 @@ class RevenueCat {
                     self.purchaseMenu.showRetryRestoreAll(error: (e as NSError).localizedDescription)
                 })
             } else if self.findEntitlements(info) {
-                // todo
+                self.completeRestore()
             } else {
                 self.purchaseMenu.alertForRestore.dismiss(animated: true, completion: {
                     self.purchaseMenu.showRetryRestoreAll(error: "In-app purchases are not active. For help contact support@eightbam.com")
@@ -284,6 +285,10 @@ class RevenueCat {
             monthlyActive = true
             defaults.set(self.monthlyActive, forKey: "monthlyActive")
         }
+        return purchased2022 || purchased2021 || monthlyActive
+    }
+    
+    func completeRestore() {
         if purchased2022 || purchased2021 || monthlyActive {
             purchaseMenu.alertForRestore.dismiss(animated: true, completion: {
                 self.purchaseMenu.close()
@@ -294,7 +299,6 @@ class RevenueCat {
         gameDelegate.enable2020(purchased2022 || purchased2021 || monthlyActive)
         gameDelegate.load2021()
         // gameDelegate.load2022()
-        return purchased2022 || purchased2021 || monthlyActive
     }
     
     func restore2021() {
@@ -479,7 +483,7 @@ class PurchaseMenu: UIViewController {
             planText = addText("Buy \(revenueCat.getCurrentYear()) Pattern Access with a one time purchase.", y: yOffset + 37, height: 65)
             addPurchaseButton(y: yOffset + 95)
             addRestoreButton(y: yOffset + 155)
-            if revenueCat.show2022 == false {
+            if show2022 == false {
                 addMonthlyButton(y: yOffset + 155)
             }
             let _ = addText("support@eightbam.com", y: yOffset + 265, height: 30)
@@ -649,12 +653,14 @@ class PurchaseMenu: UIViewController {
     }
     
     func updatePriceMonthly(_ price: Double) {
-        monthlyButton.setTitle("$\(price) Per Month", for: .normal)
-        monthlyButton.isEnabled = true
-        monthlyButton.isHidden = false
-        planText.text = "Buy \(revenueCat.getCurrentYear()) with a one time purchase OR pay per month and cancel anytime. Both plans include all features."
-        restoreButton.removeFromSuperview()
-        addRestoreButton(y: yOffset + 215)
+        if show2022 == false {
+            monthlyButton.setTitle("$\(price) Per Month", for: .normal)
+            monthlyButton.isEnabled = true
+            monthlyButton.isHidden = false
+            planText.text = "Buy \(revenueCat.getCurrentYear()) with a one time purchase OR pay per month and cancel anytime. Both plans include all features."
+            restoreButton.removeFromSuperview()
+            addRestoreButton(y: yOffset + 215)
+        }
     }
     
     func showConnectMessageForPurchase() {
