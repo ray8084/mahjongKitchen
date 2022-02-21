@@ -276,14 +276,17 @@ class RevenueCat {
         if info?.entitlements["Patterns2022"]?.isActive == true {
             purchased2022 = true
             defaults.set(purchased2022, forKey: "purchased2022")
+            purchaseMenu.showMessage("Restored 2022 Pattern Access")
         }
         if info?.entitlements["Patterns2021"]?.isActive == true {
             purchased2021 = true
             defaults.set(purchased2021, forKey: "purchased2021")
+            purchaseMenu.showMessage("Restored 2021 Pattern Access")
         }
         if info?.entitlements["Monthly"]?.isActive == true {
             monthlyActive = true
             defaults.set(self.monthlyActive, forKey: "monthlyActive")
+            purchaseMenu.showMessage("Restored Monthly Access")
         }
         return purchased2022 || purchased2021 || monthlyActive
     }
@@ -757,8 +760,8 @@ class PurchaseMenu: UIViewController {
         present(alert, animated: false, completion: nil)
     }
     
-    func showErrorMessage(error: String) {
-        let alert = UIAlertController(title: "", message: error, preferredStyle: .alert)
+    func showMessage(_ message: String) {
+        let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: {(action:UIAlertAction) in }));
         present(alert, animated: false, completion: nil)
     }
@@ -793,13 +796,13 @@ class PurchaseMenu: UIViewController {
 
     @objc func purchaseTimeout() {
         alertForPurchase.dismiss(animated: true, completion: {
-            self.showErrorMessage(error: "Purchase Timeout")
+            self.showMessage("Purchase Timeout")
         })
     }
     
     @objc func restoreTimeout() {
         alertForRestore.dismiss(animated: true, completion: {
-            self.showErrorMessage(error: "Restore Timeout")
+            self.showMessage("Restore Timeout")
         })
     }
     
