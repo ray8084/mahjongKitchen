@@ -665,7 +665,7 @@ class PurchaseMenu: UIViewController {
         purchaseButton.isEnabled = true
     }
     
-    // todo reopen montly subscriptions
+    // todo reopen monthly subscriptions
     func updatePriceMonthly(_ price: Double) {
         /*monthlyButton.setTitle("$\(price) Per Month", for: .normal)
         monthlyButton.isEnabled = true
