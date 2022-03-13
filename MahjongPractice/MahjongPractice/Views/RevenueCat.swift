@@ -111,6 +111,9 @@ class RevenueCat {
                         if self.priceMonthly > 2.50 && self.priceMonthly < 3.00 {
                             self.priceMonthly = 2.99
                         }
+                        if self.priceMonthly > 3.50 && self.priceMonthly < 4.00 {
+                            self.priceMonthly = 3.99
+                        }
                         self.purchaseMenu.updatePriceMonthly(self.priceMonthly)
                     }
                     //if package.product.productIdentifier == "com.eightbam.mahjongpractice.monthlyTrial" {
@@ -428,6 +431,7 @@ class PurchaseMenu: UIViewController {
     var alertForPurchase = UIAlertController()
     var alertForRestore = UIAlertController()
     var backgroundImageView: UIImageView!
+    var purchaseHelp: PurchaseHelp!
     var loaded = false
     var monthlyButton = UIButton()
     var planText = UITextView()
@@ -439,10 +443,11 @@ class PurchaseMenu: UIViewController {
     var revenueCat: RevenueCat!
     var settingsViewController: SettingsViewController!
     var yOffset = 0
-    
+        
     init(revenueCat: RevenueCat) {
         super.init(nibName: nil, bundle: nil)
         self.revenueCat = revenueCat
+        self.purchaseHelp = PurchaseHelp(revenueCat: revenueCat)
     }
     
     required init?(coder: NSCoder) {
@@ -472,7 +477,7 @@ class PurchaseMenu: UIViewController {
     
     func setBackground(){
         view.backgroundColor = revenueCat.viewController.view.backgroundColor
-        backgroundImageView?.removeFromSuperview()
+        /*backgroundImageView?.removeFromSuperview()
         let background = UIImage(named: "TRANS-ICON-WHITE.png")
         backgroundImageView = UIImageView(frame: view.bounds)
         backgroundImageView.contentMode =  UIView.ContentMode.scaleAspectFill
@@ -481,7 +486,7 @@ class PurchaseMenu: UIViewController {
         backgroundImageView.center = view.center
         backgroundImageView.alpha = 0.15
         view.addSubview(backgroundImageView)
-        view.sendSubviewToBack(backgroundImageView)
+        view.sendSubviewToBack(backgroundImageView)*/
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -494,11 +499,27 @@ class PurchaseMenu: UIViewController {
             planText = addText("Buy \(revenueCat.getCurrentYear()) Pattern Access with a one time purchase.", y: yOffset + 37, height: 65)
             addPurchaseButton(y: yOffset + 95)
             addMonthlyButton(y: yOffset + 155)
-            addRestoreButton(y: yOffset + 155 + (155-95))
+            addRestoreButton(y: yOffset + 215)
             let _ = addText("support@eightbam.com", y: yOffset + 265, height: 30)
             addCloseButton(y: yOffset + 20)
+            addHelpButton(y: yOffset + 300 - 30 - 20)
             loaded = true
         }
+    }
+    
+    func addHelpButton(y: Int) {
+        let x = Int(purchaseView.frame.maxX - 50)
+        let button = UIButton(frame: CGRect(x: x, y: y, width: 30, height: 30))
+        let image = UIImage(named: "iconfinder_circle-26_600774.png")
+        button.setImage(image, for: .normal)
+        button.alpha = 0.5
+        button.imageView?.contentMode = .scaleAspectFit
+        button.addTarget(self, action: #selector(showPurchaseHelp), for: .touchUpInside)
+        self.view.addSubview(button)
+    }
+    
+    @objc func showPurchaseHelp() {
+        show(purchaseHelp, sender: self)
     }
     
     func addCloseButton(y: Int) {
@@ -853,6 +874,126 @@ class PurchaseMenu: UIViewController {
         }));
         self.settingsViewController.present(alert, animated: false, completion: nil)
     }
+}
+
+
+
+// -----------------------------------------------------------------------------------------
+//
+//  Purchase Help
+//
+// -----------------------------------------------------------------------------------------
+
+class PurchaseHelp: UIViewController {
+    var backgroundImageView: UIImageView!
+    var helpView = UIView()
+    var loaded = false
+    var revenueCat: RevenueCat!
+    var yOffset = 0
     
+    init(revenueCat: RevenueCat) {
+        super.init(nibName: nil, bundle: nil)
+        self.revenueCat = revenueCat
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override var shouldAutorotate: Bool {
+        return true
+    }
+    
+    override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
+        return .landscape
+    }
+        
+    override func loadView() {
+        view = UIView()
+     }
+
+    func addHelpView() {
+        helpView.backgroundColor = .white
+        let x = Int(width() - 550) / 2
+        let y = Int(height() - 300) / 2
+        helpView.frame = CGRect(x: x, y: y, width: 550, height: 300)
+        helpView.layer.cornerRadius = 20
+        view.addSubview(helpView)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        if loaded == false {
+            yOffset = Int(height() - 300) / 2
+            setBackground()
+            addHelpView()
+            addTitle("$\(revenueCat.getCurrentPrice()) for \(revenueCat.getCurrentYear())", y: yOffset + 20);
+            addText("Access to \(revenueCat.getCurrentYear()) patterns. This option is like buying your Mahjong card in April every year. It's not a subscription. It doesn't renew. It doesn't expire.", y: yOffset + 45, height: 70)
+            addTitle("$\(revenueCat.priceMonthly) Per Month", y: yOffset + 120);
+            addText("Monthly subscription. Cancel anytime. Includes access to new patterns every year.", y: yOffset + 145, height: 55)
+            addTitle("Restore Purchases", y: yOffset + 200);
+            addText("Reinstall or install on a second device. If you purchase on your iPhone you can install on your iPad and use both.", y: yOffset + 225, height: 55)
+            addCloseButton(y: yOffset + 20)
+            loaded = true
+        }
+    }
+   
+    func setBackground(){
+        view.backgroundColor = revenueCat.viewController.view.backgroundColor
+        /*backgroundImageView?.removeFromSuperview()
+        let background = UIImage(named: "TRANS-ICON-WHITE.png")
+        backgroundImageView = UIImageView(frame: view.bounds)
+        backgroundImageView.contentMode =  UIView.ContentMode.scaleAspectFill
+        backgroundImageView.clipsToBounds = true
+        backgroundImageView.image = background
+        backgroundImageView.center = view.center
+        backgroundImageView.alpha = 0.15
+        view.addSubview(backgroundImageView)
+        view.sendSubviewToBack(backgroundImageView)*/
+    }
+    
+    func addCloseButton(y: Int) {
+        let x = Int(helpView.frame.maxX - 50)
+        let closeButton = UIButton(frame: CGRect(x: x, y: y, width: 30, height: 30))
+        let image = UIImage(named: "iconfinder_circle-02_600789.png")
+        closeButton.setImage(image, for: .normal)
+        closeButton.imageView?.contentMode = .scaleAspectFit
+        closeButton.addTarget(self, action: #selector(closeButtonAction), for: .touchUpInside)
+        self.view.addSubview(closeButton)
+    }
+    
+    @objc func closeButtonAction(sender: UIButton!) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func width() -> Int {
+        Int(view.frame.width)
+    }
+    
+    func height() -> Int {
+        Int(view.frame.height)
+    }
+   
+    func addTitle(_ text: String, y: Int) {
+        let offset = (width() - 400) / 2
+        let title = UILabel(frame: CGRect(x: offset, y: y, width: 400, height: 35))
+        title.text = text
+        title.font = UIFont.boldSystemFont(ofSize: 18)
+        title.textAlignment = .center
+        title.textColor = .black
+        title.backgroundColor = .white
+        view.addSubview(title)
+    }
+    
+    func addText(_ text: String, y: Int, height: Int) {
+        let offset = (width() - 455) / 2
+        let label = UITextView(frame: CGRect(x: offset, y: y, width: 455, height: height))
+        label.text = text
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textAlignment = .center
+        label.textColor = .black
+        label.backgroundColor = .white
+        label.isUserInteractionEnabled = false
+        view.addSubview(label)
+    }
     
 }
