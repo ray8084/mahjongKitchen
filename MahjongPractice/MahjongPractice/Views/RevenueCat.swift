@@ -493,12 +493,8 @@ class PurchaseMenu: UIViewController {
             addTitle("\(revenueCat.getCurrentYear()) Pattern Access", y: yOffset)
             planText = addText("Buy \(revenueCat.getCurrentYear()) Pattern Access with a one time purchase.", y: yOffset + 37, height: 65)
             addPurchaseButton(y: yOffset + 95)
-            addRestoreButton(y: yOffset + 155)
-            
-            // todo reenable monthly subscriptions
-            if false { //
-                addMonthlyButton(y: yOffset + 155)
-            }
+            addMonthlyButton(y: yOffset + 155)
+            addRestoreButton(y: yOffset + 155 + (155-95))
             let _ = addText("support@eightbam.com", y: yOffset + 265, height: 30)
             addCloseButton(y: yOffset + 20)
             loaded = true
@@ -665,14 +661,13 @@ class PurchaseMenu: UIViewController {
         purchaseButton.isEnabled = true
     }
     
-    // todo reopen monthly subscriptions
     func updatePriceMonthly(_ price: Double) {
-        /*monthlyButton.setTitle("$\(price) Per Month", for: .normal)
+        monthlyButton.setTitle("$\(price) Per Month", for: .normal)
         monthlyButton.isEnabled = true
         monthlyButton.isHidden = false
         planText.text = "Buy \(revenueCat.getCurrentYear()) with a one time purchase OR pay per month and cancel anytime. Both plans include all features."
         restoreButton.removeFromSuperview()
-        addRestoreButton(y: yOffset + 215)*/
+        addRestoreButton(y: yOffset + 215)
     }
     
     func showConnectMessageForPurchase() {
