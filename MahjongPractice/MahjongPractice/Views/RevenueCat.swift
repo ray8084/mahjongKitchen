@@ -152,7 +152,7 @@ class RevenueCat {
     }
         
     func purchase2022() {
-        Purchases.shared.purchasePackage(package2021) { (transaction, info, error, userCancelled) in
+        Purchases.shared.purchasePackage(package2022) { (transaction, info, error, userCancelled) in
             self.purchaseMenu.purchaseTimer.invalidate()
             if error != nil {
                 self.purchaseMenu.alertForPurchase.dismiss(animated: false, completion: {
@@ -711,7 +711,7 @@ class PurchaseMenu: UIViewController {
         purchaseButton = UIButton(frame: CGRect(x: (width()-220)/2, y: y, width: 220, height: 44))
         purchaseButton.layer.cornerRadius = 5
         purchaseButton.titleLabel!.font = UIFont.systemFont(ofSize: 20)
-        if revenueCat.price2021 == 0.0 {
+        if revenueCat.price2022 == 0.0 {
             purchaseButton.setTitle("Connecting...", for: .normal)
             purchaseButton.isEnabled = false
         } else {
@@ -722,7 +722,7 @@ class PurchaseMenu: UIViewController {
         }
         purchaseButton.backgroundColor = UIColor(red: 255/255, green: 153/255, blue: 0, alpha: 1.0);
         purchaseButton.setTitleColor(.black, for: .normal)
-        purchaseButton.addTarget(self, action: #selector(purchase2021ButtonAction), for: .touchUpInside)
+        purchaseButton.addTarget(self, action: #selector(purchase2022ButtonAction), for: .touchUpInside)
         view.addSubview(purchaseButton)
     }
     
@@ -743,7 +743,7 @@ class PurchaseMenu: UIViewController {
         view.addSubview(monthlyButton)
     }
 
-    @objc func purchase2021ButtonAction(sender: UIButton!) {
+    @objc func purchase2022ButtonAction(sender: UIButton!) {
         showConnectMessageForPurchase()
         revenueCat.purchase2022()
     }
