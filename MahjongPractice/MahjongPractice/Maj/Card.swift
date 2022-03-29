@@ -838,7 +838,7 @@ class Card {
     }
     
     func add1234_3434_2() {
-        let p = add("111 2222 333 4444", mask: "ggg gggg rrr rrrr", note: "Any 4 Consec. Nos.",  family: Family.run, concealed: false, points: 25)
+        let p = add("111 2222 333 4444", mask: "ggg gggg rrr rrrr", note: "Any Run",  family: Family.run, concealed: false, points: 25)
         for i in 1...6 {
             let d = i
             let b = i+10
@@ -853,7 +853,7 @@ class Card {
     }
     
     func addF123_2444_1() {
-        let p = add("FF 1111 2222 3333", mask: "00 0000 0000 0000", note: "Any Run",  family: Family.run, concealed: false, points: 25)
+        let p = add("FF 1111 2222 3333", mask: "00 0000 0000 0000", note: "Any 1 Suit, Any       Run",  family: Family.run, concealed: false, points: 25)
         for i in 1...7 {
             let d = i
             let b = i+10
@@ -876,6 +876,18 @@ class Card {
         }
     }
     
+    func addF123D_42233_1() {
+        let p = add("FFFF 11 22 333 DDD", mask: "0000 00 00 000 000", note: "Any Run, Matching Dragons",  family: Family.run, concealed: false, points: 25)
+        for i in 1...7 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p.add([35,35,35,35, d,d, d+1,d+1, d+2,d+2,d+2, 10,10,10])
+            p.add([35,35,35,35, b,b, b+1,b+1, b+2,b+2,b+2, 20,20,20])
+            p.add([35,35,35,35, c,c, c+1,c+1, c+2,c+2,c+2, 30,30,30])
+        }
+    }
+    
     func addF123_2444_3() {
         let p = add("FF 1111 2222 3333", mask: "00 gggg rrrr 0000", note: "Any 3 Suits, Any Run",  family: Family.run, concealed: false, points: 25)
         for i in 1...7 {
@@ -892,7 +904,7 @@ class Card {
     }
     
     func add12344_22244_3() {
-        let p = add("11 22 33 4444 4444", mask: "gg gg gg rrrr 0000", note: "Any 3 Suits, Any 4 Consec Nos.",  family: Family.run, concealed: false, points: 30)
+        let p = add("11 22 33 4444 4444", mask: "gg gg gg rrrr 0000", note: "Any 3 Suits, Any Run",  family: Family.run, concealed: false, points: 30)
         for i in 1...6 {
             let d = i
             let b = i+10
@@ -915,8 +927,23 @@ class Card {
         }
     }
     
+    func addF1F2_3434_2() {
+        let p = add("FFF 1111 FFF 2222", mask: "000 gggg 000 rrrr", note: "Any 2 Suits, Any Run",  family: Family.run, concealed: false, points: 25)
+        for i in 1...8 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p.add([35,35,35, d,d,d,d, 35,35,35, b+1,b+1,b+1,b+1])
+            p.add([35,35,35, d,d,d,d, 35,35,35, c+1,c+1,c+1,c+1])
+            p.add([35,35,35, b,b,b,b, 35,35,35, d+1,d+1,d+1,d+1])
+            p.add([35,35,35, b,b,b,b, 35,35,35, c+1,c+1,c+1,c+1])
+            p.add([35,35,35, c,c,c,c, 35,35,35, d+1,d+1,d+1,d+1])
+            p.add([35,35,35, c,c,c,c, 35,35,35, b+1,b+1,b+1,b+1])
+        }
+    }
+    
     func add1234D_12344_1() {
-        let p = add("1 22 333 4444 DDDD", mask: "0 00 000 0000 0000", note: "Any 1 Suit, Any 4 Consec, Matching Dragons",  family: Family.run, concealed: false, points: 25)
+        let p = add("1 22 333 4444 DDDD", mask: "0 00 000 0000 0000", note: "Any 1 Suit, Any Run, Matching Dragons",  family: Family.run, concealed: false, points: 25)
         for i in 1...6 {
             let d = i
             let b = i+10
@@ -929,7 +956,7 @@ class Card {
     
     
     func addF12D_2444_1() {
-        let p = add("FF 1111 2222 DDDD", mask: "00 0000 0000 0000", note: "Any 2 Consec. Nos.",  family: Family.run, concealed: false, points: 25)
+        let p = add("FF 1111 2222 DDDD", mask: "00 0000 0000 0000", note: "Any Run",  family: Family.run, concealed: false, points: 25)
         for i in 1...8 {
             let d = i
             let b = i+10
@@ -941,7 +968,7 @@ class Card {
     }
     
     func addF12D_4442_1() {
-        let p = add("FFFF 1111 2222 DD", mask: "0000 0000 0000 00", note: "Any 2 Consec. Nos.",  family: Family.run, concealed: false, points: 25)
+        let p = add("FFFF 1111 2222 DD", mask: "0000 0000 0000 00", note: "Any Run",  family: Family.run, concealed: false, points: 25)
         for i in 1...8 {
             let d = i
             let b = i+10
@@ -976,8 +1003,20 @@ class Card {
         }
     }
     
+    func add1234_3344_1() {
+        let p = add("111 222 3333 4444", mask: "000 000 0000 0000", note: "Any 1 Suit, Any Run",  family: Family.run, concealed: false, points: 25)
+        for i in 1...6 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p.add([d,d,d, d+1,d+1,d+1, d+2,d+2,d+2,d+2, d+3,d+3,d+3,d+3])
+            p.add([b,b,b, b+1,b+1,b+1, b+2,b+2,b+2,b+2, b+3,b+3,b+3,b+3])
+            p.add([c,c,c, c+1,c+1,c+1, c+2,c+2,c+2,c+2, c+3,c+3,c+3,c+3])
+        }
+    }
+ 
     func add1234_3344_2() {
-        let p = add("111 222 3333 4444", mask: "ggg ggg rrrr rrrr", note: "Any 4 Consec. Nos.",  family: Family.run, concealed: false, points: 25)
+        let p = add("111 222 3333 4444", mask: "ggg ggg rrrr rrrr", note: "Any 2 Suits, Any Run",  family: Family.run, concealed: false, points: 25)
         for i in 1...6 {
             let d = i
             let b = i+10
@@ -990,7 +1029,7 @@ class Card {
             p.add([c,c,c, c+1,c+1,c+1, b+2,b+2,b+2,b+2, b+3,b+3,b+3,b+3])
         }
     }
- 
+    
     func add12345_22244_3() {
         let p = add("11 22 33 4444 5555", mask: "gg gg gg rrrr 0000", note: "Any 5 Consec. Nos.",  family: Family.run, concealed: false, points: 30)
         for i in 1...5 {
@@ -1063,8 +1102,32 @@ class Card {
         }
     }
     
+    func add122123_323323_2_C() {
+        let p = add("111 2 333 111 2 333 (C)", mask: "ggg g ggg rrr r rrr", note: "Any 2 Suits, Any Run",  family: Family.run, concealed: true, points: 25)
+        for i in 1...7 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p.add([d,d,d, d+1, d+2,d+2,d+2, b,b,b, b+1, b+2,b+2,b+2])
+            p.add([d,d,d, d+1, d+2,d+2,d+2, c,c,c, c+1, c+2,c+2,c+2])
+            p.add([b,b,b, b+1, b+2,b+2,d+2, c,c,c, c+1, c+2,c+2,c+2])
+        }
+    }
+    
+    func add1212D_23234_3() {
+        let p = add("11 222 11 222 DDDD", mask: "gg ggg rr rrr 0000", note: "Any 3 Suits, Any Run, Opp Dragons",  family: Family.run, concealed: false, points: 25)
+        for i in 1...8 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p.add([d,d, d+1,d+1,d+1, b,b, b+1,b+1,b+1, 30,30,30,30])
+            p.add([d,d, d+1,d+1,d+1, c,c, c+1,c+1,c+1, 20,20,20,20])
+            p.add([b,b, b+1,b+1,b+1, c,c, c+1,c+1,c+1, 10,10,10,10])
+        }
+    }
+    
     func add12223_42224_3() {
-        let p = add("1111 22 22 22 3333", mask: "gggg rr gg 00 gggg", note: "Any 3 Consec. Nos.",  family: Family.run, concealed: false, points: 30)
+        let p = add("1111 22 22 22 3333", mask: "gggg rr gg 00 gggg", note: "Any Run, Pairs in the Middle",  family: Family.run, concealed: false, points: 30)
         for i in 1...7 {
             let d = i
             let b = i+10
