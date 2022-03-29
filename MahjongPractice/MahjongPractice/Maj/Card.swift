@@ -106,6 +106,7 @@ class Card {
         //print(index)
         //print(m.length)
         
+        // Assumes (C) in the concealed string, if this crashes check it
         if concealed {
             for i in index...m.length-1 {
                 let black = [NSAttributedString.Key.foregroundColor: UIColor.black]

@@ -52,19 +52,57 @@ class Card2022 : Card {
         p6.add([31,31, 34,34,34, 12,10,12,12, 33,33,33, 32,32])
         p6.add([31,31, 34,34,34, 22,10,22,22, 33,33,33, 32,32])
         
-        let p = add("FF 2022 2022 2022 (C)", mask: "00 gggg rrrr 0000", note: "Any 3 Suits",  family: Family.pairs, concealed: true, points: 85)
+        let p = add("FF 2022 2022 2022 (C)", mask: "00 gggg rrrr 0000", note: "Any 3 Suits",  family: Family.year, concealed: true, points: 85)
         p.add([35,35, 2,10,2,2, 12,10,12,12, 22,10,22,22])
     }
 
     func add2468() {
-        /*add24F68_23432_1()
-        add2468_3434_2()
-        add2468D_22334_1()
-        addF2468_24224_2()
-        add2468_3344_3()
-        add2468_4442_1()
-        addFD2468D_2411114_3()
-        add246822_311333_3()*/
+        let p0 = add("FFF 22 44 666 8888", mask: "000 00 00 000 0000", note: "Any 1 Suit",  family: Family.f2468, concealed: false, points: 25)
+        p0.generateList()
+        
+        let p1 = add("22 46 88 2222 2222", mask: "gg gg gg rrrr 0000", note: "Any 2 Suits, Kongs Any Like Even No",  family: Family.f2468, concealed: false, points: 25)
+        p1.add([2,2, 4,6, 8,8, 12,12,12,12, 22,22,22,22])
+        p1.add([2,2, 4,6, 8,8, 14,14,14,14, 24,24,24,24])
+        p1.add([2,2, 4,6, 8,8, 16,16,16,16, 26,26,26,26])
+        p1.add([2,2, 4,6, 8,8, 18,18,18,18, 28,28,28,28])
+        p1.add([12,12, 14,16, 18,18, 2,2,2,2, 22,22,22,22])
+        p1.add([12,12, 14,16, 18,18, 4,4,4,4, 24,24,24,24])
+        p1.add([12,12, 14,16, 18,18, 6,6,6,6, 26,26,26,26])
+        p1.add([12,12, 14,16, 18,18, 8,8,8,8, 28,28,28,28])
+        p1.add([22,22, 24,26, 28,28, 2,2,2,2, 12,12,12,12])
+        p1.add([22,22, 24,26, 28,28, 4,4,4,4, 14,14,14,14])
+        p1.add([22,22, 24,26, 28,28, 6,6,6,6, 16,16,16,16])
+        p1.add([22,22, 24,26, 28,28, 8,8,8,8, 18,18,18,18])
+        
+        let p2 = add("222 444 6666 8888", mask: "ggg ggg rrrr rrrr", note: "Any 2 Suits",  family: Family.f2468, concealed: false, points: 25)
+        p2.generateList()
+        
+        let p3 = add("222 444 6666 8888", mask: "ggg ggg rrrr 0000", note: "Any 3 Suits",  family: Family.f2468, concealed: false, points: 25)
+        p3.generateList()
+        
+        let p4 = add("2222 44 6666 88 88", mask: "0000 00 0000 gg rr", note: "Any 3 Suits",  family: Family.f2468, concealed: false, points: 30)
+        p4.add([2,2,2,2, 4,4, 6,6,6,6, 18,18, 28,28])
+        p4.add([12,12,12,12, 14,14, 16,16,16,16, 8,8, 28,28])
+        p4.add([22,22,22,22, 24,24, 26,26,26,26, 8,8, 18,18])
+        
+        let p5 = add("22 444 66 888 DDDD", mask: "00 000 00 000 0000", note: "Any 1 Suit",  family: Family.f2468, concealed: false, points: 25)
+        p5.generateList()
+        
+        let p6 = add("22 444 66 888 DDDD", mask: "gg ggg rr rrr 0000", note: "Any 3 Suits",  family: Family.f2468, concealed: false, points: 25)
+        p6.generateList()
+        
+        let p7 = add("FFF 2222 FFF 8888", mask: "000 gggg 000 rrrr", note: "Any 2 Suits, These Nos Only",  family: Family.f2468, concealed: false, points: 30)
+        p7.add([35,35,35, 2,2,2,2, 35,35,35, 18,18,18,18])
+        p7.add([35,35,35, 2,2,2,2, 35,35,35, 28,28,28,28])
+        p7.add([35,35,35, 12,12,12,12, 35,35,35, 28,28,28,28])
+        
+        let p8 = add("22 444 44 666 8888", mask: "gg ggg rr rrr 0000", note: "Any 3 Suits",  family: Family.f2468, concealed: false, points: 25)
+        p8.generateList()
+       
+        let p9 = add("FF 246 888 246 888 (C)", mask: "00 ggg ggg rrr rrr", note: "Any 2 Suits",  family: Family.f2468, concealed: true, points: 30)
+        p9.add([35,35, 2,4,6, 8,8,8, 12,14,16, 18,18,18])
+        p9.add([35,35, 2,4,6, 8,8,8, 22,24,26, 28,28,28])
+        p9.add([35,35, 12,14,16, 18,18,18, 22,24,26, 28,28,28])
     }
     
     func addLikeNumbers() {
