@@ -153,19 +153,41 @@ class Card2022 : Card {
     }
     
     func add13579() {
-        /*add13579_23432_1()
+        add13579_23432_1()
         add13579_23432_3()
-        addF135D_22343_1()
-        addF579D_22343_1()
-        add1335_3434_2()
-        add5779_3434_2()
-        add13D35_23432_3()
-        add57D79_23432_3()
-        addF135_4424_1()
-        addF579_4424_1()
-        add13579_22244_3()
-        add13135_33332_C()
-        add57579_33332_C()*/
+        addF135_2444_1()
+        addF579_2444_1()
+        
+        let p2 = add("111 333 3333 5555", mask: "ggg ggg rrrr rrrr", note: "Any 2 Suits",  family: Family.f13579, concealed: false, points: 25)
+        p2.add([1,1,1, 3,3,3, 13,13,13,13, 15,15,15,15])
+        p2.add([1,1,1, 3,3,3, 23,23,23,23, 25,25,25,25])
+        p2.add([11,11,11, 13,13,13, 3,3,3,3, 5,5,5,5])
+        p2.add([11,11,11, 13,13,13, 23,23,23,23, 25,25,25,25])
+        p2.add([21,21,21, 23,23,23, 3,3,3,3, 5,5,5,5])
+        p2.add([21,21,21, 23,23,23, 13,13,13,13, 15,15,15,15])
+        
+        let p3 = add("555 777 7777 9999", mask: "ggg ggg rrrr rrrr", note: "Any 2 Suits",  family: Family.f13579, concealed: false, points: 25)
+        p3.add([5,5,5, 7,7,7, 17,17,17,17, 19,19,19,19])
+        p3.add([5,5,5, 7,7,7, 27,27,27,27, 29,29,29,29])
+        p3.add([15,15,15, 17,17,17, 7,7,7,7, 9,9,9,9])
+        p3.add([15,15,15, 17,17,17, 27,27,27,27, 29,29,29,29])
+        p3.add([25,25,25, 27,27,27, 7,7,7,7, 9,9,9,9])
+        p3.add([25,25,25, 27,27,27, 17,17,17,17, 19,19,19,19])
+        
+        let p4 = add("FFF 1111 3 5 7 9999", mask: "000 gggg r r r gggg", note: "Any 2 Suits, 1s and 9s Match",  family: Family.f13579, concealed: false, points: 25)
+        p4.generateList()
+        
+        let p5 = add("1111 333 5555 DDD", mask: "0000 000 0000 000", note: "Any 1 Suit, Matching Dragons",  family: Family.f13579, concealed: false, points: 25)
+        p5.generateList()
+        
+        let p6 = add("5555 777 9999 DDD", mask: "0000 000 0000 000", note: "Any 1 Suit, Matching Dragons",  family: Family.f13579, concealed: false, points: 25)
+        p6.generateList()
+        
+        add13135_23234_3()
+        add57579_23234_3()
+
+        let p14 = add("FF 1 33 555 5 77 999 (C)", mask: "00 g gg ggg r rr rrr", note: "Any 2 Suits",  family: Family.f13579, concealed: true, points: 30)
+        p14.generateList()
     }
 
     func addWindsAndDragons() {

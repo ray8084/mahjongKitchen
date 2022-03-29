@@ -1317,6 +1317,13 @@ class Card {
         p.generateList()
     }
     
+    func add13135_23234_3() {
+        let p = add("11 333 11 333 5555", mask: "gg ggg rr rrr 0000", note: "Any 3 Suits",  family: Family.f13579, concealed: false, points: 25)
+        p.add([1,1, 3,3,3, 11,11, 13,13,13, 25,25,25,25])
+        p.add([1,1, 3,3,3, 21,21, 23,23,23, 15,15,15,15])
+        p.add([11,11, 13,13,13, 21,21, 23,23,23, 5,5,5,5])
+    }
+    
     func add13135_33332_C() {
         let p = add("111 333 111 333 55 (C)", mask: "ggg ggg rrr rrr 00", note: "Any 3 Suits",  family: Family.f13579, concealed: true, points: 30)
         p.add([1,1,1, 3,3,3, 11,11,11, 13,13,13, 25,25])
@@ -1336,6 +1343,13 @@ class Card {
         p.generateList()
     }
         
+    func add57579_23234_3() {
+        let p = add("55 777 55 777 9999", mask: "gg ggg rr rrr 0000", note: "Any 3 Suits",  family: Family.f13579, concealed: false, points: 25)
+        p.add([5,5, 7,7,7, 15,15, 17,17,17, 29,29,29,29])
+        p.add([5,5, 7,7,7, 25,25, 27,27,27, 19,19,19,19])
+        p.add([15,15, 17,17,17, 25,25, 27,27,27, 9,9,9,9])
+    }
+    
     func addF1F5_3434_1() {
         let p = add("FFF 1111 FFF 5555", mask: "000 0000 000 0000", note: "Any 1 Suit",  family: Family.f13579, concealed: false, points: 30)
         p.generateList()
