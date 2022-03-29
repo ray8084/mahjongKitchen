@@ -26,30 +26,34 @@ class Card2022 : Card {
         var count = 0
         for p in letterPatterns {
             count = count + p.idList.list.count
-            // print("\(p.id+1) " + p.getFamilyString() + " count:\(p.idList.list.count)")
+            print("\(p.id+1) " + p.getFamilyString() + " count:\(p.idList.list.count)")
         }
-        // print(count)
+        print(count)
     }
     
     func add2022() {
-        /*let p0 = add("FF 2021 2222 1111", mask: "00 0000 gggg rrrr", note: "Any 3 Suits",  family: Family.year, concealed: false, points: 25)
-        p0.add([35,35, 2,10,2,1, 12,12,12,12, 21,21,21,21])
-        p0.add([35,35, 2,10,2,1, 22,22,22,22, 11,11,11,11])
-        p0.add([35,35, 12,10,12,11, 2,2,2,2, 21,21,21,21])
-        p0.add([35,35, 12,10,12,11, 22,22,22,22, 1,1,1,1])
-        p0.add([35,35, 22,10,22,21, 2,2,2,2, 11,11,11,11])
-        p0.add([35,35, 22,10,22,21, 12,12,12,12, 1,1,1,1])
+        let p2 = add("FF DDDD 2022 DDDD", mask: "00 gggg 0000 rrrr", note: "2022 Any Suit, Green & Red Dragons",  family: Family.year, concealed: false, points: 25)
+        p2.add([35,35, 20,20,20,20, 2,10,2,2, 30,30,30,30])
+        p2.add([35,35, 20,20,20,20, 12,10,12,12, 30,30,30,30])
+        p2.add([35,35, 20,20,20,20, 22,10,22,22, 30,30,30,30])
         
-        let p1 = add("222 0000 222 1111", mask: "ggg gggg rrr rrrr", note: "Any 2 Suits",  family: Family.year, concealed : false, points: 25)
-        p1.generateList()
+        let p3 = add("222 000 2222 2222", mask: "ggg rrr 0000 rrrr", note: "2s Any 3 Suits",  family: Family.year, concealed: false, points: 30)
+        p3.add([2,2,2, 10,10,10, 12,12,12,12, 22,22,22,22])
+        p3.add([12,12,12, 10,10,10, 2,2,2,2, 22,22,22,22])
+        p3.add([22,22,22, 10,10,10, 2,2,2,2, 12,12,12,12])
         
-        let p2 = add("FFFF 2222 0000 21", mask: "0000 0000 0000 00", note: "Any 1 Suit",  family: Family.year, concealed : false, points: 25)
-        p2.generateList()
+        let p4 = add("FFFF 2022 222 222", mask: "0000 gggg rrr 000", note: "Any 3 Suits",  family: Family.year, concealed: false, points: 30)
+        p4.add([35,35,35,35, 2,10,2,2, 12,12,12, 22,22,22])
+        p4.add([35,35,35,35, 12,10,12,12, 2,2,2, 22,22,22])
+        p4.add([35,35,35,35, 22,10,22,22, 2,2,2, 12,12,12])
         
-        let p6 = add("NNN EE 2021 WW SSS (C)", mask: "000 00 0000 00 000", note: "Any 1 Suit",  family: Family.year, concealed: true, points: 30)
-        p6.add([31,31,31, 34,34, 2,10,2,1, 33,33, 32,32,32])
-        p6.add([31,31,31, 34,34, 12,10,12,11, 33,33, 32,32,32])
-        p6.add([31,31,31, 34,34, 22,10,22,21, 33,33, 32,32,32])*/
+        let p6 = add("NN EEE 2022 WWW SS (C)", mask: "00 000 0000 000 00", note: "Any 1 Suit",  family: Family.year, concealed: true, points: 30)
+        p6.add([31,31, 34,34,34, 2,10,2,2, 33,33,33, 32,32])
+        p6.add([31,31, 34,34,34, 12,10,12,12, 33,33,33, 32,32])
+        p6.add([31,31, 34,34,34, 22,10,22,22, 33,33,33, 32,32])
+        
+        let p = add("FF 2022 2022 2022 (C)", mask: "00 gggg rrrr 0000", note: "Any 3 Suits",  family: Family.pairs, concealed: true, points: 85)
+        p.add([35,35, 2,10,2,2, 12,10,12,12, 22,10,22,22])
     }
 
     func add2468() {
@@ -148,9 +152,6 @@ class Card2022 : Card {
         addF123456_2222222_1()
         addF246822_2222222_3()
         addF369369_2222222_2()*/
-        
-        let p = add("FF 2022 2022 2022 (C)", mask: "00 gggg rrrr 0000", note: "Any 3 Suits",  family: Family.pairs, concealed: true, points: 60)
-        p.add([35,35, 2,10,2,2, 12,10,12,12, 22,10,22,22])
     }
     
 }
