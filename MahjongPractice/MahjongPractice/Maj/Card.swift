@@ -691,6 +691,26 @@ class Card {
         }
     }
     
+    func addQDN1_545() {
+        let p = add("DDDDD NNNN 11111", mask: "00000 0000 00000", note: "Any Dragon, Any Wind, Any No.",  family: Family.quints, concealed: false, points: 45)
+        for w in 31...34 {
+            for i in 1...9 {
+                let d = i
+                let b = i+10
+                let c = i+20
+                p.add([10,10,10,10,10, w,w,w,w, d,d,d,d,d])
+                p.add([20,20,20,20,20, w,w,w,w, d,d,d,d,d])
+                p.add([30,30,30,30,30, w,w,w,w, d,d,d,d,d])
+                p.add([10,10,10,10,10, w,w,w,w, b,b,b,b,b])
+                p.add([20,20,20,20,20, w,w,w,w, b,b,b,b,b])
+                p.add([30,30,30,30,30, w,w,w,w, b,b,b,b,b])
+                p.add([10,10,10,10,10, w,w,w,w, c,c,c,c,c])
+                p.add([20,20,20,20,20, w,w,w,w, c,c,c,c,c])
+                p.add([30,30,30,30,30, w,w,w,w, c,c,c,c,c])
+            }
+        }
+    }
+    
     func addQ111_545_3() {
         let p = add("11111 1111 11111", mask: "ggggg rrrr 00000", note: "Any Like No.",  family: Family.quints, concealed: false, points: 40)
         for i in 1...9 {
@@ -715,6 +735,18 @@ class Card {
         }
     }
     
+    func addQF12_455_1() {
+        let p = add("FFFF 11111 22222", mask: "0000 00000 00000", note: "Any 1 Suit, Any 2 Consec. Nos.",  family: Family.quints, concealed: false, points: 45)
+        for i in 1...8 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p.add([35,35,35,35, d,d,d,d,d, d+1,d+1,d+1,d+1,d+1])
+            p.add([35,35,35,35, b,b,b,b,b, b+1,b+1,b+1,b+1,b+1])
+            p.add([35,35,35,35, c,c,c,c,c, c+1,c+1,c+1,c+1,c+1])
+        }
+    }
+    
     func addQ12311_455_3() {
         let p = add("1123 11111 11111", mask: "gggg rrrrr 00000", note: "Any Run, Any Pair",  family: Family.quints, concealed: false, points: 40)
         for i in 1...7 {
@@ -730,6 +762,18 @@ class Card {
             p.add([d,d+1,d+2,d+2, b+2,b+2,b+2,b+2,b+2, c+2,c+2,c+2,c+2,c+2])
             p.add([b,b+1,b+2,b+2, d+2,d+2,d+2,d+2,d+2, c+2,c+2,c+2,c+2,c+2])
             p.add([c,c+1,c+2,c+2, d+2,d+2,d+2,d+2,d+2, b+2,b+2,b+2,b+2,b+2])
+        }
+    }
+    
+    func addQ1233_455_3() {
+        let p = add("1122 33333 33333", mask: "gggg rrrrr 00000", note: "Any 3 Suits, Any 3 Consec No.",  family: Family.quints, concealed: false, points: 40)
+        for i in 1...7 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p.add([d,d,d+1,d+1, b+2,b+2,b+2,b+2,b+2, c+2,c+2,c+2,c+2,c+2])
+            p.add([b,b,b+1,b+1, d+2,d+2,d+2,d+2,d+2, c+2,c+2,c+2,c+2,c+2])
+            p.add([c,c,c+1,c+1, d+2,d+2,d+2,d+2,d+2, b+2,b+2,b+2,b+2,b+2])
         }
     }
     

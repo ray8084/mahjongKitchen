@@ -121,11 +121,13 @@ class Card2022 : Card {
     }
     
     func addQuints() {
-        /*addQF1N_545()
-        addQ1234_5225_2()
-        addQ123_545_1()
-        addQ123_545_3()
-        addQ1212_2525_2()*/
+        addQDN1_545()
+        
+        let p2 = add("22 444 6666 88888", mask: "00 000 0000 00000", note: "Any 1 Suit",  family: Family.quints, concealed: false, points: 45)
+        p2.generateList()
+        
+        addQ1233_455_3()
+        addQF12_455_1()
     }
     
     func addConsectiveRun() {
