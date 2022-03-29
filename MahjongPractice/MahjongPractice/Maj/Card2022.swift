@@ -94,7 +94,10 @@ class Card2022 : Card {
         let p7 = add("FFF 2222 FFF 8888", mask: "000 gggg 000 rrrr", note: "Any 2 Suits, These Nos Only",  family: Family.f2468, concealed: false, points: 30)
         p7.add([35,35,35, 2,2,2,2, 35,35,35, 18,18,18,18])
         p7.add([35,35,35, 2,2,2,2, 35,35,35, 28,28,28,28])
+        p7.add([35,35,35, 12,12,12,12, 35,35,35, 8,8,8,8])
         p7.add([35,35,35, 12,12,12,12, 35,35,35, 28,28,28,28])
+        p7.add([35,35,35, 22,22,22,22, 35,35,35, 8,8,8,8])
+        p7.add([35,35,35, 22,22,22,22, 35,35,35, 18,18,18,18])
         
         let p8 = add("22 444 44 666 8888", mask: "gg ggg rr rrr 0000", note: "Any 3 Suits",  family: Family.f2468, concealed: false, points: 25)
         p8.generateList()
@@ -106,9 +109,12 @@ class Card2022 : Card {
     }
     
     func addLikeNumbers() {
-        /*addLikeF1NEWS1_2444_2()
-        addLikeF111_4424_3()
-        addLike1D1D_3434_2()*/
+        addLikeF1F1_3434_2()
+        
+        let p = add("111 DD 111 DD 1111", mask: "ggg gg rrr rr 0000", note: "Any 3 Suits",  family: Family.likeNumbers, concealed: false, points: 30)
+        p.generateList()
+        
+        addLikeF1D1_2444_3()
     }
     
     func addAdditionHands() {
