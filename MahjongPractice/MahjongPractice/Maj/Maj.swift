@@ -826,7 +826,7 @@ class Maj {
     }
     
     func isWinBotEnabled() -> Bool {
-        return winBotEnabled && ((year == Year.y2020) || (year == Year.y2021))
+        return winBotEnabled
     }
     
     // --------------------------------------------------------------

@@ -370,7 +370,7 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
 
     @objc func botWinHelpButtonAction(sender: UIButton!) {
         let title = "Bot Wins"
-        let message = "Bots are the computer players that play the opponent hands. They call tiles and make patterns but they will not declare mahjong unless Bot Wins is enabled.  Bot Wins are only available when playing 2020 and 2021 patterns."
+        let message = "Bots are the computer players that play the opponent hands. They call tiles and make patterns but they will not declare mahjong unless Bot Wins is enabled."
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
         }));

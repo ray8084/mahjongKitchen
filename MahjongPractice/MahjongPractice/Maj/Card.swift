@@ -853,7 +853,7 @@ class Card {
     }
     
     func addF123_2444_1() {
-        let p = add("FF 1111 2222 3333", mask: "00 0000 0000 0000", note: "Any 1 Suit, Any       Run",  family: Family.run, concealed: false, points: 25)
+        let p = add("FF 1111 2222 3333", mask: "00 0000 0000 0000", note: "Any 1 Suit, Any Run",  family: Family.run, concealed: false, points: 25)
         for i in 1...7 {
             let d = i
             let b = i+10
@@ -980,7 +980,7 @@ class Card {
     }
     
     func addF1212_42323_2() {
-        let p = add("FFFF 11 222 11 222", mask: "0000 gg ggg rr rrr", note: "Any 2 Suits, Any 2 Like Consec Nos.",  family: Family.run, concealed: false, points: 30)
+        let p = add("FFFF 11 222 11 222", mask: "0000 gg ggg rr rrr", note: "Any 2 Suits, Any 2 Like Consec Nos",  family: Family.run, concealed: false, points: 30)
         for i in 1...8 {
             let d = i
             let b = i+10
@@ -992,7 +992,7 @@ class Card {
     }
     
     func add12322_32333_C() {
-        let p = add("111 22 333 222 222 (C)", mask: "ggg gg ggg rrr 000", note: "Any 3 Consec Nos. Pungs Match Pair",  family: Family.run, concealed: true, points: 30)
+        let p = add("111 22 333 222 222 (C)", mask: "ggg gg ggg rrr 000", note: "Any 3 Consec Nos, Pungs Match Pair",  family: Family.run, concealed: true, points: 30)
         for i in 1...7 {
             let d = i
             let b = i+10
@@ -1031,7 +1031,7 @@ class Card {
     }
     
     func add12345_22244_3() {
-        let p = add("11 22 33 4444 5555", mask: "gg gg gg rrrr 0000", note: "Any 5 Consec. Nos.",  family: Family.run, concealed: false, points: 30)
+        let p = add("11 22 33 4444 5555", mask: "gg gg gg rrrr 0000", note: "Any 5 Consec Nos",  family: Family.run, concealed: false, points: 30)
         for i in 1...5 {
             let d = i
             let b = i+10
@@ -1076,7 +1076,7 @@ class Card {
     }
     
     func add12123_22334_3() {
-        let p = add("11 22 111 222 3333", mask: "gg gg rrr rrr 0000", note: "Any 3 Consec. Nos.",  family: Family.run, concealed: false, points: 25)
+        let p = add("11 22 111 222 3333", mask: "gg gg rrr rrr 0000", note: "Any 3 Consec Nos",  family: Family.run, concealed: false, points: 25)
         for i in 1...7 {
             let d = i
             let b = i+10
@@ -1091,7 +1091,7 @@ class Card {
     }
     
     func add12123_23234_3() {
-        let p = add("11 222 11 222 3333", mask: "gg ggg rr rrr 0000", note: "Any 3 Suits, Any 3 Consec. Nos.",  family: Family.run, concealed: false, points: 25)
+        let p = add("11 222 11 222 3333", mask: "gg ggg rr rrr 0000", note: "Any 3 Suits, Any 3 Consec Nos",  family: Family.run, concealed: false, points: 25)
         for i in 1...7 {
             let d = i
             let b = i+10
@@ -1139,7 +1139,7 @@ class Card {
     }
     
     func add123DD_323333_C() {
-        let p = add("111 22 333 DDD DDD (C)", mask: "ggg gg ggg rrr 000", note: "Any 3 Consec. Nos.",  family: Family.run, concealed: true, points: 30)
+        let p = add("111 22 333 DDD DDD (C)", mask: "ggg gg ggg rrr 000", note: "Any 3 Consec Nos",  family: Family.run, concealed: true, points: 30)
         for i in 1...7 {
             let d = i
             let b = i+10
@@ -1151,7 +1151,7 @@ class Card {
     }
     
     func addF12DD_23333_C() {
-        let p = add("FF 111 222 DDD DDD (C)", mask: "00 ggg ggg rrr 000", note: "Any 2 Consec. Nos. Opp Dragons",  family: Family.run, concealed: true, points: 30)
+        let p = add("FF 111 222 DDD DDD (C)", mask: "00 ggg ggg rrr 000", note: "Any 2 Consec Nos, Opp Dragons",  family: Family.run, concealed: true, points: 30)
         for i in 1...8 {
             let d = i
             let b = i+10
@@ -1403,7 +1403,7 @@ class Card {
     }
 
     func addFN11S_22442_2() {
-        let p = add("FF NN 1111 1111 SS", mask: "00 00 gggg rrrr 00", note: "Any Like Odd Nos.",  family: Family.winds, concealed: false, points: 30)
+        let p = add("FF NN 1111 1111 SS", mask: "00 00 gggg rrrr 00", note: "Any Like Odd Nos",  family: Family.winds, concealed: false, points: 30)
         for i in 1...9 {
             if i & 1 == 1 {
                 let d = i
@@ -1417,7 +1417,7 @@ class Card {
     }
     
     func add1N1S1_23234_3() {
-        let p = add("11 NNN 11 SSS 1111", mask: "gg 000 rr 000 0000", note: "Any Like Odd Nos.",  family: Family.winds, concealed: false, points: 30)
+        let p = add("11 NNN 11 SSS 1111", mask: "gg 000 rr 000 0000", note: "Any Like Odd Nos",  family: Family.winds, concealed: false, points: 30)
         for i in 1...9 {
             if i & 1 == 1 {
                 let d = i
@@ -1431,7 +1431,7 @@ class Card {
     }
 
     func addFE22W_22442_2() {
-        let p = add("FF EE 2222 2222 WW", mask: "00 00 gggg rrrr 00", note: "Any Like Even Nos.",  family: Family.winds, concealed: false, points: 30)
+        let p = add("FF EE 2222 2222 WW", mask: "00 00 gggg rrrr 00", note: "Any Like Even Nos",  family: Family.winds, concealed: false, points: 30)
         for i in 1...9 {
             if i & 1 == 0 {
                 let d = i
@@ -1445,7 +1445,7 @@ class Card {
     }
 
     func add2E2W2_23234_3() {
-        let p = add("22 EEE 22 WWW 2222", mask: "gg 000 rr 000 0000", note: "Any Like Even Nos.",  family: Family.winds, concealed: false, points: 30)
+        let p = add("22 EEE 22 WWW 2222", mask: "gg 000 rr 000 0000", note: "Any Like Even Nos",  family: Family.winds, concealed: false, points: 30)
         for i in 1...9 {
             if i & 1 == 0 {
                 let d = i
@@ -1691,7 +1691,7 @@ class Card {
     // -----------------------------------------------------------------------------------------
     
     func addNEWS111_222222_3() {
-        let p = add("NN EE WW SS 11 11 11 (C)", mask: "00 00 00 00 gg rr 00", note: "Any Like Nos.",  family: Family.pairs, concealed: true, points: 50)
+        let p = add("NN EE WW SS 11 11 11 (C)", mask: "00 00 00 00 gg rr 00", note: "Any Like Nos",  family: Family.pairs, concealed: true, points: 50)
         for i in 1...9 {
             let d = i
             let b = i+10
@@ -1727,7 +1727,7 @@ class Card {
     }
     
     func addFNEWS111_22112222_3() {
-        let p = add("FF NN E W SS 11 11 11 (C)", mask: "00 00 0 0 00 gg rr 00", note: "Any Like Nos.",  family: Family.pairs, concealed: true, points: 50)
+        let p = add("FF NN E W SS 11 11 11 (C)", mask: "00 00 0 0 00 gg rr 00", note: "Any Like Nos",  family: Family.pairs, concealed: true, points: 50)
         for i in 1...9 {
             let d = i
             let b = i+10
@@ -1764,7 +1764,7 @@ class Card {
     }
     
     func add1234567_2222222_1() {
-        let p = add("11 22 33 44 55 66 77 (C)", mask: "00 00 00 00 00 00 00", note: "Any 7 Consec Nos.",  family: Family.pairs, concealed: true, points: 50)
+        let p = add("11 22 33 44 55 66 77 (C)", mask: "00 00 00 00 00 00 00", note: "Any 7 Consec Nos",  family: Family.pairs, concealed: true, points: 50)
         for i in 1...3 {
             let d = i
             let b = i+10
@@ -1776,7 +1776,7 @@ class Card {
     }
     
     func addF123456_2222222_1() {
-        let p = add("FF 11 22 33 44 55 66 (C)", mask: "00 00 00 00 00 00 00", note: "Any 6 Conces. Nos.",  family: Family.pairs, concealed: true, points: 50)
+        let p = add("FF 11 22 33 44 55 66 (C)", mask: "00 00 00 00 00 00 00", note: "Any 6 Conces Nos",  family: Family.pairs, concealed: true, points: 50)
         for i in 1...4 {
             let d = i
             let b = i+10
@@ -1788,7 +1788,7 @@ class Card {
     }
     
     func addF123123_2222222_2() {
-        let p = add("FF 11 22 33 11 22 33 (C)", mask: "00 gg gg gg rr rr rr", note: "Any 2 Suits, Any 3 Conces. Nos.",  family: Family.pairs, concealed: true, points: 50)
+        let p = add("FF 11 22 33 11 22 33 (C)", mask: "00 gg gg gg rr rr rr", note: "Any 2 Suits, Any 3 Conces Nos",  family: Family.pairs, concealed: true, points: 50)
         for i in 1...7 {
             let d = i
             let b = i+10
@@ -1807,7 +1807,7 @@ class Card {
     }
     
     func addF12D12D_2222222_2() {
-        let p = add("FF 11 22 DD 11 22 DD (C)", mask: "00 gg gg gg rr rr rr", note: "Any 2 Suits, Any 2 Like Consec. No.",  family: Family.pairs, concealed: true, points: 50)
+        let p = add("FF 11 22 DD 11 22 DD (C)", mask: "00 gg gg gg rr rr rr", note: "Any 2 Suits, Any 2 Like Consec Nos",  family: Family.pairs, concealed: true, points: 50)
         for i in 1...8 {
             let d = i
             let b = i+10
@@ -1819,7 +1819,7 @@ class Card {
     }
     
     func addF121212_2222222_3() {
-        let p = add("FF 11 22 11 22 11 22 (C)", mask: "00 gg gg rr rr 00 00", note: "Any 2 Consec. Nos.",  family: Family.pairs, concealed: true, points: 50)
+        let p = add("FF 11 22 11 22 11 22 (C)", mask: "00 gg gg rr rr 00 00", note: "Any 2 Consec Nos",  family: Family.pairs, concealed: true, points: 50)
         for i in 1...8 {
             let d = i
             let b = i+10
@@ -1829,7 +1829,7 @@ class Card {
     }
     
     func addF123DDD_2222222_3() {
-        let p = add("FF 11 22 33 DD DD DD (C)", mask: "00 00 00 00 gg rr", note: "Any 3 Consec. Nos.",  family: Family.pairs, concealed: true)
+        let p = add("FF 11 22 33 DD DD DD (C)", mask: "00 00 00 00 gg rr", note: "Any 3 Consec Nos",  family: Family.pairs, concealed: true)
         for i in 1...7 {
             let d = i
             let b = i+10
@@ -1841,7 +1841,7 @@ class Card {
     }
     
     func addF12345D_2222222_1() {
-        let p = add("FF 11 22 33 44 55 DD (C)", mask: "00 00 00 00 00 00 00", note: "Any 5 Consec. Nos.",  family: Family.pairs, concealed: true)
+        let p = add("FF 11 22 33 44 55 DD (C)", mask: "00 00 00 00 00 00 00", note: "Any 5 Consec Nos",  family: Family.pairs, concealed: true)
         for i in 1...5 {
             let d = i
             let b = i+10
@@ -1853,7 +1853,7 @@ class Card {
     }
     
     func addF246822_2222222_3() {
-        let p = add("FF 22 44 66 88 22 22 (C)", mask: "00 00 00 00 00 gg rr", note: "Any Like Even Nos. in Other 2 Suits.",  family: Family.pairs, concealed: true)
+        let p = add("FF 22 44 66 88 22 22 (C)", mask: "00 00 00 00 00 gg rr", note: "Any Like Even Nos in Other 2 Suits",  family: Family.pairs, concealed: true)
         p.add([35,35, 2,2,4,4,6,6,8,8, 12,12, 22,22])
         p.add([35,35, 2,2,4,4,6,6,8,8, 14,14, 24,24])
         p.add([35,35, 2,2,4,4,6,6,8,8, 16,16, 26,26])
