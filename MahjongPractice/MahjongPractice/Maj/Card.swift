@@ -1700,6 +1700,32 @@ class Card {
         }
     }
     
+    func addNEWSDDD_2222222_3() {
+        let p = add("NN EE WW SS DD DD DD (C)", mask: "00 00 00 00 gg rr 00", note: "",  family: Family.pairs, concealed: true, points: 50)
+        p.add([31,31, 34,34, 33,33, 32,32, 10,10, 20,20, 30,30])
+    }
+    
+    func add1357911_2222222_3() {
+        let p5 = add("11 33 55 77 99 11 11 (C)", mask: "gg gg gg gg gg rr 00", note: "Odd Pairs Match in Opp Suits",  family: Family.pairs, concealed: true, points: 50)
+        p5.add([1,1, 3,3, 5,5, 7,7, 9,9, 11,11, 21,21])
+        p5.add([1,1, 3,3, 5,5, 7,7, 9,9, 13,13, 23,23])
+        p5.add([1,1, 3,3, 5,5, 7,7, 9,9, 15,15, 25,25])
+        p5.add([1,1, 3,3, 5,5, 7,7, 9,9, 17,17, 27,27])
+        p5.add([1,1, 3,3, 5,5, 7,7, 9,9, 19,19, 29,29])
+
+        p5.add([11,11, 13,13, 15,15, 17,17, 19,19, 1,1, 21,21])
+        p5.add([11,11, 13,13, 15,15, 17,17, 19,19, 3,3, 23,23])
+        p5.add([11,11, 13,13, 15,15, 17,17, 19,19, 5,5, 25,25])
+        p5.add([11,11, 13,13, 15,15, 17,17, 19,19, 7,7, 27,27])
+        p5.add([11,11, 13,13, 15,15, 17,17, 19,19, 9,9, 29,29])
+        
+        p5.add([21,21, 23,23, 25,25, 27,27, 29,29, 11,11, 1,1])
+        p5.add([21,21, 23,23, 25,25, 27,27, 29,29, 13,13, 3,3])
+        p5.add([21,21, 23,23, 25,25, 27,27, 29,29, 15,15, 5,5])
+        p5.add([21,21, 23,23, 25,25, 27,27, 29,29, 17,17, 7,7])
+        p5.add([21,21, 23,23, 25,25, 27,27, 29,29, 19,19, 9,9])
+    }
+    
     func addFNEWS111_22112222_3() {
         let p = add("FF NN E W SS 11 11 11 (C)", mask: "00 00 0 0 00 gg rr 00", note: "Any Like Nos.",  family: Family.pairs, concealed: true, points: 50)
         for i in 1...9 {
@@ -1730,15 +1756,15 @@ class Card {
         p.add([25,25,27, 15,15,17,17,19, 5,5,7,7,9,9])
     }
         
-    func addF24682468_221122112_2() {
-        let p = add("FF 22 4 6 88 22 4 6 88 (C)", mask: "00 gg g g gg rr r r rr", note: "Any 2 Suits",  family: Family.pairs, concealed: true, points: 50)
+    func addF24682468_2222222_2() {
+        let p = add("FF 22 46 88 22 46 88 (C)", mask: "00 gg gg gg rr rr rr", note: "Any 2 Suits",  family: Family.pairs, concealed: true, points: 50)
         p.add([35,35, 2,2, 4,6, 8,8, 12,12, 14,16, 18,18])
         p.add([35,35, 2,2, 4,6, 8,8, 22,22, 24,26, 28,28])
         p.add([35,35, 12,12, 14,16, 18,18, 22,22, 24,26, 28,28])
     }
     
     func add1234567_2222222_1() {
-        let p = add("11 22 33 44 55 66 77 (C)", mask: "00 00 00 00 00 00 00", note: "Any Run of 7 Nos.",  family: Family.pairs, concealed: true, points: 50)
+        let p = add("11 22 33 44 55 66 77 (C)", mask: "00 00 00 00 00 00 00", note: "Any 7 Consec Nos.",  family: Family.pairs, concealed: true, points: 50)
         for i in 1...3 {
             let d = i
             let b = i+10
@@ -1761,6 +1787,18 @@ class Card {
         }
     }
     
+    func addF123123_2222222_2() {
+        let p = add("FF 11 22 33 11 22 33 (C)", mask: "00 gg gg gg rr rr rr", note: "Any 2 Suits, Any 3 Conces. Nos.",  family: Family.pairs, concealed: true, points: 50)
+        for i in 1...7 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p.add([35,35, d,d, d+1,d+1, d+2,d+2, b,b, b+1,b+1, b+2,b+2])
+            p.add([35,35, d,d, d+1,d+1, d+2,d+2, c,c, c+1,c+1, c+2,c+2])
+            p.add([35,35, b,b, b+1,b+1, b+2,b+2, c,c, c+1,c+1, c+2,c+2])
+        }
+    }
+        
     func addF369369_2222222_2() {
         let p = add("FF 33 66 99 33 66 99 (C)", mask: "00 gg gg gg rr rr rr", note: "Any 2 Suits",  family: Family.pairs, concealed: true, points: 50)
         p.add([35,35, 3,3, 6,6, 9,9, 13,13, 16,16, 19,19])
