@@ -1502,6 +1502,30 @@ class Card {
         p.add([35,35,35,35, 34,34,34,34, 20,20, 33,33,33,33])
     }
     
+    func addNS123_44123_1() {
+        let p = add("NNNN SSSS 1 22 333", mask: "0000 0000 0 00 000", note: "Any 3 Consec Nos In 1 Suit",  family: Family.winds, concealed: false, points: 30)
+        for i in 1...7 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p.add([31,31,31,31, 32,32,32,32, d, d+1,d+1, d+2,d+2,d+2])
+            p.add([31,31,31,31, 32,32,32,32, b, b+1,b+1, b+2,b+2,b+2])
+            p.add([31,31,31,31, 32,32,32,32, c, c+1,c+1, c+2,c+2,c+2])
+        }
+    }
+    
+    func addEW123_44123_1() {
+        let p = add("EEEE WWWW 1 22 333", mask: "0000 0000 0 00 000", note: "Any 3 Consec Nos In 1 Suit",  family: Family.winds, concealed: false, points: 30)
+        for i in 1...7 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p.add([34,34,34,34, 33,33,33,33, d, d+1,d+1, d+2,d+2,d+2])
+            p.add([34,34,34,34, 33,33,33,33, b, b+1,b+1, b+2,b+2,b+2])
+            p.add([34,34,34,34, 33,33,33,33, c, c+1,c+1, c+2,c+2,c+2])
+        }
+    }
+    
         
     // -----------------------------------------------------------------------------------------
     //
@@ -1561,6 +1585,16 @@ class Card {
     
     func addF369_5234_1() {
         let p = add("FFFFF 33 666 9999", mask: "00000 00 000 0000", note: "Any 1 Suit",  family: Family.f369, concealed: false, points: 25)
+        p.generateList()
+    }
+    
+    func addF369_3434_1() {
+        let p = add("FFF 3333 666 9999", mask: "000 0000 000 0000", note: "Any 1 Suit",  family: Family.f369, concealed: false, points: 25)
+        p.generateList()
+    }
+    
+    func addF369_3434_3() {
+        let p = add("FFF 3333 666 9999", mask: "000 gggg rrr 0000", note: "Any 3 Suits",  family: Family.f369, concealed: false, points: 25)
         p.generateList()
     }
     

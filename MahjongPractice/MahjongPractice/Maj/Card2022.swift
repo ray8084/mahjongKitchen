@@ -191,29 +191,23 @@ class Card2022 : Card {
     }
 
     func addWindsAndDragons() {
-        /*addNEWS_4334()
-        add1N1S1_23234_3()
-        add2E2W2_23234_3()
-        addFNEWS_43223()
-        addFNRS_2444()
-        addFEGW_2444()
+        addNEWS_4442()
+        addFDDD_3434_3()
         
-        let p9 = add("FF NNNN 2021 SSSS", mask: "00 0000 0000 0000", note: "2021 Any 1 Suit",  family: Family.winds, concealed: false, points: 25)
-        p9.add([35,35, 31,31,31,31, 2,10,2,1, 32,32,32,32])
-        p9.add([35,35, 31,31,31,31, 12,10,12,11, 32,32,32,32])
-        p9.add([35,35, 31,31,31,31, 22,10,22,21, 32,32,32,32])
+        let p0 = add("FFFF NNNN E W SSSS", mask: "0000 0000 0 0 0000", note: "",  family: Family.winds, concealed: false, points: 30)
+        p0.add([35,35,35,35, 31,31,31,31, 34,33, 32,32,32,32])
         
-        let pa = add("FF EEEE 2021 WWWW", mask: "00 0000 0000 0000", note: "2021 Any 1 Suit",  family: Family.winds, concealed: false, points: 25)
-        pa.add([35,35, 34,34,34,34, 2,10,2,1, 33,33,33,33])
-        pa.add([35,35, 34,34,34,34, 12,10,12,11, 33,33,33,33])
-        pa.add([35,35, 34,34,34,34, 22,10,22,21, 33,33,33,33])
-        
-        addNEWSDD_311333_C()*/
+        addNS123_44123_1()
+        addEW123_44123_1()
+        addNEWSDD_311333_C()
     }
 
     func add369() {
-        /*add3669_3434_2()
-        add369D_4343_1()
+        add3669_3344_2()
+        addF369_3434_1()
+        addF369_3434_3()
+        
+        /*add369D_4343_1()
         add3699_4433_3()
         addF369_5234_1()
         add3669D_22334_3()
