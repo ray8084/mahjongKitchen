@@ -207,13 +207,19 @@ class Card2022 : Card {
         addF369_3434_1()
         addF369_3434_3()
         
-        /*add369D_4343_1()
+        let p0 = add("33 666 DDDD 666 99", mask: "rr rrr gggg 000 00", note: "Any 3 Suits",  family: Family.f369, concealed: false, points: 25)
+        p0.generateList()
+        
+        let p1 = add("FF 33 666 9999 DDD", mask: "00 00 000 0000 000", note: "Any 1 Suits",  family: Family.f369, concealed: false, points: 25)
+        p1.generateList()
+        
         add3699_4433_3()
-        addF369_5234_1()
-        add3669D_22334_3()
-        addF369_2444_1()
-        addF369_2444_3()
-        add36369_33332_C()*/
+        addF3693_23234_2()
+        
+        let p7 = add("FF 3 66 999 3 66 999 (C)", mask: "00 g gg ggg r rr rrr", note: "Any 2 Suits",  family: Family.f369, concealed: true, points: 35)
+        p7.add([35,35, 3, 6,6, 9,9,9, 13, 16,16, 19,19,19])
+        p7.add([35,35, 3, 6,6, 9,9,9, 23, 26,26, 29,29,29])
+        p7.add([35,35, 13, 16,16, 19,19,19, 23, 26,26, 29,29,29])
     }
 
     func addSinglesAndPairs() {
