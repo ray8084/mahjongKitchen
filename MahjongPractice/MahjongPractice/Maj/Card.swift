@@ -1110,7 +1110,7 @@ class Card {
             let c = i+20
             p.add([d,d,d, d+1, d+2,d+2,d+2, b,b,b, b+1, b+2,b+2,b+2])
             p.add([d,d,d, d+1, d+2,d+2,d+2, c,c,c, c+1, c+2,c+2,c+2])
-            p.add([b,b,b, b+1, b+2,b+2,d+2, c,c,c, c+1, c+2,c+2,c+2])
+            p.add([b,b,b, b+1, b+2,b+2,b+2, c,c,c, c+1, c+2,c+2,c+2])
         }
     }
     
