@@ -155,8 +155,12 @@ class Card2022 : Card {
     func add13579() {
         add13579_23432_1()
         add13579_23432_3()
-        addF135_2444_1()
-        addF579_2444_1()
+        
+        let p0 = add("FF 1111 3333 5555", mask: "00 gggg rrrr 0000", note: "Any 3 Suits",  family: Family.f13579, concealed: false, points: 25)
+        p0.generateList()
+        
+        let p1 = add("FF 5555 7777 9999", mask: "00 gggg rrrr 0000", note: "Any 3 Suits",  family: Family.f13579, concealed: false, points: 25)
+        p1.generateList()
         
         let p2 = add("111 333 3333 5555", mask: "ggg ggg rrrr rrrr", note: "Any 2 Suits",  family: Family.f13579, concealed: false, points: 25)
         p2.add([1,1,1, 3,3,3, 13,13,13,13, 15,15,15,15])

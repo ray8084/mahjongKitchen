@@ -1170,7 +1170,7 @@ class Card {
     // -----------------------------------------------------------------------------------------
     
     func add13579_23432_1() {
-        let p = add("11 333 5555 777 99", mask: "00 000 0000 000 00", note: "",  family: Family.f13579, concealed: false, points: 25)
+        let p = add("11 333 5555 777 99", mask: "00 000 0000 000 00", note: "Any 1 Suit",  family: Family.f13579, concealed: false, points: 25)
         p.add([1,1, 3,3,3, 5,5,5,5, 7,7,7, 9,9])
         p.add([11,11, 13,13,13, 15,15,15,15, 17,17,17, 19,19])
         p.add([21,21, 23,23,23, 25,25,25,25, 27,27,27, 29,29])
@@ -1245,7 +1245,7 @@ class Card {
         let p = add("FF 1111 3333 5555", mask: "00 0000 0000 0000", note: "Any 1 Suit",  family: Family.f13579, concealed: false, points: 25)
         p.generateList()
     }
-        
+            
     func addF579_4424_1(){
         let p = add("FFFF 5555 77 9999", mask: "0000 0000 00 0000", note: "Any 1 Suit",  family: Family.f13579, concealed: false, points: 25)
         p.generateList()
