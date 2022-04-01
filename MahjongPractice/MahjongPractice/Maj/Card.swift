@@ -1526,6 +1526,18 @@ class Card {
         }
     }
     
+    func add1NEWS1_421124_2() {
+        let p = add("1111 NN E W SS 1111", mask: "gggg 00 0 0 00 rrrr", note: "Any Like Odd or Even Nos",  family: Family.winds, concealed: false, points: 30)
+        for i in 1...9 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p.add([d,d,d,d, 31,31, 34,33, 32,32, b,b,b,b])
+            p.add([d,d,d,d, 31,31, 34,33, 32,32, c,c,c,c])
+            p.add([b,b,b,b, 31,31, 34,33, 32,32, c,c,c,c])
+        }
+    }
+    
         
     // -----------------------------------------------------------------------------------------
     //

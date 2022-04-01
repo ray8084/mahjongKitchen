@@ -201,6 +201,7 @@ class Card2022 : Card {
         let p0 = add("FFFF NNNN E W SSSS", mask: "0000 0000 0 0 0000", note: "",  family: Family.winds, concealed: false, points: 30)
         p0.add([35,35,35,35, 31,31,31,31, 34,33, 32,32,32,32])
         
+        add1NEWS1_421124_2()
         addNS123_44123_1()
         addEW123_44123_1()
         addNEWSDD_311333_C()
