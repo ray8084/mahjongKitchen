@@ -24,6 +24,10 @@ class Card2016 : Card {
         addSinglesAndPairs()
     }
     
+    override func getYear() -> String {
+        return "2016"
+    }
+    
     func add2016() {
         let p1 = add("FF NNNN 2016 SSSS", mask: "00 0000 0000 0000", note: "",  family: Family.year, concealed: false)
         let p2 = add("FF EEEE 2016 WWWW", mask: "00 0000 0000 0000", note: "",  family: Family.year, concealed: false)

@@ -29,6 +29,10 @@ class Card2019 : Card {
         // print(count)
     }
     
+    override func getYear() -> String {
+        return "2019"
+    }
+    
     func add2019() {
         let p0 = add("FFFF 2019 111 999", mask: "0000 gggg rrr 000", note: "Any 3 Suits",  family: Family.year, concealed: false, points: 25)
         p0.add([35,35,35,35, 2,10,1,9, 11,11,11, 29,29,29])

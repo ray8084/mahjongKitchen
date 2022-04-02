@@ -25,6 +25,10 @@ class Card2017 : Card {
         buildIdMaps()
     }
     
+    override func getYear() -> String {
+        return "2017"
+    }
+    
     func add2017() {
         let p1 = add("222 0000 111 7777", mask: "000 0000 rrr rrrr", note: "Any 2 Suits",  family: Family.year, concealed : false, points: 25)
         p1.generateList()

@@ -16,6 +16,10 @@ class Card {
     init() {
     }
     
+    func getYear() -> String {
+        return ""
+    }
+    
     func copy (_ copy: Card) {
         self.showLosses = copy.showLosses
         // ? letterpatterns
@@ -140,9 +144,8 @@ class Card {
     
     func loadSavedValues() {
         for p in letterPatterns {
-            p.wins = defaults.integer( forKey: p.key() )
-            p.losses = defaults.integer( forKey: p.lossKey() )
-            p.winsSinceVersion22 = defaults.integer( forKey: p.winKeySinceVersion22() )
+            p.losses = defaults.integer( forKey: p.lossKey() + getYear() ) + defaults.integer( forKey: p.lossKey() )
+            p.winsSinceVersion22 = defaults.integer( forKey: p.winKeySinceVersion22() + getYear()) + defaults.integer( forKey: p.winKeySinceVersion22() )
         }
     }
     
@@ -150,20 +153,23 @@ class Card {
         if index < letterPatterns.count {
             let p = letterPatterns[index]
             p.winsSinceVersion22 += 1
-            defaults.set(p.winsSinceVersion22, forKey: p.winKeySinceVersion22())
+            defaults.set(p.winsSinceVersion22, forKey: p.winKeySinceVersion22() + getYear())
         }
     }
     
     func addLoss(_ letterPattern: LetterPattern) {
         letterPattern.losses += 1
-        defaults.set(letterPattern.losses, forKey: letterPattern.lossKey())
+        defaults.set(letterPattern.losses, forKey: letterPattern.lossKey() + getYear())
     }
     
     func clearStats() {
         for p in letterPatterns {
-            defaults.set(0, forKey: p.key())
+            p.losses = 0
+            p.winsSinceVersion22 = 0
             defaults.set(0, forKey: p.lossKey())
             defaults.set(0, forKey: p.winKeySinceVersion22())
+            defaults.set(0, forKey: p.lossKey() + getYear() )
+            defaults.set(0, forKey: p.winKeySinceVersion22() + getYear())
         }
     }
     

@@ -17,6 +17,7 @@ class StatViewController: NarrowViewController {
     private var progressBottom = 0
     private var circleText: [UIView] = []
     private var circleLayers: [CAShapeLayer] = []
+    private var statLabels: [UILabel] = []
     
     init(maj: Maj, frame: CGRect, narrowViewDelegate: NarrowViewDelegate) {
         self.maj = maj
@@ -123,7 +124,7 @@ class StatViewController: NarrowViewController {
         addRowLabel(y: rowBottom, text: "Year")
         addRowLabel(y: rowBottom, text: "2468")
         addRowLabel(y: rowBottom, text: "LikeNum")
-        if (maj.year != Year.y2020) && (maj.year != Year.y2021) { addRowLabel(y: rowBottom, text: "Addition") }
+        if (maj.year != Year.y2020) && (maj.year != Year.y2021) && (maj.year != Year.y2022) { addRowLabel(y: rowBottom, text: "Addition") }
         addRowLabel(y: rowBottom, text: "Quints")
         addRowLabel(y: rowBottom, text: "Runs")
         addRowLabel(y: rowBottom, text: "13579")
@@ -150,11 +151,15 @@ class StatViewController: NarrowViewController {
     // -----------------------------------------------------------------------------------------
     
     private func update(maj: Maj) {
+        for label in statLabels {
+            label.removeFromSuperview()
+        }
+        statLabels = []
         rowBottom = 35
         addWins(y: rowBottom, text: maj.card.getTotalWins(family: Family.year))
         addWins(y: rowBottom, text: maj.card.getTotalWins(family: Family.f2468))
         addWins(y: rowBottom, text: maj.card.getTotalWins(family: Family.likeNumbers))
-        if (maj.year != Year.y2020) && (maj.year != Year.y2021) {addWins(y: rowBottom, text: maj.card.getTotalWins(family: Family.addition))}
+        if (maj.year != Year.y2020) && (maj.year != Year.y2021) && (maj.year != Year.y2022) {addWins(y: rowBottom, text: maj.card.getTotalWins(family: Family.addition))}
         addWins(y: rowBottom, text: maj.card.getTotalWins(family: Family.quints))
         addWins(y: rowBottom, text: maj.card.getTotalWins(family: Family.run))
         addWins(y: rowBottom, text: maj.card.getTotalWins(family: Family.f13579))
@@ -167,7 +172,7 @@ class StatViewController: NarrowViewController {
         addPatternWins(y: rowBottom, text: maj.card.getPatternWins(family: Family.year))
         addPatternWins(y: rowBottom, text: maj.card.getPatternWins(family: Family.f2468))
         addPatternWins(y: rowBottom, text: maj.card.getPatternWins(family: Family.likeNumbers))
-        if (maj.year != Year.y2020) && (maj.year != Year.y2021) {addPatternWins(y: rowBottom, text: maj.card.getPatternWins(family: Family.addition))}
+        if (maj.year != Year.y2020) && (maj.year != Year.y2021) && (maj.year != Year.y2022) {addPatternWins(y: rowBottom, text: maj.card.getPatternWins(family: Family.addition))}
         addPatternWins(y: rowBottom, text: maj.card.getPatternWins(family: Family.quints))
         addPatternWins(y: rowBottom, text: maj.card.getPatternWins(family: Family.run))
         addPatternWins(y: rowBottom, text: maj.card.getPatternWins(family: Family.f13579))
@@ -180,7 +185,7 @@ class StatViewController: NarrowViewController {
         addPatternPercent(y: rowBottom, text: maj.card.getPatternWinPercentageString(family: Family.year))
         addPatternPercent(y: rowBottom, text: maj.card.getPatternWinPercentageString(family: Family.f2468))
         addPatternPercent(y: rowBottom, text: maj.card.getPatternWinPercentageString(family: Family.likeNumbers))
-        if (maj.year != Year.y2020) && (maj.year != Year.y2021) {addPatternPercent(y: rowBottom, text: maj.card.getPatternWinPercentageString(family: Family.addition))}
+        if (maj.year != Year.y2020) && (maj.year != Year.y2021) && (maj.year != Year.y2022) {addPatternPercent(y: rowBottom, text: maj.card.getPatternWinPercentageString(family: Family.addition))}
         addPatternPercent(y: rowBottom, text: maj.card.getPatternWinPercentageString(family: Family.quints))
         addPatternPercent(y: rowBottom, text: maj.card.getPatternWinPercentageString(family: Family.run))
         addPatternPercent(y: rowBottom, text: maj.card.getPatternWinPercentageString(family: Family.f13579))
@@ -193,7 +198,7 @@ class StatViewController: NarrowViewController {
         addLosses(y: rowBottom, text: maj.card.getLosses(family: Family.year))
         addLosses(y: rowBottom, text: maj.card.getLosses(family: Family.f2468))
         addLosses(y: rowBottom, text: maj.card.getLosses(family: Family.likeNumbers))
-        if (maj.year != Year.y2020) && (maj.year != Year.y2021) {addLosses(y: rowBottom, text: maj.card.getLosses(family: Family.addition))}
+        if (maj.year != Year.y2020) && (maj.year != Year.y2021) && (maj.year != Year.y2022) {addLosses(y: rowBottom, text: maj.card.getLosses(family: Family.addition))}
         addLosses(y: rowBottom, text: maj.card.getLosses(family: Family.quints))
         addLosses(y: rowBottom, text: maj.card.getLosses(family: Family.run))
         addLosses(y: rowBottom, text: maj.card.getLosses(family: Family.f13579))
@@ -206,7 +211,7 @@ class StatViewController: NarrowViewController {
         addWinPercentage(y: rowBottom, text: maj.card.getWinLossPercent(family: Family.year))
         addWinPercentage(y: rowBottom, text: maj.card.getWinLossPercent(family: Family.f2468))
         addWinPercentage(y: rowBottom, text: maj.card.getWinLossPercent(family: Family.likeNumbers))
-        if (maj.year != Year.y2020) && (maj.year != Year.y2021) {addWinPercentage(y: rowBottom, text: maj.card.getWinLossPercent(family: Family.addition))}
+        if (maj.year != Year.y2020) && (maj.year != Year.y2021) && (maj.year != Year.y2022) {addWinPercentage(y: rowBottom, text: maj.card.getWinLossPercent(family: Family.addition))}
         addWinPercentage(y: rowBottom, text: maj.card.getWinLossPercent(family: Family.quints))
         addWinPercentage(y: rowBottom, text: maj.card.getWinLossPercent(family: Family.run))
         addWinPercentage(y: rowBottom, text: maj.card.getWinLossPercent(family: Family.f13579))
@@ -221,7 +226,8 @@ class StatViewController: NarrowViewController {
         label.text = text
         label.textAlignment = .right
         label.font = UIFont.systemFont(ofSize: fontsize)
-        self.scrollView.addSubview(label)
+        scrollView.addSubview(label)
+        statLabels.append(label)
         rowBottom += 20
     }
     
@@ -230,7 +236,8 @@ class StatViewController: NarrowViewController {
         label.text = text
         label.textAlignment = .right
         label.font = UIFont.systemFont(ofSize: fontsize)
-        self.scrollView.addSubview(label)
+        scrollView.addSubview(label)
+        statLabels.append(label)
         rowBottom += 20
     }
     
@@ -239,7 +246,8 @@ class StatViewController: NarrowViewController {
         label.text = text
         label.textAlignment = .right
         label.font = UIFont.systemFont(ofSize: fontsize)
-        self.scrollView.addSubview(label)
+        scrollView.addSubview(label)
+        statLabels.append(label)
         rowBottom += 20
     }
     
@@ -248,7 +256,8 @@ class StatViewController: NarrowViewController {
         label.text = text
         label.textAlignment = .right
         label.font = UIFont.systemFont(ofSize: fontsize)
-        self.scrollView.addSubview(label)
+        scrollView.addSubview(label)
+        statLabels.append(label)
         rowBottom += 20
     }
     
@@ -257,9 +266,11 @@ class StatViewController: NarrowViewController {
         label.text = text
         label.textAlignment = .right
         label.font = UIFont.systemFont(ofSize: fontsize)
-        self.scrollView.addSubview(label)
+        scrollView.addSubview(label)
+        statLabels.append(label)
         rowBottom += 20
     }
+    
     
     // -----------------------------------------------------------------------------------------
     //
@@ -274,6 +285,8 @@ class StatViewController: NarrowViewController {
         for layer in circleLayers {
             layer.removeFromSuperlayer()
         }
+        circleText = []
+        circleLayers = []
         let center = maxWidth / 2
         let radius = CGFloat(30)
         let firstOffset = radius

@@ -22,6 +22,10 @@ class Card2018 : Card {
         addSinglesAndPairs()
     }
     
+    override func getYear() -> String {
+        return "2018"
+    }
+    
     func add2018() {
         let p1 = add("222 000 1111 8888", mask: "000 000 gggg rrrr", note: "Any 3 Suits",  family: Family.year, concealed : false, points: 25)
         p1.generateList()

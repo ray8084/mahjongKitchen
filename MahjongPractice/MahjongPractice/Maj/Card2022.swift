@@ -31,35 +31,8 @@ class Card2022 : Card {
         print(count)
     }
     
-    override func loadSavedValues() {
-        for p in letterPatterns {
-            p.losses = defaults.integer( forKey: p.lossKey() + "2022" ) + defaults.integer( forKey: p.lossKey() )
-            p.winsSinceVersion22 = defaults.integer( forKey: p.winKeySinceVersion22() + "2022") + defaults.integer( forKey: p.winKeySinceVersion22() )
-        }
-    }
-    
-    override func addWin(_ index: Int) {
-        if index < letterPatterns.count {
-            let p = letterPatterns[index]
-            p.winsSinceVersion22 += 1
-            defaults.set(p.winsSinceVersion22, forKey: p.winKeySinceVersion22() + "2022")
-        }
-    }
-    
-    override func addLoss(_ letterPattern: LetterPattern) {
-        letterPattern.losses += 1
-        defaults.set(letterPattern.losses, forKey: letterPattern.lossKey() + "2022")
-    }
-    
-    override func clearStats() {
-        for p in letterPatterns {
-            p.losses = 0
-            p.winsSinceVersion22 = 0
-            defaults.set(0, forKey: p.lossKey())
-            defaults.set(0, forKey: p.winKeySinceVersion22())
-            defaults.set(0, forKey: p.lossKey() + "2022")
-            defaults.set(0, forKey: p.winKeySinceVersion22() + "2022")
-        }
+    override func getYear() -> String {
+        return "2022"
     }
         
     func add2022() {
