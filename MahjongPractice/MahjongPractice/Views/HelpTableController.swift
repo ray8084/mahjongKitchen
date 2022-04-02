@@ -674,7 +674,7 @@ class HelpTableController: NarrowViewController, UITableViewDelegate, UITableVie
     
     private func addJokers() {
         let chapter = HelpChapter("Jokers", xOffset: xOffset, width: view.frame.width)
-        chapter.addLabel("Jokers can only be used in 3, 4, 5 or 6 of the same kind of tile. Jokers can never be used in singles or pairs including 2020 and NEWS. There are 8 Joker tiles.")
+        chapter.addLabel("Jokers can only be used in 3, 4, 5 or 6 of the same kind of tile. Jokers can never be used in singles or pairs including 2022 and NEWS. There are 8 Joker tiles.")
         chapter.addTile("joker.png", index: 0)
         chapter.expandBodyTileHeight()
         chapter.expandBody(30)

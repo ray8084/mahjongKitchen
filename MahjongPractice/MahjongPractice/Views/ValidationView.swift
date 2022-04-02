@@ -45,7 +45,7 @@ class ValidationView: UIScrollView {
         addMatchingTiles( match, maj: maj )
         y += margin * 3
         addLabelLarge("FAQ")
-        var tips = "Jokers\nJokers can only be used in 3,4,5 or 6 of the same kind of tile. Jokers can not be used in Singles & Pairs including 2020 and NEWS."
+        var tips = "Jokers\nJokers can only be used in 3,4,5 or 6 of the same kind of tile. Jokers can not be used in Singles & Pairs including 2022 and NEWS."
         tips += "\n\nSuits\nSuit counts must be correct. If a pattern says Any 3 Suits, all 3 suits must be used."
         tips += "\n\nDragons\nRed Dragons match the Crak suit. Green Dragons match the Bam suit. Soaps match the Dot suit. Dragons suits must follow the rules for each pattern."
         tips += "\n\nOneBam\nOneBam is a bird on bamboo in the classic tile set we use. It looks like an owl."

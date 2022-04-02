@@ -15,6 +15,8 @@ class StatViewController: NarrowViewController {
     private var maj: Maj!
     private var rowBottom = 0
     private var progressBottom = 0
+    private var circleText: [UIView] = []
+    private var circleLayers: [CAShapeLayer] = []
     
     init(maj: Maj, frame: CGRect, narrowViewDelegate: NarrowViewDelegate) {
         self.maj = maj
@@ -45,6 +47,7 @@ class StatViewController: NarrowViewController {
         xOffset = (Int(scrollView.frame.width) - tableWidth) / 2
         yOffset = scrollView.frame.height > 350 ? 20 : 0
         addTitle()
+        addResetButton(y: yOffset)
         let _ = addLine(x: xOffset, y: yOffset + 55)
         addProgress(maj: maj, top: yOffset + 110)
         tableOffset = progressBottom + 40
@@ -265,6 +268,12 @@ class StatViewController: NarrowViewController {
     // -----------------------------------------------------------------------------------------
     
     private func addProgress(maj: Maj, top: Int) {
+        for view in circleText {
+            view.removeFromSuperview()
+        }
+        for layer in circleLayers {
+            layer.removeFromSuperlayer()
+        }
         let center = maxWidth / 2
         let radius = CGFloat(30)
         let firstOffset = radius
@@ -309,6 +318,7 @@ class StatViewController: NarrowViewController {
         trackLayer.fillColor = UIColor.clear.cgColor
         trackLayer.lineCap = CAShapeLayerLineCap.round
         scrollView.layer.addSublayer(trackLayer)
+        circleLayers.append(trackLayer)
         
         shapeLayer.path = circularPath.cgPath
         shapeLayer.strokeColor = UIColor.systemGreen.cgColor
@@ -319,7 +329,8 @@ class StatViewController: NarrowViewController {
         shapeLayer.lineCap = CAShapeLayerLineCap.round
         shapeLayer.strokeEnd = 0
         scrollView.layer.addSublayer(shapeLayer)
-
+        circleLayers.append(shapeLayer)
+        
         let basicAnimation = CABasicAnimation(keyPath: "strokeEnd")
         basicAnimation.toValue = toValue * 0.8
         basicAnimation.fillMode = CAMediaTimingFillMode.forwards
@@ -333,6 +344,39 @@ class StatViewController: NarrowViewController {
         let percent = Int(toValue * 100)
         text.text = "\(label)\n\(percent)%"
         scrollView.addSubview(text)
+        circleText.append(text)
     }
+    
+    
+    // -----------------------------------------------------------------------------------------
+    //
+    //  Reset
+    //
+    // -----------------------------------------------------------------------------------------
+    
+    func addResetButton(y: Int) {
+        let x = scrollView.frame.origin.x + scrollView.frame.width - 50 - 80
+        let resetButton = UIButton(frame: CGRect(x: Int(x), y: y+20, width: 50, height: 25))
+        resetButton.layer.cornerRadius = 5
+        resetButton.titleLabel!.font = UIFont.systemFont(ofSize: 16)
+        resetButton.setTitle("Clear", for: .normal)
+        resetButton.backgroundColor = .darkGray
+        // resetButton.setTitleColor(.black, for: .normal)
+        resetButton.addTarget(self, action: #selector(showResetMenu), for: .touchUpInside)
+        scrollView.addSubview(resetButton)
+    }
+    
+    @objc func showResetMenu() {
+        let message = "Clear win and loss stats for this years card"
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action:UIAlertAction) in }));
+        alert.addAction(UIAlertAction(title: "Clear", style: .default, handler: {(action:UIAlertAction) in
+            self.maj.card.clearStats()
+            self.update(maj: self.maj)
+            self.addProgress(maj: self.maj, top: self.yOffset + 110)
+        }));
+        present(alert, animated: false, completion: nil)
+    }
+    
 }
 

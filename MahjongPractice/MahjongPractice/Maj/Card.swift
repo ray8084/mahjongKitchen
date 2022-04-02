@@ -159,6 +159,14 @@ class Card {
         defaults.set(letterPattern.losses, forKey: letterPattern.lossKey())
     }
     
+    func clearStats() {
+        for p in letterPatterns {
+            defaults.set(0, forKey: p.key())
+            defaults.set(0, forKey: p.lossKey())
+            defaults.set(0, forKey: p.winKeySinceVersion22())
+        }
+    }
+    
     func winCountText(_ index: Int) -> NSMutableAttributedString {
         var winText = NSMutableAttributedString()
         if index < letterPatterns.count {
