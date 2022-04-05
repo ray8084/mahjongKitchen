@@ -71,6 +71,7 @@ class Maj {
     var sortStyle = SortStyle.suits
     var hideSortMessage = false
     var techSupportDebug = false
+    var hideAutomajMessage = false
             
     var wall = Deck()
     var replayWall = Deck()
@@ -158,6 +159,7 @@ class Maj {
         techSupportDebug = copy.techSupportDebug
         hideSortMessage = copy.hideSortMessage
         alternateRedDragon = copy.alternateRedDragon
+        hideAutomajMessage = copy.hideAutomajMessage
      }
     
   
@@ -224,6 +226,7 @@ class Maj {
         disableTapToDiscard = defaults.bool(forKey: "disableTapToDiscard")
         techSupportDebug = defaults.bool(forKey: "techSupportDebug")
         hideSortMessage = defaults.bool(forKey: "hideSortMessage")
+        hideAutomajMessage = defaults.bool(forKey: "hideAutomajMessage")
     }
     
     func loadPatterns(_ letterPatterns: [LetterPattern]) {
@@ -242,6 +245,12 @@ class Maj {
             opponentPatternsLoaded = true
         }
     }
+    
+    func saveHideAutomajMessage() {
+        hideAutomajMessage = true
+        defaults.set(true, forKey: "hideAutomajMessage")
+    }
+    
     
     // --------------------------------------------------------------
     //  get methods

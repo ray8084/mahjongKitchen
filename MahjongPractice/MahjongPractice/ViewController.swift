@@ -239,13 +239,16 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         
         alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
             self.newGameAction(win)
+            if win { self.showAutoMajMenu() }
         }));
         
         alert.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
             self.replay()
+            if win { self.showAutoMajMenu() }
         }));
         
         alert.addAction(UIAlertAction(title: "Continue", style: .cancel, handler: {(action:UIAlertAction) in
+            if win { self.showAutoMajMenu() }
         }));
         
         present(alert, animated: true, completion: nil)
@@ -945,6 +948,31 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         present(alert, animated: true, completion: nil)
     }
     
+    
+    // -----------------------------------------------------------------------------------------
+    //
+    //  AutoMaj
+    //
+    // -----------------------------------------------------------------------------------------
+    
+    func showAutoMajMenu() {
+        if maj.hideAutomajMessage == false {
+            let title = "Automatically Declare Mahjong"
+            let message = "This option can be changed in Settings"
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Turn OFF", style: .default, handler: {(action:UIAlertAction) in
+                self.maj.setDisableAutomaj(true)
+            }));
+            
+            alert.addAction(UIAlertAction(title: "Leave ON", style: .default, handler: {(action:UIAlertAction) in
+            }));
+           
+            present(alert, animated: true, completion: nil)
+        }
+        maj.saveHideAutomajMessage()
+    }
+        
     
     // -----------------------------------------------------------------------------------------
     //
