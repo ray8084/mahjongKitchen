@@ -64,7 +64,7 @@ class Card2022 : Card {
         let p0 = add("FFF 22 44 666 8888", mask: "000 00 00 000 0000", note: "Any 1 Suit",  family: Family.f2468, concealed: false, points: 25)
         p0.generateList()
         
-        let p1 = add("22 46 88 2222 2222", mask: "gg gg gg rrrr 0000", note: "Any 2 Suits, Kongs Any Like Even No",  family: Family.f2468, concealed: false, points: 25)
+        let p1 = add("22 46 88 2222 2222", mask: "gg gg gg rrrr 0000", note: "Any 3 Suits, Kongs Any Like Even No",  family: Family.f2468, concealed: false, points: 25)
         p1.add([2,2, 4,6, 8,8, 12,12,12,12, 22,22,22,22])
         p1.add([2,2, 4,6, 8,8, 14,14,14,14, 24,24,24,24])
         p1.add([2,2, 4,6, 8,8, 16,16,16,16, 26,26,26,26])

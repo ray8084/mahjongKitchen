@@ -356,9 +356,10 @@ class RevenueCat {
         purchaseMenu.alertForRestore.dismiss(animated: true, completion: {
             self.purchaseMenu.close()
         })
+        gameDelegate.enable2022(true)
         gameDelegate.enable2021(true)
         gameDelegate.enable2020(true)
-        gameDelegate.load2021()
+        gameDelegate.load2022()
     }
 
     func is2022Purchased() -> Bool {

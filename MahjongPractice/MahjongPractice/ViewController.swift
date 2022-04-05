@@ -64,6 +64,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     var controlPanel: UISegmentedControl!
     var versionLabel: UILabel!
     var yearLabel: UILabel!
+    var eightbamLabel: UILabel!
     
     
     // -----------------------------------------------------------------------------------------
@@ -261,6 +262,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         } else {
             self.redeal()
         }
+        eightbamLabel.isHidden = false
     }
         
     func eastWon() {
@@ -282,6 +284,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         botView.showHighestPatternMatch = false
         hideBotView()
         showBottomView()
+        eightbamLabel.isHidden = false
     }
     
     
@@ -376,6 +379,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 discardTableView.show(parent: view, rowHeader: tableLocation(), maj: maj, margin: cardMarginX())
             }
         }
+        eightbamLabel.isHidden = !maj.isCharlestonActive()
         return true
     }
   
@@ -702,6 +706,17 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             yearLabel.text = maj.getYearText()
             view.addSubview(yearLabel)
         }
+        if eightbamLabel == nil {
+            eightbamLabel = UILabel()
+            eightbamLabel.frame = CGRect(x: cardMarginX(), y: tileHeight() - 40, width: 500, height: 40)
+            // eightbamLabel.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.regular)
+            eightbamLabel.font = UIFont(name: "Chalkduster", size: 16)
+            // titleLabel.textColor = UIColor(red: 114/255, green: 123/255, blue: 102/255, alpha: 1.0)
+            eightbamLabel.textColor = .black
+            eightbamLabel.textAlignment = .left
+            eightbamLabel.text = "American Mahjong Practice, Eight Bam LLC"
+            view.addSubview(eightbamLabel)
+        }
     }
     
     func setSegmentColors(_ segment: UISegmentedControl, chalkduster: Bool) {
@@ -875,7 +890,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         }));
         
         if self.maj.enable2021 == false {
-            alert.addAction(UIAlertAction(title: "2021 Pattern Access", style: .default, handler: {(action:UIAlertAction) in
+            alert.addAction(UIAlertAction(title: "2022 Pattern Access", style: .default, handler: {(action:UIAlertAction) in
                 self.revenueCat.showPurchaseMenu(self)
             }));
         }
@@ -1511,6 +1526,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         if maj.isWinBotEnabled() && maj.botWon() {
             botWon()
         }
+        eightbamLabel.isHidden = maj.isCharlestonActive() ? false : true
         return true
     }
     

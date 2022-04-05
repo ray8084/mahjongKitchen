@@ -486,6 +486,7 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
             // default
         } else {
             segment.tintColor = .gray
+            dragonSegment.tintColor = .gray
         }
         
         let tilesOffset = segmentOffset + 45
