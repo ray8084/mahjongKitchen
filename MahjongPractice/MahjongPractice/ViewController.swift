@@ -714,7 +714,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             // titleLabel.textColor = UIColor(red: 114/255, green: 123/255, blue: 102/255, alpha: 1.0)
             eightbamLabel.textColor = .black
             eightbamLabel.textAlignment = .left
-            eightbamLabel.text = "American Mahjong Practice, Eight Bam LLC"
+            eightbamLabel.text = "American Mahjong Practice"
             view.addSubview(eightbamLabel)
         }
     }
