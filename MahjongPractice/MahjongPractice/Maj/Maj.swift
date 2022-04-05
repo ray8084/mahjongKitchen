@@ -66,6 +66,7 @@ class Maj {
     var enable2022 = false
     var shuffleWithSeed = false
     var shuffleSeed = ""
+    var disableAutomaj = false
     var disableTapToDiscard = false
     var sortStyle = SortStyle.suits
     var hideSortMessage = false
@@ -187,7 +188,8 @@ class Maj {
     }
       
     func eastWon() -> Bool {
-        return east.rack!.tiles.count == 14
+        // return east.rack!.tiles.count == 14
+        return east.getHighestMatch().matchCount == 14
     }
     
     func loadSavedValues() {
@@ -448,6 +450,11 @@ class Maj {
     func setDisableTapToDiscard(_ disable: Bool) {
         disableTapToDiscard = disable
         defaults.set(disableTapToDiscard, forKey: "disableTapToDiscard")
+    }
+    
+    func setDisableAutomaj(_ disable: Bool) {
+        disableAutomaj = disable
+        defaults.set(disableAutomaj, forKey: "disableAutomaj")
     }
     
     func setAlternateRedDragon(_ enable: Bool) {

@@ -65,6 +65,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     var versionLabel: UILabel!
     var yearLabel: UILabel!
     var eightbamLabel: UILabel!
+    var redealButton: UIButton!
     
     
     // -----------------------------------------------------------------------------------------
@@ -263,6 +264,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             self.redeal()
         }
         eightbamLabel.isHidden = false
+        redealButton.isHidden = false
     }
         
     func eastWon() {
@@ -285,6 +287,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         hideBotView()
         showBottomView()
         eightbamLabel.isHidden = false
+        redealButton.isHidden = false
     }
     
     
@@ -380,6 +383,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             }
         }
         eightbamLabel.isHidden = !maj.isCharlestonActive()
+        redealButton.isHidden = eightbamLabel.isHidden
         return true
     }
   
@@ -563,6 +567,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         addSettingsButton()
         addMenuButton()
         addSortButton()
+        addRedealButton()
     }
     
     func addHelpButton() {
@@ -638,6 +643,21 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         sortButton1.isHidden = !maj.isCharlestonActive()
         sortButton2.isHidden = maj.isCharlestonActive()
     }
+    
+    func addRedealButton() {
+        if redealButton == nil {
+            redealButton = UIButton()
+            redealButton.frame = CGRect(x: helpButtonLocationX() - 20, y: tileHeight() - buttonSize(),  width: buttonSize()+40, height: buttonSize())
+            redealButton.layer.cornerRadius = 5
+            redealButton.titleLabel!.font = UIFont(name: "Chalkduster", size: 16)!
+            redealButton.backgroundColor = .black
+            redealButton.setTitle("Redeal", for: .normal)
+            redealButton.alpha = 0.8
+            redealButton.addTarget(self, action: #selector(redeal), for: .touchUpInside)
+            view.addSubview(redealButton)
+        }
+    }
+    
     
     @objc func helpButtonAction(sender: UIButton!) {
         let help = HelpTableController(frame: view.frame, narrowViewDelegate: self)
@@ -1121,6 +1141,12 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         if !handled {
             sender.view!.center = start
         }
+        if maj.eastWon() && (winCounted == false) && (maj.disableAutomaj == false){
+            maj.east.rackAllTiles()
+            showHand()
+            showRack()
+            eastWon()
+        }
     }
 
     func getTile(location: CGPoint) -> Tile{
@@ -1288,7 +1314,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     
     func showJokerExposeLastMessage() {
         let title = "Joker"
-        let message = "Please expose numbers, dragons, flowers and wind tiles before jokers.\n This is not a Mahjong rule, it just helps our app reliabliy identify jokers. Jokers replace the tile to the left."
+        let message = "Please expose tiles left of jokers.\n This is not a Mahjong rule. We automatically indentify jokers. Jokers replace the tile to the left."
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
@@ -1527,6 +1553,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             botWon()
         }
         eightbamLabel.isHidden = maj.isCharlestonActive() ? false : true
+        redealButton.isHidden = eightbamLabel.isHidden
         return true
     }
     
