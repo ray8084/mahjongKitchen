@@ -32,6 +32,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     let botView = BotView()
     var discardTableView = DiscardTableView()
     var validationView = ValidationView()
+    var newGameMenu =  UIAlertController()
     
     let margin: CGFloat = 5
     let space: CGFloat = 1
@@ -235,22 +236,22 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
     
     func showGameMenu(title: String, message: String, win: Bool) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        newGameMenu = UIAlertController(title: title, message: message, preferredStyle: .alert)
         self.cardView.update(maj)
         self.tileMatchView.update(maj)
         
-        alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
+        newGameMenu.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
             self.newGameAction(win)
         }));
         
-        alert.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
+        newGameMenu.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
             self.replay()
         }));
         
-        alert.addAction(UIAlertAction(title: "Continue", style: .cancel, handler: {(action:UIAlertAction) in
+        newGameMenu.addAction(UIAlertAction(title: "Continue", style: .cancel, handler: {(action:UIAlertAction) in
         }));
         
-        present(alert, animated: true, completion: nil)
+        // present(newGameMenu, animated: true, completion: nil)
     }
         
     func newGameAction(_ win: Bool) {
@@ -488,7 +489,8 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     func closeValidationView() {
         validationView.removeFromSuperview()
         validationView.closeButton.removeFromSuperview()
-        showGameMenu(title: "Game", message: "", win: false)
+        showGameMenu(title: "Game Over", message: "", win: false)
+        present(newGameMenu, animated: true)
     }
     
     func showRackError(_ message: String) {
@@ -1348,8 +1350,12 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                     moved = true
                     
                     let message = maj.card.winningHand(maj: maj)
-                    if (maj.east.rack?.tiles.count == 14) && (message.count == 0) {
-                        showValidationView()
+                    if (maj.east.rack?.tiles.count == 14) {
+                        if (message.count == 0) {
+                            showValidationView()
+                        } else {
+                            present(newGameMenu, animated: true)
+                        }
                     }
                 }
             } else {
