@@ -689,6 +689,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         showRack()
         eastWon()
         mahjButton.isHidden = true
+        present(newGameMenu, animated: true)
     }
     
     @objc func helpButtonAction(sender: UIButton!) {
