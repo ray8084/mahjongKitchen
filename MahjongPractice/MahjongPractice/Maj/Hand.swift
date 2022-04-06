@@ -456,58 +456,64 @@ class Hand {
     
     // --------------------------------------------------------------
     //  calling
+
+    func skipPattern(patternId: Int) -> Bool {
+        return (patternId == 0) || (patternId == 2) || (patternId == 3) || (patternId == 4) // todo fix 2022 joker calls
+    }
     
     func call(maj: Maj, rack: Rack) -> Bool{
         // print("Call \(name)")
         if maj.discardTile != nil {
             if maj.discardTile.isJoker() == false {
                 let tileMatchItem = getHighestMatch()
-                let matchMap = tileMatchItem.map
-                let matchId = maj.discardTile.id
-                let tilename = maj.discardTile.getDisplayName()
-                let handMap = TileIdMap(tiles: tiles)
-                let rackMap = TileIdMap(rack: rack)
-                let matchCount = matchMap.map[matchId]
-                let handCount = handMap.map[matchId]
-                let rackCount = rackMap.map[matchId]
-                let jokers = jokerCount()
-                maj.discardCalled = false
-                if rackCount != 0 {
-                }
-                else if (matchCount == 4) && (handCount == 3) {
-                    maj.discardCalled = call(maj: maj, rack: rack, matchId: matchId, matchCount: matchCount, handCount: handCount)
-                }
-                else if (matchCount == 4) && (handCount == 2) && (jokers >= 1) {
-                    maj.discardCalled = callWithJoker(maj: maj, rack: rack, matchId: matchId, matchCount: matchCount, handCount: handCount)
-                }
-                else if (matchCount == 4) && (handCount == 1) && (jokers >= 2) {
-                    maj.discardCalled = callWith2Jokers(maj: maj, rack: rack, matchId: matchId, matchCount: matchCount, handCount: handCount)
-                }
-                else if (matchCount == 3) && (handCount == 2) {
-                    maj.discardCalled = call(maj: maj, rack: rack, matchId: matchId, matchCount: matchCount, handCount: handCount)
-                }
-                else if (matchCount == 3) && (handCount == 1) && (jokers > 0) {
-                    maj.discardCalled = callWithJoker(maj: maj, rack: rack, matchId: matchId, matchCount: matchCount, handCount: handCount)
-                } else if (matchCount == 2) && (handCount == 1){
-                    maj.discardCalled = callPair(maj: maj, rack: rack, matchId: matchId, matchCount: matchCount, handCount: handCount)
-                } else {
-                    // print("Pass \(name) id \(matchId) map \(matchCount) hand \(handCount) jokers \(jokers)" )
-                }
-                
-                if maj.discardCalled {
-                    // print("Call \(name) id \(matchId) map \(matchCount) hand \(handCount) jokers \(jokers)" )
-                    maj.clearMessages()
-                    if maj.isWinBotEnabled() && maj.botWon() {
-                        rack.message = "\(name) declared Mahjong"
-                        print(rack.message)
+                if skipPattern(patternId: tileMatchItem.letterPatternId) == false {
+                    let matchMap = tileMatchItem.map
+                    let matchId = maj.discardTile.id
+                    let tilename = maj.discardTile.getDisplayName()
+                    let handMap = TileIdMap(tiles: tiles)
+                    let rackMap = TileIdMap(rack: rack)
+                    let matchCount = matchMap.map[matchId]
+                    let handCount = handMap.map[matchId]
+                    let rackCount = rackMap.map[matchId]
+                    let jokers = jokerCount()
+                    maj.discardCalled = false
+                    if rackCount != 0 {
+                    }
+                    else if (matchCount == 4) && (handCount == 3) {
+                        maj.discardCalled = call(maj: maj, rack: rack, matchId: matchId, matchCount: matchCount, handCount: handCount)
+                    }
+                    else if (matchCount == 4) && (handCount == 2) && (jokers >= 1) {
+                        maj.discardCalled = callWithJoker(maj: maj, rack: rack, matchId: matchId, matchCount: matchCount, handCount: handCount)
+                    }
+                    else if (matchCount == 4) && (handCount == 1) && (jokers >= 2) {
+                        maj.discardCalled = callWith2Jokers(maj: maj, rack: rack, matchId: matchId, matchCount: matchCount, handCount: handCount)
+                    }
+                    else if (matchCount == 3) && (handCount == 2) {
+                        maj.discardCalled = call(maj: maj, rack: rack, matchId: matchId, matchCount: matchCount, handCount: handCount)
+                    }
+                    else if (matchCount == 3) && (handCount == 1) && (jokers > 0) {
+                        maj.discardCalled = callWithJoker(maj: maj, rack: rack, matchId: matchId, matchCount: matchCount, handCount: handCount)
+                    } else if (matchCount == 2) && (handCount == 1){
+                        maj.discardCalled = callPair(maj: maj, rack: rack, matchId: matchId, matchCount: matchCount, handCount: handCount)
                     } else {
-                        rack.message = "\(name) called \(tilename)"
-                        if maj.previousHandName == maj.south.rack?.name {
-                            maj.south.rack?.message = "\(maj.south.rack?.name ?? "") discarded \(tilename)"
-                        } else if maj.previousHandName == maj.west.rack?.name {
-                            maj.west.rack?.message = "\(maj.west.rack?.name ?? "") discarded \(tilename)"
-                        } else if maj.previousHandName == maj.north.rack?.name {
-                            maj.north.rack?.message = "\(maj.north.rack?.name ?? "") discarded \(tilename)"
+                        // print("Pass \(name) id \(matchId) map \(matchCount) hand \(handCount) jokers \(jokers)" )
+                    }
+                    
+                    if maj.discardCalled {
+                        print("Call \(name) id \(matchId) map \(matchCount) hand \(handCount) jokers \(jokers) letterPatternIndex \(tileMatchItem.letterPatternId)" )
+                        maj.clearMessages()
+                        if maj.isWinBotEnabled() && maj.botWon() {
+                            rack.message = "\(name) declared Mahjong"
+                            print(rack.message)
+                        } else {
+                            rack.message = "\(name) called \(tilename)"
+                            if maj.previousHandName == maj.south.rack?.name {
+                                maj.south.rack?.message = "\(maj.south.rack?.name ?? "") discarded \(tilename)"
+                            } else if maj.previousHandName == maj.west.rack?.name {
+                                maj.west.rack?.message = "\(maj.west.rack?.name ?? "") discarded \(tilename)"
+                            } else if maj.previousHandName == maj.north.rack?.name {
+                                maj.north.rack?.message = "\(maj.north.rack?.name ?? "") discarded \(tilename)"
+                            }
                         }
                     }
                 }
