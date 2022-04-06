@@ -323,12 +323,12 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
         settingsBottom = Int(tapSwitch.frame.origin.y + tapSwitch.frame.height)
         addTapToDiscardHelpButton(x: xOffset + maxWidth - 60, y: nextOffset)
         
-        nextOffset = settingsBottom + 10
-        let automajSwitch = addSwitch("Declare Mahjong Automatically", y: nextOffset)
-        automajSwitch.isOn = !maj.disableAutomaj
-        automajSwitch.addTarget(self, action: #selector(changeAutomaj), for: .valueChanged)
-        settingsBottom = Int(automajSwitch.frame.origin.y + automajSwitch.frame.height)
-        addAutomajHelpButton(x: xOffset + maxWidth - 60, y: nextOffset)
+        //nextOffset = settingsBottom + 10
+        //let automajSwitch = addSwitch("Declare Mahjong Automatically", y: nextOffset)
+        //automajSwitch.isOn = !maj.disableAutomaj
+        //automajSwitch.addTarget(self, action: #selector(changeAutomaj), for: .valueChanged)
+        //settingsBottom = Int(automajSwitch.frame.origin.y + automajSwitch.frame.height)
+        //addAutomajHelpButton(x: xOffset + maxWidth - 60, y: nextOffset)
                 
         nextOffset = settingsBottom + 10
         let techSupportSwitch = addSwitch("Tech Support Debug Messages", y: nextOffset)

@@ -66,6 +66,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     var yearLabel: UILabel!
     var eightbamLabel: UILabel!
     var redealButton: UIButton!
+    var mahjButton: UIButton!
     
     
     // -----------------------------------------------------------------------------------------
@@ -225,6 +226,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
     
     func showWinMenu() {
+        self.mahjButton.isHidden = true
         if (maj.unrecognizedHandDeclared() == false) {
             let title = "Mahjong - You Win!"
             let message = maj.card.winningHand(maj: maj)
@@ -239,16 +241,13 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         
         alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
             self.newGameAction(win)
-            if win { self.showAutoMajMenu() }
         }));
         
         alert.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
             self.replay()
-            if win { self.showAutoMajMenu() }
         }));
         
         alert.addAction(UIAlertAction(title: "Continue", style: .cancel, handler: {(action:UIAlertAction) in
-            if win { self.showAutoMajMenu() }
         }));
         
         present(alert, animated: true, completion: nil)
@@ -571,6 +570,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         addMenuButton()
         addSortButton()
         addRedealButton()
+        addMahjButton()
     }
     
     func addHelpButton() {
@@ -661,6 +661,33 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         }
     }
     
+    func addMahjButton() {
+        if mahjButton == nil {
+            let x = controlPanelLocationX() + ((tileWidth() + space) * 9)
+            let y = charlestonTop()
+            mahjButton = UIButton()
+            mahjButton.frame = CGRect(x: x - 130, y: y,  width: buttonSize()+150, height: buttonSize())
+            mahjButton.layer.cornerRadius = 5
+            mahjButton.titleLabel!.font = UIFont(name: "Chalkduster", size: 16)!
+            // mahjButton.backgroundColor = UIColor(red: 255/255, green: 153/255, blue: 0, alpha: 1.0);
+            mahjButton.backgroundColor = .black
+            // mahjButton.setTitleColor(.black, for: .normal)
+            mahjButton.setTitleColor(.white, for: .normal)
+            mahjButton.setTitle("Declare Mahjong", for: .normal)
+            mahjButton.alpha = 0.8
+            mahjButton.addTarget(self, action: #selector(declareMahjAction), for: .touchUpInside)
+            mahjButton.isHidden = true
+            view.addSubview(mahjButton)
+        }
+    }
+        
+    @objc func declareMahjAction(sender: UIButton!) {
+        maj.east.rackAllTiles()
+        showHand()
+        showRack()
+        eastWon()
+        mahjButton.isHidden = true
+    }
     
     @objc func helpButtonAction(sender: UIButton!) {
         let help = HelpTableController(frame: view.frame, narrowViewDelegate: self)
@@ -1169,11 +1196,9 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         if !handled {
             sender.view!.center = start
         }
-        if maj.eastWon() && (winCounted == false) && (maj.disableAutomaj == false){
-            maj.east.rackAllTiles()
-            showHand()
-            showRack()
-            eastWon()
+        if maj.eastWon() && (winCounted == false) {
+            mahjButton.isHidden = false
+            sortButton2.isHidden = true
         }
     }
 
