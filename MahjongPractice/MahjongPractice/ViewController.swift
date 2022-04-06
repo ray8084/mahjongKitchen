@@ -248,10 +248,11 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             self.replay()
         }));
         
-        newGameMenu.addAction(UIAlertAction(title: "Continue", style: .cancel, handler: {(action:UIAlertAction) in
-        }));
+        if win == false {
+            newGameMenu.addAction(UIAlertAction(title: "Review", style: .default, handler: {(action:UIAlertAction) in  }));
+        }
         
-        // present(newGameMenu, animated: true, completion: nil)
+        present(newGameMenu, animated: true, completion: nil)
     }
         
     func newGameAction(_ win: Bool) {
@@ -483,6 +484,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
     
     func showValidationView() {
+        newGameMenu.dismiss(animated: false, completion: nil)
         validationView.show(view, maj: maj, delegate: self)
     }
     
@@ -490,7 +492,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         validationView.removeFromSuperview()
         validationView.closeButton.removeFromSuperview()
         showGameMenu(title: "Game Over", message: "", win: false)
-        present(newGameMenu, animated: true)
     }
     
     func showRackError(_ message: String) {
@@ -652,11 +653,11 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     func addRedealButton() {
         if redealButton == nil {
             redealButton = UIButton()
-            redealButton.frame = CGRect(x: helpButtonLocationX() - 20, y: tileHeight() - buttonSize(),  width: buttonSize()+40, height: buttonSize())
+            redealButton.frame = CGRect(x: helpButtonLocationX() - 60, y: tileHeight() - buttonSize(),  width: buttonSize()+80, height: buttonSize())
             redealButton.layer.cornerRadius = 5
             redealButton.titleLabel!.font = UIFont(name: "Chalkduster", size: 16)!
             redealButton.backgroundColor = .black
-            redealButton.setTitle("Redeal", for: .normal)
+            redealButton.setTitle("New Game", for: .normal)
             redealButton.alpha = 0.8
             redealButton.addTarget(self, action: #selector(redeal), for: .touchUpInside)
             view.addSubview(redealButton)
@@ -689,7 +690,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         showRack()
         eastWon()
         mahjButton.isHidden = true
-        present(newGameMenu, animated: true)
     }
     
     @objc func helpButtonAction(sender: UIButton!) {
@@ -1127,7 +1127,14 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 handlePanGestureBegin(sender)
                 break
             case .ended:
-                if sender.view!.superview != nil { handlePanGestureEnded(sender) }
+                if sender.view!.superview != nil {
+                    if (maj.isWinBotEnabled() && maj.botWon()) || (label.text == "Game Over") {
+                        sender.view!.center = start
+                        showGameMenu()
+                    } else {
+                        handlePanGestureEnded(sender)
+                    }
+                }
                 break
             case .changed:
                 if sender.view!.superview != nil { handlePanGestureChanged(sender) }
@@ -1354,8 +1361,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                     if (maj.east.rack?.tiles.count == 14) {
                         if (message.count == 0) {
                             showValidationView()
-                        } else {
-                            present(newGameMenu, animated: true)
                         }
                     }
                 }
@@ -1614,6 +1619,11 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         }
         eightbamLabel.isHidden = maj.isCharlestonActive() ? false : true
         redealButton.isHidden = eightbamLabel.isHidden
+        
+        if maj.eastWon() && (winCounted == false) {
+            mahjButton.isHidden = false
+            sortButton2.isHidden = true
+        }
         return true
     }
     
