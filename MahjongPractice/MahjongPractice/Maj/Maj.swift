@@ -190,8 +190,7 @@ class Maj {
     }
       
     func eastWon() -> Bool {
-        // return east.rack!.tiles.count == 14
-        return east.getHighestMatch().matchCount == 14
+        return east.rack!.tiles.count == 14
     }
     
     func loadSavedValues() {

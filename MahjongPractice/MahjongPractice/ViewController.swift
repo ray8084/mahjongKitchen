@@ -56,6 +56,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     var winCounted = false
     var lossCounted = false
     var rackingInProgress = false
+    var reviewInProgress = false
     
     var menuButton: UIButton!
     var settingsButton: UIButton!
@@ -248,9 +249,9 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             self.replay()
         }));
         
-        if win == false {
-            newGameMenu.addAction(UIAlertAction(title: "Review", style: .default, handler: {(action:UIAlertAction) in  }));
-        }
+        newGameMenu.addAction(UIAlertAction(title: "Review", style: .default, handler: {(action:UIAlertAction) in
+            self.reviewInProgress = true
+        }));
         
         present(newGameMenu, animated: true, completion: nil)
     }
@@ -270,6 +271,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         eightbamLabel.isHidden = false
         redealButton.isHidden = false
         mahjButton.isHidden = true
+        reviewInProgress = false
     }
         
     func eastWon() {
@@ -294,6 +296,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         eightbamLabel.isHidden = false
         redealButton.isHidden = false
         mahjButton.isHidden = true
+        reviewInProgress = false
     }
     
     
@@ -686,7 +689,12 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
         
     @objc func declareMahjAction(sender: UIButton!) {
+        if maj.discardTile != nil {
+            maj.east.rack?.tiles.append(maj.discardTile)
+            maj.discardTile = nil
+        }
         maj.east.rackAllTiles()
+        showDiscard()
         showHand()
         showRack()
         eastWon()
@@ -1129,9 +1137,8 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 break
             case .ended:
                 if sender.view!.superview != nil {
-                    if (maj.isWinBotEnabled() && maj.botWon()) || (label.text == "Game Over") {
-                        sender.view!.center = start
-                        showGameMenu()
+                    if reviewInProgress {
+                        handlePanGestureDuringReview(sender)
                     } else {
                         handlePanGestureEnded(sender)
                     }
@@ -1159,6 +1166,17 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 sender.view!.center = end
                 view.bringSubviewToFront(sender.view!)
             }
+        }
+    }
+    
+    func handlePanGestureDuringReview(_ sender: UIPanGestureRecognizer ) {
+        let startTag = sender.view?.tag ?? 0
+        let endLocation = sender.location(in: sender.view!.superview!)
+        if isRack(tag: startTag) && isRack(endLocation) {
+            let _ = swapInRack(end: endLocation, startTag: startTag)
+        } else {
+            sender.view!.center = start
+            showGameMenu()
         }
     }
     
@@ -1207,11 +1225,24 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         if !handled {
             sender.view!.center = start
         }
-        
-        maj.east.countMatches()
-        if maj.eastWon() && (winCounted == false) {
-            mahjButton.isHidden = false
-            sortButton2.isHidden = true
+        checkForMahjong()
+    }
+    
+    func checkForMahjong() {
+        if maj.isCharlestonActive() == false && reviewInProgress == false {
+            if maj.discardTile != nil {
+                let highest = maj.card.getClosestPattern(tiles: maj.east.tiles + maj.rackTiles() + [maj.discardTile])
+                if (highest.matchCount == 14) && (winCounted == false) {
+                    mahjButton.isHidden = false
+                    sortButton2.isHidden = true
+                }
+            } else {
+                let highest = maj.card.getClosestPattern(tiles: maj.east.tiles + maj.rackTiles())
+                if (highest.matchCount == 14) && (winCounted == false) {
+                    mahjButton.isHidden = false
+                    sortButton2.isHidden = true
+                }
+            }
         }
     }
 
@@ -1582,6 +1613,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             }));
             
             alert.addAction(UIAlertAction(title: "Review", style: .cancel, handler: {(action:UIAlertAction) in
+                self.reviewInProgress = true
             }));
             
             present(alert, animated: true, completion: nil)
