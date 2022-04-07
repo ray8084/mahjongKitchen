@@ -269,6 +269,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         }
         eightbamLabel.isHidden = false
         redealButton.isHidden = false
+        mahjButton.isHidden = true
     }
         
     func eastWon() {
@@ -292,6 +293,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         showBottomView()
         eightbamLabel.isHidden = false
         redealButton.isHidden = false
+        mahjButton.isHidden = true
     }
     
     
@@ -315,6 +317,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         hideBotView()
         showBottomView()
         yearLabel?.text = maj.getYearText()
+        mahjButton.isHidden = true
     }
     
     func resetMaj() {
@@ -672,9 +675,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             mahjButton.frame = CGRect(x: x - 130, y: y,  width: buttonSize()+150, height: buttonSize())
             mahjButton.layer.cornerRadius = 5
             mahjButton.titleLabel!.font = UIFont(name: "Chalkduster", size: 16)!
-            // mahjButton.backgroundColor = UIColor(red: 255/255, green: 153/255, blue: 0, alpha: 1.0);
             mahjButton.backgroundColor = .black
-            // mahjButton.setTitleColor(.black, for: .normal)
             mahjButton.setTitleColor(.white, for: .normal)
             mahjButton.setTitle("Declare Mahjong", for: .normal)
             mahjButton.alpha = 0.8
@@ -1206,6 +1207,8 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         if !handled {
             sender.view!.center = start
         }
+        
+        maj.east.countMatches()
         if maj.eastWon() && (winCounted == false) {
             mahjButton.isHidden = false
             sortButton2.isHidden = true
@@ -1619,11 +1622,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         }
         eightbamLabel.isHidden = maj.isCharlestonActive() ? false : true
         redealButton.isHidden = eightbamLabel.isHidden
-        
-        if maj.eastWon() && (winCounted == false) {
-            mahjButton.isHidden = false
-            sortButton2.isHidden = true
-        }
         return true
     }
     
