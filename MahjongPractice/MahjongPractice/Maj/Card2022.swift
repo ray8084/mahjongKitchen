@@ -12,16 +12,17 @@ class Card2022 : Card {
     
     override init() {
         super.init()
+        year = Year.y2022
         add2022()
-        add2468()
-        addLikeNumbers()
-        addAdditionHands()
-        addQuints()
-        addConsectiveRun()
-        add13579()
-        addWindsAndDragons()
-        add369()
-        addSinglesAndPairs()
+        //add2468()
+        //addLikeNumbers()
+        //addAdditionHands()
+        //addQuints()
+        //addConsectiveRun()
+        //add13579()
+        //addWindsAndDragons()
+        //add369()
+        //addSinglesAndPairs()
         
         var count = 0
         for p in letterPatterns {

@@ -12,6 +12,7 @@ class Card {
     var letterPatterns: [LetterPattern] = []
     let defaults = UserDefaults.standard
     var showLosses = false
+    var year = Year.uninitialized
     
     init() {
     }
@@ -118,7 +119,7 @@ class Card {
             }
         }
        
-        let p = LetterPattern(text: m, mask: mask, note: note, id: letterPatterns.count, family: family, concealed: concealed, points: points)
+        let p = LetterPattern(text: m, mask: mask, note: note, id: letterPatterns.count, family: family, concealed: concealed, points: points, year: year)
         letterPatterns.append(p)
         return p
     }

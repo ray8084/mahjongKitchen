@@ -43,8 +43,9 @@ class LetterPattern {
     var points = 0
     var rackFilter = false
     var hide = false
+    var year = Year.uninitialized
     
-    init(text: NSMutableAttributedString, mask: String, note: String, id: Int, family: Int, concealed: Bool, points: Int) {
+    init(text: NSMutableAttributedString, mask: String, note: String, id: Int, family: Int, concealed: Bool, points: Int, year: Int) {
         self.text = text
         self.note = NSMutableAttributedString(string: note)
         self.id = id
@@ -52,6 +53,7 @@ class LetterPattern {
         self.family = family
         self.concealed = concealed
         self.points = points
+        self.year = year
     }
     
     func getDescription() -> String {
@@ -124,8 +126,13 @@ class LetterPattern {
                         jokerCount += 1
                     }
                 }
-                for map in idMap.list {
-                    let count = countMatches(tiles: tiles, map: map.map, jokerCount: jokerCount)
+                for (index, map) in idMap.list.enumerated() {
+                    var count = 0
+                    if year == Year.y2022 {
+                        count = countMatches2022(tiles: tiles, map: map.map, jokerCount: jokerCount, subId: index)
+                    } else {
+                        count = countMatches(tiles: tiles, map: map.map, jokerCount: jokerCount, subId: index)
+                    }
                     if count > matchCount {
                         matchCount = count
                     }
@@ -134,7 +141,7 @@ class LetterPattern {
         }
     }
     
-    private func countMatches(tiles: [Tile], map: [Int], jokerCount: Int) -> Int {
+    private func countMatches(tiles: [Tile], map: [Int], jokerCount: Int, subId: Int) -> Int {
         var remainder = map
         for tile in tiles {
             if remainder[tile.id] != 0 {
@@ -164,8 +171,59 @@ class LetterPattern {
         for idCount in remainder {
             count -= idCount
         }
+        print("countMatches patterId \(self.id) subId \(subId) count \(count)")
         return count
     }
+    
+    private func countMatches2022(tiles: [Tile], map: [Int], jokerCount: Int, subId: Int) -> Int {
+        var remainder = map
+        for tile in tiles {
+            if remainder[tile.id] != 0 {
+                remainder[tile.id] -= 1
+            }
+        }
+            
+        // check jokers
+        var jokerRemainder = jokerCount
+        if (year == Year.y2022) && (id == 4) {
+            jokerRemainder = 0  // hardcoded special case for FFFF 2022 2022 2022 no jokers
+        }
+        if (jokerRemainder != 0) && (family != Family.pairs) {
+            for (index, idCount) in map.enumerated() {
+                if (idCount > 2) && (remainder[index] != 0) {
+                    if (id == 0) && (index == 2)         { // hardcoded special case FF GGGG 2022 RRRR dots
+                    } else if (id == 0) && (index == 12) { // hardcoded special case FF GGGG 2022 RRRR bams
+                    } else if (id == 0) && (index == 22) { // hardcoded special case FF GGGG 2020 RRRR craks
+                    } else if (id == 2) && (subId == 0) && (index == 2)  { // hardcoded special case FFFF 2022 222 222 dots
+                    } else if (id == 2) && (subId == 1) && (index == 12) { // hardcoded special case FFFF 222 2022 222 bams
+                    } else if (id == 2) && (subId == 2) && (index == 22) { // hardcoded special case FFFF 222 222 2022 craks
+                    } else if (id == 3) && (index == 2)  { // hardcoded special case NN EEE 2022 WWW SS dots
+                    } else if (id == 3) && (index == 12) { // hardcoded special case NN EEE 2022 WWW SSS bams
+                    } else if (id == 3) && (index == 22) { // hardcoded special case NN EEE 2022 WWW SS craks
+                    } else if (id == 4) && (index == 2)  { // hardcoded special case FF 2022 2022 2022 dots
+                    } else if (id == 4) && (index == 12) { // hardcoded special case FF 2022 2022 2022 bams
+                    } else if (id == 4) && (index == 22) { // hardcoded special case FF 2022 2022 2022 craks
+                    } else if remainder[index] >= jokerRemainder {
+                        remainder[index] -= jokerRemainder
+                        jokerRemainder = 0
+                        break
+                    } else {
+                        jokerRemainder -= remainder[index]
+                        remainder[index] = 0
+                    }
+                }
+            }
+        }
+            
+        // count remainder
+        var count = 14
+        for idCount in remainder {
+            count -= idCount
+        }
+        print("countMatches patterId \(self.id) subId \(subId) count \(count)")
+        return count
+    }
+
 
     private func countMatches(_ tiles: [Tile], item: [Int]) -> Int {
         var ids = item
