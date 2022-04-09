@@ -45,7 +45,7 @@ class StatViewController: NarrowViewController {
     }
     
     override func addControls() {
-        scrollViewHeight = 34000
+        scrollViewHeight = 35000
         narrowView()
         addScrollView()
         xOffset = (Int(scrollView.frame.width) - tableWidth) / 2
@@ -518,6 +518,85 @@ class StatViewController: NarrowViewController {
                 index += 1
             }
         }
+        
+        addTitle("Tiles", y: offset)
+        offset += 55
+        let _ = addLine(x: xOffset, y: offset)
+        offset += 5
+        var total1s = 0
+        var total2s = 0
+        var total3s = 0
+        var total4s = 0
+        var total5s = 0
+        var total6s = 0
+        var total7s = 0
+        var total8s = 0
+        var total9s = 0
+        var totalSoaps = 0
+        var totalGreen = 0
+        var totalRed = 0
+        var totalNorth = 0
+        var totalEast = 0
+        var totalWest = 0
+        var totalSouth = 0
+        var totalFlowers = 0
+
+        for p in maj.unsortedLetterPatterns {
+            for idlist in p.idList.list {
+                for id in idlist.ids {
+                    switch(id) {
+                    case 1: total1s += 1
+                    case 2: total2s += 1
+                    case 3: total3s += 1
+                    case 4: total4s += 1
+                    case 5: total5s += 1
+                    case 6: total6s += 1
+                    case 7: total7s += 1
+                    case 8: total8s += 1
+                    case 9: total9s += 1
+                    case 10: totalSoaps += 1
+                    case 11: total1s += 1
+                    case 12: total2s += 1
+                    case 13: total3s += 1
+                    case 14: total4s += 1
+                    case 15: total5s += 1
+                    case 16: total6s += 1
+                    case 17: total7s += 1
+                    case 18: total8s += 1
+                    case 19: total9s += 1
+                    case 20: totalGreen += 1
+                    case 21: total1s += 1
+                    case 22: total2s += 1
+                    case 23: total3s += 1
+                    case 24: total4s += 1
+                    case 25: total5s += 1
+                    case 26: total6s += 1
+                    case 27: total7s += 1
+                    case 28: total8s += 1
+                    case 29: total9s += 1
+                    case 30: totalRed += 1
+                    default: break
+                    }
+                }
+            }
+        }
+        let _ = addLabel("Total 1s \(total1s)", y: offset); offset += 30
+        let _ = addLabel("Total 2s \(total2s)", y: offset); offset += 30
+        let _ = addLabel("Total 3s \(total3s)", y: offset); offset += 30
+        let _ = addLabel("Total 4s \(total4s)", y: offset); offset += 30
+        let _ = addLabel("Total 5s \(total5s)", y: offset); offset += 30
+        let _ = addLabel("Total 6s \(total6s)", y: offset); offset += 30
+        let _ = addLabel("Total 7s \(total7s)", y: offset); offset += 30
+        let _ = addLabel("Total 8s \(total8s)", y: offset); offset += 30
+        let _ = addLabel("Total 9s \(total9s)", y: offset); offset += 30
+        let _ = addLabel("Total Soaps \(totalSoaps)", y: offset); offset += 30
+        let _ = addLabel("Total Red Dragons \(totalRed)", y: offset); offset += 30
+        let _ = addLabel("Total Green Dragons \(totalGreen)", y: offset); offset += 30
+        let _ = addLabel("Total North \(totalNorth)", y: offset); offset += 30
+        let _ = addLabel("Total East \(totalEast)", y: offset); offset += 30
+        let _ = addLabel("Total West \(totalWest)", y: offset); offset += 30
+        let _ = addLabel("Total South \(totalSouth)", y: offset); offset += 30
+        let _ = addLabel("Total Flowers \(totalFlowers)", y: offset); offset += 30
         return offset
     }
     
