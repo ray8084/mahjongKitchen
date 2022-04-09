@@ -407,7 +407,7 @@ class StatViewController: NarrowViewController {
     
     private func addAllHands(_ yoffset: Int) {
         cardStatsOffset = yoffset
-        addTitle("Card Stats - Hands", y: cardStatsOffset)
+        addTitle("Card Stats", y: cardStatsOffset)
         cardStatsOffset += 55
         let _ = addLine(x: xOffset, y: cardStatsOffset)
         cardStatsOffset += 5
@@ -420,7 +420,7 @@ class StatViewController: NarrowViewController {
         loadButton = UIButton(frame: CGRect(x: xOffset, y: y+20, width: 200, height: 25))
         loadButton.layer.cornerRadius = 5
         loadButton.titleLabel!.font = UIFont.systemFont(ofSize: 16)
-        loadButton.setTitle("Generate card stats", for: .normal)
+        loadButton.setTitle("Generate Card Stats", for: .normal)
         loadButton.backgroundColor = .darkGray
         loadButton.addTarget(self, action: #selector(generateCardStats), for: .touchUpInside)
         scrollView.addSubview(loadButton)
@@ -439,17 +439,69 @@ class StatViewController: NarrowViewController {
         var offset = cardStatsOffset
         xOffset = (Int(scrollView.frame.width) - tableWidth) / 2 - 5
         maxWidth = 400
+        
+        addTitle("Sections", y: offset)
+        offset += 55
+        let _ = addLine(x: xOffset, y: offset)
+        offset += 5
+        
+        var totalYearsHands = 0
+        var totalEvenHands = 0
+        var totalLikeNumberHands = 0
+        var totalAdditionHands = 0
+        var totalQuintHands = 0
+        var totalRunHands = 0
+        var totalOddHands = 0
+        var totalWindHands = 0
+        var total369Hands = 0
+        var totalSinglesAndPairsHands = 0
+        
         var total = 0
+        for p in maj.unsortedLetterPatterns {
+            switch(p.family) {
+            case Family.year: totalYearsHands += p.idList.list.count
+            case Family.f2468: totalEvenHands += p.idList.list.count
+            case Family.likeNumbers: totalLikeNumberHands += p.idList.list.count
+            case Family.addition: totalAdditionHands += p.idList.list.count
+            case Family.quints: totalQuintHands += p.idList.list.count
+            case Family.run: totalRunHands += p.idList.list.count
+            case Family.f13579: totalOddHands += p.idList.list.count
+            case Family.winds: totalWindHands += p.idList.list.count
+            case Family.f369: total369Hands += p.idList.list.count
+            case Family.pairs: totalSinglesAndPairsHands += p.idList.list.count
+            default: break
+            }
+            total += p.idList.list.count
+        }
+
+        let _ = addLabel("Year \(totalYearsHands) hands", y: offset); offset += 30
+        let _ = addLabel("2468 \(totalEvenHands) hands", y: offset); offset += 30
+        let _ = addLabel("Like Number \(totalLikeNumberHands) hands", y: offset); offset += 30
+        let _ = addLabel("Math \(totalAdditionHands) hands", y: offset); offset += 30
+        let _ = addLabel("Quint \(totalQuintHands) hands", y: offset); offset += 30
+        let _ = addLabel("Runs \(totalRunHands) hands", y: offset); offset += 30
+        let _ = addLabel("13579 \(totalOddHands) hands", y: offset); offset += 30
+        let _ = addLabel("Wind & Dragon \(totalWindHands) hands", y: offset); offset += 30
+        let _ = addLabel("369 \(total369Hands) hands", y: offset); offset += 30
+        let _ = addLabel("Singles And Pairs \(totalSinglesAndPairsHands) hands", y: offset); offset += 30
+        let _ = addLabel("Total \(total) hands", y: offset); offset += 50
+
+        addTitle("Patterns", y: offset)
+        offset += 55
+        let _ = addLine(x: xOffset, y: offset)
+        offset += 5
+
+        total = 0
         for p in maj.unsortedLetterPatterns {
             total += p.idList.list.count
             let line = "\(p.id+1).  \(p.getFamilyString()) \(p.idList.list.count) hands"
             let _ = addLabel(line, y: offset )
+            print(line)
             offset += 30
         }
-        let _ = addLabel("Total \(total)", y: offset)
         offset += 50
                         
-        addTitle("Card Stats - Tiles", y: offset)
+        addTitle("All Hands", y: offset)
         offset += 55
         let _ = addLine(x: xOffset, y: offset)
         offset += 5

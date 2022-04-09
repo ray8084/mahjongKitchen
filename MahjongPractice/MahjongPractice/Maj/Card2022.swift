@@ -115,10 +115,7 @@ class Card2022 : Card {
     
     func addLikeNumbers() {
         addLikeF1F1_3434_2()
-        
-        let p = add("111 DD 111 DD 1111", mask: "ggg gg rrr rr 0000", note: "Any 3 Suits",  family: Family.likeNumbers, concealed: false, points: 30)
-        p.generateList()
-        
+        addLike1D1D1_32324_3()
         addLikeF1D1_2444_3()
     }
     

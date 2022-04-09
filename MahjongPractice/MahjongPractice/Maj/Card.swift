@@ -537,6 +537,18 @@ class Card {
         }
     }
     
+    func addLike1D1D1_32324_3() {
+        let p = add("111 DD 111 DD 1111", mask: "gg ggg rrr rr 0000", note: "Any 3 Suits",  family: Family.likeNumbers, concealed: false, points: 25)
+        for i in 1...9 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p.add([d,d,d, 10,10, b,b,b, 20,20, c,c,c,c])
+            p.add([d,d,d, 10,10, c,c,c, 30,30, b,b,b,b])
+            p.add([b,b,b, 20,20, c,c,c, 30,30, d,d,d,d])
+        }
+    }
+        
     func addLikeF111_5234_3() {
         let p = add("FFFFF 11 111 1111", mask: "00000 gg rrr 0000", note: "Any 3 Suits",  family: Family.likeNumbers, concealed: false, points: 25)
         for i in 1...9 {
