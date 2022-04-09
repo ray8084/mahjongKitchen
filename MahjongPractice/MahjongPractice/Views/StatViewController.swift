@@ -474,17 +474,17 @@ class StatViewController: NarrowViewController {
             total += p.idList.list.count
         }
 
-        let _ = addLabel("Year \(totalYearsHands) hands", y: offset); offset += 30
-        let _ = addLabel("2468 \(totalEvenHands) hands", y: offset); offset += 30
-        let _ = addLabel("Like Number \(totalLikeNumberHands) hands", y: offset); offset += 30
-        let _ = addLabel("Math \(totalAdditionHands) hands", y: offset); offset += 30
-        let _ = addLabel("Quint \(totalQuintHands) hands", y: offset); offset += 30
-        let _ = addLabel("Runs \(totalRunHands) hands", y: offset); offset += 30
-        let _ = addLabel("13579 \(totalOddHands) hands", y: offset); offset += 30
-        let _ = addLabel("Wind & Dragon \(totalWindHands) hands", y: offset); offset += 30
-        let _ = addLabel("369 \(total369Hands) hands", y: offset); offset += 30
-        let _ = addLabel("Singles And Pairs \(totalSinglesAndPairsHands) hands", y: offset); offset += 30
-        let _ = addLabel("Total \(total) hands", y: offset); offset += 50
+        let _ = addLabel("Year \t\t\t\t \(totalYearsHands) hands", y: offset); offset += 27
+        let _ = addLabel("2468 \t\t\t\t \(totalEvenHands) hands", y: offset); offset += 27
+        let _ = addLabel("Like Number \t\t \(totalLikeNumberHands) hands", y: offset); offset += 27
+        let _ = addLabel("Math \t\t\t\t \(totalAdditionHands) hands", y: offset); offset += 27
+        let _ = addLabel("Quint \t\t\t\t \(totalQuintHands) hands", y: offset); offset += 27
+        let _ = addLabel("Runs \t\t\t\t \(totalRunHands) hands", y: offset); offset += 27
+        let _ = addLabel("13579 \t\t\t\t \(totalOddHands) hands", y: offset); offset += 27
+        let _ = addLabel("Wind & Dragon \t \(totalWindHands) hands", y: offset); offset += 27
+        let _ = addLabel("369 \t\t\t\t \(total369Hands) hands", y: offset); offset += 27
+        let _ = addLabel("Singles And Pairs \t \(totalSinglesAndPairsHands) hands", y: offset); offset += 27
+        let _ = addLabel("Total \t\t\t\t \(total) hands", y: offset); offset += 50
 
         addTitle("Patterns", y: offset)
         offset += 55
@@ -497,27 +497,9 @@ class StatViewController: NarrowViewController {
             let line = "\(p.id+1).  \(p.getFamilyString()) \(p.idList.list.count) hands"
             let _ = addLabel(line, y: offset )
             print(line)
-            offset += 30
+            offset += 27
         }
-        offset += 50
-                        
-        addTitle("All Hands", y: offset)
-        offset += 55
-        let _ = addLine(x: xOffset, y: offset)
-        offset += 5
-        
-        var hand = 1
-        for p in maj.unsortedLetterPatterns {
-            var index = 1
-            for idlist in p.idList.list {
-                let line = "\(p.id+1).\(index).  \(getHandString(idlist.ids))"
-                print(line)
-                let _ = addLabel(line, y: offset )
-                offset += 30
-                hand += 1
-                index += 1
-            }
-        }
+        offset += 50 - 27
         
         addTitle("Tiles", y: offset)
         offset += 55
@@ -575,28 +557,52 @@ class StatViewController: NarrowViewController {
                     case 28: total8s += 1
                     case 29: total9s += 1
                     case 30: totalRed += 1
+                    case 31: totalNorth += 1
+                    case 32: totalSouth += 1
+                    case 33: totalWest += 1
+                    case 34: totalEast += 1
+                    case 35: totalFlowers += 1
                     default: break
                     }
                 }
             }
         }
-        let _ = addLabel("Total 1s \(total1s)", y: offset); offset += 30
-        let _ = addLabel("Total 2s \(total2s)", y: offset); offset += 30
-        let _ = addLabel("Total 3s \(total3s)", y: offset); offset += 30
-        let _ = addLabel("Total 4s \(total4s)", y: offset); offset += 30
-        let _ = addLabel("Total 5s \(total5s)", y: offset); offset += 30
-        let _ = addLabel("Total 6s \(total6s)", y: offset); offset += 30
-        let _ = addLabel("Total 7s \(total7s)", y: offset); offset += 30
-        let _ = addLabel("Total 8s \(total8s)", y: offset); offset += 30
-        let _ = addLabel("Total 9s \(total9s)", y: offset); offset += 30
-        let _ = addLabel("Total Soaps \(totalSoaps)", y: offset); offset += 30
-        let _ = addLabel("Total Red Dragons \(totalRed)", y: offset); offset += 30
-        let _ = addLabel("Total Green Dragons \(totalGreen)", y: offset); offset += 30
-        let _ = addLabel("Total North \(totalNorth)", y: offset); offset += 30
-        let _ = addLabel("Total East \(totalEast)", y: offset); offset += 30
-        let _ = addLabel("Total West \(totalWest)", y: offset); offset += 30
-        let _ = addLabel("Total South \(totalSouth)", y: offset); offset += 30
-        let _ = addLabel("Total Flowers \(totalFlowers)", y: offset); offset += 30
+        let _ = addLabel("Total 1s \t\t\t\t \(total1s)", y: offset); offset += 27
+        let _ = addLabel("Total 2s \t\t\t\t \(total2s)", y: offset); offset += 27
+        let _ = addLabel("Total 3s \t\t\t\t \(total3s)", y: offset); offset += 27
+        let _ = addLabel("Total 4s \t\t\t\t \(total4s)", y: offset); offset += 27
+        let _ = addLabel("Total 5s \t\t\t\t \(total5s)", y: offset); offset += 27
+        let _ = addLabel("Total 6s \t\t\t\t \(total6s)", y: offset); offset += 27
+        let _ = addLabel("Total 7s \t\t\t\t \(total7s)", y: offset); offset += 27
+        let _ = addLabel("Total 8s \t\t\t\t \(total8s)", y: offset); offset += 27
+        let _ = addLabel("Total 9s \t\t\t\t \(total9s)", y: offset); offset += 27
+        let _ = addLabel("Total Soaps \t\t\t \(totalSoaps)", y: offset); offset += 27
+        let _ = addLabel("Total Red Dragons \t\t \(totalRed)", y: offset); offset += 27
+        let _ = addLabel("Total Green Dragons \t \(totalGreen)", y: offset); offset += 27
+        let _ = addLabel("Total North \t\t\t \(totalNorth)", y: offset); offset += 27
+        let _ = addLabel("Total East \t\t\t\t \(totalEast)", y: offset); offset += 27
+        let _ = addLabel("Total West \t\t\t\t \(totalWest)", y: offset); offset += 27
+        let _ = addLabel("Total South \t\t\t \(totalSouth)", y: offset); offset += 27
+        let _ = addLabel("Total Flowers \t\t\t \(totalFlowers)", y: offset); offset += 50
+        
+        addTitle("All Hands", y: offset)
+        offset += 55
+        let _ = addLine(x: xOffset, y: offset)
+        offset += 5
+        
+        var hand = 1
+        for p in maj.unsortedLetterPatterns {
+            var index = 1
+            for idlist in p.idList.list {
+                let line = "\(p.id+1).\(index).  \(getHandString(idlist.ids))"
+                print(line)
+                let _ = addLabel(line, y: offset )
+                offset += 27
+                hand += 1
+                index += 1
+            }
+        }
+       
         return offset
     }
     
