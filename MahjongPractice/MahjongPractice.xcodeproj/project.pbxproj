@@ -1181,7 +1181,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.3;
+				MARKETING_VERSION = 6.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.eightbam.mahjong2019;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1213,7 +1213,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 6.3;
+				MARKETING_VERSION = 6.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.eightbam.mahjong2019;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

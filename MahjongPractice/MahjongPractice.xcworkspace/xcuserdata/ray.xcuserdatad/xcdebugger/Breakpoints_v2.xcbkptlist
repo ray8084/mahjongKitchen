@@ -110,8 +110,8 @@
             filePath = "MahjongPractice/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1588"
-            endingLineNumber = "1588"
+            startingLineNumber = "1586"
+            endingLineNumber = "1586"
             landmarkName = "ViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -142,8 +142,8 @@
             filePath = "MahjongPractice/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1629"
-            endingLineNumber = "1629"
+            startingLineNumber = "1627"
+            endingLineNumber = "1627"
             landmarkName = "ViewController"
             landmarkType = "3">
          </BreakpointContent>
@@ -398,8 +398,8 @@
             filePath = "MahjongPractice/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1658"
-            endingLineNumber = "1658"
+            startingLineNumber = "1656"
+            endingLineNumber = "1656"
             landmarkName = "nextState()"
             landmarkType = "7">
          </BreakpointContent>
@@ -430,8 +430,8 @@
             filePath = "MahjongPractice/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1634"
-            endingLineNumber = "1634"
+            startingLineNumber = "1632"
+            endingLineNumber = "1632"
             landmarkName = "nextState()"
             landmarkType = "7">
          </BreakpointContent>
@@ -478,8 +478,8 @@
             filePath = "MahjongPractice/ViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1399"
-            endingLineNumber = "1399"
+            startingLineNumber = "1397"
+            endingLineNumber = "1397"
             landmarkName = "moveToRack(end:startTag:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -609,6 +609,54 @@
             startingLineNumber = "1232"
             endingLineNumber = "1232"
             landmarkName = "checkForMahjong()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B01FB489-4489-422E-AAD0-48F7CA52A135"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MahjongPractice/Maj/Card2022.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "61"
+            endingLineNumber = "61"
+            landmarkName = "add2022()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A622FA45-96C2-4D65-ACA0-C81C5C72032D"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MahjongPractice/Maj/TileMatches.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "215"
+            endingLineNumber = "215"
+            landmarkName = "areSinglesNormal(tileId:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A6B5B497-5AF3-4632-B35F-646F0AF42B54"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MahjongPractice/Maj/TileMatches.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "209"
+            endingLineNumber = "209"
+            landmarkName = "areSinglesNormal(tileId:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

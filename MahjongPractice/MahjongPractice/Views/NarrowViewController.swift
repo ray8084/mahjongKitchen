@@ -145,7 +145,7 @@ class NarrowViewController: UIViewController {
         bottom = Int(title.frame.origin.y + 40)
     }
     
-    func addLabel(_ text: String, y: Int) {
+    func addLabel(_ text: String, y: Int) -> UITextView {
         let label = UITextView(frame: CGRect(x: xOffset, y: y, width: maxWidth, height: 21))
         label.text = text
         label.isScrollEnabled = false
@@ -154,6 +154,7 @@ class NarrowViewController: UIViewController {
         label.sizeToFit()
         scrollView.addSubview(label)
         bottom = Int(label.frame.origin.y + label.frame.height)
+        return label
     }
     
     func addLabelItalic(_ text: String, y: Int) {

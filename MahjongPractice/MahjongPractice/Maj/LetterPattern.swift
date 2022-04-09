@@ -82,8 +82,8 @@ class LetterPattern {
         }
     }
     
-    func add(_ item: [Int]) {
-        idList.add(item)
+    func add(_ item: [Int], singles: Int = Singles.normal) {
+        idList.add(item, singles: singles)
     }
     
     func getWins(showLosses: Bool) -> Int {
@@ -171,7 +171,7 @@ class LetterPattern {
         for idCount in remainder {
             count -= idCount
         }
-        print("countMatches patterId \(self.id) subId \(subId) count \(count)")
+        // print("countMatches patterId \(self.id) subId \(subId) count \(count)")
         return count
     }
     
@@ -185,9 +185,6 @@ class LetterPattern {
             
         // check jokers
         var jokerRemainder = jokerCount
-        if (year == Year.y2022) && (id == 4) {
-            jokerRemainder = 0  // hardcoded special case for FFFF 2022 2022 2022 no jokers
-        }
         if (jokerRemainder != 0) && (family != Family.pairs) {
             for (index, idCount) in map.enumerated() {
                 if (idCount > 2) && (remainder[index] != 0) {
@@ -203,6 +200,7 @@ class LetterPattern {
                     } else if (id == 4) && (index == 2)  { // hardcoded special case FF 2022 2022 2022 dots
                     } else if (id == 4) && (index == 12) { // hardcoded special case FF 2022 2022 2022 bams
                     } else if (id == 4) && (index == 22) { // hardcoded special case FF 2022 2022 2022 craks
+                    } else if (id == 4) && (index == 10) { // hardcoded special case FF 2022 2022 2022 soaps
                     } else if remainder[index] >= jokerRemainder {
                         remainder[index] -= jokerRemainder
                         jokerRemainder = 0
@@ -220,7 +218,7 @@ class LetterPattern {
         for idCount in remainder {
             count -= idCount
         }
-        print("countMatches patterId \(self.id) subId \(subId) count \(count)")
+        // print("countMatches patterId \(self.id) subId \(subId) count \(count)")
         return count
     }
 

@@ -1232,14 +1232,12 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         if maj.isCharlestonActive() == false && reviewInProgress == false {
             if maj.discardTile != nil {
                 let highest = maj.card.getClosestPattern(tiles: maj.east.tiles + maj.rackTiles() + [maj.discardTile])
-                print("checkforMahjong \(highest.matchCount) discardTile \(maj.discardTile.id)")
                 if (highest.matchCount == 14) && (winCounted == false) {
                     mahjButton.isHidden = false
                     sortButton2.isHidden = true
                 }
             } else {
                 let highest = maj.card.getClosestPattern(tiles: maj.east.tiles + maj.rackTiles())
-                print("checkforMahjong \(highest.matchCount)")
                 if (highest.matchCount == 14) && (winCounted == false) {
                     mahjButton.isHidden = false
                     sortButton2.isHidden = true

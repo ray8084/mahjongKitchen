@@ -13,12 +13,17 @@
 
 import Foundation
 
+struct ExtendedIdList {
+    var ids = [Int]()
+    var singles = Singles.normal
+}
+
 class TileIdListList {
-    typealias tileIdList = [Int]       // always 14 ids
-    var list = [tileIdList]()          // variable number of lists
+    //var list = [[Int]]()          // variable number of lists
+    var list = [ExtendedIdList]()
     
-    func add(_ item: [Int]) {
-        list.append(item)
+    func add(_ item: [Int], singles: Int) {
+        list.append(ExtendedIdList(ids: item, singles: singles))
     }
     
     func log() {
@@ -40,11 +45,13 @@ class TileIdListList {
         for suits in suiteList {
             if family == Family.likeNumbers {
                 for numberIndex in 0...8 {
-                    list.append( convertStringToTileIds(string: s, suit: suits, numberIndex: numberIndex) )
+                    let item = ExtendedIdList(ids: convertStringToTileIds(string: s, suit: suits, numberIndex: numberIndex) )
+                    list.append(item)
                 }
             }
             else {
-                list.append( convertStringToTileIds(string: s, suit: suits, numberIndex: 0) )
+                let item = ExtendedIdList(ids: convertStringToTileIds(string: s, suit: suits, numberIndex: 0))
+                list.append(item)
             }
         }
     }

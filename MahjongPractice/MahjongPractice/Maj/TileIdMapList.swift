@@ -108,7 +108,7 @@ class TileIdMapList {
     
     func build(_ tileIdList: TileIdListList) {
         for idList in tileIdList.list {
-            let idMap = TileIdMap(idList)
+            let idMap = TileIdMap(idList.ids)
             list.append(idMap)
         }
     }

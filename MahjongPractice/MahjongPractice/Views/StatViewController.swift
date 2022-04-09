@@ -15,9 +15,12 @@ class StatViewController: NarrowViewController {
     private var maj: Maj!
     private var rowBottom = 0
     private var progressBottom = 0
+    private var cardStatsOffset = 0
     private var circleText: [UIView] = []
     private var circleLayers: [CAShapeLayer] = []
     private var statLabels: [UILabel] = []
+    private var loadButton = UIButton()
+    private var loadingLabel = UITextView()
     
     init(maj: Maj, frame: CGRect, narrowViewDelegate: NarrowViewDelegate) {
         self.maj = maj
@@ -42,7 +45,7 @@ class StatViewController: NarrowViewController {
     }
     
     override func addControls() {
-        scrollViewHeight = 600
+        scrollViewHeight = 34000
         narrowView()
         addScrollView()
         xOffset = (Int(scrollView.frame.width) - tableWidth) / 2
@@ -54,6 +57,7 @@ class StatViewController: NarrowViewController {
         tableOffset = progressBottom + 40
         addStatTable(maj: maj)
         addCloseButton()
+        addAllHands(550)
     }
     
     func addAddition() -> Bool {
@@ -67,8 +71,8 @@ class StatViewController: NarrowViewController {
     // -----------------------------------------------------------------------------------------
     
     private func addTitle() {
-        let title = UILabel(frame: CGRect(x: xOffset, y: yOffset, width: 100, height: 60))
-        title.text = "Stats"
+        let title = UILabel(frame: CGRect(x: xOffset, y: yOffset, width: 250, height: 60))
+        title.text = "Your Stats"
         title.font = UIFont.boldSystemFont(ofSize: 22)
         self.scrollView.addSubview(title)
     }
@@ -393,6 +397,123 @@ class StatViewController: NarrowViewController {
         }));
         present(alert, animated: false, completion: nil)
     }
+    
+    
+    // -----------------------------------------------------------------------------------------
+    //
+    //  Add all patterns
+    //
+    // -----------------------------------------------------------------------------------------
+    
+    private func addAllHands(_ yoffset: Int) {
+        cardStatsOffset = yoffset
+        addTitle("Card Stats - Hands", y: cardStatsOffset)
+        cardStatsOffset += 55
+        let _ = addLine(x: xOffset, y: cardStatsOffset)
+        cardStatsOffset += 5
+        loadingLabel = addLabel("Takes a long time to load and unload.  Please be patient after closing.", y: cardStatsOffset)
+        cardStatsOffset += 60
+        addLoadButton(y: cardStatsOffset)
+    }
+    
+    func addLoadButton(y: Int) {
+        loadButton = UIButton(frame: CGRect(x: xOffset, y: y+20, width: 200, height: 25))
+        loadButton.layer.cornerRadius = 5
+        loadButton.titleLabel!.font = UIFont.systemFont(ofSize: 16)
+        loadButton.setTitle("Generate card stats", for: .normal)
+        loadButton.backgroundColor = .darkGray
+        loadButton.addTarget(self, action: #selector(generateCardStats), for: .touchUpInside)
+        scrollView.addSubview(loadButton)
+    }
+    
+    @objc private func generateCardStats() {
+        loadingLabel.removeFromSuperview()
+        loadButton.removeFromSuperview()
+        cardStatsOffset -= 60
+        loadingLabel = addLabel("Loading...", y: cardStatsOffset)
+        Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(loadAllHands), userInfo: nil, repeats: false)
+    }
+    
+    @objc private func loadAllHands() -> Int {
+        loadingLabel.removeFromSuperview()
+        var offset = cardStatsOffset
+        xOffset = (Int(scrollView.frame.width) - tableWidth) / 2 - 5
+        maxWidth = 400
+        var total = 0
+        for p in maj.unsortedLetterPatterns {
+            total += p.idList.list.count
+            let line = "\(p.id+1).  \(p.getFamilyString()) \(p.idList.list.count) hands"
+            let _ = addLabel(line, y: offset )
+            offset += 30
+        }
+        let _ = addLabel("Total \(total)", y: offset)
+        offset += 50
+                        
+        addTitle("Card Stats - Tiles", y: offset)
+        offset += 55
+        let _ = addLine(x: xOffset, y: offset)
+        offset += 5
+        
+        var hand = 1
+        for p in maj.unsortedLetterPatterns {
+            var index = 1
+            for idlist in p.idList.list {
+                let line = "\(p.id+1).\(index).  \(getHandString(idlist.ids))"
+                print(line)
+                let _ = addLabel(line, y: offset )
+                offset += 30
+                hand += 1
+                index += 1
+            }
+        }
+        return offset
+    }
+    
+    func getHandString(_ ids: [Int]) -> String {
+        var hand = ""
+        for id in ids {
+            switch(id) {
+            case 1: hand += "1d "
+            case 2: hand += "2d "
+            case 3: hand += "3d "
+            case 4: hand += "4d "
+            case 5: hand += "5d "
+            case 6: hand += "6d "
+            case 7: hand += "7d "
+            case 8: hand += "8d "
+            case 9: hand += "9d "
+            case 10: hand += "0 "
+            case 11: hand += "1b "
+            case 12: hand += "2b "
+            case 13: hand += "3b "
+            case 14: hand += "4b "
+            case 15: hand += "5b "
+            case 16: hand += "6b "
+            case 17: hand += "7b "
+            case 18: hand += "8b "
+            case 19: hand += "9b "
+            case 20: hand += "g "
+            case 21: hand += "1c "
+            case 22: hand += "2c "
+            case 23: hand += "3c "
+            case 24: hand += "4c "
+            case 25: hand += "5c "
+            case 26: hand += "6c "
+            case 27: hand += "7c "
+            case 28: hand += "8c "
+            case 29: hand += "9c "
+            case 30: hand += "r "
+            case 31: hand += "n "
+            case 32: hand += "s "
+            case 33: hand += "w "
+            case 34: hand += "e "
+            case 35: hand += "f "
+            default: break
+            }
+        }
+        return hand
+    }
+ 
     
 }
 

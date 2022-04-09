@@ -1,5 +1,5 @@
 //
-//  TilePatterns.swift
+//  TileMatches.swift
 //  Mahjong2017
 //
 //  Created by Ray Meyer on 12/2/17.
@@ -7,6 +7,15 @@
 //
 
 import Foundation
+
+// some pattersn break the singles & pairs algorithm, for example 2022 has 3 twos but they are singles
+class Singles {
+    static let normal = 0
+    static let dot2 = 2
+    static let bam2 = 12
+    static let crak2 = 22
+    static let ff_2022_2022_2022 = 2022
+}
 
 class TileMatches {
     var list = [TileMatchItem]()
@@ -17,7 +26,7 @@ class TileMatches {
         var letterPatternIndex = 0
         for lp in letterPatterns {
             for tileIds in lp.idList.list {
-                list.append(TileMatchItem(tileIds: tileIds, letterPatternIndex: letterPatternIndex, letterPattern: lp))
+                list.append(TileMatchItem(tileIds: tileIds.ids, letterPatternIndex: letterPatternIndex, letterPattern: lp, singles: tileIds.singles))
             }
             letterPatternIndex += 1
         }
@@ -28,7 +37,7 @@ class TileMatches {
         for lp in letterPatterns {
             if (lp.concealed == false) && (lp.family != Family.pairs) && (lp.family != Family.quints){
                 for tileIds in lp.idList.list {
-                    list.append(TileMatchItem(tileIds: tileIds, letterPatternIndex: letterPatternIndex, letterPattern: lp))
+                    list.append(TileMatchItem(tileIds: tileIds.ids, letterPatternIndex: letterPatternIndex, letterPattern: lp, singles: tileIds.singles))
                 }
             }
             letterPatternIndex += 1
@@ -61,13 +70,15 @@ class TileMatches {
             if (jokerRemainder != 0) && (tileMatchItem.family != Family.pairs) {
                 for (index, idCount) in tileMatchItem.map.map.enumerated() {
                     if (idCount > 2) && (remainder[index] != 0) {
-                        if remainder[index] >= jokerRemainder {
-                            remainder[index] -= jokerRemainder
-                            jokerRemainder = 0
-                            break
-                        } else {
-                            jokerRemainder -= remainder[index]
-                            remainder[index] = 0
+                        if tileMatchItem.areSinglesNormal(tileId: index) {
+                            if remainder[index] >= jokerRemainder {
+                                remainder[index] -= jokerRemainder
+                                jokerRemainder = 0
+                                break
+                            } else {
+                                jokerRemainder -= remainder[index]
+                                remainder[index] = 0
+                            }
                         }
                     }
                 }
@@ -98,13 +109,15 @@ class TileMatches {
         if (jokerRemainder != 0) && (tileMatchItem.family != Family.pairs) {
             for (index, idCount) in tileMatchItem.map.map.enumerated() {
                 if (idCount > 2) && (remainder[index] != 0) {
-                    if remainder[index] >= jokerRemainder {
-                        remainder[index] -= jokerRemainder
-                        jokerRemainder = 0
-                        break
-                    } else {
-                        jokerRemainder -= remainder[index]
-                        remainder[index] = 0
+                    if tileMatchItem.areSinglesNormal(tileId: index) {
+                        if remainder[index] >= jokerRemainder {
+                            remainder[index] -= jokerRemainder
+                            jokerRemainder = 0
+                            break
+                        } else {
+                            jokerRemainder -= remainder[index]
+                            remainder[index] = 0
+                        }
                     }
                 }
             }
@@ -166,13 +179,15 @@ class TileMatchItem {
     var concealed = false
     var family = 0
     var rackFilter = false
+    var singles = Singles.normal
    
-    init(tileIds: [Int], letterPatternIndex: Int, letterPattern: LetterPattern){
+    init(tileIds: [Int], letterPatternIndex: Int, letterPattern: LetterPattern, singles: Int){
         self.tileIds = tileIds
         self.letterPatternId = letterPatternIndex
         self.family = letterPattern.family
         self.concealed = letterPattern.concealed
         self.map = TileIdMap(tileIds)
+        self.singles = singles
     }
     
     func rackFilter(_ rackMap: TileIdMap) {
@@ -188,5 +203,17 @@ class TileMatchItem {
         if rackFilter == false {
             print("keep \(map.map) for rack \(rackMap.map)")
         }
+    }
+    
+    func areSinglesNormal(tileId: Int) -> Bool {
+        var normalSingles = true
+        if singles == Singles.normal {
+            normalSingles = true
+        } else if singles == tileId {
+            normalSingles = false
+        } else if singles == Singles.ff_2022_2022_2022 {
+            normalSingles = tileId != 2 && tileId != 12 && tileId != 22 && tileId != 10
+        }
+        return normalSingles;
     }
 }

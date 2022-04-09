@@ -500,7 +500,7 @@ class Hand {
                     }
                     
                     if maj.discardCalled {
-                        print("Call \(name) id \(matchId) map \(matchCount) hand \(handCount) jokers \(jokers) letterPatternIndex \(tileMatchItem.letterPatternId)" )
+                        // print("Call \(name) id \(matchId) map \(matchCount) hand \(handCount) jokers \(jokers) letterPatternIndex \(tileMatchItem.letterPatternId)" )
                         maj.clearMessages()
                         if maj.isWinBotEnabled() && maj.botWon() {
                             rack.message = "\(name) declared Mahjong"
