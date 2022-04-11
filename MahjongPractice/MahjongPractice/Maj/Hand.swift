@@ -298,6 +298,41 @@ class Hand {
         return sortedTiles
     }
 
+    func finalSortEastRack(_ maj: Maj) {
+        tileMatches.countMatchesForEastNoFilters(maj)
+        tileMatches.sort()
+        let best = tileMatches.list[0].tileIds
+        rack!.tiles = finalSort(maj, hand: rack!, best: best)
+    }
+    
+    func finalSort(_ mah: Maj, hand: Hand, best: [Int]) -> [Tile] {
+        var oldTiles: [Tile] = hand.tiles
+        var newTiles: [Tile] = []
+        for tileId in best {
+            var found = false
+            for (index, tile) in oldTiles.enumerated() {
+                if tile.id == tileId {
+                    newTiles.append(tile)
+                    oldTiles.remove(at: index)
+                    found = true
+                    break
+                }
+            }
+            if found == false {
+                for (index, tile) in oldTiles.enumerated() {
+                    if tile.isJoker() {
+                        newTiles.append(tile)
+                        oldTiles.remove(at: index)
+                        found = true
+                        break
+                    }
+                }
+            }
+        }
+        return newTiles
+    }
+    
+    
     
     // --------------------------------------------------------------
     //  tile methods
@@ -371,6 +406,8 @@ class Hand {
         rack!.sort()
         tiles.removeAll()
     }
+    
+    
     
     func rackJokers(rack: Rack, id: Int, suit: String, number: Int, count: Int) {
         for _ in 1...count {

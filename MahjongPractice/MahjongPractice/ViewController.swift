@@ -694,6 +694,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             maj.discardTile = nil
         }
         maj.east.rackAllTiles()
+        maj.east.finalSortEastRack(maj)
         showDiscard()
         showHand()
         showRack()
