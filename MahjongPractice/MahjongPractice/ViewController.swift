@@ -463,6 +463,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
     
     func undoDiscard() -> Bool {
+        print("undoDiscard")
         var undo = false
         if (maj.lastDiscard != nil) && !maj.disableUndo {
             discardTableView.countTile(maj.lastDiscard, increment: -1, maj: maj)
@@ -475,6 +476,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             tileMatchView.update(maj)
             botView.update(maj)
             discardTableView.showCounts(maj: maj)
+            showHand()
         }
         return undo
     }
@@ -1345,6 +1347,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
     
     func moveToDiscard(startTag: Int) -> Bool {
+        print("moveToDiscard")
         var moved = false
         if maj.discardTile == nil {
             let index = getTileColIndex(tag: startTag)
@@ -1630,6 +1633,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     // -----------------------------------------------------------------------------------------
     
     func nextState() -> Bool {
+        print("nextState")
         if maj.isWinBotEnabled() && maj.botWon() {
             botWon()
         } else if maj.isGameOver(){
