@@ -504,7 +504,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
     
     func shouldUndoDiscard(_ start: CGPoint, location: CGPoint) -> Bool {
-        let movedLeft = start.x > location.x
+        let movedLeft = (start.x - 20) > location.x
         return movedLeft
     }
     
