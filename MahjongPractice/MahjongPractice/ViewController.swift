@@ -229,13 +229,59 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     
     func showWinMenu() {
         self.mahjButton.isHidden = true
-        if (maj.unrecognizedHandDeclared() == false) {
+        if (maj.unrecognizedHandDeclared() == false && doubleCheckYouWin()) {
             let title = "Mahjong - You Win!"
             let message = maj.card.winningHand(maj: maj)
             showGameMenu(title: title, message: message, win: true)
         }
     }
     
+    func doubleCheckYouWin() -> Bool {
+        print("doubleCheckYouWin")
+        let highest = maj.card.getClosestPattern(tiles: maj.rackTiles())
+        var validMahjong = (highest.matchCount == 14)
+        if highest.year == Year.y2022 && highest.id == 2 {                                    // special case for FFFF 2022 222 222
+            if maj.specialCase2022Rack.count == 6 || maj.specialCase2022Rack.count == 10 {    // 2 sets of 2s are already racked
+                var rackedSuits = Set<String>()
+                for tile in maj.specialCase2022Rack {
+                    rackedSuits.insert(tile.suit)
+                }
+                print(rackedSuits)
+                var countOf2022Twos = 0
+                for tile in maj.east.rack!.tiles {
+                    if tile.number == 2 && rackedSuits.contains(tile.suit) == false {
+                        countOf2022Twos += 1
+                    }
+                }
+                print(countOf2022Twos)
+                if countOf2022Twos != 3 {
+                    validMahjong = false
+                    show2022JokerError()
+                }
+            }
+        }
+        return validMahjong
+    }
+    
+    func show2022JokerError() {
+        let message = "Joker error in 2022. Jokers are not allowed in singles and pairs including years, news"
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
+            self.newGameAction(false)
+        }));
+        
+        alert.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
+            self.replay()
+        }));
+        
+        alert.addAction(UIAlertAction(title: "Review", style: .default, handler: {(action:UIAlertAction) in
+            self.reviewInProgress = true
+        }));
+        
+        present(alert, animated: true, completion: nil)
+    }
+        
     func showGameMenu(title: String, message: String, win: Bool) {
         newGameMenu = UIAlertController(title: title, message: message, preferredStyle: .alert)
         self.cardView.update(maj)
@@ -1235,18 +1281,37 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         if maj.isCharlestonActive() == false && reviewInProgress == false {
             if maj.discardTile != nil {
                 let highest = maj.card.getClosestPattern(tiles: maj.east.tiles + maj.rackTiles() + [maj.discardTile])
-                if (highest.matchCount == 14) && (winCounted == false) {
+                if (highest.matchCount == 14) && (winCounted == false) && doubleCheckForMahjong(highest, hand: maj.east.tiles + [maj.discardTile], rack: maj.east.rack!.tiles) {
                     mahjButton.isHidden = false
                     sortButton2.isHidden = true
                 }
             } else {
                 let highest = maj.card.getClosestPattern(tiles: maj.east.tiles + maj.rackTiles())
-                if (highest.matchCount == 14) && (winCounted == false) {
+                if (highest.matchCount == 14) && (winCounted == false) && doubleCheckForMahjong(highest, hand: maj.east.tiles, rack: maj.east.rack!.tiles) {
                     mahjButton.isHidden = false
                     sortButton2.isHidden = true
                 }
             }
         }
+    }
+    
+    func doubleCheckForMahjong(_ match: LetterPattern, hand: [Tile], rack: [Tile]) -> Bool {
+        var validMahjong = (match.matchCount == 14)
+        if match.year == Year.y2022 && match.id == 2 {  // special case for FFFF 2022 222 222
+            if rack.count == 6 || rack.count == 10 {    // 2 sets of 2s are already racked
+                var countOf2s = 0                       // make sure we have 3 natural 2s
+                for tile in hand {
+                    if tile.number == 2 {
+                        countOf2s += 1
+                    }
+                }
+                if countOf2s != 3 {
+                    validMahjong = false
+                    maj.specialCase2022Rack = rack
+                }
+            }
+        }
+        return validMahjong
     }
 
     func getTile(location: CGPoint) -> Tile{

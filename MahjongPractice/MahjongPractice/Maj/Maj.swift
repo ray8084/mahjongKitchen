@@ -89,6 +89,7 @@ class Maj {
     var replayWest = Hand("WestReplay")
     var replayNorth = Hand("NorthReplay")
     var bots: [Hand] = []
+    var specialCase2022Rack: [Tile] = []
 
     var discardTile: Tile!
     var lastDiscard: Tile!
@@ -160,6 +161,7 @@ class Maj {
         hideSortMessage = copy.hideSortMessage
         alternateRedDragon = copy.alternateRedDragon
         hideAutomajMessage = copy.hideAutomajMessage
+        specialCase2022Rack = copy.specialCase2022Rack
      }
     
   
@@ -493,6 +495,30 @@ class Maj {
         replayWest.tiles = west.tiles
         replayNorth.tiles = north.tiles
         replayWall.tiles = wall.tiles
+        forceHand()
+        specialCase2022Rack = []
+    }
+                          
+    func forceHand() {
+        east.tiles = []
+        let joker1 = Tile(named: "joker", num: 11, suit: "jkr", id: 36, sortId: 55, sortNum: 55)
+        joker1.jokerFlag = true
+        east.tiles.append(joker1)
+        let joker2 = Tile(named: "joker", num: 11, suit: "jkr", id: 36, sortId: 55, sortNum: 55)
+        joker2.jokerFlag = true
+        east.tiles.append(joker2)
+        east.tiles.append(Tile(named: "sum", num: 12, suit: "flwr", id: 35, sortId: 2, sortNum: 2))
+        east.tiles.append(Tile(named: "sum", num: 12, suit: "flwr", id: 35, sortId: 2, sortNum: 2))
+        east.tiles.append(Tile(named: "2dot", num: 2, suit: "dot", id: 2, sortId: 2, sortNum: 2))
+        east.tiles.append(Tile(named: "2dot", num: 2, suit: "dot", id: 2, sortId: 2, sortNum: 2))
+        east.tiles.append(Tile(named: "soap", num: 10, suit: "dot", id: 10, sortId: 41, sortNum: 41))
+        east.tiles.append(Tile(named: "2dot", num: 2, suit: "dot", id: 2, sortId: 2, sortNum: 2))
+        east.tiles.append(Tile(named: "2bam", num: 2, suit: "bam", id: 12, sortId: 12, sortNum: 12))
+        east.tiles.append(Tile(named: "2bam", num: 2, suit: "bam", id: 12, sortId: 12, sortNum: 12))
+        east.tiles.append(Tile(named: "2bam", num: 2, suit: "bam", id: 12, sortId: 12, sortNum: 12))
+        east.tiles.append(Tile(named: "2crak", num: 2, suit: "crak", id: 22, sortId: 22, sortNum: 22))
+        east.tiles.append(Tile(named: "2crak", num: 2, suit: "crak", id: 22, sortId: 22, sortNum: 22))
+        east.tiles.append(Tile(named: "2crak", num: 2, suit: "crak", id: 22, sortId: 22, sortNum: 22))
     }
     
     func replay() {
@@ -510,6 +536,7 @@ class Maj {
         west.rack?.tiles = []
         north.rack?.tiles = []
         clearMessages()
+        specialCase2022Rack = []
         // winBot.replay(maj: self)
         // selectWinBot()
     }
