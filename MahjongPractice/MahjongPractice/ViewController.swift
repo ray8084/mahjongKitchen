@@ -1296,22 +1296,39 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
     
     func doubleCheckForMahjong(_ match: LetterPattern, hand: [Tile], rack: [Tile]) -> Bool {
+        print("doubleCheckForMahjong \(match.year) \(match.id)")
         var validMahjong = (match.matchCount == 14)
-        if match.year == Year.y2022 && match.id == 2 {  // special case for FFFF 2022 222 222
-            if rack.count == 6 || rack.count == 10 {    // 2 sets of 2s are already racked
-                var countOf2s = 0                       // make sure we have 3 natural 2s
+        if match.year == Year.y2022 && match.id == 2 {      // special case for FFFF 2022 222 222
+            print("checkRack")
+            let suitsForRacked2s = countSuitsForRacked2s()
+            if suitsForRacked2s == 2 {                      // 2 sets of 2s are already racked
+                print("count2s")
+                var count2022Twos = 0                       // make sure we have 3 natural 2s
                 for tile in hand {
                     if tile.number == 2 {
-                        countOf2s += 1
+                        count2022Twos += 1
                     }
                 }
-                if countOf2s != 3 {
+                if count2022Twos != 3 {
                     validMahjong = false
                     maj.specialCase2022Rack = rack
                 }
+            } else if suitsForRacked2s == 3 {               // 3 sets of 2s racked, racking in progress
+                print("racking in progress")                // evaluate after its racked
+                validMahjong = false
             }
         }
         return validMahjong
+    }
+    
+    func countSuitsForRacked2s() -> Int {
+        var suits = Set<String>()
+        for tile in maj.east.rack!.tiles {
+            if tile.number == 2 {
+                suits.insert(tile.suit)
+            }
+        }
+        return suits.count
     }
 
     func getTile(location: CGPoint) -> Tile{

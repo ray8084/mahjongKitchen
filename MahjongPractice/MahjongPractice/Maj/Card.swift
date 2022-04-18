@@ -538,7 +538,7 @@ class Card {
     }
     
     func addLike1D1D1_32324_3() {
-        let p = add("111 DD 111 DD 1111", mask: "gg ggg rrr rr 0000", note: "Any 3 Suits",  family: Family.likeNumbers, concealed: false, points: 25)
+        let p = add("111 DD 111 DD 1111", mask: "ggg gg rrr rr 0000", note: "Any 3 Suits",  family: Family.likeNumbers, concealed: false, points: 25)
         for i in 1...9 {
             let d = i
             let b = i+10
