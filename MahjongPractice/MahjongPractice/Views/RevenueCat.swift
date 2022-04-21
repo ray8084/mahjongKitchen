@@ -515,15 +515,15 @@ class PurchaseMenu: UIViewController {
             // addMonthlyButton(y: yOffset + 155)
             // addRestoreButton(y: yOffset + 215)
             
-            addHelpText2("This option is like buying your Mahjong card in April every year. It's not a subscription. It doesn't renew.", y: yOffset + 70, height: 65)
+            addHelpText2("One-time purchase of 2022 pattern access. All features.", y: yOffset + 80, height: 65)
             addLine(y: yOffset + 70)
             addPurchaseButton(y: yOffset + 85)
                         
-            addHelpText2("Monthly subscription. Cancel anytime. Includes access to new patterns every year.", y: yOffset + 140, height: 65)
+            addHelpText2("Monthly subscription. Cancel anytime. Includes access to new patterns every year. All features.", y: yOffset + 140, height: 65)
             addLine(y: yOffset + 140)
             addMonthlyButton(y: yOffset + 155)
             
-            addHelpText2("Purchase once and install on an iPhone and iPad and use both. Or use to reinstall if needed.", y: yOffset + 210, height: 85)
+            addHelpText2("Restore purchase on a second device, or after a reinstall. Purchase once and use on your iPhone and iPad.", y: yOffset + 210, height: 85)
             addLine(y: yOffset + 210)
             addRestoreButton(y: yOffset + 225)
             
