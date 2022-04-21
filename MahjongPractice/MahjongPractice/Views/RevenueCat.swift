@@ -506,14 +506,30 @@ class PurchaseMenu: UIViewController {
             yOffset = Int(height() - 300) / 2
             setBackground()
             addPurchaseView()
-            addTitle("\(revenueCat.getCurrentYear()) Pattern Access", y: yOffset)
-            planText = addText("Buy \(revenueCat.getCurrentYear()) Pattern Access with a one time purchase.", y: yOffset + 37, height: 65)
-            addPurchaseButton(y: yOffset + 95)
+            
+            supportText = addText("support@eightbam.com", y: yOffset + 30, height: 35)
+            addTitle("\(revenueCat.getCurrentYear()) Pattern Access", y: yOffset + 10, height: 35)
+            
+            // planText = addText("Buy \(revenueCat.getCurrentYear()) Pattern Access with a one time purchase.", y: yOffset + 37, height: 65)
+            // addPurchaseButton(y: yOffset + 95)
+            // addMonthlyButton(y: yOffset + 155)
+            // addRestoreButton(y: yOffset + 215)
+            
+            addHelpText2("This option is like buying your Mahjong card in April every year. It's not a subscription. It doesn't renew.", y: yOffset + 70, height: 65)
+            addLine(y: yOffset + 70)
+            addPurchaseButton(y: yOffset + 85)
+                        
+            addHelpText2("Monthly subscription. Cancel anytime. Includes access to new patterns every year.", y: yOffset + 140, height: 65)
+            addLine(y: yOffset + 140)
             addMonthlyButton(y: yOffset + 155)
-            addRestoreButton(y: yOffset + 215)
-            supportText = addText("support@eightbam.com", y: yOffset + 265, height: 30)
+            
+            addHelpText2("Purchase once and install on an iPhone and iPad and use both. Or use to reinstall if needed.", y: yOffset + 210, height: 85)
+            addLine(y: yOffset + 210)
+            addRestoreButton(y: yOffset + 225)
+            
+            // supportText = addText("support@eightbam.com", y: yOffset + 265, height: 20)
             addCloseButton(y: yOffset + 20)
-            addHelpButton(y: yOffset + 300 - 30 - 20)
+            // addHelpButton(y: yOffset + 300 - 30 - 20)
             loaded = true
         }
     }
@@ -571,7 +587,19 @@ class PurchaseMenu: UIViewController {
         view.addSubview(textView)
         return textView
     }
-        
+    
+    func addHelpText2(_ text: String, y: Int, height: Int) {
+        let offset = (width() - 455) / 2
+        let textView = UITextView(frame: CGRect(x: offset - 30, y: y, width: 300, height: height))
+        textView.text = text
+        textView.font = UIFont.systemFont(ofSize: 16)
+        textView.textAlignment = .left
+        textView.textColor = .black
+        textView.backgroundColor = .white
+        textView.isUserInteractionEnabled = false
+        view.addSubview(textView)
+    }
+    
     func addHelpClose(y: Int) {
         let x = Int(purchaseView.frame.maxX - 50)
         helpCloseButton = UIButton(frame: CGRect(x: x, y: y, width: 30, height: 30))
@@ -684,14 +712,14 @@ class PurchaseMenu: UIViewController {
         present(alert, animated: false, completion: nil)
     }
     
-    func addTitle(_ text: String, y: Int) {
+    func addTitle(_ text: String, y: Int, height: Int) {
         let offset = (width() - 400) / 2
-        titleLabel = UILabel(frame: CGRect(x: offset, y: y, width: 400, height: 55))
+        titleLabel = UILabel(frame: CGRect(x: offset, y: y, width: 400, height: height))
         titleLabel.text = text
         titleLabel.font = UIFont.boldSystemFont(ofSize: 24)
         titleLabel.textAlignment = .center
         titleLabel.textColor = .black
-        titleLabel.backgroundColor = .white
+        titleLabel.backgroundColor = .clear
         view.addSubview(titleLabel)
     }
     
@@ -709,7 +737,8 @@ class PurchaseMenu: UIViewController {
     }
     
     func addPurchaseButton(y: Int) {
-        purchaseButton = UIButton(frame: CGRect(x: (width()-220)/2, y: y, width: 220, height: 44))
+        // purchaseButton = UIButton(frame: CGRect(x: (width()-220)/2, y: y, width: 220, height: 44))
+        purchaseButton = UIButton(frame: CGRect(x: ((width()-190)/2) + 160, y: y, width: 190, height: 44))
         purchaseButton.layer.cornerRadius = 5
         purchaseButton.titleLabel!.font = UIFont.systemFont(ofSize: 20)
         if revenueCat.price2022 == 0.0 {
@@ -728,7 +757,8 @@ class PurchaseMenu: UIViewController {
     }
     
     func addMonthlyButton(y: Int) {
-        monthlyButton = UIButton(frame: CGRect(x: (width()-220)/2, y: y, width: 220, height: 44))
+        // monthlyButton = UIButton(frame: CGRect(x: (width()-220)/2, y: y, width: 220, height: 44))
+        monthlyButton = UIButton(frame: CGRect(x: ((width()-190)/2) + 160, y: y, width: 190, height: 44))
         monthlyButton.layer.cornerRadius = 5
         monthlyButton.titleLabel!.font = UIFont.systemFont(ofSize: 20)
         if revenueCat.priceMonthly == 0.0 {
@@ -764,9 +794,9 @@ class PurchaseMenu: UIViewController {
         monthlyButton.setTitle("$\(price) Per Month", for: .normal)
         monthlyButton.isEnabled = true
         monthlyButton.isHidden = false
-        planText.text = "Buy \(revenueCat.getCurrentYear()) with a one time purchase OR pay per month and cancel anytime. Both plans include all features."
+        // planText.text = "Buy \(revenueCat.getCurrentYear()) with a one time purchase OR pay per month and cancel anytime. Both plans include all features."
         restoreButton.removeFromSuperview()
-        addRestoreButton(y: yOffset + 215)
+        addRestoreButton(y: yOffset + 225)
     }
     
     func showConnectMessageForPurchase() {
@@ -779,7 +809,8 @@ class PurchaseMenu: UIViewController {
     }
     
     func addRestoreButton(y: Int) {
-        restoreButton = UIButton(frame: CGRect(x: (width()-220)/2, y: y, width: 220, height: 44))
+        // restoreButton = UIButton(frame: CGRect(x: (width()-220)/2, y: y, width: 220, height: 44))
+        restoreButton = UIButton(frame: CGRect(x: ((width()-190)/2) + 160, y: y, width: 190, height: 44))
         restoreButton.layer.cornerRadius = 5
         restoreButton.titleLabel!.font = UIFont.systemFont(ofSize: 20)
         restoreButton.setTitle("Restore Purchases", for: .normal)
@@ -951,5 +982,17 @@ class PurchaseMenu: UIViewController {
             self.settingsViewController.show(self, sender: self.settingsViewController)
         }));
         self.settingsViewController.present(alert, animated: false, completion: nil)
+    }
+    
+    func addLine(y: Int) {
+        let x = ((width() - 455) / 2) - 30
+        
+        let line = UIView(frame: CGRect(x: x, y: y, width: 550-40, height: 1))
+        if #available(iOS 13.0, *) {
+            line.backgroundColor = .quaternaryLabel
+        } else {
+            line.backgroundColor = .lightGray
+        }
+        view.addSubview(line)
     }
 }
