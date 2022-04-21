@@ -1039,31 +1039,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     
     // -----------------------------------------------------------------------------------------
     //
-    //  AutoMaj
-    //
-    // -----------------------------------------------------------------------------------------
-    
-    func showAutoMajMenu() {
-        if maj.hideAutomajMessage == false {
-            let title = "Automatically Declare Mahjong"
-            let message = "This option can be changed in Settings"
-            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Turn OFF", style: .default, handler: {(action:UIAlertAction) in
-                self.maj.setDisableAutomaj(true)
-            }));
-            
-            alert.addAction(UIAlertAction(title: "Leave ON", style: .default, handler: {(action:UIAlertAction) in
-            }));
-           
-            present(alert, animated: true, completion: nil)
-        }
-        maj.saveHideAutomajMessage()
-    }
-        
-    
-    // -----------------------------------------------------------------------------------------
-    //
     //  Tiles
     //
     // -----------------------------------------------------------------------------------------
@@ -1278,7 +1253,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
     
     func checkForMahjong() {
-        if maj.isCharlestonActive() == false && reviewInProgress == false {
+        if !maj.isCharlestonActive() && !reviewInProgress && !maj.disableAutomaj {
             if maj.discardTile != nil {
                 let highest = maj.card.getClosestPattern(tiles: maj.east.tiles + maj.rackTiles() + [maj.discardTile])
                 if (highest.matchCount == 14) && (winCounted == false) && doubleCheckForMahjong(highest, hand: maj.east.tiles + [maj.discardTile], rack: maj.east.rack!.tiles) {

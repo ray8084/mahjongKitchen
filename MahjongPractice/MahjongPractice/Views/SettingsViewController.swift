@@ -323,12 +323,12 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
         settingsBottom = Int(tapSwitch.frame.origin.y + tapSwitch.frame.height)
         addTapToDiscardHelpButton(x: xOffset + maxWidth - 60, y: nextOffset)
         
-        //nextOffset = settingsBottom + 10
-        //let automajSwitch = addSwitch("Declare Mahjong Automatically", y: nextOffset)
-        //automajSwitch.isOn = !maj.disableAutomaj
-        //automajSwitch.addTarget(self, action: #selector(changeAutomaj), for: .valueChanged)
-        //settingsBottom = Int(automajSwitch.frame.origin.y + automajSwitch.frame.height)
-        //addAutomajHelpButton(x: xOffset + maxWidth - 60, y: nextOffset)
+        nextOffset = settingsBottom + 10
+        let automajSwitch = addSwitch("Declare Mahjong Pop-Up Button", y: nextOffset)
+        automajSwitch.isOn = !maj.disableAutomaj
+        automajSwitch.addTarget(self, action: #selector(changeAutomaj), for: .valueChanged)
+        settingsBottom = Int(automajSwitch.frame.origin.y + automajSwitch.frame.height)
+        addAutomajHelpButton(x: xOffset + maxWidth - 60, y: nextOffset)
                 
         nextOffset = settingsBottom + 10
         let techSupportSwitch = addSwitch("Tech Support Debug Messages", y: nextOffset)
@@ -485,8 +485,8 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
     }
 
     @objc func automajHelpButtonAction(sender: UIButton!) {
-        let title = "Declare Mahjong Automatically"
-        let message = "To declare Mahjong all tiles must be exposed on the rack above your hand. This option will complete that step for you. If your last tile comes from the wall it will complete automatically. If a bot discards your last tile, drag it to the rack above your hand. Disable this feature to move tiles yourself."
+        let title = "Declare Mahjong\nPop-Up button"
+        let message = "Pop up the Declare Mahjong button when you have a complete hand."
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
         }));
