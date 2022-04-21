@@ -985,14 +985,9 @@ class PurchaseMenu: UIViewController {
     }
     
     func addLine(y: Int) {
-        let x = ((width() - 455) / 2) - 30
-        
+        let x = ((width() - 455) / 2) - 30       
         let line = UIView(frame: CGRect(x: x, y: y, width: 550-40, height: 1))
-        if #available(iOS 13.0, *) {
-            line.backgroundColor = .quaternaryLabel
-        } else {
-            line.backgroundColor = .lightGray
-        }
+        line.backgroundColor = .lightGray
         view.addSubview(line)
     }
 }
