@@ -975,7 +975,7 @@ class PurchaseMenu: UIViewController {
     }
     
     func oldYearMessage(_ year: String) {
-        let message = year + " is included with 2021"
+        let message = year + " is included with 2022"
         let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: {(action:UIAlertAction) in
             self.settingsViewController.select2021()
@@ -985,7 +985,7 @@ class PurchaseMenu: UIViewController {
     }
     
     func addLine(y: Int) {
-        let x = ((width() - 455) / 2) - 30       
+        let x = ((width() - 455) / 2) - 30
         let line = UIView(frame: CGRect(x: x, y: y, width: 550-40, height: 1))
         line.backgroundColor = .lightGray
         view.addSubview(line)
