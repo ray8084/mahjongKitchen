@@ -11,6 +11,7 @@ import Foundation
 class Rack: Hand {
     
     func validate() -> String {
+        markJokers()
         var validation = ""
         if tiles.count > 0 {
             let map = TileIdMap(rack: self)
@@ -26,12 +27,23 @@ class Rack: Hand {
                 }
             }
             if validation != "" {
-                validation += " cannot be exposed until declaring MahJong. Return tiles to your hand to continue.\n"
+                validation += " cannot be exposed until declaring MahJong. If your using jokers, place jokers to the right. This is not a mahjong rule it just helps us identify jokers. And of course jokers cannot be used in singles and pairs including years and NEWS. Move tiles or return tiles to your hand to continue.\n"
             }
         }
         return validation
     }
     
+    func markJokers() {
+        for (index, tile) in tiles.enumerated() {
+            if tile.isJoker() && (index > 0) {
+                tile.setJokerFields(tiles[index-1])
+            }
+            if tile.isJoker() && (index == 0) && (tiles.count > 1) {
+                tile.setJokerFields(tiles[1])
+            }
+        }
+    }
+        
     func markJoker(joker: Tile, index: Int) {
         if (tiles.count > 0) && (index >= tiles.count) {
             joker.setJokerFields(lastNonJoker())

@@ -519,7 +519,7 @@ class PurchaseMenu: UIViewController {
             addLine(y: yOffset + 70)
             addPurchaseButton(y: yOffset + 85)
                         
-            addHelpText2("Monthly subscription. Cancel anytime. Includes access to new patterns every year. All features.", y: yOffset + 140, height: 65)
+            addHelpText2("Monthly subscription. Includes access to new patterns every year. All features. Cancel anytime.", y: yOffset + 140, height: 65)
             addLine(y: yOffset + 140)
             addMonthlyButton(y: yOffset + 155)
             

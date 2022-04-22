@@ -549,7 +549,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
     
     func showRackError(_ message: String) {
-        let alert = UIAlertController(title: "Warning", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: "Singles and Pairs Error", message: message, preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
             self.redeal()
@@ -1396,7 +1396,8 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             let tile = maj.east.removeFromRack(startIndex)
             maj.east.addToRack(tile, index: endIndex)
             showRack()
-            markJoker(tile, index: endIndex)
+            // markJoker(tile, index: endIndex)
+            maj.east.rack?.markJokers()
             swapped = true
         } else {
             showDebugMessage(ErrorId.swapInRack)
@@ -1472,7 +1473,8 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                     showRack()
                     maj.letterPatternRackFilterPending = true
                     maj.tileMatchesRackFilterPending = true
-                    markJoker(tile, index: endIndex)
+                    // markJoker(tile, index: endIndex)
+                    maj.east.rack?.markJokers()
                     moved = true
                     
                     let message = maj.card.winningHand(maj: maj)
@@ -1496,8 +1498,8 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
     
     func showJokerExposeLastMessage() {
-        let title = "Joker"
-        let message = "Please expose tiles left of jokers.\n This is not a Mahjong rule. We automatically indentify jokers. Jokers replace the tile to the left."
+        let title = "Jokers to the Right"
+        let message = "Please expose jokers after other tiles. We automatically match jokers with the tile to the left.\nThis is not a Mahjong rule."
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in

@@ -487,7 +487,7 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
 
     @objc func automajHelpButtonAction(sender: UIButton!) {
         let title = "Declare Mahjong\nPop-Up button"
-        let message = "Pop up the Declare Mahjong button when you have a complete hand."
+        let message = "Pop up the Declare Mahjong button when you have a complete hand. Disable to identify mahjong and rack tiles yourself."
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
         }));
