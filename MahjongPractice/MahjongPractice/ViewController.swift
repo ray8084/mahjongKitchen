@@ -69,7 +69,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     var eightbamLabel: UILabel!
     var redealButton: UIButton!
     var mahjButton: UIButton!
-    
+    // var mahjButton2: UIButton!
     
     // -----------------------------------------------------------------------------------------
     //
@@ -734,6 +734,19 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             mahjButton.isHidden = true
             view.addSubview(mahjButton)
         }
+        /*if mahjButton2 == nil {
+            mahjButton2 = UIButton()
+            mahjButton2.frame = CGRect(x: menuButtonLocationX() - buttonSize() - 150 - 20, y: buttonLocationY(),  width: buttonSize() + 150, height: buttonSize())
+            mahjButton2.layer.cornerRadius = 5
+            mahjButton2.titleLabel!.font = UIFont(name: "Chalkduster", size: 16)!
+            mahjButton2.backgroundColor = .black
+            mahjButton2.setTitleColor(.white, for: .normal)
+            mahjButton2.setTitle("Declare Mahjong", for: .normal)
+            mahjButton2.alpha = 0.8
+            mahjButton2.addTarget(self, action: #selector(declareMahjAction), for: .touchUpInside)
+            mahjButton2.isHidden = true
+            view.addSubview(mahjButton2)
+        }*/
     }
         
     @objc func declareMahjAction(sender: UIButton!) {
@@ -908,6 +921,15 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         cardView.filter(maj)
         cardView.update(maj)
         tileMatchView.update(maj)
+        updateMahjButton2()
+    }
+    
+    func updateMahjButton2() {
+        if maj.isCharlestonActive() {
+            //mahjButton2.isHidden = true
+        } else {
+            //mahjButton2.isHidden = !maj.disableAutomaj
+        }
     }
     
     func showBottomView() {
@@ -1268,6 +1290,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 }
             }
         }
+        updateMahjButton2()
     }
     
     func doubleCheckForMahjong(_ match: LetterPattern, hand: [Tile], rack: [Tile]) -> Bool {

@@ -472,6 +472,7 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
     
     @objc private func changeAutomaj(sender: UISwitch) {
         maj.setDisableAutomaj( !maj.disableAutomaj )
+        settingsDelegate.updateViews()
     }
     
     func addAutomajHelpButton(x: Int, y: Int) {
