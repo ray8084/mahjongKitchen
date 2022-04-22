@@ -27,7 +27,7 @@ class Rack: Hand {
                 }
             }
             if validation != "" {
-                validation += " cannot be exposed until declaring MahJong. If your using jokers, place jokers to the right. This is not a mahjong rule it just helps us identify jokers. And of course jokers cannot be used in singles and pairs including years and NEWS. Move tiles or return tiles to your hand to continue.\n"
+                validation += " cannot be exposed until declaring MahJong. If your using jokers in kongs, pungs or quints, place jokers to the right. Joker placement is not a mahjong rule it just helps us identify jokers. And of course jokers cannot be used in singles and pairs including years and NEWS. Move jokers or return tiles to your hand to continue.\n"
             }
         }
         return validation
