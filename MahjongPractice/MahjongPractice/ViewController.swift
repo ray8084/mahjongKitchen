@@ -547,7 +547,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         validationView.closeButton.removeFromSuperview()
         showGameMenu(title: "Game Over", message: "", win: false)
     }
-    
+
     func showRackError(_ message: String) {
         let alert = UIAlertController(title: "Singles and Pairs Error", message: message, preferredStyle: .alert)
         
@@ -1281,12 +1281,18 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 if (highest.matchCount == 14) && (winCounted == false) && doubleCheckForMahjong(highest, hand: maj.east.tiles + [maj.discardTile], rack: maj.east.rack!.tiles) {
                     mahjButton.isHidden = false
                     sortButton2.isHidden = true
+                } else if highest.matchCount == 13 {    // mah was discarded
+                    mahjButton.isHidden = true
+                    sortButton2.isHidden = false
                 }
             } else {
                 let highest = maj.card.getClosestPattern(tiles: maj.east.tiles + maj.rackTiles())
                 if (highest.matchCount == 14) && (winCounted == false) && doubleCheckForMahjong(highest, hand: maj.east.tiles, rack: maj.east.rack!.tiles) {
                     mahjButton.isHidden = false
                     sortButton2.isHidden = true
+                } else if highest.matchCount == 13 {
+                    mahjButton.isHidden = true
+                    sortButton2.isHidden = false
                 }
             }
         }
