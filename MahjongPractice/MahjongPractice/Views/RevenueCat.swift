@@ -507,27 +507,28 @@ class PurchaseMenu: UIViewController {
             setBackground()
             addPurchaseView()
             
-            supportText = addText("support@eightbam.com", y: yOffset + 30, height: 35)
-            addTitle("\(revenueCat.getCurrentYear()) Pattern Access", y: yOffset + 10, height: 35)
+            // supportText = addText("support@eightbam.com", y: yOffset + 30, height: 35)
+            addTitle("Purchase \(revenueCat.getCurrentYear()) ?", y: yOffset + 15, height: 35)
             
             // planText = addText("Buy \(revenueCat.getCurrentYear()) Pattern Access with a one time purchase.", y: yOffset + 37, height: 65)
             // addPurchaseButton(y: yOffset + 95)
             // addMonthlyButton(y: yOffset + 155)
             // addRestoreButton(y: yOffset + 215)
             
-            addHelpText2("One-time purchase of 2022 pattern access. All features.", y: yOffset + 80, height: 65)
-            addLine(y: yOffset + 70)
-            addPurchaseButton(y: yOffset + 85)
+            addHelpText2("One-time purchase of 2022 pattern access. All features.", y: yOffset + 70, height: 65)
+            addLine(y: yOffset + 60)
+            addPurchaseButton(y: yOffset + 75)
                         
-            addHelpText2("Monthly subscription. Includes access to new patterns every year. All features. Cancel anytime.", y: yOffset + 140, height: 65)
-            addLine(y: yOffset + 140)
-            addMonthlyButton(y: yOffset + 155)
+            addHelpText2("Monthly subscription. Includes access to new patterns every year. All features. Cancel anytime.", y: yOffset + 130, height: 65)
+            addLine(y: yOffset + 130)
+            addMonthlyButton(y: yOffset + 145)
             
-            addHelpText2("Restore purchase on a second device, or after a reinstall. Purchase once and use on your iPhone and iPad.", y: yOffset + 210, height: 85)
-            addLine(y: yOffset + 210)
-            addRestoreButton(y: yOffset + 225)
+            addHelpText2("Restore purchase on a second device, or after a reinstall. Purchase once and use on your iPhone and iPad.", y: yOffset + 200, height: 85)
+            addLine(y: yOffset + 200)
+            addRestoreButton(y: yOffset + 215)
             
-            // supportText = addText("support@eightbam.com", y: yOffset + 265, height: 20)
+            supportText = addText("support@eightbam.com", y: yOffset + 265, height: 40)
+            // addHelpText2("support@eightbam.com", y: yOffset + 265, height: 30)
             addCloseButton(y: yOffset + 20)
             // addHelpButton(y: yOffset + 300 - 30 - 20)
             loaded = true
@@ -730,7 +731,7 @@ class PurchaseMenu: UIViewController {
         textView.font = UIFont.systemFont(ofSize: 16)
         textView.textAlignment = .center
         textView.textColor = .black
-        textView.backgroundColor = .white
+        textView.backgroundColor = .clear
         textView.isUserInteractionEnabled = false
         view.addSubview(textView)
         return textView
@@ -796,7 +797,7 @@ class PurchaseMenu: UIViewController {
         monthlyButton.isHidden = false
         // planText.text = "Buy \(revenueCat.getCurrentYear()) with a one time purchase OR pay per month and cancel anytime. Both plans include all features."
         restoreButton.removeFromSuperview()
-        addRestoreButton(y: yOffset + 225)
+        addRestoreButton(y: yOffset + 215)
     }
     
     func showConnectMessageForPurchase() {
