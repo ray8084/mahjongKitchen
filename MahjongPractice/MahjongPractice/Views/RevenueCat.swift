@@ -523,7 +523,7 @@ class PurchaseMenu: UIViewController {
             addLine(y: yOffset + 130)
             addMonthlyButton(y: yOffset + 145)
             
-            addHelpText2("Restore purchase on a second device or after a reinstall. Purchase once and use on your iPhone and iPad.", y: yOffset + 200, height: 85)
+            addHelpText2("Restore 2022 purchase on a second device or after a reinstall. Purchase once and use on your iPhone and iPad.", y: yOffset + 200, height: 85)
             addLine(y: yOffset + 200)
             addRestoreButton(y: yOffset + 215)
             

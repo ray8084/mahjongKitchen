@@ -489,7 +489,7 @@ class Maj {
         replayWest.tiles = west.tiles
         replayNorth.tiles = north.tiles
         replayWall.tiles = wall.tiles
-        // forceHand()
+        //forceHand()
         specialCase2022Rack = []
     }
                           
