@@ -454,7 +454,8 @@ class Hand {
         if filterOutConcealed && tileMatchItem.concealed {
             filterOut = true
         }
-        if rack?.tiles.isEmpty == false && tileMatchItem.concealed {
+        let rackCount = rack?.tiles.count
+        if (rackCount! > 0) && (rackCount! < 14) && tileMatchItem.concealed {
             filterOut = true
         }
         if filterOutQuints && (tileMatchItem.family == Family.quints){

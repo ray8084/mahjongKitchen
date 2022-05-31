@@ -1482,6 +1482,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                     // markJoker(tile, index: endIndex)
                     maj.east.rack?.markJokers()
                     moved = true
+                    updateViews()
                     
                     let message = maj.card.winningHand(maj: maj)
                     if (maj.east.rack?.tiles.count == 14) {
@@ -1612,7 +1613,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             showRack()
             maj.letterPatternRackFilterPending = true
             maj.tileMatchesRackFilterPending = true
-            tileMatchView.update(maj)
+            updateViews()
             return true
         } else {
             return false
