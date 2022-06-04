@@ -479,58 +479,43 @@ class PurchaseMenu: UIViewController {
 
     func addPurchaseView() {
         purchaseView.backgroundColor = .white
-        let x = Int(width() - 550) / 2
-        let y = Int(height() - 300) / 2
-        purchaseView.frame = CGRect(x: x, y: y, width: 550, height: 300)
+        let x = Int(width() - 600) / 2
+        let y = Int(height() - 350) / 2
+        purchaseView.frame = CGRect(x: x, y: y, width: 600, height: 350)
         purchaseView.layer.cornerRadius = 20
         view.addSubview(purchaseView)
     }
     
     func setBackground(){
         view.backgroundColor = revenueCat.viewController.view.backgroundColor
-        /*backgroundImageView?.removeFromSuperview()
-        let background = UIImage(named: "TRANS-ICON-WHITE.png")
-        backgroundImageView = UIImageView(frame: view.bounds)
-        backgroundImageView.contentMode =  UIView.ContentMode.scaleAspectFill
-        backgroundImageView.clipsToBounds = true
-        backgroundImageView.image = background
-        backgroundImageView.center = view.center
-        backgroundImageView.alpha = 0.15
-        view.addSubview(backgroundImageView)
-        view.sendSubviewToBack(backgroundImageView)*/
     }
     
     override func viewDidAppear(_ animated: Bool) {
         print("PurchaseMeny.viewDidAppear")
         if loaded == false {
-            yOffset = Int(height() - 300) / 2
+            yOffset = Int(height() - 350) / 2
             setBackground()
             addPurchaseView()
             
-            // supportText = addText("support@eightbam.com", y: yOffset + 30, height: 35)
             addTitle("Purchase \(revenueCat.getCurrentYear()) ?", y: yOffset + 15, height: 35)
             
-            // planText = addText("Buy \(revenueCat.getCurrentYear()) Pattern Access with a one time purchase.", y: yOffset + 37, height: 65)
-            // addPurchaseButton(y: yOffset + 95)
-            // addMonthlyButton(y: yOffset + 155)
-            // addRestoreButton(y: yOffset + 215)
-            
-            addHelpText2("One-time purchase of 2022 pattern access. All features.", y: yOffset + 70, height: 65)
-            addLine(y: yOffset + 60)
-            addPurchaseButton(y: yOffset + 75)
+            addHelpText2("One-time purchase of 2022 pattern access includes all features.", y: yOffset + 80, height: 65)
+            addLine(y: yOffset + 70)
+            addPurchaseButton(y: yOffset + 85)
                         
-            addHelpText2("Monthly subscription. Includes access to new patterns every year. All features. Cancel anytime.", y: yOffset + 130, height: 65)
-            addLine(y: yOffset + 130)
-            addMonthlyButton(y: yOffset + 145)
+            addHelpText2("Monthly subscription includes access to new patterns every year and all features. Cancel anytime.", y: yOffset + 140, height: 65)
+            addLine(y: yOffset + 140)
+            addMonthlyButton(y: yOffset + 155)
             
-            addHelpText2("Restore 2022 purchase on a second device or after a reinstall. Purchase once and use on your iPhone and iPad.", y: yOffset + 200, height: 85)
-            addLine(y: yOffset + 200)
-            addRestoreButton(y: yOffset + 215)
+            addHelpText2("Restore 2022 purchase on a second device or after a reinstall. Purchase once and use on your iPhone and iPad.", y: yOffset + 215, height: 85)
+            addLine(y: yOffset + 215)
+            addRestoreButton(y: yOffset + 230)
+            addLine(y: yOffset + 290)
             
-            supportText = addText("support@eightbam.com", y: yOffset + 265, height: 40)
-            // addHelpText2("support@eightbam.com", y: yOffset + 265, height: 30)
+            addSupport("support@eightbam.com", y: yOffset + 305)
+            addEula("Privacy Policy & Terms of Service", y: yOffset + 305)
+            
             addCloseButton(y: yOffset + 20)
-            // addHelpButton(y: yOffset + 300 - 30 - 20)
             loaded = true
         }
     }
@@ -576,6 +561,29 @@ class PurchaseMenu: UIViewController {
         return title
     }
     
+    func addEula(_ text: String, y: Int) {
+        let textView = UITextView(frame: CGRect(x: width()/2 - 300 + 30, y: y, width: 300, height: 40))
+        let attributedString = NSMutableAttributedString(string: text)
+        attributedString.addAttribute(.link, value: "https://eightbam.com/policy", range: NSRange(location: 0, length: text.count))
+        textView.attributedText = attributedString
+        textView.isUserInteractionEnabled = true
+        textView.textAlignment = .left
+        textView.font = UIFont.systemFont(ofSize: 16)
+        textView.backgroundColor = .clear
+        view.addSubview(textView)
+    }
+    
+    func addSupport(_ text: String, y: Int) {
+        let textView = UITextView(frame: CGRect(x: width()/2 - 30, y: y, width: 300, height: 40))
+        textView.text = text
+        textView.font = UIFont.systemFont(ofSize: 16)
+        textView.textAlignment = .right
+        textView.textColor = .black
+        textView.backgroundColor = .clear
+        textView.isUserInteractionEnabled = false
+        view.addSubview(textView)
+    }
+    
     func addHelpText(_ text: String, y: Int, height: Int) -> UITextView {
         let offset = (width() - 455) / 2
         let textView = UITextView(frame: CGRect(x: offset, y: y, width: 455, height: height))
@@ -590,8 +598,8 @@ class PurchaseMenu: UIViewController {
     }
     
     func addHelpText2(_ text: String, y: Int, height: Int) {
-        let offset = (width() - 455) / 2
-        let textView = UITextView(frame: CGRect(x: offset - 30, y: y, width: 300, height: height))
+        let offset = (width() - 475) / 2
+        let textView = UITextView(frame: CGRect(x: offset - 30, y: y, width: 320, height: height))
         textView.text = text
         textView.font = UIFont.systemFont(ofSize: 16)
         textView.textAlignment = .left
@@ -739,7 +747,7 @@ class PurchaseMenu: UIViewController {
     
     func addPurchaseButton(y: Int) {
         // purchaseButton = UIButton(frame: CGRect(x: (width()-220)/2, y: y, width: 220, height: 44))
-        purchaseButton = UIButton(frame: CGRect(x: ((width()-190)/2) + 160, y: y, width: 190, height: 44))
+        purchaseButton = UIButton(frame: CGRect(x: ((width()-190)/2) + 170, y: y, width: 190, height: 44))
         purchaseButton.layer.cornerRadius = 5
         purchaseButton.titleLabel!.font = UIFont.systemFont(ofSize: 20)
         if revenueCat.price2022 == 0.0 {
@@ -759,7 +767,7 @@ class PurchaseMenu: UIViewController {
     
     func addMonthlyButton(y: Int) {
         // monthlyButton = UIButton(frame: CGRect(x: (width()-220)/2, y: y, width: 220, height: 44))
-        monthlyButton = UIButton(frame: CGRect(x: ((width()-190)/2) + 160, y: y, width: 190, height: 44))
+        monthlyButton = UIButton(frame: CGRect(x: ((width()-190)/2) + 170, y: y, width: 190, height: 44))
         monthlyButton.layer.cornerRadius = 5
         monthlyButton.titleLabel!.font = UIFont.systemFont(ofSize: 20)
         if revenueCat.priceMonthly == 0.0 {
@@ -796,8 +804,8 @@ class PurchaseMenu: UIViewController {
         monthlyButton.isEnabled = true
         monthlyButton.isHidden = false
         // planText.text = "Buy \(revenueCat.getCurrentYear()) with a one time purchase OR pay per month and cancel anytime. Both plans include all features."
-        restoreButton.removeFromSuperview()
-        addRestoreButton(y: yOffset + 215)
+        // restoreButton.removeFromSuperview()
+        // addRestoreButton(y: yOffset + 225)
     }
     
     func showConnectMessageForPurchase() {
@@ -811,7 +819,7 @@ class PurchaseMenu: UIViewController {
     
     func addRestoreButton(y: Int) {
         // restoreButton = UIButton(frame: CGRect(x: (width()-220)/2, y: y, width: 220, height: 44))
-        restoreButton = UIButton(frame: CGRect(x: ((width()-190)/2) + 160, y: y, width: 190, height: 44))
+        restoreButton = UIButton(frame: CGRect(x: ((width()-190)/2) + 170, y: y, width: 190, height: 44))
         restoreButton.layer.cornerRadius = 5
         restoreButton.titleLabel!.font = UIFont.systemFont(ofSize: 20)
         restoreButton.setTitle("Restore Purchases", for: .normal)
@@ -986,8 +994,8 @@ class PurchaseMenu: UIViewController {
     }
     
     func addLine(y: Int) {
-        let x = ((width() - 455) / 2) - 30
-        let line = UIView(frame: CGRect(x: x, y: y, width: 550-40, height: 1))
+        let x = ((width() - 475) / 2) - 30
+        let line = UIView(frame: CGRect(x: x, y: y, width: 570-40, height: 1))
         line.backgroundColor = .lightGray
         view.addSubview(line)
     }
