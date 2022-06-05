@@ -1278,7 +1278,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         if !maj.isCharlestonActive() && !reviewInProgress && !maj.disableAutomaj {
             if maj.discardTile != nil {
                 let highest = maj.card.getClosestPattern(tiles: maj.east.tiles + maj.rackTiles() + [maj.discardTile])
-                if (highest.matchCount == 14) && (winCounted == false) && doubleCheckForMahjong(highest, hand: maj.east.tiles + [maj.discardTile], rack: maj.east.rack!.tiles) {
+                if (highest.matchCount == 14) && (winCounted == false) && maj.doubleCheckForMahjong(highest) {
                     mahjButton.isHidden = false
                     sortButton2.isHidden = true
                 } else if highest.matchCount == 13 {    // mah was discarded
@@ -1287,7 +1287,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 }
             } else {
                 let highest = maj.card.getClosestPattern(tiles: maj.east.tiles + maj.rackTiles())
-                if (highest.matchCount == 14) && (winCounted == false) && doubleCheckForMahjong(highest, hand: maj.east.tiles, rack: maj.east.rack!.tiles) {
+                if (highest.matchCount == 14) && (winCounted == false) && maj.doubleCheckForMahjong(highest) {
                     mahjButton.isHidden = false
                     sortButton2.isHidden = true
                 } else if highest.matchCount == 13 {
@@ -1298,8 +1298,9 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         }
         updateMahjButton2()
     }
-    
-    func doubleCheckForMahjong(_ match: LetterPattern, hand: [Tile], rack: [Tile]) -> Bool {
+   
+        
+    /*func doubleCheckForMahjong(_ match: LetterPattern, hand: [Tile], rack: [Tile]) -> Bool {
         print("doubleCheckForMahjong \(match.year) \(match.id)")
         var validMahjong = (match.matchCount == 14)
         if match.year == Year.y2022 && match.id == 2 {      // special case for FFFF 2022 222 222
@@ -1323,7 +1324,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             }
         }
         return validMahjong
-    }
+    }*/
     
     func countSuitsForRacked2s() -> Int {
         var suits = Set<String>()

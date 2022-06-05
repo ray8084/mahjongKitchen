@@ -108,8 +108,12 @@ class Maj {
     var bamTileStyle = TileStyle.classic
     var alternateRedDragon = false
     
+    
     // --------------------------------------------------------------
-    //  copy
+    //
+    //  Copy
+    //
+    // --------------------------------------------------------------
     
     func copy(_ copy: Maj) {
         state = copy.state
@@ -165,7 +169,10 @@ class Maj {
     
   
     // --------------------------------------------------------------
-    //  init
+    //
+    //  Init
+    //
+    // --------------------------------------------------------------
     
     init() {
         bots = [south, west, north]
@@ -248,7 +255,10 @@ class Maj {
     
     
     // --------------------------------------------------------------
-    //  get methods
+    //
+    //  Get Methods
+    //
+    // --------------------------------------------------------------
     
     func getHand(state: Int) -> Hand {
         switch state {
@@ -288,8 +298,12 @@ class Maj {
         south.rack?.message = ""
     }
     
+    
     // --------------------------------------------------------------
-    //  switches
+    //
+    //  Settings
+    //
+    // --------------------------------------------------------------
   
     func toggleLosses(){
         showLosses = !showLosses
@@ -471,8 +485,12 @@ class Maj {
         defaults.set(techSupportDebug, forKey: "techSupportDebug")
     }
     
+    
     // --------------------------------------------------------------
-    //  dealing
+    //
+    //  Dealing
+    //
+    // --------------------------------------------------------------
     
     func deal() {
         wall.shuffle(withSeed: shuffleWithSeed, seedString: shuffleSeed)
@@ -489,11 +507,11 @@ class Maj {
         replayWest.tiles = west.tiles
         replayNorth.tiles = north.tiles
         replayWall.tiles = wall.tiles
-        //forceHand()
+        // forceDebugHand()
         specialCase2022Rack = []
     }
                           
-    func forceHand() {
+    func forceDebugHand() {
         east.tiles = []
         let joker1 = Tile(named: "joker", num: 11, suit: "jkr", id: 36, sortId: 55, sortNum: 55)
         joker1.jokerFlag = true
@@ -537,7 +555,10 @@ class Maj {
     
     
     // --------------------------------------------------------------
+    //
     //  Sorting
+    //
+    // --------------------------------------------------------------
     
     func userSort() {
         switch(sortStyle) {
@@ -555,7 +576,10 @@ class Maj {
      
     
     // --------------------------------------------------------------
-    //  charleston
+    //
+    //  Charleston
+    //
+    // --------------------------------------------------------------
     
     func isCharlestonActive() -> Bool {
         return charlestonState < 7
@@ -655,8 +679,12 @@ class Maj {
         // print(dest.getBestBotHand().matchCount)
     }
     
+    
     // --------------------------------------------------------------
-    //  game state
+    //
+    //  Game State
+    //
+    // --------------------------------------------------------------
     
     func nextState() -> String {
         lastState = state
@@ -865,8 +893,12 @@ class Maj {
         return winBotEnabled
     }
     
+    
     // --------------------------------------------------------------
-    //  rack
+    //
+    //  Racks
+    //
+    // --------------------------------------------------------------
 
     func rackTiles() -> [Tile] {
         return east.rack!.tiles
@@ -898,10 +930,7 @@ class Maj {
             discardTile = nil
         }
     }
-    
-    // --------------------------------------------------------------
-    //  opponent racks
-    
+        
     func stealJoker(tile: Tile) -> Bool {
         var found = false
         if (south.rack?.replaceJoker(tile))! {
@@ -920,4 +949,88 @@ class Maj {
         }
         return found
     }
+    
+    
+    // --------------------------------------------------------------
+    //
+    //  Double Check
+    //
+    // --------------------------------------------------------------
+    
+    func doubleCheckForMahjong(_ closest: LetterPattern) -> Bool {
+        print("doubleCheckForMahjong")
+        var valid = false;
+        for ids in closest.idList.list {
+            if doubleCheckIds(ids, pattern: closest) {
+                valid = true
+                break
+            }
+        }
+        return valid
+    }
+    
+    private func doubleCheckIds(_ list: ExtendedIdList, pattern: LetterPattern) -> Bool {
+        var valid = false;
+        
+        // remove rack tiles
+        var remainder = list.ids;
+        for tile in east.rack!.tiles {
+            for (index, id) in remainder.enumerated() {
+                if tile.id == id || tile.jokerId == id {
+                    remainder.remove(at: index)
+                    break
+                }
+            }
+        }
+        print(list.singles)
+        print(remainder)
+              
+        // tile maps
+        let originalMap = TileIdMap(list.ids)
+        let remainderMap = TileIdMap(remainder)
+        print(remainderMap.map)
+        let handMap = TileIdMap(tiles: east.tiles)
+        if discardTile != nil && !discardTile.isJoker() {
+            handMap.map[discardTile.id] += 1
+        }
+        print(handMap.map)
+        
+        // subtract hand tiles from remainder tiles
+        for (index, count) in remainderMap.map.enumerated() {
+            if count != 0 && index != 36 {
+                remainderMap.map[index] -= handMap.map[index]                   // subtract tiles
+                handMap.map[index] = 0
+                if remainderMap.map[index] != 0 && handMap.map[36] >= remainderMap.map[index] {
+                    if list.singles != index && originalMap.map[index] > 2 {    // check for singles and pairs
+                        handMap.map[36] -= remainderMap.map[index]              // subtract jokers
+                        remainderMap.map[index] = 0
+                    }
+                }
+            }
+        }
+        print(remainderMap.map)
+        print(handMap.map)
+        let remainderCount = remainderMap.map.reduce(0, +)
+        valid = remainderCount == 0
+        
+        // special check FFFF 2022 222 222
+        // if the 2s from 2022 are posted but soap is not posted it cant be this pattern
+        if pattern.year == Year.y2022 && pattern.id == 2 {
+            let rackMap = TileIdMap(rack: east.rack!)
+            if rackMap.map[10] == 0 && rackMap.map[list.singles] != 0 {
+                valid = false
+            }
+        }
+        
+        // special check FF 2022 2022 2022
+        // no jokers allowed in this pattern
+        if list.singles == Singles.ff_2022_2022_2022 {
+            if east.jokerCount() != 0 || east.rack!.jokerCount() != 0 {
+                valid = false
+            }
+        }
+                
+        return valid
+    }
+    
 }

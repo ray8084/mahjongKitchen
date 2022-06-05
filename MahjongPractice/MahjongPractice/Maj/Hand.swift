@@ -406,9 +406,7 @@ class Hand {
         rack!.sort()
         tiles.removeAll()
     }
-    
-    
-    
+        
     func rackJokers(rack: Rack, id: Int, suit: String, number: Int, count: Int) {
         for _ in 1...count {
             for (index, tile) in tiles.enumerated() {
