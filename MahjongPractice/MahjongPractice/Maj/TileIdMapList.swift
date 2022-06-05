@@ -63,6 +63,10 @@ class TileIdMap {
         return map[36]
     }
     
+    func flowerCount() -> Int {
+        return map[35]
+    }
+    
     func log() {
         print(map)
     }

@@ -970,8 +970,14 @@ class Maj {
     }
     
     private func doubleCheckIds(_ list: ExtendedIdList, pattern: LetterPattern) -> Bool {
-        var valid = false;
-        
+        var valid = doubleCheckCount(list, pattern: pattern);
+        if valid { valid = doubleCheckRack(list, pattern: pattern) }
+        if valid { valid = doubleCheck_FFFF_2022_222_222(list, pattern: pattern) }
+        if valid { valid = doubleCheck_FF_2022_2022_2022(list, pattern: pattern) }
+        return valid
+    }
+    
+    private func doubleCheckCount(_ list: ExtendedIdList, pattern: LetterPattern) -> Bool {
         // remove rack tiles
         var remainder = list.ids;
         for tile in east.rack!.tiles {
@@ -1011,25 +1017,68 @@ class Maj {
         print(remainderMap.map)
         print(handMap.map)
         let remainderCount = remainderMap.map.reduce(0, +)
-        valid = remainderCount == 0
-        
-        // special check FFFF 2022 222 222
-        // if the 2s from 2022 are posted but soap is not posted it cant be this pattern
+        print("doubleCheckCount \(remainderCount)")
+        return remainderCount == 0
+    }
+    
+    //
+    // If the 2s from 2022 are posted but soap is not posted it cant be this pattern
+    //
+    private func doubleCheck_FFFF_2022_222_222(_ list: ExtendedIdList, pattern: LetterPattern) -> Bool {
+        var valid = true
         if pattern.year == Year.y2022 && pattern.id == 2 {
             let rackMap = TileIdMap(rack: east.rack!)
             if rackMap.map[10] == 0 && rackMap.map[list.singles] != 0 {
                 valid = false
             }
         }
-        
-        // special check FF 2022 2022 2022
-        // no jokers allowed in this pattern
+        print("doubleCheck_FFFF_2022_222_222 \(valid)")
+        return valid
+    }
+    
+    //
+    // No jokers allowed in this pattern
+    //
+    private func doubleCheck_FF_2022_2022_2022(_ list: ExtendedIdList, pattern: LetterPattern) -> Bool {
+        var valid = true
         if list.singles == Singles.ff_2022_2022_2022 {
             if east.jokerCount() != 0 || east.rack!.jokerCount() != 0 {
                 valid = false
             }
         }
-                
+        print("doubleCheck_FF_2022_2022_2022 \(valid)")
+        return valid
+    }
+    
+    //
+    // Rack count has to match excactly for each, we cant add more tiles to a set later
+    //
+    private func doubleCheckRack(_ list: ExtendedIdList, pattern: LetterPattern) -> Bool {
+        print("doubleCheckRack")
+        var valid = true
+        let rackMap = TileIdMap(rack: east.rack!)   // accounts for jokers
+        let idMap = TileIdMap(list.ids)
+        for (index, count) in rackMap.map.enumerated() {
+            if count != 0 && index < 35 {
+                if count != idMap.map[index] {
+                    valid = false
+                    break;
+                }
+            }
+        }
+        if valid {
+            // check flowers
+            print("flowers \(rackMap.flowerCount()) \(idMap.flowerCount())")
+            if rackMap.flowerCount() == 3 {
+                if !(idMap.flowerCount() == 3 || idMap.flowerCount() == 6) {
+                    valid = false
+                }
+            } else if rackMap.flowerCount() > 0 && (rackMap.flowerCount() != idMap.flowerCount()) {
+                valid = false
+            }
+        }
+        
+        print("doubleCheckRack \(valid)")
         return valid
     }
     
