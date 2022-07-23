@@ -16,7 +16,7 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var lp: UILongPressGestureRecognizer! = nil
     let cellHeight: CGFloat = 20.0
     var root: UIViewController!
-    var sorted = true
+    // var sorted = true
     var maxRows = 12
     var isHidden = true
     let darkBamboo:UIColor = UIColor(red: 114/255, green: 123/255, blue: 102/255, alpha: 1.0)
@@ -100,20 +100,9 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
             maj.letterPatternRackFilterPending = false
         }
     }
-    
-    func toggleSort(_ maj: Maj) {
-        if sorted == false {
-            maj.card.letterPatterns.sort(by: { $0.matchCount > $1.matchCount })
-            sorted = true
-        }
-        else {
-            maj.card.letterPatterns.sort(by: { $0.id < $1.id })
-            sorted = false
-        }
-    }
-    
+        
     func sort(_ maj: Maj) {
-        if sorted == true {
+        if maj.east.tileMatches.stopSorting == false {
             maj.card.letterPatterns.sort(by: { $0.matchCount == $1.matchCount ? $0.id < $1.id : $0.matchCount > $1.matchCount} )
         }
     }
@@ -263,20 +252,27 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     @objc func hideButton(_ sender: UIView) {
-        let alert = UIAlertController(title: "Hide this pattern for this game", message: maj.card.text(sender.tag-100).string, preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "Hide", style: .default, handler: {(action:UIAlertAction) in
-            self.maj.card.hidePattern(sender.tag-100)
-            self.update(self.maj)
-        }));
-        
-        alert.addAction(UIAlertAction(title: "Unhide All", style: .default, handler: {(action:UIAlertAction) in
-            self.maj.card.unhideAll()
-            self.update(self.maj)
-        }));
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil));
-        root.present(alert, animated: true, completion: nil)
+        if maj.east.tileMatches.stopSorting == true {
+            let alert = UIAlertController(title: "Sorting is off", message: "You cannot hide patterns when sorting is off", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil));
+            root.present(alert, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: "Hide this pattern for this game", message: maj.card.text(sender.tag-100).string, preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Hide", style: .default, handler: {(action:UIAlertAction) in
+                self.maj.card.hidePattern(sender.tag-100)
+                self.update(self.maj)
+            }));
+            
+            alert.addAction(UIAlertAction(title: "Unhide All", style: .default, handler: {(action:UIAlertAction) in
+                self.maj.card.unhideAll()
+                self.update(self.maj)
+            }));
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil));
+            root.present(alert, animated: true, completion: nil)
+        }
     }
     
     func rowHeight() -> CGFloat  {

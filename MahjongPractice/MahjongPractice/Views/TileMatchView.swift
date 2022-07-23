@@ -65,6 +65,7 @@ class TileMatchView: UIViewController, UITableViewDelegate, UITableViewDataSourc
         //tableView.backgroundColor = bgcolor
         tableView.backgroundColor = UIColor.clear
         tableView.separatorColor = UIColor(white: 0, alpha: 0)
+        // tableView.allowsSelection = false
         self.bgcolor = bgcolor
         root = rootView
         //UIView.animate(withDuration: 0.3, delay: 0.1, options: [],
@@ -109,9 +110,14 @@ class TileMatchView: UIViewController, UITableViewDelegate, UITableViewDataSourc
         return tileHeight() + 4.0
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        lockSorting(tableView)
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "tileMatchCell")! as UITableViewCell
         cell.backgroundColor = UIColor.clear
+        cell.selectionStyle = .none
         for v in cell.subviews {
             v.removeFromSuperview()
         }
@@ -154,8 +160,45 @@ class TileMatchView: UIViewController, UITableViewDelegate, UITableViewDataSourc
         label2.textColor = UIColor.black
         cell.addSubview(label2)
         
+        if indexPath.row == 0 {
+            let button = UIButton()
+            button.frame = CGRect(x: x + 150, y: 8.0, width: 80, height: tileHeight())
+            if self.maj!.east.tileMatches.stopSorting == true {
+                button.setTitle("[unlock]", for: .normal)
+            } else {
+                button.setTitle("[lock]", for: .normal)
+            }
+            button.setTitleColor(UIColor.darkGray, for: .normal)
+            button.addTarget(self, action: #selector(TileMatchView.lockSorting), for: .touchUpInside)
+            cell.addSubview(button)
+        }
+            
         return cell
     }
   
+    @objc func lockSorting(_ sender: UIView) {
+        if self.maj!.east.tileMatches.stopSorting == true {
+            let alert = UIAlertController(title: "Unlock pattern sorting", message: "", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Unlock", style: .default, handler: {(action:UIAlertAction) in
+                self.maj!.east.tileMatches.stopSorting = false
+                self.tableView.reloadData()
+            }));
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil));
+            root.present(alert, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: "Lock pattern sorting", message: "", preferredStyle: .alert)
+            
+            alert.addAction(UIAlertAction(title: "Lock", style: .default, handler: {(action:UIAlertAction) in
+                self.maj!.east.tileMatches.stopSorting = true
+                self.tableView.reloadData()
+            }));
+            
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil));
+            root.present(alert, animated: true, completion: nil)
+        }
+    }
+    
     
 }
