@@ -497,13 +497,13 @@ class PurchaseMenu: UIViewController {
             setBackground()
             addPurchaseView()
             
-            addTitle("Purchase \(revenueCat.getCurrentYear()) ?", y: yOffset + 15, height: 35)
+            addTitle("Purchase \(revenueCat.getCurrentYear())", y: yOffset + 18, height: 35)
             
             addHelpText2("One-time purchase of 2022 pattern access includes all features.", y: yOffset + 80, height: 65)
             addLine(y: yOffset + 70)
             addPurchaseButton(y: yOffset + 85)
                         
-            addHelpText2("Monthly subscription includes access to new patterns every year and all features. Cancel anytime.", y: yOffset + 140, height: 65)
+            addHelpText2("Monthly subscription includes all features and access to new patterns every year. Cancel anytime.", y: yOffset + 140, height: 65)
             addLine(y: yOffset + 140)
             addMonthlyButton(y: yOffset + 155)
             
@@ -562,7 +562,8 @@ class PurchaseMenu: UIViewController {
     }
     
     func addEula(_ text: String, y: Int) {
-        let textView = UITextView(frame: CGRect(x: width()/2 - 300 + 30, y: y, width: 300, height: 40))
+        // let textView = UITextView(frame: CGRect(x: width()/2 - 300 + 30, y: y, width: 300, height: 40))
+        let textView = UITextView(frame: CGRect(x: width()/2 - 40, y: y, width: 300, height: 40))
         let attributedString = NSMutableAttributedString(string: text)
         attributedString.addAttribute(.link, value: "https://eightbam.com/policy", range: NSRange(location: 0, length: text.count))
         textView.attributedText = attributedString
@@ -574,7 +575,8 @@ class PurchaseMenu: UIViewController {
     }
     
     func addSupport(_ text: String, y: Int) {
-        let textView = UITextView(frame: CGRect(x: width()/2 - 30, y: y, width: 300, height: 40))
+        // let textView = UITextView(frame: CGRect(x: width()/2 - 30, y: y, width: 300, height: 40))
+        let textView = UITextView(frame: CGRect(x: width()/2 - 300 - 40, y: y, width: 300, height: 40))
         textView.text = text
         textView.font = UIFont.systemFont(ofSize: 16)
         textView.textAlignment = .right
