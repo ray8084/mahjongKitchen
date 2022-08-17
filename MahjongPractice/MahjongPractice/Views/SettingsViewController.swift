@@ -62,6 +62,7 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
         addFilters()
         addOptions()
         addTileImages()
+        addManageSubscriptions()
         addCloseButton()
     }
     
@@ -578,4 +579,41 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
         settingsDelegate.changeTileImages()
     }
     
+    
+    // -----------------------------------------------------------------------------------------
+    //
+    //  Manage Subscriptions
+    //
+    // -----------------------------------------------------------------------------------------
+    
+    private func addManageSubscriptions() {
+        let line = addLine(x: xOffset, y: tilesBottom + 20)
+        let bottom = Int(line.frame.origin.y + line.frame.height)
+        
+        let top = bottom + 10
+        addTitle("Manage Subscriptions", y: top)
+        
+        let x = Int(line.center.x - (line.frame.width / 2) + 10)
+        let ipadView = UITextView(frame: CGRect(x: x, y: top + 50, width: 300, height: 40))
+        let ipadText = "iPad User Guide"
+        let ipadLink = "https://support.apple.com/guide/ipad/manage-purchases-subscriptions-settings-ipadee10c6e7/ipados"
+        let iPadAttributedString = NSMutableAttributedString(string: ipadText)
+        iPadAttributedString.addAttribute(.link, value: ipadLink, range: NSRange(location: 0, length: ipadText.count))
+        ipadView.attributedText = iPadAttributedString
+        ipadView.isUserInteractionEnabled = true
+        ipadView.font = UIFont.systemFont(ofSize: 16)
+        scrollView.addSubview(ipadView)
+        
+        let iphoneView = UITextView(frame: CGRect(x: x, y: top + 80, width: 300, height: 40))
+        let iphoneText = "iPhone User Guide"
+        let iphoneLink = "https://support.apple.com/guide/iphone/manage-purchases-subscriptions-settings-iph3dfd91de/15.0/ios/15.0"
+        let iphoneAttributedString = NSMutableAttributedString(string: iphoneText)
+        iphoneAttributedString.addAttribute(.link, value: iphoneLink, range: NSRange(location: 0, length: iphoneText.count))
+        iphoneView.attributedText = iphoneAttributedString
+        iphoneView.isUserInteractionEnabled = true
+        iphoneView.font = UIFont.systemFont(ofSize: 16)
+        scrollView.addSubview(iphoneView)
+    }
+    
 }
+
