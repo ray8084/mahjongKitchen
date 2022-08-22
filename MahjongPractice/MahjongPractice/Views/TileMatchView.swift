@@ -188,7 +188,8 @@ class TileMatchView: UIViewController, UITableViewDelegate, UITableViewDataSourc
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil));
             root.present(alert, animated: true, completion: nil)
         } else {
-            let alert = UIAlertController(title: "Lock pattern sorting", message: "", preferredStyle: .alert)
+            let message = "Stop the Patterns and Tiles views from sorting.  When unlocked these views match your hand with all possible hands and sort based on the highest matching tile count.  For example if 10 tiles in your had match a pattern it will be higher in the list than a pattern that only matches 9 tiles.  If you don't want to see any more updates and stop the constant sorting of these lists use lock"
+            let alert = UIAlertController(title: "Lock pattern sorting", message: message, preferredStyle: .alert)
             
             alert.addAction(UIAlertAction(title: "Lock", style: .default, handler: {(action:UIAlertAction) in
                 self.maj!.east.tileMatches.stopSorting = true

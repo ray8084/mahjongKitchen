@@ -39,6 +39,7 @@ class HelpTableController: NarrowViewController, UITableViewDelegate, UITableVie
         addBots()
         addBlindPassing()
         addUndo()
+        addLock()
         addHowToClose()
         addFlowers()
         addBams()
@@ -530,6 +531,20 @@ class HelpTableController: NarrowViewController, UITableViewDelegate, UITableVie
     private func addUndo() {
         let chapter = HelpChapter("Undo", xOffset: xOffset, width: view.frame.width)
         chapter.addLabel("Drag a tile from the discard position to the left to undo. The previous tile will return to the discard position.\n")
+        chapters.append(chapter)
+    }
+    
+    
+    // -----------------------------------------------------------------------------------------
+    //
+    //  Lock
+    //
+    // -----------------------------------------------------------------------------------------
+    
+    private func addLock() {
+        let chapter = HelpChapter("Lock", xOffset: xOffset, width: view.frame.width)
+        chapter.addLabel("On the Tiles view the [lock] button will stop the Patterns and Tiles views from sorting.  When unlocked these views match your hand with all possible hands and sort based on the highest matching tile count.  For example if 10 tiles in your had match a pattern it will be higher in the list than a pattern that only matches 9 tiles.  If you don't want to see any more updates and stop the constant sorting of these lists use the [lock] button")
+        chapter.addScreenShot("lock.png")
         chapters.append(chapter)
     }
     
