@@ -23,11 +23,14 @@ class Card2022 : Card {
         addWindsAndDragons()
         add369()
         addSinglesAndPairs()
+        // loadSavedValues()
         
         var count = 0
         for p in letterPatterns {
             count = count + p.idList.list.count
             print("\(p.id+1) " + p.getFamilyString() + " count:\(p.idList.list.count)")
+            // for _ in 1...10 { addWin(p.id) }
+            // for _ in 1...10 { addLoss(p) }
         }
         print(count)
     }
