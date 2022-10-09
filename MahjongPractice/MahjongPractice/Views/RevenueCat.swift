@@ -689,11 +689,11 @@ class PurchaseMenu: UIViewController {
     }
     
     func width() -> Int {
-        Int(view.frame.width)
+        max(Int(view.frame.width), Int(view.frame.height))
     }
     
     func height() -> Int {
-        Int(view.frame.height)
+        min(Int(view.frame.width), Int(view.frame.height))
     }
     
     func showTrialMenu() {
