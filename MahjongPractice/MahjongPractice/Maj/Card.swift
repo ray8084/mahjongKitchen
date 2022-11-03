@@ -150,11 +150,15 @@ class Card {
         }
     }
     
-    func addWin(_ index: Int) {
+    func addWin(_ index: Int) -> Bool {
+        print("addWin \(index)")
         if index < letterPatterns.count {
             let p = letterPatterns[index]
             p.winsSinceVersion22 += 1
             defaults.set(p.winsSinceVersion22, forKey: p.winKeySinceVersion22() + getYear())
+            return true
+        } else {
+            return false
         }
     }
     
@@ -264,6 +268,7 @@ class Card {
             }
             index += 1
         }
+        print("winningIndex \(found) \(index)")
         return found ? index : 0xFFFF
     }
 

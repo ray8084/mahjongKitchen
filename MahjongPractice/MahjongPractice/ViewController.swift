@@ -195,14 +195,20 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     
     func showGameMenu() {
         let eastWon = maj.eastWon()
+        //addWin()
         if maj.isGameOver() {
+            //addWin()
             maj.card.clearRackFilter()
+            //addWin()
             maj.east.tileMatches.clearRackFilter()
+            //addWin()
             cardView.update(maj)
+            //addWin()
             tileMatchView.update(maj)
+            //addWin()
         }
         if maj.isGameOver() && eastWon {
-            addWin()
+            //addWin()
             showWinMenu()
         } else if maj.isGameOver() && !lossCounted {
             addLoss()
@@ -213,9 +219,9 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
     
     func addWin() {
-        if winCounted == false {
-            maj.card.addWin(maj.card.winningIndex((maj.east.rack?.jokerCount())!))
-            winCounted = true
+        print("ViewController addWin")
+        if maj.eastWon() && winCounted == false {
+            winCounted = maj.card.addWin(maj.card.winningIndex((maj.east.rack?.jokerCount())!))
         }
     }
     
@@ -233,6 +239,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             let title = "Mahjong - You Win!"
             let message = maj.card.winningHand(maj: maj)
             showGameMenu(title: title, message: message, win: true)
+            addWin() // debugging
         }
     }
     
@@ -288,14 +295,17 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         self.tileMatchView.update(maj)
         
         newGameMenu.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
+            self.addWin()
             self.newGameAction(win)
         }));
         
         newGameMenu.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
+            self.addWin()
             self.replay()
         }));
         
         newGameMenu.addAction(UIAlertAction(title: "Review", style: .default, handler: {(action:UIAlertAction) in
+            self.addWin()
             self.reviewInProgress = true
         }));
         
