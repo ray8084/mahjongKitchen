@@ -189,6 +189,8 @@ extension IAPHelper: SKPaymentTransactionObserver {
         case .purchasing:
             print("purchasing")
             break
+        default:
+            break
       }
     }
     for transaction in transactions {
@@ -203,6 +205,7 @@ extension IAPHelper: SKPaymentTransactionObserver {
             break
         case .deferred: break
         case .purchasing: break
+        default: break
       }
     }
   }

@@ -479,8 +479,11 @@ class PurchaseMenu: UIViewController {
 
     func addPurchaseView() {
         purchaseView.backgroundColor = .white
-        let x = Int(width() - 600) / 2
-        let y = Int(height() - 350) / 2
+        let w = width()
+        let h = height()
+        let x = Int(w - 600) / 2
+        let y = Int(h - 350) / 2
+        print("addPurchaseView \(w) \(h) \(x) \(y)")
         purchaseView.frame = CGRect(x: x, y: y, width: 600, height: 350)
         purchaseView.layer.cornerRadius = 20
         view.addSubview(purchaseView)
@@ -689,11 +692,17 @@ class PurchaseMenu: UIViewController {
     }
     
     func width() -> Int {
-        max(Int(view.frame.width), Int(view.frame.height))
+        var width = max(Int(view.frame.width), Int(view.frame.height))
+        if #available(iOS 16.0, *) { // bug in the width in ios16
+            if width > 900 {
+                width = 700
+            }
+        }
+        return width
     }
     
     func height() -> Int {
-        min(Int(view.frame.width), Int(view.frame.height))
+        return min(Int(view.frame.width), Int(view.frame.height))
     }
     
     func showTrialMenu() {
