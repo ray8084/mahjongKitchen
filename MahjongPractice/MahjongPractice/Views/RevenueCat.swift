@@ -61,6 +61,10 @@ class RevenueCat {
         purchased2022 = defaults.bool(forKey: "purchased2022")
         monthlyActive = defaults.bool(forKey: "monthlyActive")
         monthlyTrialActive = defaults.bool(forKey: "monthlyTrialActive")
+        
+        // unlock
+        // purchased2022 = true
+        // defaults.set(Year.y2022, forKey: "year")
     }
     
     func getCurrentYear() -> String {
