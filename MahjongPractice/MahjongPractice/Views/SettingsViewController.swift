@@ -90,7 +90,7 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
         let line = addLine(x: xOffset, y: yearBottom + 10)
         yearBottom = Int(line.frame.origin.y + line.frame.height)
         
-        let items = ["2017", "2018", "2019", "2020", "2021", "2022"]
+        let items = ["2017", "2018", "2019", "2020", "2021", "2022", "2023"]
         yearSegmentControl = UISegmentedControl(items: items)
         yearSegmentControl.selectedSegmentIndex = maj.getYearSegment()
         yearSegmentControl.frame = CGRect(x: xOffset, y: yearBottom + 10, width: maxWidth, height: Int(yearSegmentControl.frame.height))

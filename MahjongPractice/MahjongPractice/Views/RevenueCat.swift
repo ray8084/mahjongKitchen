@@ -68,7 +68,7 @@ class RevenueCat {
     }
     
     func getCurrentYear() -> String {
-        return "2022"
+        return "2023"
     }
     
     func getCurrentPrice() -> Double {
@@ -506,7 +506,7 @@ class PurchaseMenu: UIViewController {
             
             addTitle("Purchase \(revenueCat.getCurrentYear())", y: yOffset + 18, height: 35)
             
-            addHelpText2("One-time purchase of 2022 pattern access includes all features.", y: yOffset + 80, height: 65)
+            addHelpText2("One-time purchase of 2023 pattern access includes all features.", y: yOffset + 80, height: 65)
             addLine(y: yOffset + 70)
             addPurchaseButton(y: yOffset + 85)
                         
@@ -514,7 +514,7 @@ class PurchaseMenu: UIViewController {
             addLine(y: yOffset + 140)
             addMonthlyButton(y: yOffset + 155)
             
-            addHelpText2("Restore 2022 purchase on a second device or after a reinstall. Purchase once and use on your iPhone and iPad.", y: yOffset + 215, height: 85)
+            addHelpText2("Restore 2023 purchase on a second device or after a reinstall. Purchase once and use on your iPhone and iPad.", y: yOffset + 215, height: 85)
             addLine(y: yOffset + 215)
             addRestoreButton(y: yOffset + 230)
             addLine(y: yOffset + 290)
