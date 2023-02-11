@@ -24,6 +24,7 @@ class Year {
     static let y2017 = 4
     static let y2021 = 5
     static let y2022 = 6
+    static let y2023 = 6
 }
 
 class YearSegment {
@@ -33,6 +34,7 @@ class YearSegment {
     static let segment2020 = 3
     static let segment2021 = 4
     static let segment2022 = 5
+    static let segment2023 = 6
 }
 
 class TileStyle {
@@ -64,6 +66,7 @@ class Maj {
     var enable2020 = false
     var enable2021 = false
     var enable2022 = false
+    var enable2023 = false
     var shuffleWithSeed = false
     var shuffleSeed = ""
     var disableAutomaj = false

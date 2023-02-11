@@ -157,6 +157,7 @@
 		714252E32708033A001AE6F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 714252E22708033A001AE6F0 /* LaunchScreen.storyboard */; };
 		714252E527080ACE001AE6F0 /* iconfinder_circle-26_600774.png in Resources */ = {isa = PBXBuildFile; fileRef = 714252E427080ACE001AE6F0 /* iconfinder_circle-26_600774.png */; };
 		716E74E827C44CFC0031145C /* Card2022.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716E74E727C44CFC0031145C /* Card2022.swift */; };
+		7182A9DD2997F3660043A3EA /* Card2023.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7182A9DC2997F3660043A3EA /* Card2023.swift */; };
 		71980F9B28B43B9D00BFAD57 /* lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 71980F9A28B43B9D00BFAD57 /* lock.png */; };
 /* End PBXBuildFile section */
 
@@ -336,6 +337,7 @@
 		714252E22708033A001AE6F0 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		714252E427080ACE001AE6F0 /* iconfinder_circle-26_600774.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconfinder_circle-26_600774.png"; sourceTree = "<group>"; };
 		716E74E727C44CFC0031145C /* Card2022.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card2022.swift; sourceTree = "<group>"; };
+		7182A9DC2997F3660043A3EA /* Card2023.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card2023.swift; sourceTree = "<group>"; };
 		71980F9A28B43B9D00BFAD57 /* lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock.png; sourceTree = "<group>"; };
 		8A035980D389C5C22DDD03CB /* Pods-MahjongPractice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MahjongPractice.release.xcconfig"; path = "Target Support Files/Pods-MahjongPractice/Pods-MahjongPractice.release.xcconfig"; sourceTree = "<group>"; };
 		A668A2FB6B118FAF6D0F3252 /* Pods_MahjongPractice_MahjongPracticeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MahjongPractice_MahjongPracticeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -471,6 +473,7 @@
 				714252AB2707A023001AE6F0 /* Card2020.swift */,
 				714252A42707A023001AE6F0 /* Card2021.swift */,
 				716E74E727C44CFC0031145C /* Card2022.swift */,
+				7182A9DC2997F3660043A3EA /* Card2023.swift */,
 				714252A22707A023001AE6F0 /* Deck.swift */,
 				714252AE2707A023001AE6F0 /* DiscardTable.swift */,
 				714252AD2707A023001AE6F0 /* Hand.swift */,
@@ -991,6 +994,7 @@
 				714252CF2707A04B001AE6F0 /* RevenueCat.swift in Sources */,
 				714252B52707A024001AE6F0 /* Card2021.swift in Sources */,
 				714252D22707A04C001AE6F0 /* HelpTableController.swift in Sources */,
+				7182A9DD2997F3660043A3EA /* Card2023.swift in Sources */,
 				714252BB2707A024001AE6F0 /* Card2017.swift in Sources */,
 				714252D12707A04B001AE6F0 /* NarrowViewController.swift in Sources */,
 				714252B62707A024001AE6F0 /* Card2016.swift in Sources */,

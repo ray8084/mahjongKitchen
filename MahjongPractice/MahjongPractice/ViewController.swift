@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum ErrorId: Int { case swapInHand = 801, toCharlestonOut, swapInRack, toRack, toDiscard, charlestonToHand, rackToDiscard }
+enum ErrorId: Int { case swapInHand = 8001, toCharlestonOut, swapInRack, toRack, toDiscard, charlestonToHand, rackToDiscard }
 
 class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, SettingsDelegate, ValidationViewDelegate  {
     
@@ -153,6 +153,11 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         redeal()
     }
     
+    func load2023() {
+        changeYear(YearSegment.segment2023)
+        redeal()
+    }
+    
     func enable2020(_ enable: Bool) {
         maj.enable2020 = enable
     }
@@ -163,6 +168,10 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     
     func enable2022(_ enable: Bool) {
         maj.enable2022 = enable
+    }
+    
+    func enable2023(_ enable: Bool) {
+        maj.enable2023 = enable
     }
     
     func showGame() {
@@ -1032,8 +1041,8 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             self.show(stats, sender: self)
         }));
         
-        if self.maj.enable2021 == false {
-            alert.addAction(UIAlertAction(title: "2022 Pattern Access", style: .default, handler: {(action:UIAlertAction) in
+        if self.maj.enable2023 == false {
+            alert.addAction(UIAlertAction(title: "2023 Pattern Access", style: .default, handler: {(action:UIAlertAction) in
                 self.revenueCat.showPurchaseMenu(self)
             }));
         }
@@ -1308,33 +1317,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         }
         updateMahjButton2()
     }
-   
-        
-    /*func doubleCheckForMahjong(_ match: LetterPattern, hand: [Tile], rack: [Tile]) -> Bool {
-        print("doubleCheckForMahjong \(match.year) \(match.id)")
-        var validMahjong = (match.matchCount == 14)
-        if match.year == Year.y2022 && match.id == 2 {      // special case for FFFF 2022 222 222
-            print("checkRack")
-            let suitsForRacked2s = countSuitsForRacked2s()
-            if suitsForRacked2s == 2 {                      // 2 sets of 2s are already racked
-                print("count2s")
-                var count2022Twos = 0                       // make sure we have 3 natural 2s
-                for tile in hand {
-                    if tile.number == 2 {
-                        count2022Twos += 1
-                    }
-                }
-                if count2022Twos != 3 {
-                    validMahjong = false
-                    maj.specialCase2022Rack = rack
-                }
-            } else if suitsForRacked2s == 3 {               // 3 sets of 2s racked, racking in progress
-                print("racking in progress")                // evaluate after its racked
-                validMahjong = false
-            }
-        }
-        return validMahjong
-    }*/
     
     func countSuitsForRacked2s() -> Int {
         var suits = Set<String>()

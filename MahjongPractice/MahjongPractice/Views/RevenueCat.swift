@@ -10,11 +10,13 @@ import Purchases
 
 protocol GameDelegate {
     func redeal()
-    func load2022()
     func load2021()
-    func enable2022(_ enable: Bool)
-    func enable2021(_ enable: Bool)
+    func load2022()
+    func load2023()
     func enable2020(_ enable: Bool)
+    func enable2021(_ enable: Bool)
+    func enable2022(_ enable: Bool)
+    func enable2023(_ enable: Bool)
     func changeYear(_ segment: Int)
     func override2021() -> Bool
 }
@@ -41,13 +43,16 @@ class RevenueCat {
     var monthlyTrialOption = false
     var package2021: Purchases.Package!
     var package2022: Purchases.Package!
+    var package2023: Purchases.Package!
     var packageMonthly: Purchases.Package!
     var packageMonthlyTrial: Purchases.Package!
     var purchased2021 = false
     var purchased2022 = false
+    var purchased2023 = false
     var purchaseMenu: PurchaseMenu!
     var price2021 = 0.0
     var price2022 = 0.0
+    var price2023 = 0.0
     var priceMonthly = 0.0
     var priceMonthlyTrial = 0.0
     var responseTimeoutSeconds = 360.0
@@ -59,6 +64,7 @@ class RevenueCat {
         self.purchaseMenu = PurchaseMenu(revenueCat: self)
         purchased2021 = defaults.bool(forKey: "purchased2021")
         purchased2022 = defaults.bool(forKey: "purchased2022")
+        purchased2023 = defaults.bool(forKey: "purchased2023")
         monthlyActive = defaults.bool(forKey: "monthlyActive")
         monthlyTrialActive = defaults.bool(forKey: "monthlyTrialActive")
         
@@ -72,15 +78,16 @@ class RevenueCat {
     }
     
     func getCurrentPrice() -> Double {
-        return price2022
+        return price2023
     }
     
     func start() {
         print("RevenueCat.start")
-        if is2022Purchased() || monthlyActive {
+        if is2023Purchased() || monthlyActive {
             gameDelegate.enable2021(true)
             gameDelegate.enable2020(true)
             gameDelegate.enable2022(true)
+            gameDelegate.enable2023(true)
             gameDelegate.redeal()
         } else {
             showPurchaseMenu(viewController)
@@ -105,6 +112,11 @@ class RevenueCat {
                         self.package2022 = package
                         self.price2022 = Double(truncating: package.product.price)
                         self.purchaseMenu.updatePurchaseButton(self.price2022)
+                    }
+                    if package.product.productIdentifier == "com.eightbam.mahjongpractice.patterns2023" {
+                        self.package2023 = package
+                        self.price2023 = Double(truncating: package.product.price)
+                        self.purchaseMenu.updatePurchaseButton(self.price2023)
                     }
                     if package.product.productIdentifier == "com.eightbam.mahjongpractice.monthly" {
                         self.packageMonthly = package
@@ -155,24 +167,24 @@ class RevenueCat {
         }
     }
         
-    func purchase2022() {
-        Purchases.shared.purchasePackage(package2022) { (transaction, info, error, userCancelled) in
+    func purchase2023() {
+        Purchases.shared.purchasePackage(package2023) { (transaction, info, error, userCancelled) in
             self.purchaseMenu.purchaseTimer.invalidate()
             if error != nil {
                 self.purchaseMenu.alertForPurchase.dismiss(animated: false, completion: {
                     let message = (error! as NSError).localizedDescription
-                    self.purchaseMenu.showRetryPurchase2022(error: message)
+                    self.purchaseMenu.showRetryPurchase2023(error: message)
                 })
             } else if transaction != nil {
                 if transaction?.transactionState == .purchased {
-                    self.completePurchase2022()
+                    self.completePurchase2023()
                 }
             }
-            if error == nil && info != nil && self.purchased2022 == false {
-                if info?.entitlements["Patterns2022"]?.isActive == true {
-                    self.completePurchase2022()
+            if error == nil && info != nil && self.purchased2023 == false {
+                if info?.entitlements["Patterns2023"]?.isActive == true {
+                    self.completePurchase2023()
                 } else {
-                    self.purchaseMenu.showRetryPurchase2022(error: "The in-app purchase for 2022 Access is not active. For help contact support@eightbam.com")
+                    self.purchaseMenu.showRetryPurchase2023(error: "The in-app purchase for 2023 Access is not active. For help contact support@eightbam.com")
                 }
             }
         }
@@ -224,16 +236,17 @@ class RevenueCat {
         }
     }
         
-    func completePurchase2022() {
-        purchased2022 = true
-        defaults.set(purchased2022, forKey: "purchased2022")
+    func completePurchase2023() {
+        purchased2023 = true
+        defaults.set(purchased2023, forKey: "purchased2023")
         purchaseMenu.alertForPurchase.dismiss(animated: true, completion: {
             self.purchaseMenu.close()
         })
-        gameDelegate.enable2022(true)
-        gameDelegate.enable2021(true)
         gameDelegate.enable2020(true)
-        gameDelegate.load2022()
+        gameDelegate.enable2021(true)
+        gameDelegate.enable2022(true)
+        gameDelegate.enable2023(true)
+        gameDelegate.load2023()
     }
     
     func completePurchaseMonthly() {
@@ -242,10 +255,11 @@ class RevenueCat {
         purchaseMenu.alertForPurchase.dismiss(animated: true, completion: {
             self.purchaseMenu.close()
         })
-        gameDelegate.enable2022(true)
-        gameDelegate.enable2021(true)
         gameDelegate.enable2020(true)
-        gameDelegate.load2022()
+        gameDelegate.enable2021(true)
+        gameDelegate.enable2022(true)
+        gameDelegate.enable2023(true)
+        gameDelegate.load2023()
     }
     
     func completePurchaseMonthlyTrial() {
@@ -254,10 +268,11 @@ class RevenueCat {
         purchaseMenu.alertForPurchase.dismiss(animated: true, completion: {
             self.purchaseMenu.close()
         })
-        gameDelegate.enable2022(true)
-        gameDelegate.enable2021(true)
         gameDelegate.enable2020(true)
-        gameDelegate.load2022()
+        gameDelegate.enable2021(true)
+        gameDelegate.enable2022(true)
+        gameDelegate.enable2023(true)
+        gameDelegate.load2023()
     }
     
     func restoreAll() {
@@ -278,37 +293,44 @@ class RevenueCat {
     }
     
     func findEntitlements(_ info: Purchases.PurchaserInfo?) -> Bool {
+        if info?.entitlements["Patterns2021"]?.isActive == true {
+            purchased2021 = true
+            defaults.set(purchased2021, forKey: "purchased2021")
+        }
         if info?.entitlements["Patterns2022"]?.isActive == true {
             purchased2022 = true
             defaults.set(purchased2022, forKey: "purchased2022")
         }
-        if info?.entitlements["Patterns2021"]?.isActive == true {
-            purchased2021 = true
-            defaults.set(purchased2021, forKey: "purchased2021")
+        if info?.entitlements["Patterns2023"]?.isActive == true {
+            purchased2023 = true
+            defaults.set(purchased2023, forKey: "purchased2023")
         }
         if info?.entitlements["Monthly"]?.isActive == true {
             monthlyActive = true
             defaults.set(self.monthlyActive, forKey: "monthlyActive")
         }
-        return purchased2022 || purchased2021 || monthlyActive
+        return purchased2022 || purchased2021 || monthlyActive || purchased2023
     }
     
     func completeRestore() {
-        if purchased2022 || purchased2021 || monthlyActive {
+        if purchased2022 || purchased2021 || monthlyActive || purchased2023 {
             purchaseMenu.alertForRestore.dismiss(animated: true, completion: {
                 self.purchaseMenu.showRestorationSuccess()
             })
         }
-        gameDelegate.enable2022(purchased2022 || monthlyActive)
-        gameDelegate.enable2021(purchased2022 || purchased2021 || monthlyActive)
-        gameDelegate.enable2020(purchased2022 || purchased2021 || monthlyActive)
-        if purchased2022 || monthlyActive {
+        gameDelegate.enable2023(purchased2023 || monthlyActive)
+        gameDelegate.enable2022(purchased2022 || monthlyActive || purchased2023)
+        gameDelegate.enable2021(purchased2022 || purchased2021 || monthlyActive || purchased2023)
+        gameDelegate.enable2020(purchased2022 || purchased2021 || monthlyActive || purchased2023)
+        if purchased2023 || monthlyActive {
+            gameDelegate.load2023()
+        } else if purchased2022 || monthlyActive {
             gameDelegate.load2022()
         } else if purchased2021 {
             gameDelegate.load2021()
         }
     }
-    
+                  
     func restore2021() {
         Purchases.shared.restoreTransactions { (info, error) in
             self.purchaseMenu.restoreTimer.invalidate()
@@ -321,6 +343,40 @@ class RevenueCat {
             } else {
                 self.purchaseMenu.alertForRestore.dismiss(animated: true, completion: {
                     self.purchaseMenu.showRetryRestore2021(error: "The in-app purchase for 2021 Access is not active. For help contact support@eightbam.com")
+                })
+            }
+        }
+    }
+    
+    func restore2022() {
+        Purchases.shared.restoreTransactions { (info, error) in
+            self.purchaseMenu.restoreTimer.invalidate()
+            if let e = error {
+                self.purchaseMenu.alertForRestore.dismiss(animated: true, completion: {
+                    self.purchaseMenu.showRetryRestore2022(error: (e as NSError).localizedDescription)
+                })
+            } else if info?.entitlements["Patterns2022"]?.isActive == true {
+                self.completeRestore2022()
+            } else {
+                self.purchaseMenu.alertForRestore.dismiss(animated: true, completion: {
+                    self.purchaseMenu.showRetryRestore2022(error: "The in-app purchase for 2022 Access is not active. For help contact support@eightbam.com")
+                })
+            }
+        }
+    }
+    
+    func restore2023() {
+        Purchases.shared.restoreTransactions { (info, error) in
+            self.purchaseMenu.restoreTimer.invalidate()
+            if let e = error {
+                self.purchaseMenu.alertForRestore.dismiss(animated: true, completion: {
+                    self.purchaseMenu.showRetryRestore2023(error: (e as NSError).localizedDescription)
+                })
+            } else if info?.entitlements["Patterns2023"]?.isActive == true {
+                self.completeRestore2023()
+            } else {
+                self.purchaseMenu.alertForRestore.dismiss(animated: true, completion: {
+                    self.purchaseMenu.showRetryRestore2023(error: "The in-app purchase for 2023 Access is not active. For help contact support@eightbam.com")
                 })
             }
         }
@@ -354,6 +410,31 @@ class RevenueCat {
         gameDelegate.load2021()
     }
     
+    func completeRestore2022() {
+        purchased2022 = true
+        defaults.set(self.purchased2022, forKey: "purchased2022")
+        purchaseMenu.alertForRestore.dismiss(animated: true, completion: {
+            self.purchaseMenu.close()
+        })
+        gameDelegate.enable2020(true)
+        gameDelegate.enable2021(true)
+        gameDelegate.enable2022(true)
+        gameDelegate.load2022()
+    }
+    
+    func completeRestore2023() {
+        purchased2023 = true
+        defaults.set(self.purchased2023, forKey: "purchased2023")
+        purchaseMenu.alertForRestore.dismiss(animated: true, completion: {
+            self.purchaseMenu.close()
+        })
+        gameDelegate.enable2020(true)
+        gameDelegate.enable2021(true)
+        gameDelegate.enable2022(true)
+        gameDelegate.enable2023(true)
+        gameDelegate.load2023()
+    }
+    
     func completeRestoreMonthly() {
         monthlyActive = true
         defaults.set(self.monthlyActive, forKey: "monthlyActive")
@@ -366,22 +447,26 @@ class RevenueCat {
         gameDelegate.load2022()
     }
 
+    func is2023Purchased() -> Bool {
+        return purchased2023
+    }
+    
     func is2022Purchased() -> Bool {
-        return purchased2022
+        return purchased2022 || purchased2023
     }
     
     func is2021Purchased() -> Bool {
         let history2021 = AppStoreHistory.store.isProductPurchased(AppStoreHistory.Patterns2021)
-        return history2021 || purchased2021 || gameDelegate.override2021() || is2022Purchased()
+        return history2021 || purchased2021 || gameDelegate.override2021() || is2022Purchased() || is2023Purchased()
     }
 
     func is2020Purchased() -> Bool {
         let history2020 = AppStoreHistory.store.isProductPurchased(AppStoreHistory.Patterns2020)
-        return history2020 || is2021Purchased()
+        return history2020 || is2021Purchased() || is2023Purchased()
     }
     
-    func is2019Purchased() -> Bool { is2020Purchased() || is2021Purchased() }
-    func is2018Purchased() -> Bool { is2020Purchased() || is2021Purchased() }
+    func is2019Purchased() -> Bool { is2020Purchased() || is2021Purchased() || is2023Purchased() }
+    func is2018Purchased() -> Bool { is2020Purchased() || is2021Purchased() || is2023Purchased() }
     func is2017Trial() -> Bool { return !is2020Purchased() && !is2021Purchased() }
     
     func changeYear(year: Int, settingsViewController: SettingsViewController) {
@@ -416,6 +501,12 @@ class RevenueCat {
             case Year.y2022:
                 if is2022Purchased() || monthlyActive {
                     gameDelegate.changeYear(YearSegment.segment2022)
+                } else {
+                    purchaseMenu.oldYearMessage("2022")
+                }
+            case Year.y2023:
+                if is2023Purchased() || monthlyActive {
+                    gameDelegate.changeYear(YearSegment.segment2023)
                 } else {
                     showPurchaseMenu(settingsViewController)
                 }
@@ -569,7 +660,6 @@ class PurchaseMenu: UIViewController {
     }
     
     func addEula(_ text: String, y: Int) {
-        // let textView = UITextView(frame: CGRect(x: width()/2 - 300 + 30, y: y, width: 300, height: 40))
         let textView = UITextView(frame: CGRect(x: width()/2 - 40, y: y, width: 300, height: 40))
         let attributedString = NSMutableAttributedString(string: text)
         attributedString.addAttribute(.link, value: "https://eightbam.com/policy", range: NSRange(location: 0, length: text.count))
@@ -582,7 +672,6 @@ class PurchaseMenu: UIViewController {
     }
     
     func addSupport(_ text: String, y: Int) {
-        // let textView = UITextView(frame: CGRect(x: width()/2 - 30, y: y, width: 300, height: 40))
         let textView = UITextView(frame: CGRect(x: width()/2 - 300 - 40, y: y, width: 300, height: 40))
         textView.text = text
         textView.font = UIFont.systemFont(ofSize: 16)
@@ -668,6 +757,9 @@ class PurchaseMenu: UIViewController {
     
     func validateYear() {
         if settingsViewController != nil {
+            if settingsViewController.is2022Selected() && !revenueCat.is2022Purchased() {
+                settingsViewController.select2021()
+            }
             if settingsViewController.is2021Selected() && !revenueCat.is2021Purchased() {
                 settingsViewController.select2020()
             }
@@ -710,7 +802,7 @@ class PurchaseMenu: UIViewController {
     }
     
     func showTrialMenu() {
-        var title = "2017 is available as a free trial with limited feautures"
+        var title = "2017 is available as a free trial for limited time with limited features"
         var message = ""
         if revenueCat.monthlyTrialOption {
             title = "Free Trial\nMonthly Subscription"
@@ -761,7 +853,6 @@ class PurchaseMenu: UIViewController {
     }
     
     func addPurchaseButton(y: Int) {
-        // purchaseButton = UIButton(frame: CGRect(x: (width()-220)/2, y: y, width: 220, height: 44))
         purchaseButton = UIButton(frame: CGRect(x: ((width()-190)/2) + 170, y: y, width: 190, height: 44))
         purchaseButton.layer.cornerRadius = 5
         purchaseButton.titleLabel!.font = UIFont.systemFont(ofSize: 20)
@@ -776,12 +867,11 @@ class PurchaseMenu: UIViewController {
         }
         purchaseButton.backgroundColor = UIColor(red: 255/255, green: 153/255, blue: 0, alpha: 1.0);
         purchaseButton.setTitleColor(.black, for: .normal)
-        purchaseButton.addTarget(self, action: #selector(purchase2022ButtonAction), for: .touchUpInside)
+        purchaseButton.addTarget(self, action: #selector(purchase2023ButtonAction), for: .touchUpInside)
         view.addSubview(purchaseButton)
     }
     
     func addMonthlyButton(y: Int) {
-        // monthlyButton = UIButton(frame: CGRect(x: (width()-220)/2, y: y, width: 220, height: 44))
         monthlyButton = UIButton(frame: CGRect(x: ((width()-190)/2) + 170, y: y, width: 190, height: 44))
         monthlyButton.layer.cornerRadius = 5
         monthlyButton.titleLabel!.font = UIFont.systemFont(ofSize: 20)
@@ -798,9 +888,13 @@ class PurchaseMenu: UIViewController {
         view.addSubview(monthlyButton)
     }
 
-    @objc func purchase2022ButtonAction(sender: UIButton!) {
-        showConnectMessageForPurchase()
-        revenueCat.purchase2022()
+    @objc func purchase2023ButtonAction(sender: UIButton!) {
+        if revenueCat.package2023 == nil {
+            revenueCatError(viewController: self)
+        } else {
+            showConnectMessageForPurchase()
+            revenueCat.purchase2023()
+        }
     }
     
     @objc func purchaseMonthlyButtonAction(sender: UIButton!) {
@@ -818,9 +912,6 @@ class PurchaseMenu: UIViewController {
         monthlyButton.setTitle("$\(price) Per Month", for: .normal)
         monthlyButton.isEnabled = true
         monthlyButton.isHidden = false
-        // planText.text = "Buy \(revenueCat.getCurrentYear()) with a one time purchase OR pay per month and cancel anytime. Both plans include all features."
-        // restoreButton.removeFromSuperview()
-        // addRestoreButton(y: yOffset + 225)
     }
     
     func showConnectMessageForPurchase() {
@@ -833,7 +924,6 @@ class PurchaseMenu: UIViewController {
     }
     
     func addRestoreButton(y: Int) {
-        // restoreButton = UIButton(frame: CGRect(x: (width()-220)/2, y: y, width: 220, height: 44))
         restoreButton = UIButton(frame: CGRect(x: ((width()-190)/2) + 170, y: y, width: 190, height: 44))
         restoreButton.layer.cornerRadius = 5
         restoreButton.titleLabel!.font = UIFont.systemFont(ofSize: 20)
@@ -868,6 +958,26 @@ class PurchaseMenu: UIViewController {
         present(alert, animated: false, completion: nil)
     }
     
+    func showRetryRestore2022(error: String) {
+        let alert = UIAlertController(title: "", message: error, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action:UIAlertAction) in }));
+        alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: {(action:UIAlertAction) in
+            self.showConnectMessageForRestore()
+            self.revenueCat.restore2022()
+        }));
+        present(alert, animated: false, completion: nil)
+    }
+    
+    func showRetryRestore2023(error: String) {
+        let alert = UIAlertController(title: "", message: error, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action:UIAlertAction) in }));
+        alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: {(action:UIAlertAction) in
+            self.showConnectMessageForRestore()
+            self.revenueCat.restore2023()
+        }));
+        present(alert, animated: false, completion: nil)
+    }
+    
     func showRetryRestoreAll(error: String) {
         let alert = UIAlertController(title: "", message: error, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action:UIAlertAction) in }));
@@ -888,12 +998,12 @@ class PurchaseMenu: UIViewController {
         present(alert, animated: false, completion: nil)
     }
     
-    func showRetryPurchase2022(error: String) {
+    func showRetryPurchase2023(error: String) {
         let alert = UIAlertController(title: "", message: error, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action:UIAlertAction) in }));
         alert.addAction(UIAlertAction(title: "Retry", style: .default, handler: {(action:UIAlertAction) in
             self.showConnectMessageForPurchase()
-            self.revenueCat.purchase2022()
+            self.revenueCat.purchase2023()
         }));
         present(alert, animated: false, completion: nil)
     }
@@ -927,6 +1037,9 @@ class PurchaseMenu: UIViewController {
     func showRestorationSuccess() {
         let title = "Restore Purchases - Success"
         var message = ""
+        if revenueCat.purchased2023 {
+            message += "2023 Pattern Access\n"
+        }
         if revenueCat.purchased2022 {
             message += "2022 Pattern Access\n"
         }
@@ -949,22 +1062,6 @@ class PurchaseMenu: UIViewController {
         alert.addAction(UIAlertAction(title: "Restore", style: .default, handler: {(action:UIAlertAction) in
             self.showConnectMessageForRestore()
             self.revenueCat.restoreAll()
-        }));
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action:UIAlertAction) in
-        }));
-        present(alert, animated: false, completion: nil)
-    }
-        
-    @objc func showRestoreMenuOld() {
-        let message = "Restore 2021 Access or Monthly Access on a new device, a second device or after deleting. For help  support@eightbam.com."
-        let alert = UIAlertController(title: "Restore Purchase", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "2021 Access", style: .default, handler: {(action:UIAlertAction) in
-            self.showConnectMessageForRestore()
-            self.revenueCat.restore2021()
-        }));
-        alert.addAction(UIAlertAction(title: "Monthly Access", style: .default, handler: {(action:UIAlertAction) in
-            self.showConnectMessageForRestore()
-            self.revenueCat.restoreMonthly()
         }));
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action:UIAlertAction) in
         }));
@@ -999,13 +1096,20 @@ class PurchaseMenu: UIViewController {
     }
     
     func oldYearMessage(_ year: String) {
-        let message = year + " is included with 2022"
+        let message = year + " is included with 2023"
         let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: {(action:UIAlertAction) in
-            self.settingsViewController.select2021()
+            self.settingsViewController.select2022()
             self.settingsViewController.show(self, sender: self.settingsViewController)
         }));
         self.settingsViewController.present(alert, animated: false, completion: nil)
+    }
+    
+    func revenueCatError(viewController: UIViewController) {
+        let alert = UIAlertController(title: "", message: "RevenueCat Error: 8101\nContact support@eightbam.com", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: {(action:UIAlertAction) in
+        }));
+        viewController.present(alert, animated: false, completion: nil)
     }
     
     func addLine(y: Int) {
