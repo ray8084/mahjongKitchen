@@ -116,6 +116,7 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
             case YearSegment.segment2020: revenueCat.changeYear(year: Year.y2020, settingsViewController: self)
             case YearSegment.segment2021: revenueCat.changeYear(year: Year.y2021, settingsViewController: self)
             case YearSegment.segment2022: revenueCat.changeYear(year: Year.y2022, settingsViewController: self)
+            case YearSegment.segment2023: revenueCat.changeYear(year: Year.y2023, settingsViewController: self)
             default: revenueCat.changeYear(year: Year.y2017, settingsViewController: self)
         }
     }
@@ -133,12 +134,14 @@ class SettingsViewController: NarrowViewController, UITextFieldDelegate {
     func select2020() { yearSegmentControl.selectedSegmentIndex = YearSegment.segment2020}
     func select2021() { yearSegmentControl.selectedSegmentIndex = YearSegment.segment2021}
     func select2022() { yearSegmentControl.selectedSegmentIndex = YearSegment.segment2022}
+    func select2023() { yearSegmentControl.selectedSegmentIndex = YearSegment.segment2023}
     func is2017Selected() -> Bool { return yearSegmentControl.selectedSegmentIndex == YearSegment.segment2017 }
     func is2018Selected() -> Bool { return yearSegmentControl.selectedSegmentIndex == YearSegment.segment2018 }
     func is2019Selected() -> Bool { return yearSegmentControl.selectedSegmentIndex == YearSegment.segment2019 }
     func is2020Selected() -> Bool { return yearSegmentControl.selectedSegmentIndex == YearSegment.segment2020 }
     func is2021Selected() -> Bool { return yearSegmentControl.selectedSegmentIndex == YearSegment.segment2021 }
     func is2022Selected() -> Bool { return yearSegmentControl.selectedSegmentIndex == YearSegment.segment2022 }
+    func is2023Selected() -> Bool { return yearSegmentControl.selectedSegmentIndex == YearSegment.segment2023 }
     
     
     // -----------------------------------------------------------------------------------------

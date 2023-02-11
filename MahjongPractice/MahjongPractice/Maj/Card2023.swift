@@ -36,6 +36,8 @@ class Card2023 : Card {
     }
         
     func add2023() {
+        let p = add("FF 2023 2023 2023 (C)", mask: "00 gggg rrrr 0000", note: "Any 3 Suits",  family: Family.year, concealed: true, points: 85)
+        p.add([35,35, 2,10,2,3, 12,10,13,13, 22,10,23,23])
     }
 
     func add2468() {

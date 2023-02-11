@@ -1041,7 +1041,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             self.show(stats, sender: self)
         }));
         
-        if self.maj.enable2023 == false {
+        if self.maj.enable2023 == false && self.revenueCat.monthlyActive == false {
             alert.addAction(UIAlertAction(title: "2023 Pattern Access", style: .default, handler: {(action:UIAlertAction) in
                 self.revenueCat.showPurchaseMenu(self)
             }));

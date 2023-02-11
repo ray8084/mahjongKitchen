@@ -24,7 +24,7 @@ class Year {
     static let y2017 = 4
     static let y2021 = 5
     static let y2022 = 6
-    static let y2023 = 6
+    static let y2023 = 7
 }
 
 class YearSegment {
@@ -153,6 +153,7 @@ class Maj {
         enable2020 = copy.enable2020
         enable2021 = copy.enable2021
         enable2022 = copy.enable2022
+        enable2023 = copy.enable2023
         override2020 = copy.override2020
         override2021 = copy.override2021
         crakTileStyle = copy.crakTileStyle
@@ -396,6 +397,9 @@ class Maj {
         case YearSegment.segment2022:
             year = Year.y2022
             card = Card2022()
+        case YearSegment.segment2023:
+            year = Year.y2023
+            card = Card2023()
         default:
             year = Year.y2017
             card = Card2017()
@@ -415,6 +419,7 @@ class Maj {
         case Year.y2020: segment = YearSegment.segment2020
         case Year.y2021: segment = YearSegment.segment2021
         case Year.y2022: segment = YearSegment.segment2022
+        case Year.y2023: segment = YearSegment.segment2023
         default: segment = YearSegment.segment2017
         }
         print("maj.getYearSegment \(segment)")
@@ -429,6 +434,7 @@ class Maj {
         case Year.y2020: return "2020"
         case Year.y2021: return "2021"
         case Year.y2022: return "2022"
+        case Year.y2023: return "2023"
         default: return ""
         }
     }
