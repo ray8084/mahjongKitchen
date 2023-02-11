@@ -148,8 +148,10 @@ class RevenueCat {
             if info != nil {
                 if info?.entitlements["Monthly"]?.isActive == true {
                     self.monthlyActive = true
-                    self.gameDelegate.enable2021(true)
                     self.gameDelegate.enable2020(true)
+                    self.gameDelegate.enable2021(true)
+                    self.gameDelegate.enable2022(true)
+                    self.gameDelegate.enable2023(true)
                 } else {
                     self.monthlyActive = false
                     self.gameDelegate.enable2021(self.is2021Purchased())
