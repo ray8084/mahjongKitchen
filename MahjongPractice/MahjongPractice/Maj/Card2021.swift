@@ -57,14 +57,14 @@ class Card2021 : Card {
     }
 
     func add2468() {
-        add24F68_23432_1()
-        add2468_3434_2()
-        add2468D_22334_1()
-        addF2468_24224_2()
-        add2468_3344_3()
-        add2468_4442_1()
-        addFD2468D_2411114_3()
-        add246822_311333_3()
+        add2021e1()
+        add2021e2()
+        add2021e3()
+        add2021e4()
+        add2021e5()
+        add2021e6()
+        add2021e7()
+        add2021e8()
     }
     
     func addLikeNumbers() {

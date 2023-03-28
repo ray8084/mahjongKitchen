@@ -377,6 +377,116 @@ class Card {
     //
     // -----------------------------------------------------------------------------------------
     
+    func add18e1() {
+        let p1 = add("FFF 22 44 666 8888", mask: "000 00 00 000 0000", note: "",  family: Family.f2468, concealed: false, points: 25)
+        p1.generateList()
+    }
+    
+    func add18e2() {
+        let p2 = add("2222 44 6666 88 88", mask: "0000 00 0000 gg rr", note: "Any 3 Suits",  family: Family.f2468, concealed: false, points: 30)
+        p2.add([2,2,2,2, 4,4, 6,6,6,6, 18,18, 28,28])
+        p2.add([12,12,12,12, 14,14, 16,16,16,16, 8,8, 28,28])
+        p2.add([22,22,22,22, 24,24, 26,26,26,26, 8,8, 18,18])
+    }
+
+    func add18e3() {
+        let p3 = add("22 44 666 888 DDDD", mask: "gg gg rrr rrr 0000", note: "Any 3 Suits",  family: Family.f2468, concealed: false, points: 25)
+        p3.generateList()
+    }
+    
+    func add18e4() {
+        let p4 = add("2222 4444 6666 88", mask: "0000 0000 0000 00", note: "",  family: Family.f2468, concealed: false, points: 25)
+        p4.generateList()
+    }
+    
+    func add18e5() {
+        let p5 = add("222 444 6666 8888", mask: "ggg ggg rrrr rrrr", note: "Any 2 Suits",  family: Family.f2468, concealed: false, points: 25)
+        p5.generateList()
+    }
+    
+    func add18e6() {
+        let p6 = add("222 444 666 888 DD (C)", mask: "000 000 000 000 00", note: "Any 1 Suit",  family: Family.f2468, concealed: true, points: 30)
+        p6.generateList()
+    }
+
+    func add19e1() {
+        let p1 = add("FFF 22 44 666 8888", mask: "000 00 00 000 0000", note: "",  family: Family.f2468, concealed: false, points: 25)
+        p1.generateList()
+    }
+    
+    func add19e2() {
+        let p2 = add("222 4444 666 8888", mask: "ggg gggg rrr rrrr", note: "Any 2 Suits",  family: Family.f2468, concealed: false, points: 25)
+        p2.generateList()
+    }
+    
+    func add19e3() {
+        let p3 = add("2222 4444 6666 88", mask: "0000 0000 0000 00", note: "",  family: Family.f2468, concealed: false, points: 25)
+        p3.generateList()
+    }
+     
+    func add19e4() {
+        let p4 = add("FF 2222 44 66 8888", mask: "00 rrrr gg gg rrrr", note: "Any 2 Suits",  family: Family.f2468, concealed: false, points: 25)
+        p4.generateList()
+    }
+     
+    func add19e5() {
+        let p5 = add("22 444 DDDD 666 88", mask: "00 000 0000 000 00", note: "",  family: Family.f2468, concealed: false, points: 25)
+        p5.generateList()
+    }
+   
+    func add19e6() {
+        let p6 = add("222 44 666 888 888 (C)", mask: "ggg gg ggg rrr 000", note: "Any 3 Suits",  family: Family.f2468, concealed: true, points: 30)
+        p6.add([2,2,2, 4,4, 6,6,6, 18,18,18, 28,28,28])
+        p6.add([12,12,12, 14,14, 16,16,16, 8,8,8, 28,28,28])
+        p6.add([22,22,22, 24,24, 26,26,26, 8,8,8, 18,18,18])
+    }
+    
+    func add20e1() {
+        let p1 = add("FFFF 2 44 666 8888", mask: "0000 0 00 000 0000", note: "Any 1 Suit",  family: Family.f2468, concealed: false, points: 25)
+        p1.generateList()
+    }
+        
+    func add20e2() {
+        let p2 = add("22 44 666 888 DDDD", mask: "gg gg rrr rrr 0000", note: "Any 3 Suits",  family: Family.f2468, concealed: false, points: 25)
+        p2.generateList()
+    }
+        
+    func add20e3() {
+        let p3 = add("2222 4444 6666 88", mask: "0000 0000 0000 00", note: "Any 1 Suit",  family: Family.f2468, concealed: false, points: 25)
+        p3.generateList()
+    }
+    
+    func add20e4() {
+        let p4 = add("222 444 6666 8888", mask: "ggg ggg rrrr rrrr", note: "Any 2 Suits",  family: Family.f2468, concealed: false, points: 25)
+        p4.generateList()
+    }
+        
+    func add20e5() {
+        let p5 = add("FFFF 4444 6666 24", mask: "0000 gggg rrrr 00", note: "Any 3 Suits",  family: Family.f2468, concealed: false, points: 25)
+        p5.generateList()
+    }
+        
+    func add20e6() {
+        let p6 = add("FFFF 6666 8888 48", mask: "0000 gggg rrrr 00", note: "Any 3 Suits",  family: Family.f2468, concealed: false, points: 25)
+        p6.generateList()
+    }
+    
+    func add20e7() {
+        let p7 = add("22 444 44 666 8888", mask: "gg ggg rr rrr 0000", note: "Any 3 Suits",  family: Family.f2468, concealed: false, points: 25)
+        p7.generateList()
+    }
+    
+    func add20e8() {
+        let p8 = add("22 444 DDDD 666 88", mask: "00 000 0000 000 00", note: "Any 1 Suit",  family: Family.f2468, concealed: false, points: 25)
+        p8.generateList()
+    }
+    
+    func add20e9() {
+        let p9 = add("FF 222 444 666 888 (C)", mask: "00 ggg rrr rrr ggg", note: "Any 2 Suits",  family: Family.f2468, concealed: true, points: 30)
+        p9.generateList()
+    }
+    
+    
     func addF2468_32234_1() {
         let p = add("FFF 22 44 666 8888", mask: "000 00 00 000 0000", note: "Any 1 Suit",  family: Family.f2468, concealed: false, points: 25)
         p.generateList()
@@ -387,7 +497,7 @@ class Card {
         p.generateList()
     }
         
-    func add2468_3434_2() {
+    func add2021e2() {
         let p = add("222 4444 666 8888", mask: "ggg gggg rrr rrrr", note: "Any 2 Suits",  family: Family.f2468, concealed: false, points: 25)
         p.generateList()
     }
@@ -397,29 +507,29 @@ class Card {
         p.generateList()
     }
     
-    func add2468_4442_1() {
+    func add2021e6() {
         let p = add("2222 4444 6666 88", mask: "0000 0000 0000 00", note: "Any 1 Suit",  family: Family.f2468, concealed: false, points: 25)
         p.generateList()
     }
     
-    func add2468_3344_3() {
+    func add2021e5() {
         let p = add("222 444 6666 8888", mask: "ggg ggg rrrr 0000", note: "Any 3 Suits",  family: Family.f2468, concealed: false, points: 25)
         p.generateList()
     }
     
-    func addF2468_24224_2() {
+    func add2021e4() {
         let p = add("FF 2222 44 66 8888", mask: "00 gggg rr rr gggg", note: "Any 2 Suits",  family: Family.f2468, concealed: false, points: 25)
         p.generateList()
     }
     
-    func addFD2468D_2411114_3() {
+    func add2021e7() {
         let p = add("FF DDDD 2 4 6 8 DDDD", mask: "00 gggg 0 0 0 0 rrrr", note: "Any 3 Suits",  family: Family.f2468, concealed: false, points: 25)
         p.add([35,35, 10,10,10,10, 12,14,16,18, 30,30,30,30])
         p.add([35,35, 20,20,20,20, 2,4,6,8, 30,30,30,30])
         p.add([35,35, 10,10,10,10, 22,24,26,28, 20,20,20,20])
     }
     
-    func add246822_311333_3() {
+    func add2021e8() {
         let p = add("222 4 6 888 222 222 (C)", mask: "ggg g g ggg rrr 000", note: "Like Pungs 2,4,6,8 in Other 2 Suits",  family: Family.f2468, concealed: true, points: 25)
         p.add([2,2,2, 4, 6, 8,8,8, 12,12,12, 22,22,22])
         p.add([2,2,2, 4, 6, 8,8,8, 14,14,14, 24,24,24])
@@ -445,12 +555,12 @@ class Card {
         p.generateList()
     }
     
-    func add2468D_22334_1() {
+    func add2021e3() {
         let p = add("22 44 666 888 DDDD", mask: "00 00 000 000 0000", note: "Any 1 Suit, Matching Dragon",  family: Family.f2468, concealed: false, points: 25)
         p.generateList()
     }
     
-    func add24F68_23432_1() {
+    func add2021e1() {
         let p = add("22 444 FFFF 666 88", mask: "00 000 0000 000 00", note: "Any 1 Suit",  family: Family.f2468, concealed: false, points: 25)
         p.generateList()
     }
