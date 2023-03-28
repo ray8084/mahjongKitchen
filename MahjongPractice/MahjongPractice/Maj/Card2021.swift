@@ -79,9 +79,9 @@ class Card2021 : Card {
     func addQuints() {
         add2021q1()
         add2021q2()
-        addQ123_545_1()
-        addQ123_545_3()
-        addQ1212_2525_2()
+        add2021q3()
+        add2021q4()
+        add2021q5()
     }
     
     func addConsectiveRun() {

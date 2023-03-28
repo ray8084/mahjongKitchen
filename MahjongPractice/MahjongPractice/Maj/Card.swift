@@ -1029,8 +1029,11 @@ class Card {
         }
     }
     
-    
-    
+    func add2022q2() {
+        let p2 = add("22 444 6666 88888", mask: "00 000 0000 00000", note: "Any 1 Suit",  family: Family.quints, concealed: false, points: 45)
+        p2.generateList()
+    }
+        
     func addQ1234_2345_1() {
         let p = add("11 222 3333 44444", mask: "00 000 0000 00000", note: "Any 4 Consec Nos.",  family: Family.quints, concealed: false, points: 45)
         for i in 1...6 {
@@ -1058,7 +1061,7 @@ class Card {
         }
     }
     
-    func addQ1212_2525_2() {
+    func add2021q5() {
         let p = add("11 22222 11 22222", mask: "gg ggggg rr rrrrr", note: "Any 2 Suits, Any 2 Consec Nos.",  family: Family.quints, concealed: false, points: 45)
         for i in 1...8 {
             let d = i
@@ -1142,7 +1145,7 @@ class Card {
         }
     }
     
-    func addQDN1_545() {
+    func add2022q1() {
         let p = add("DDDDD NNNN 11111", mask: "00000 0000 00000", note: "Any Dragon, Any Wind, Any No.",  family: Family.quints, concealed: false, points: 45)
         for w in 31...34 {
             for i in 1...9 {
@@ -1186,7 +1189,7 @@ class Card {
         }
     }
     
-    func addQF12_455_1() {
+    func add2022q4() {
         let p = add("FFFF 11111 22222", mask: "0000 00000 00000", note: "Any 1 Suit, Any 2 Consec. Nos.",  family: Family.quints, concealed: false, points: 45)
         for i in 1...8 {
             let d = i
@@ -1216,7 +1219,7 @@ class Card {
         }
     }
     
-    func addQ1233_455_3() {
+    func add2022q3() {
         let p = add("1122 33333 33333", mask: "gggg rrrrr 00000", note: "Any 3 Suits, Any 3 Consec No.",  family: Family.quints, concealed: false, points: 40)
         for i in 1...7 {
             let d = i
@@ -1240,7 +1243,7 @@ class Card {
         }
     }
     
-    func addQ123_545_1() {
+    func add2021q3() {
         let p = add("11111 2222 33333", mask: "00000 0000 00000", note: "Any 3 Consec, Nos.",  family: Family.quints, concealed: false)
         for i in 1...7 {
             let d = i
@@ -1252,7 +1255,7 @@ class Card {
         }
     }
     
-    func addQ123_545_3() {
+    func add2021q4() {
         let p = add("11111 2222 33333", mask: "ggggg rrrr 00000", note: "Any 3 Consec, Nos.",  family: Family.quints, concealed: false)
         for i in 1...7 {
             let d = i

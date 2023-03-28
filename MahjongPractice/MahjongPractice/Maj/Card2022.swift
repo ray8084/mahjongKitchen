@@ -126,13 +126,13 @@ class Card2022 : Card {
     }
     
     func addQuints() {
-        addQDN1_545()
+        add2022q1()
         
         let p2 = add("22 444 6666 88888", mask: "00 000 0000 00000", note: "Any 1 Suit",  family: Family.quints, concealed: false, points: 45)
         p2.generateList()
         
-        addQ1233_455_3()
-        addQF12_455_1()
+        add2022q3()
+        add2022q4()
     }
     
     func addConsectiveRun() {
