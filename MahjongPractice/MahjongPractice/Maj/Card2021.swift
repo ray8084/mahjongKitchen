@@ -68,9 +68,9 @@ class Card2021 : Card {
     }
     
     func addLikeNumbers() {
-        addLikeF1NEWS1_2444_2()
-        addLikeF111_4424_3()
-        addLike1D1D_3434_2()
+        add2021l1()
+        add2021l2()
+        add2021l3()
     }
     
     func addAdditionHands() {

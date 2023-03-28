@@ -669,6 +669,88 @@ class Card {
     //
     // -----------------------------------------------------------------------------------------
     
+    func add2018l1() {
+        let p1 = add("FF 1111 DDDD 1111", mask: "00 gggg 0000 rrrr", note: "Any Like No.",  family: Family.likeNumbers, concealed: false, points: 25)
+        for i in 1...9 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p1.add([35,35, b,b,b,b, 10,10,10,10, c,c,c,c])
+            p1.add([35,35, d,d,d,d, 20,20,20,20, c,c,c,c])
+            p1.add([35,35, d,d,d,d, 30,30,30,30, b,b,b,b])
+        }
+    }
+    
+    func add2018l2() {
+        let p2 = add("FFF 1111 FFF 1111", mask: "000 gggg 000 rrrr", note: "Any Like No.",  family: Family.likeNumbers, concealed: false, points: 30)
+        for i in 1...9 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p2.add([35,35,35, d,d,d,d, 35,35,35, b,b,b,b])
+            p2.add([35,35,35, d,d,d,d, 35,35,35, c,c,c,c])
+            p2.add([35,35,35, b,b,b,b, 35,35,35, c,c,c,c])
+        }
+    }
+    
+    func add2018l3() {
+        let p3 = add("11 DD 111 DDD 1111 (C)", mask: "gg gg rrr rrr 0000", note: "Any Like No.",  family: Family.likeNumbers, concealed: true, points: 30)
+        p3.generateList()
+    }
+    
+    func add2019l1() {
+        let p1 = add("FF 1111 1111 1111", mask: "00 gggg rrrr 0000", note: "Any 3 Suits",  family: Family.likeNumbers, concealed: false, points: 25)
+        for i in 1...9 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p1.add([35,35, d,d,d,d, b,b,b,b, c,c,c,c])
+        }
+    }
+    
+    func add2019l2() {
+        let p2 = add("11 DD 111 DDD 1111 (C)", mask: "gg gg rrr rrr 0000", note: "Any 3 Suits",  family: Family.likeNumbers, concealed: true, points: 30)
+        p2.generateList()
+    }
+    
+    func add2020l1() {
+        let p1 = add("FF 1111 1111 1111", mask: "00 gggg rrrr 0000", note: "Any 3 Suits",  family: Family.likeNumbers, concealed: false, points: 25)
+        for i in 1...9 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p1.add([35,35, d,d,d,d, b,b,b,b, c,c,c,c])
+        }
+    }
+    
+    func add2020l2() {
+        let p2 = add("FF 1111 DD 1111 DD", mask: "00 gggg gg rrrr rr", note: "Any 2 Suits",  family: Family.likeNumbers, concealed: false, points: 25)
+        for i in 1...9 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p2.add([35,35, d,d,d,d, 10,10, b,b,b,b, 20,20])
+            p2.add([35,35, d,d,d,d, 10,10, c,c,c,c, 30,30])
+            p2.add([35,35, b,b,b,b, 20,20, c,c,c,c, 30,30])
+        }
+    }
+    
+    func add2020l3() {
+        let p3 = add("FFFFF 11 111 1111", mask: "00000 gg rrr 0000", note: "Any 3 Suits",  family: Family.likeNumbers, concealed: false, points: 25)
+        for i in 1...9 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p3.add([35,35,35,35,35, d,d, b,b,b, c,c,c,c])
+            p3.add([35,35,35,35,35, d,d, c,c,c, b,b,b,b])
+            p3.add([35,35,35,35,35, b,b, d,d,d, c,c,c,c])
+            p3.add([35,35,35,35,35, b,b, c,c,c, d,d,d,d])
+            p3.add([35,35,35,35,35, c,c, d,d,d, b,b,b,b])
+            p3.add([35,35,35,35,35, c,c, b,b,b, d,d,d,d])
+        }
+    }
+    
+    
     func addLikeF111_2444_3() {
         let p = add("FF 1111 1111 1111", mask: "00 gggg rrrr 0000", note: "Any 3 Suits",  family: Family.likeNumbers, concealed: false, points: 25)
         for i in 1...9 {
@@ -684,7 +766,7 @@ class Card {
         p.generateList()
     }
     
-    func addLikeF1D1_2444_3() {
+    func add2022l3() {
         let p = add("FF 1111 DDDD 1111", mask: "00 gggg rrrr 0000", note: "Any Like No.",  family: Family.likeNumbers, concealed: false, points: 25)
         for i in 1...9 {
             let d = i
@@ -696,7 +778,7 @@ class Card {
         }
     }
     
-    func addLikeF1F1_3434_2() {
+    func add2022l1() {
         let p = add("FFF 1111 FFF 1111", mask: "000 gggg 000 rrrr", note: "Any Like No.",  family: Family.likeNumbers, concealed: false, points: 30)
         for i in 1...9 {
             let d = i
@@ -720,7 +802,7 @@ class Card {
         }
     }
     
-    func addLike1D1D1_32324_3() {
+    func add2022l2() {
         let p = add("111 DD 111 DD 1111", mask: "ggg gg rrr rr 0000", note: "Any 3 Suits",  family: Family.likeNumbers, concealed: false, points: 25)
         for i in 1...9 {
             let d = i
@@ -747,7 +829,7 @@ class Card {
         }
     }
     
-    func addLikeF111_4424_3() {
+    func add2021l2() {
         let p = add("FFFF 1111 11 1111", mask: "0000 gggg rr 0000", note: "Any 3 Suits",  family: Family.likeNumbers, concealed: false, points: 25)
         for i in 1...9 {
             let d = i
@@ -759,7 +841,7 @@ class Card {
         }
     }
     
-    func addLike1D1D_3434_2() {
+    func add2021l3() {
         let p = add("111 DDDD 111 DDDD", mask: "ggg gggg rrr rrrr", note: "Any 2 Suits, Matching Dragons",  family: Family.likeNumbers, concealed: false, points: 25)
         for i in 1...9 {
             let d = i
@@ -771,7 +853,7 @@ class Card {
         }
     }
     
-    func addLikeF1NEWS1_2444_2() {
+    func add2021l1() {
         let p = add("FF 1111 NEWS 1111", mask: "00 gggg 0000 rrrr", note: "Any 2 Suits",  family: Family.likeNumbers, concealed: false, points: 25)
         for i in 1...9 {
             let d = i
