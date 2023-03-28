@@ -77,8 +77,8 @@ class Card2021 : Card {
     }
     
     func addQuints() {
-        addQF1N_545()
-        addQ1234_5225_2()
+        add2021q1()
+        add2021q2()
         addQ123_545_1()
         addQ123_545_3()
         addQ1212_2525_2()
