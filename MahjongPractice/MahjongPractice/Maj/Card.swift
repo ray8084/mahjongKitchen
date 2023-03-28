@@ -373,7 +373,7 @@ class Card {
     
     // -----------------------------------------------------------------------------------------
     //
-    //  Standard 2468
+    //  2468
     //
     // -----------------------------------------------------------------------------------------
     
@@ -485,8 +485,7 @@ class Card {
         let p9 = add("FF 222 444 666 888 (C)", mask: "00 ggg rrr rrr ggg", note: "Any 2 Suits",  family: Family.f2468, concealed: true, points: 30)
         p9.generateList()
     }
-    
-    
+        
     func addF2468_32234_1() {
         let p = add("FFF 22 44 666 8888", mask: "000 00 00 000 0000", note: "Any 1 Suit",  family: Family.f2468, concealed: false, points: 25)
         p.generateList()
@@ -594,6 +593,75 @@ class Card {
         p.generateList()
     }
     
+    func add2022e1() {
+        let p1 = add("FFF 22 44 666 8888", mask: "000 00 00 000 0000", note: "Any 1 Suit",  family: Family.f2468, concealed: false, points: 25)
+        p1.generateList()
+    }
+    
+    func add2022e2() {
+        let p2 = add("22 46 88 2222 2222", mask: "gg gg gg rrrr 0000", note: "Any 3 Suits, Kongs Any Like Even No",  family: Family.f2468, concealed: false, points: 25)
+        p2.add([2,2, 4,6, 8,8, 12,12,12,12, 22,22,22,22])
+        p2.add([2,2, 4,6, 8,8, 14,14,14,14, 24,24,24,24])
+        p2.add([2,2, 4,6, 8,8, 16,16,16,16, 26,26,26,26])
+        p2.add([2,2, 4,6, 8,8, 18,18,18,18, 28,28,28,28])
+        p2.add([12,12, 14,16, 18,18, 2,2,2,2, 22,22,22,22])
+        p2.add([12,12, 14,16, 18,18, 4,4,4,4, 24,24,24,24])
+        p2.add([12,12, 14,16, 18,18, 6,6,6,6, 26,26,26,26])
+        p2.add([12,12, 14,16, 18,18, 8,8,8,8, 28,28,28,28])
+        p2.add([22,22, 24,26, 28,28, 2,2,2,2, 12,12,12,12])
+        p2.add([22,22, 24,26, 28,28, 4,4,4,4, 14,14,14,14])
+        p2.add([22,22, 24,26, 28,28, 6,6,6,6, 16,16,16,16])
+        p2.add([22,22, 24,26, 28,28, 8,8,8,8, 18,18,18,18])
+    }
+    
+    func add2022e3() {
+        let p3 = add("222 444 6666 8888", mask: "ggg ggg rrrr rrrr", note: "Any 2 Suits",  family: Family.f2468, concealed: false, points: 25)
+        p3.generateList()
+    }
+    
+    func add2022e4() {
+        let p4 = add("222 444 6666 8888", mask: "ggg ggg rrrr 0000", note: "Any 3 Suits",  family: Family.f2468, concealed: false, points: 25)
+        p4.generateList()
+    }
+    
+    func add2022e5() {
+        let p5 = add("2222 44 6666 88 88", mask: "0000 00 0000 gg rr", note: "Any 3 Suits",  family: Family.f2468, concealed: false, points: 30)
+        p5.add([2,2,2,2, 4,4, 6,6,6,6, 18,18, 28,28])
+        p5.add([12,12,12,12, 14,14, 16,16,16,16, 8,8, 28,28])
+        p5.add([22,22,22,22, 24,24, 26,26,26,26, 8,8, 18,18])
+    }
+    
+    func add2022e6() {
+        let p6 = add("22 444 66 888 DDDD", mask: "00 000 00 000 0000", note: "Any 1 Suit",  family: Family.f2468, concealed: false, points: 25)
+        p6.generateList()
+    }
+    
+    func add2022e7() {
+        let p7 = add("22 444 66 888 DDDD", mask: "gg ggg rr rrr 0000", note: "Any 3 Suits",  family: Family.f2468, concealed: false, points: 25)
+        p7.generateList()
+    }
+    
+    func add2022e8() {
+        let p8 = add("FFF 2222 FFF 8888", mask: "000 gggg 000 rrrr", note: "Any 2 Suits, These Nos Only",  family: Family.f2468, concealed: false, points: 30)
+        p8.add([35,35,35, 2,2,2,2, 35,35,35, 18,18,18,18])
+        p8.add([35,35,35, 2,2,2,2, 35,35,35, 28,28,28,28])
+        p8.add([35,35,35, 12,12,12,12, 35,35,35, 8,8,8,8])
+        p8.add([35,35,35, 12,12,12,12, 35,35,35, 28,28,28,28])
+        p8.add([35,35,35, 22,22,22,22, 35,35,35, 8,8,8,8])
+        p8.add([35,35,35, 22,22,22,22, 35,35,35, 18,18,18,18])
+    }
+    
+    func add2022e9() {
+        let p9 = add("22 444 44 666 8888", mask: "gg ggg rr rrr 0000", note: "Any 3 Suits",  family: Family.f2468, concealed: false, points: 25)
+        p9.generateList()
+    }
+    
+    func add2022e10() {
+        let p10 = add("FF 246 888 246 888 (C)", mask: "00 ggg ggg rrr rrr", note: "Any 2 Suits",  family: Family.f2468, concealed: true, points: 30)
+        p10.add([35,35, 2,4,6, 8,8,8, 12,14,16, 18,18,18])
+        p10.add([35,35, 2,4,6, 8,8,8, 22,24,26, 28,28,28])
+        p10.add([35,35, 12,14,16, 18,18,18, 22,24,26, 28,28,28])
+    }
     
     // -----------------------------------------------------------------------------------------
     //
