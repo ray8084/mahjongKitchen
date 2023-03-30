@@ -276,8 +276,52 @@ class Card2023 : Card {
     }
 
     func addWindsAndDragons() {
+        addNEWS_4334()
+        
+        let p2 = add("NNN EEEE WWWW SSS", mask: "000 0000 0000 000", note: "",  family: Family.winds, concealed: false, points: 25)
+        p2.add([31,31,31, 34,34,34,34, 33,33,33,33, 32,32,32])
+        
+        let p3 = add("NNN SSS 11 22 3333", mask: "000 000 00 00 0000", note: "Any Run",  family: Family.winds, concealed: false, points: 25)
+        for i in 1...7 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p3.add([31,31,31, 32,32,32, d,d, d+1,d+1, d+2,d+2,d+2,d+2])
+            p3.add([31,31,31, 32,32,32, b,b, b+1,b+1, b+2,b+2,b+2,b+2])
+            p3.add([31,31,31, 32,32,32, c,c, c+1,c+1, c+2,c+2,c+2,c+2])
+        }
+        
+        let p4 = add("EEE WWW 11 22 3333", mask: "000 000 00 00 0000", note: "Any Run",  family: Family.winds, concealed: false, points: 25)
+        for i in 1...7 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p4.add([34,34,34, 33,33,33, d,d, d+1,d+1, d+2,d+2,d+2,d+2])
+            p4.add([34,34,34, 33,33,33, b,b, b+1,b+1, b+2,b+2,b+2,b+2])
+            p4.add([34,34,34, 33,33,33, c,c, c+1,c+1, c+2,c+2,c+2,c+2])
+        }
+        
+        let p5 = add("NNNN SSSS DDD DDD", mask: "0000 0000 ggg rrr", note: "Any 2 Dragons",  family: Family.winds, concealed: false, points: 25)
+        p5.add([31,31,31,31, 32,32,32,32, 10,10,10, 20,20,20])
+        p5.add([31,31,31,31, 32,32,32,32, 10,10,10, 30,30,30])
+        p5.add([31,31,31,31, 32,32,32,32, 20,20,20, 30,30,30])
+        
+        let p6 = add("EEEE WWWW DDD DDD", mask: "0000 0000 ggg rrr", note: "Any 2 Dragons",  family: Family.winds, concealed: false, points: 25)
+        p6.add([34,34,34,34, 33,33,33,33, 10,10,10, 20,20,20])
+        p6.add([34,34,34,34, 33,33,33,33, 10,10,10, 30,30,30])
+        p6.add([34,34,34,34, 33,33,33,33, 20,20,20, 30,30,30])
+        
+        let p7 = add("FF NNNN 2023 SSSS", mask: "00 0000 0000 0000", note: "",  family: Family.winds, concealed: false, points: 25)
+        p7.add([35,35, 31,31,31,31, 2,10,2,3, 32,32,32,32])
+        p7.add([35,35, 31,31,31,31, 12,10,12,13, 32,32,32,32])
+        p7.add([35,35, 31,31,31,31, 22,10,22,23, 32,32,32,32])
+        
+        let p8 = add("FF EEEE 2023 WWWW", mask: "00 0000 0000 0000", note: "",  family: Family.winds, concealed: false, points: 25)
+        p8.add([35,35, 34,34,34,34, 2,10,2,3, 33,33,33,33])
+        p8.add([35,35, 34,34,34,34, 12,10,12,13, 33,33,33,33])
+        p8.add([35,35, 34,34,34,34, 22,10,22,23, 33,33,33,33])
     }
-
+    
     func add369() {
     }
 
