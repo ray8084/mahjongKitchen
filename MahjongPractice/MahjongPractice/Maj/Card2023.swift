@@ -135,10 +135,33 @@ class Card2023 : Card {
         p4.add([35,35, 4,4,4,4, 14,14,14,14, 28,28,28,28])
         p4.add([35,35, 4,4,4,4, 24,24,24,24, 18,18,18,18])
         p4.add([35,35, 24,24,24,24, 14,14,14,14, 8,8,8,8])
-        
     }
     
     func addQuints() {
+        let p1 = add("11111 NNNN 11111", mask: "ggggg 0000 rrrrr", note: "Any 2 Suits, Any Like Nos, Any Wind",  family: Family.quints, concealed: false, points: 45)
+        for w in 31...34 {
+            for i in 1...9 {
+                let d = i
+                let b = i+10
+                let c = i+20
+                p1.add([c,c,c,c,c, w,w,w,w, d,d,d,d,d])
+                p1.add([b,b,b,b,b, w,w,w,w, d,d,d,d,d])
+                p1.add([c,c,c,c,c, w,w,w,w, b,b,b,b,b])
+            }
+        }
+        
+        let p2 = add("22 333 4444 55555", mask: "00 000 0000 00000", note: "Any 1 Suit, These Nos. Only",  family: Family.quints, concealed: false, points: 40)
+        p2.generateList()
+        
+        let p3 = add("FFFF 11111 22222", mask: "0000 ggggg rrrrr", note: "Any 2 Suits, Any 2 Consec Nos.",  family: Family.quints, concealed: false, points: 45)
+        for i in 1...8 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p3.add([35,35,35,35, d,d,d,d,d, b+1,b+1,b+1,b+1,b+1])
+            p3.add([35,35,35,35, d,d,d,d,d, c+1,c+1,c+1,c+1,c+1])
+            p3.add([35,35,35,35, b,b,b,b,b, c+1,c+1,c+1,c+1,c+1])
+        }
     }
     
     func addConsectiveRun() {
