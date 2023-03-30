@@ -116,6 +116,26 @@ class Card2023 : Card {
     }
     
     func addAdditionHands() {
+        let p1 = add("FF 1111+1111=2222", mask: "00 gggg rrrr 0000", note: "Any 3 Suits",  family: Family.addition, concealed: false, points: 25)
+        p1.add([35,35, 1,1,1,1, 11,11,11,11, 22,22,22,22])
+        p1.add([35,35, 1,1,1,1, 21,21,21,21, 12,12,12,12])
+        p1.add([35,35, 21,21,21,21, 11,11,11,11, 2,2,2,2])
+        
+        let p2 = add("FF 2222+2222=4444", mask: "00 gggg rrrr 0000", note: "Any 3 Suits",  family: Family.addition, concealed: false, points: 25)
+        p2.add([35,35, 2,2,2,2, 12,12,12,12, 24,24,24,24])
+        p2.add([35,35, 2,2,2,2, 22,22,22,22, 14,14,14,14])
+        p2.add([35,35, 22,22,22,22, 12,12,12,12, 4,4,4,4])
+        
+        let p3 = add("FF 3333+3333=6666", mask: "00 gggg rrrr 0000", note: "Any 3 Suits",  family: Family.addition, concealed: false, points: 25)
+        p3.add([35,35, 3,3,3,3, 13,13,13,13, 26,26,26,26])
+        p3.add([35,35, 3,3,3,3, 23,23,23,23, 16,16,16,16])
+        p3.add([35,35, 23,23,23,23, 13,13,13,13, 6,6,6,6])
+        
+        let p4 = add("FF 4444+4444=8888", mask: "00 gggg rrrr 0000", note: "Any 3 Suits",  family: Family.addition, concealed: false, points: 25)
+        p4.add([35,35, 4,4,4,4, 14,14,14,14, 28,28,28,28])
+        p4.add([35,35, 4,4,4,4, 24,24,24,24, 18,18,18,18])
+        p4.add([35,35, 24,24,24,24, 14,14,14,14, 8,8,8,8])
+        
     }
     
     func addQuints() {
