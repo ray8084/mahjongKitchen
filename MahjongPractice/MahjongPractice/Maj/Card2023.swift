@@ -381,6 +381,30 @@ class Card2023 : Card {
     }
 
     func addSinglesAndPairs() {
+        let p1 = add("11 357 99 11 357 99 (C)", mask: "gg ggg gg rr rrr rr", note: "Any 2 Suits",  family: Family.pairs, concealed: true, points: 50)
+        p1.add([1,1, 3,5,7, 9,9, 11,11, 13,15,17, 19,19])
+        p1.add([1,1, 3,5,7, 9,9, 21,21, 23,25,27, 29,29])
+        p1.add([11,11, 13,15,17, 19,19, 21,21, 23,25,27, 29,29])
+        
+        let p2 = add("FF 11 22 11 22 11 22 (C)", mask: "00 gg gg rr rr 00 00", note: "Any 3 Suits, Any 3 Consec Pairs",  family: Family.pairs, concealed: true, points: 50)
+        for i in 1...8 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p2.add([35,35, d,d, d+1,d+1, b,b, b+1,b+1, c,c, c+1,c+1])
+        }
+                
+        let p3 = add("33 66 99 D 33 66 99 D (C)", mask: "gg gg gg g rr rr rr r", note: "Any 2 Suits, Matching Dragons",  family: Family.pairs, concealed: true, points: 50)
+        p3.add([3,3, 6,6, 9,9, 10, 13,13, 16,16, 19,19, 20])
+        p3.add([3,3, 6,6, 9,9, 10, 23,23, 26,26, 29,29, 30])
+        p3.add([13,13, 16,16, 19,19, 20, 23,23, 26,26, 29,29, 30])
+        
+        let p4 = add("FF 2 4 66 88 2 4 66 88 (C)", mask: "00 g g gg gg r r rr rr", note: "Any 2 Suits",  family: Family.pairs, concealed: true, points: 50)
+        p4.add([35,35, 2, 4, 6,6, 8,8, 12, 14, 16,16, 18,18])
+        p4.add([35,35, 2, 4, 6,6, 8,8, 22, 24, 26,26, 28,28])
+        p4.add([35,35, 12, 14, 16,16, 18,18, 22, 24, 26,26, 28,28])
+        
+        
         let p = add("FF 2023 2023 2023 (C)", mask: "00 gggg rrrr 0000", note: "Any 3 Suits",  family: Family.pairs, concealed: true, points: 75)
         p.add([35,35, 2,10,2,3, 12,10,13,13, 22,10,23,23])
     }
