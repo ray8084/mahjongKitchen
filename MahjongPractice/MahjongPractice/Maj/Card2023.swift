@@ -205,6 +205,36 @@ class Card2023 : Card {
         
         addF123_2444_1()
         addF123_2444_3()
+        
+        let p9 = add("111 2222 111 2222", mask: "ggg gggg rrr rrrr", note: "Any 2 Suits, Any 2 Consec Nos",  family: Family.run, concealed: false, points: 25)
+        for i in 1...8 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p9.add([d,d,d, d+1,d+1,d+1,d+1, b,b,b, b+1,b+1,b+1,b+1])
+            p9.add([d,d,d, d+1,d+1,d+1,d+1, c,c,c, c+1,c+1,c+1,c+1])
+            p9.add([b,b,b, b+1,b+1,b+1,b+1, c,c,c, c+1,c+1,c+1,c+1])
+        }
+        
+        let p10 = add("FFFF 11 22 333 333", mask: "0000 gg gg rrr 000", note: "Any 3 Suits, Any 3 Consec Nos",  family: Family.run, concealed: false, points: 25)
+        for i in 1...7 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p10.add([35,35,35,35, d,d, d+1,d+1, b+2,b+2,b+2, c+2,c+2,c+2])
+            p10.add([35,35,35,35, b,b, b+1,b+1, d+2,d+2,d+2, c+2,c+2,c+2])
+            p10.add([35,35,35,35, c,c, c+1,c+1, d+2,d+2,d+2, b+2,b+2,b+2])
+        }
+
+        let p11 = add("FF 111 22 33 444 DD (C)", mask: "00 000 00 00 000 00", note: "Any 1 Suit, Any Run, Matching Dragons",  family: Family.run, concealed: true, points: 30)
+        for i in 1...6 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p11.add([35,35, d,d,d, d+1,d+1, d+2,d+2, d+3,d+3,d+3, 10,10])
+            p11.add([35,35, b,b,b, b+1,b+1, b+2,b+2, b+3,b+3,b+3, 20,20])
+            p11.add([35,35, c,c,c, c+1,c+1, c+2,c+2, c+3,c+3,c+3, 30,30])
+        }
     }
     
     func add13579() {
