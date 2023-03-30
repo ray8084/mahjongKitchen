@@ -320,6 +320,28 @@ class Card2023 : Card {
         p8.add([35,35, 34,34,34,34, 2,10,2,3, 33,33,33,33])
         p8.add([35,35, 34,34,34,34, 12,10,12,13, 33,33,33,33])
         p8.add([35,35, 34,34,34,34, 22,10,22,23, 33,33,33,33])
+        
+        let p9 = add("FFFF N EE WWW SSSS", mask: "0000 0 00 000 0000", note: "",  family: Family.winds, concealed: false, points: 25)
+        p9.add([35,35,35,35, 31, 34,34, 33,33,33, 32,32,32,32])
+        
+        let p10 = add("DDDD NN EW SS DDDD", mask: "gggg 00 00 00 rrrr", note: "Any 2 Dragons",  family: Family.winds, concealed: false, points: 30)
+        p10.add([10,10,10,10, 31,31, 34,33, 32,32, 30,30,30,30])
+        p10.add([10,10,10,10, 31,31, 34,33, 32,32, 20,20,20,20])
+        p10.add([20,20,20,20, 31,31, 34,33, 32,32, 30,30,30,30])
+        
+        let p11 = add("NNN EW SSS 111 222 (C)", mask: "000 00 000 ggg rrr", note: "Any Consec Nos, Any 2 Suits",  family: Family.winds, concealed: true, points: 30)
+        for i in 1...8 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p11.add([31,31,31, 34,33, 32,32,32, d,d,d, b+1,b+1,b+1])
+            p11.add([31,31,31, 34,33, 32,32,32, d,d,d, c+1,c+1,c+1])
+            p11.add([31,31,31, 34,33, 32,32,32, b,b,b, d+1,d+1,d+1])
+            p11.add([31,31,31, 34,33, 32,32,32, b,b,b, c+1,c+1,c+1])
+            p11.add([31,31,31, 34,33, 32,32,32, c,c,c, d+1,d+1,d+1])
+            p11.add([31,31,31, 34,33, 32,32,32, c,c,c, b+1,b+1,b+1])
+        }
+
     }
     
     func add369() {
