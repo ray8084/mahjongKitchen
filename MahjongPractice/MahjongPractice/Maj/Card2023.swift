@@ -165,6 +165,46 @@ class Card2023 : Card {
     }
     
     func addConsectiveRun() {
+        add12345_23432_1()
+        add56789_23432_1()
+        
+        let p3 = add("111 2222 333 4444", mask: "000 0000 000 0000", note: "Any Run, Any 1 Suit",  family: Family.run, concealed: false, points: 25)
+        for i in 1...6 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p3.add([d,d,d, d+1,d+1,d+1,d+1 ,d+2,d+2,d+2, d+3,d+3,d+3,d+3])
+            p3.add([b,b,b, b+1,b+1,b+1,b+1 ,b+2,b+2,b+2, b+3,b+3,b+3,b+3])
+            p3.add([c,c,c, c+1,c+1,c+1,c+1 ,c+2,c+2,c+2, c+3,c+3,c+3,c+3])
+        }
+        
+        add1234_3434_2()
+        
+        let p5 = add("FF 1111 2222 DDDD", mask: "00 0000 0000 0000", note: "Any 1 Suit, Any Run, Matching Dragons",  family: Family.run, concealed: false, points: 25)
+        for i in 1...8 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p5.add([35,35, d,d,d,d, d+1,d+1,d+1,d+1, 10,10,10,10])
+            p5.add([35,35, b,b,b,b, b+1,b+1,b+1,b+1, 20,20,20,20])
+            p5.add([35,35, c,c,c,c, c+1,c+1,c+1,c+1, 30,30,30,30])
+        }
+        
+        let p6 = add("1 22 333 4444 5555", mask: "g gg ggg rrrr 0000", note: "Any 3 Suits, Any 5 Consec Nos",  family: Family.run, concealed: false, points: 30)
+        for i in 1...5 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p6.add([d, d+1,d+1, d+2,d+2,d+2, b+3,b+3,b+3,b+3, c+4,c+4,c+4,c+4])
+            p6.add([d, d+1,d+1, d+2,d+2,d+2, c+3,c+3,c+3,c+3, b+4,b+4,b+4,b+4])
+            p6.add([b, b+1,b+1, b+2,b+2,b+2, d+3,d+3,d+3,d+3, c+4,c+4,c+4,c+4])
+            p6.add([b, b+1,b+1, b+2,b+2,b+2, c+3,c+3,c+3,c+3, d+4,d+4,d+4,d+4])
+            p6.add([c, c+1,c+1, c+2,c+2,c+2, d+3,d+3,d+3,d+3, b+4,b+4,b+4,b+4])
+            p6.add([c, c+1,c+1, c+2,c+2,c+2, b+3,b+3,b+3,b+3, d+4,d+4,d+4,d+4])
+        }
+        
+        addF123_2444_1()
+        addF123_2444_3()
     }
     
     func add13579() {

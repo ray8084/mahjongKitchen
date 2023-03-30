@@ -1292,7 +1292,7 @@ class Card {
     }
     
     func add1234_3434_2() {
-        let p = add("111 2222 333 4444", mask: "ggg gggg rrr rrrr", note: "Any Run",  family: Family.run, concealed: false, points: 25)
+        let p = add("111 2222 333 4444", mask: "ggg gggg rrr rrrr", note: "Any Run, Any 2 Suits",  family: Family.run, concealed: false, points: 25)
         for i in 1...6 {
             let d = i
             let b = i+10
