@@ -68,6 +68,39 @@ class Card2023 : Card {
     }
 
     func add2468() {
+        let p1 = add("FFFF 2222 46 8888", mask: "0000 0000 00 0000", note: "Any 1 Suit",  family: Family.f2468, concealed: false, points: 25)
+        p1.generateList()
+        
+        let p2 = add("22 46 88 2222 2222", mask: "gg gg gg rrrr 0000", note: "Any 3 Suits, Kongs Any Like Even No",  family: Family.f2468, concealed: false, points: 25)
+        p2.add([2,2, 4,6, 8,8, 12,12,12,12, 22,22,22,22])
+        p2.add([2,2, 4,6, 8,8, 14,14,14,14, 24,24,24,24])
+        p2.add([2,2, 4,6, 8,8, 16,16,16,16, 26,26,26,26])
+        p2.add([2,2, 4,6, 8,8, 18,18,18,18, 28,28,28,28])
+        p2.add([12,12, 14,16, 18,18, 2,2,2,2, 22,22,22,22])
+        p2.add([12,12, 14,16, 18,18, 4,4,4,4, 24,24,24,24])
+        p2.add([12,12, 14,16, 18,18, 6,6,6,6, 26,26,26,26])
+        p2.add([12,12, 14,16, 18,18, 8,8,8,8, 28,28,28,28])
+        p2.add([22,22, 24,26, 28,28, 2,2,2,2, 12,12,12,12])
+        p2.add([22,22, 24,26, 28,28, 4,4,4,4, 14,14,14,14])
+        p2.add([22,22, 24,26, 28,28, 6,6,6,6, 16,16,16,16])
+        p2.add([22,22, 24,26, 28,28, 8,8,8,8, 18,18,18,18])
+        
+        let p3 = add("222 4444 666 8888", mask: "000 0000 000 0000", note: "Any 1 Suit",  family: Family.f2468, concealed: false, points: 25)
+        p3.generateList()
+
+        let p4 = add("222 4444 666 8888", mask: "ggg gggg rrr rrrr", note: "Any 2 Suits",  family: Family.f2468, concealed: false, points: 25)
+        p4.generateList()
+        
+        let p5 = add("22 4444 44 6666 88", mask: "gg gggg rr rrrr 00", note: "Any 3 Suits",  family: Family.f2468, concealed: false, points: 25)
+        p5.generateList()
+        
+        let p6 = add("222 888 DDDD DDDD", mask: "ggg ggg rrrr 0000", note: "Any 3 Suits, 2s and 8s Only",  family: Family.f2468, concealed: false, points: 25)
+        p6.add([2,2,2, 8,8,8, 20,20,20,20, 30,30,30,30])
+        p6.add([12,12,12, 18,18,18, 10,10,10,10, 30,30,30,30])
+        p6.add([22,22,22, 28,28,28, 10,10,10,10, 20,20,20,20])
+        
+        let p7 = add("FF 222 44 66 888 DD (C)", mask: "00 000 00 00 000 00", note: "Any 1 Suit with Matching Dragons",  family: Family.f2468, concealed: true, points: 30)
+        p7.generateList()
     }
     
     func addLikeNumbers() {
