@@ -249,12 +249,30 @@ class Card2023 : Card {
         let p6 = add("FF 5555 7777 9999", mask: "00 gggg rrrr 0000", note: "Any 3 Suits",  family: Family.f13579, concealed: false, points: 25)
         p6.generateList()
         
-        let p7 = add("FF 1111 33 5555 DD", mask: "00 0000 00 0000 00", note: "Any 1 Suit, Matchng Dragon",  family: Family.f13579, concealed: false, points: 25)
+        let p7 = add("FF 1111 33 5555 DD", mask: "00 0000 00 0000 00", note: "Any 1 Suit, Matching Dragon",  family: Family.f13579, concealed: false, points: 30)
         p7.generateList()
 
-        let p8 = add("FF 5555 77 9999 DD", mask: "00 0000 00 0000 00", note: "Any 1 Suit, Matching Dragon",  family: Family.f13579, concealed: false, points: 25)
+        let p8 = add("FF 5555 77 9999 DD", mask: "00 0000 00 0000 00", note: "Any 1 Suit, Matching Dragon",  family: Family.f13579, concealed: false, points: 30)
         p8.generateList()
         
+        add13D35_23432_3()
+        add57D79_23432_3()
+        
+        let p11 = add("FFFF 11 33 555 555", mask: "0000 gg gg rrr 000", note: "These Nos Only",  family: Family.f13579, concealed: false, points: 25)
+        p11.add([35,35,35,35, 1,1, 3,3, 15,15,15, 25,25,25])
+        p11.add([35,35,35,35, 11,11, 13,13, 5,5,5, 25,25,25])
+        p11.add([35,35,35,35, 21,21, 23,23, 5,5,5, 15,15,15])
+        
+        let p12 = add("FFFF 55 77 999 999", mask: "0000 gg gg rrr 000", note: "These Nos Only",  family: Family.f13579, concealed: false, points: 25)
+        p12.add([35,35,35,35, 5,5, 7,7, 19,19,19, 29,29,29])
+        p12.add([35,35,35,35, 15,15, 17,17, 9,9,9, 29,29,29])
+        p12.add([35,35,35,35, 25,25, 27,27, 9,9,9, 19,19,19])
+        
+        let p13 = add("1111 33 55 77 9999", mask: "gggg rr rr rr gggg", note: "Any 2 Suits",  family: Family.f13579, concealed: false, points: 30)
+        p13.generateList()
+        
+        let p14 = add("111 3 555 555 7 999 (C)", mask: "ggg g ggg rrr r rrr", note: "Any 2 Suits",  family: Family.f13579, concealed: true, points: 30)
+        p14.generateList()
     }
 
     func addWindsAndDragons() {
