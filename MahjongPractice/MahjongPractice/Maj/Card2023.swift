@@ -238,6 +238,23 @@ class Card2023 : Card {
     }
     
     func add13579() {
+        add13579_23432_1()
+        add13579_23432_3()
+        add1335_3434_2()
+        add5779_3434_2()
+        
+        let p5 = add("FF 1111 3333 5555", mask: "00 gggg rrrr 0000", note: "Any 3 Suits",  family: Family.f13579, concealed: false, points: 25)
+        p5.generateList()
+        
+        let p6 = add("FF 5555 7777 9999", mask: "00 gggg rrrr 0000", note: "Any 3 Suits",  family: Family.f13579, concealed: false, points: 25)
+        p6.generateList()
+        
+        let p7 = add("FF 1111 33 5555 DD", mask: "00 0000 00 0000 00", note: "Any 1 Suit, Matchng Dragon",  family: Family.f13579, concealed: false, points: 25)
+        p7.generateList()
+
+        let p8 = add("FF 5555 77 9999 DD", mask: "00 0000 00 0000 00", note: "Any 1 Suit, Matching Dragon",  family: Family.f13579, concealed: false, points: 25)
+        p8.generateList()
+        
     }
 
     func addWindsAndDragons() {
