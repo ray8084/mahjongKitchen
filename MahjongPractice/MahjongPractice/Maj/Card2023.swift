@@ -341,10 +341,24 @@ class Card2023 : Card {
             p11.add([31,31,31, 34,33, 32,32,32, c,c,c, d+1,d+1,d+1])
             p11.add([31,31,31, 34,33, 32,32,32, c,c,c, b+1,b+1,b+1])
         }
-
     }
     
     func add369() {
+        add3669_3434_2()
+        
+        let p2 = add("FFFF 3333 66 9999", mask: "0000 0000 00 0000", note: "Any 1 Suit",  family: Family.f369, concealed: false, points: 25)
+        p2.generateList()
+        
+        let p3 = add("FFFF 3333 66 9999", mask: "0000 gggg rr 0000", note: "Any 3 Suits",  family: Family.f369, concealed: false, points: 25)
+        p3.generateList()
+        
+        let p4 = add("33 66 333 666 9999", mask: "gg gg rrr rrr 0000", note: "Any 3 Suits",  family: Family.f369, concealed: false, points: 25)
+        p4.generateList()
+        
+        let p5 = add("FF 33 66 99 DDD DDD", mask: "00 gg gg gg rrr 000", note: "Any 3 Suits, Opp Dragons",  family: Family.f369, concealed: false, points: 30)
+        p5.add([35,35, 3,3, 6,6, 9,9, 30,30,30, 20,20,20])
+        p5.add([35,35, 13,13, 16,16, 19,19, 10,10,10, 30,30,30])
+        p5.add([35,35, 23,23, 26,26, 29,29, 10,10,10, 20,20,20])
     }
 
     func addSinglesAndPairs() {
