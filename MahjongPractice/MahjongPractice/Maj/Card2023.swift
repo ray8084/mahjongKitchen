@@ -104,6 +104,15 @@ class Card2023 : Card {
     }
     
     func addLikeNumbers() {
+        add2021l2()
+        
+        let p2 = add("FF 111 D 111 D 111 D (C)", mask: "00 ggg g rrr r 000 0", note: "Any 3 Suits, Any Like Nos",  family: Family.likeNumbers, concealed: true, points: 30)
+        for i in 1...9 {
+            let d = i
+            let b = i+10
+            let c = i+20
+            p2.add([35,35, d,d,d, 10, b,b,b, 20, c,c,c, 30])
+        }
     }
     
     func addAdditionHands() {
