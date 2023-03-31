@@ -407,7 +407,7 @@ class Card2023 : Card {
         add1234567_2222222_1()
         
         let p6 = add("FF 2023 2023 2023 (C)", mask: "00 gggg rrrr 0000", note: "Any 3 Suits",  family: Family.pairs, concealed: true, points: 75)
-        p6.add([35,35, 2,10,2,3, 12,10,13,13, 22,10,23,23])
+        p6.add([35,35, 2,10,2,3, 12,10,12,13, 22,10,22,23])
     }
     
 }
