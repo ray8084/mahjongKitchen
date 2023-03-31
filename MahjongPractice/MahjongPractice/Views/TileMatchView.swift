@@ -101,7 +101,7 @@ class TileMatchView: UIViewController, UITableViewDelegate, UITableViewDataSourc
             count = maxRows
         }
         if maj?.isGameOver() ?? false {
-            count = 1
+            count = 0
         }
         return(count)
     }

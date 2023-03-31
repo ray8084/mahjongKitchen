@@ -143,7 +143,7 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
             count = maxRows
         }
         if maj.isGameOver() {
-            count = 1
+            count = 0
         }
         return count
     }
