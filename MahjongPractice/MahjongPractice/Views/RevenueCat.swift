@@ -303,7 +303,7 @@ class RevenueCat {
             purchased2022 = true
             defaults.set(purchased2022, forKey: "purchased2022")
         }
-        if info?.entitlements["Patterns2023"]?.isActive == true {
+        if info?.entitlements["Patterns"]?.isActive == true {
             purchased2023 = true
             defaults.set(purchased2023, forKey: "purchased2023")
         }
