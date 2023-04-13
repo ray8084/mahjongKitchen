@@ -9,7 +9,7 @@ import UIKit
 
 enum ErrorId: Int { case swapInHand = 8001, toCharlestonOut, swapInRack, toRack, toDiscard, charlestonToHand, rackToDiscard }
 
-class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, SettingsDelegate, ValidationViewDelegate  {
+class ViewController: UIViewController, NarrowViewDelegate  {
     
     var backgroundImageView: UIImageView!
     var viewDidAppear = false
@@ -26,7 +26,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     var rackView: [UIView] = []
     var discardView: [UIView] = []
     var discardTableView = DiscardTableView()
-    var validationView = ValidationView()
     var newGameMenu =  UIAlertController()
     
     let margin: CGFloat = 5
@@ -56,15 +55,8 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     var menuButton: UIButton!
     var settingsButton: UIButton!
     var helpButton: UIButton!
-    var sortButton1: UIButton!
-    var sortButton2: UIButton!
-    var controlPanel: UISegmentedControl!
     var versionLabel: UILabel!
-    var yearLabel: UILabel!
-    var eightbamLabel: UILabel!
-    var redealButton: UIButton!
-    var mahjButton: UIButton!
-    // var mahjButton2: UIButton!
+
     
     // -----------------------------------------------------------------------------------------
     //
@@ -95,6 +87,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         if viewDidAppear == false {
             setBackground()
             enable2023(true)
+            maj.setYearSegment(segment: Year.y2023)
             redeal()
             viewDidAppear = true
         }
@@ -179,7 +172,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         showHand()
         showLabel()
         showButtons()
-        showControlPanel()
     }
     
     func gameOver() {
@@ -224,7 +216,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
     
     func showWinMenu() {
-        self.mahjButton.isHidden = true
         if (maj.unrecognizedHandDeclared() == false && doubleCheckYouWin()) {
             let title = "Mahjong - You Win!"
             let message = maj.card.winningHand(maj: maj)
@@ -304,14 +295,10 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         if self.maj.shuffleWithSeed {
             self.showShuffleKeywordMenu()
         } else if win && (self.maj.card.getTotalWinCount() > 2 ) {
-            AppStoreHistory.store.requestReview()
             self.redeal()
         } else {
             self.redeal()
         }
-        eightbamLabel.isHidden = false
-        redealButton.isHidden = false
-        mahjButton.isHidden = true
         reviewInProgress = false
     }
         
@@ -329,9 +316,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         maj.card.clearRackFilter()
         showGame()
         showBottomView()
-        eightbamLabel.isHidden = false
-        redealButton.isHidden = false
-        mahjButton.isHidden = true
         reviewInProgress = false
     }
     
@@ -351,8 +335,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         discardTableView.hide()
         showGame()
         showBottomView()
-        yearLabel?.text = maj.getYearText()
-        mahjButton.isHidden = true
     }
     
     func resetMaj() {
@@ -423,8 +405,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 discardTableView.show(parent: view, rowHeader: tableLocation(), maj: maj, margin: cardMarginX())
             }
         }
-        eightbamLabel.isHidden = !maj.isCharlestonActive()
-        redealButton.isHidden = eightbamLabel.isHidden
         return true
     }
 
@@ -501,17 +481,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 showRackError(message)
             }
         }
-    }
-    
-    func showValidationView() {
-        newGameMenu.dismiss(animated: false, completion: nil)
-        validationView.show(view, maj: maj, delegate: self)
-    }
-    
-    func closeValidationView() {
-        validationView.removeFromSuperview()
-        validationView.closeButton.removeFromSuperview()
-        showGameMenu(title: "Game Over", message: "", win: false)
     }
 
     func showRackError(_ message: String) {
@@ -591,9 +560,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         addHelpButton()
         addSettingsButton()
         addMenuButton()
-        addSortButton()
-        addRedealButton()
-        addMahjButton()
     }
     
     func addHelpButton() {
@@ -637,98 +603,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         }
     }
     
-    func addSortButton() {
-        if sortButton1 == nil {
-            sortButton1 = UIButton()
-            let x = controlPanelLocationX()
-            let y = charlestonTop()
-            sortButton1.frame = CGRect(x: x, y: y,  width: buttonSize() + 20, height: buttonSize())
-            sortButton1.layer.cornerRadius = 5
-            sortButton1.titleLabel!.font = UIFont(name: "Chalkduster", size: 16)!
-            sortButton1.backgroundColor = .white
-            sortButton1.alpha = 0.8
-            sortButton1.setTitle("Sort", for: .normal)
-            sortButton1.setTitleColor(.black, for: .normal)
-            sortButton1.addTarget(self, action: #selector(sortButtonAction), for: .touchUpInside)
-            view.addSubview(sortButton1)
-        }
-        if sortButton2 == nil {
-            sortButton2 = UIButton()
-            let x = controlPanelLocationX() + ((tileWidth() + space) * 9)
-            let y = charlestonTop()
-            sortButton2.frame = CGRect(x: x, y: y,  width: buttonSize() + 20, height: buttonSize())
-            sortButton2.layer.cornerRadius = 5
-            sortButton2.titleLabel!.font = UIFont(name: "Chalkduster", size: 16)!
-            sortButton2.backgroundColor = .white
-            sortButton2.alpha = 0.8
-            sortButton2.setTitle("Sort", for: .normal)
-            sortButton2.setTitleColor(.black, for: .normal)
-            sortButton2.addTarget(self, action: #selector(sortButtonAction), for: .touchUpInside)
-            view.addSubview(sortButton2)
-        }
-        sortButton1.isHidden = !maj.isCharlestonActive()
-        sortButton2.isHidden = maj.isCharlestonActive()
-    }
-    
-    func addRedealButton() {
-        if redealButton == nil {
-            redealButton = UIButton()
-            redealButton.frame = CGRect(x: helpButtonLocationX() - 60, y: tileHeight() - buttonSize(),  width: buttonSize()+80, height: buttonSize())
-            redealButton.layer.cornerRadius = 5
-            redealButton.titleLabel!.font = UIFont(name: "Chalkduster", size: 16)!
-            redealButton.backgroundColor = .black
-            redealButton.setTitle("New Game", for: .normal)
-            redealButton.alpha = 0.8
-            redealButton.addTarget(self, action: #selector(redeal), for: .touchUpInside)
-            view.addSubview(redealButton)
-        }
-    }
-    
-    func addMahjButton() {
-        if mahjButton == nil {
-            let x = controlPanelLocationX() + ((tileWidth() + space) * 9)
-            let y = charlestonTop()
-            mahjButton = UIButton()
-            mahjButton.frame = CGRect(x: x - 130, y: y,  width: buttonSize()+150, height: buttonSize())
-            mahjButton.layer.cornerRadius = 5
-            mahjButton.titleLabel!.font = UIFont(name: "Chalkduster", size: 16)!
-            mahjButton.backgroundColor = .black
-            mahjButton.setTitleColor(.white, for: .normal)
-            mahjButton.setTitle("Declare Mahjong", for: .normal)
-            mahjButton.alpha = 0.8
-            mahjButton.addTarget(self, action: #selector(declareMahjAction), for: .touchUpInside)
-            mahjButton.isHidden = true
-            view.addSubview(mahjButton)
-        }
-        /*if mahjButton2 == nil {
-            mahjButton2 = UIButton()
-            mahjButton2.frame = CGRect(x: menuButtonLocationX() - buttonSize() - 150 - 20, y: buttonLocationY(),  width: buttonSize() + 150, height: buttonSize())
-            mahjButton2.layer.cornerRadius = 5
-            mahjButton2.titleLabel!.font = UIFont(name: "Chalkduster", size: 16)!
-            mahjButton2.backgroundColor = .black
-            mahjButton2.setTitleColor(.white, for: .normal)
-            mahjButton2.setTitle("Declare Mahjong", for: .normal)
-            mahjButton2.alpha = 0.8
-            mahjButton2.addTarget(self, action: #selector(declareMahjAction), for: .touchUpInside)
-            mahjButton2.isHidden = true
-            view.addSubview(mahjButton2)
-        }*/
-    }
-        
-    @objc func declareMahjAction(sender: UIButton!) {
-        if maj.discardTile != nil {
-            maj.east.rack?.tiles.append(maj.discardTile)
-            maj.discardTile = nil
-        }
-        maj.east.rackAllTiles()
-        maj.east.finalSortEastRack(maj)
-        showDiscard()
-        showHand()
-        showRack()
-        eastWon()
-        mahjButton.isHidden = true
-    }
-    
     @objc func helpButtonAction(sender: UIButton!) {
         let help = HelpTableController(frame: view.frame, narrowViewDelegate: self)
         show(help, sender: self)
@@ -761,76 +635,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     func settingsButtonLocationX() -> CGFloat { return helpButton.frame.origin.x - buttonSize() - 15 }
     func buttonLocationY() -> CGFloat { return controlPanelLocationY() }
     func buttonSize() -> CGFloat { return controlPanelHeight() }
-    
-    
-    // -----------------------------------------------------------------------------------------
-    //
-    //  Segmented Control Panel
-    //
-    // -----------------------------------------------------------------------------------------
-    
-    func showControlPanel() {
-        if controlPanel == nil {
-            let items = ["Bots", "Patterns", "Tiles"]
-            controlPanel = UISegmentedControl(items: items)
-            controlPanel.frame = CGRect(x: controlPanelLocationX(), y: controlPanelLocationY(), width: controlPanelWidth(), height: controlPanelHeight())
-            setSegmentColors(controlPanel, chalkduster: true)
-            controlPanel.addTarget(self, action: #selector(controlPanelValueChanged), for: .valueChanged)
-            view.addSubview(controlPanel)
-        }
-        if versionLabel == nil {
-            versionLabel = UILabel()
-            versionLabel.frame = CGRect(x: controlPanel.frame.origin.x + controlPanel.frame.width + 15, y: controlPanelLocationY(), width: 100, height: controlPanelHeight())
-            versionLabel.textColor = UIColor.black
-            versionLabel.text = "v" + (Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "")
-            view.addSubview(versionLabel)
-        }
-        if yearLabel == nil {
-            yearLabel = UILabel()
-            yearLabel.frame = CGRect(x: helpButtonLocationX() - 80, y: controlPanelLocationY() - buttonSize() - buttonSize() - 10, width: 150, height: 100)
-            yearLabel.font = UIFont.systemFont(ofSize: 40, weight: UIFont.Weight.bold)
-            yearLabel.textColor = .white
-            yearLabel.alpha = 0.5
-            yearLabel.text = maj.getYearText()
-            view.addSubview(yearLabel)
-        }
-        if eightbamLabel == nil {
-            eightbamLabel = UILabel()
-            eightbamLabel.frame = CGRect(x: cardMarginX(), y: tileHeight() - 40, width: 500, height: 40)
-            // eightbamLabel.font = UIFont.systemFont(ofSize: 20, weight: UIFont.Weight.regular)
-            eightbamLabel.font = UIFont(name: "Chalkduster", size: 16)
-            // titleLabel.textColor = UIColor(red: 114/255, green: 123/255, blue: 102/255, alpha: 1.0)
-            eightbamLabel.textColor = .black
-            eightbamLabel.textAlignment = .left
-            eightbamLabel.text = "American Mahjong Practice"
-            view.addSubview(eightbamLabel)
-        }
-    }
-    
-    func setSegmentColors(_ segment: UISegmentedControl, chalkduster: Bool) {
-        let font = UIFont(name: "Chalkduster", size: 16)
-        if #available(iOS 13.0, *) {
-            segment.selectedSegmentTintColor = UIColor.white
-            if chalkduster {
-                let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: font! ]
-                segment.setTitleTextAttributes(titleTextAttributes, for:.normal)
-                segment.setTitleTextAttributes(titleTextAttributes, for:.selected)
-            } else {
-                let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black ]
-                segment.setTitleTextAttributes(titleTextAttributes, for:.normal)
-                segment.setTitleTextAttributes(titleTextAttributes, for:.selected)
-            }
-        } else {
-            if chalkduster {
-                segment.setTitleTextAttributes([NSAttributedString.Key.font: font!], for: .normal)
-            }
-            segment.tintColor = UIColor(white: 0.1, alpha: 1)
-        }
-    }
-    
-    @objc func controlPanelValueChanged(_ sender: Any) {
-    }
-    
     
 
     
@@ -871,12 +675,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         
         alert.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
             self.replay()
-        }));
-        
-        
-        alert.addAction(UIAlertAction(title: "Stats", style: .default, handler: {(action:UIAlertAction) in
-            let stats = StatViewController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self)
-            self.show(stats, sender: self)
         }));
         
         alert.addAction(UIAlertAction(title: "Continue", style: .cancel, handler: {(action:UIAlertAction) in
@@ -1118,33 +916,9 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         if !handled {
             sender.view!.center = start
         }
-        checkForMahjong()
     }
-    
-    func checkForMahjong() {
-        if !maj.isCharlestonActive() && !reviewInProgress && !maj.disableAutomaj {
-            if maj.discardTile != nil {
-                let highest = maj.card.getClosestPattern(tiles: maj.east.tiles + maj.rackTiles() + [maj.discardTile])
-                if (highest.matchCount == 14) && (winCounted == false) && maj.doubleCheckForMahjong(highest) {
-                    mahjButton.isHidden = false
-                    sortButton2.isHidden = true
-                } else if highest.matchCount == 13 {    // mah was discarded
-                    mahjButton.isHidden = true
-                    sortButton2.isHidden = false
-                }
-            } else {
-                let highest = maj.card.getClosestPattern(tiles: maj.east.tiles + maj.rackTiles())
-                if (highest.matchCount == 14) && (winCounted == false) && maj.doubleCheckForMahjong(highest) {
-                    mahjButton.isHidden = false
-                    sortButton2.isHidden = true
-                } else if highest.matchCount == 13 {
-                    mahjButton.isHidden = true
-                    sortButton2.isHidden = false
-                }
-            }
-        }
-        updateMahjButton2()
-    }
+   
+
     
     func countSuitsForRacked2s() -> Int {
         var suits = Set<String>()
@@ -1297,13 +1071,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                     maj.east.rack?.markJokers()
                     moved = true
                     updateViews()
-                    
-                    let message = maj.card.winningHand(maj: maj)
-                    if (maj.east.rack?.tiles.count == 14) {
-                        if (message.count == 0) {
-                            showValidationView()
-                        }
-                    }
+                   
                 }
             } else {
                 showDebugMessage(ErrorId.toRack)
@@ -1440,7 +1208,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     
     @objc func handleTapGestureDiscard(_ sender: UITapGestureRecognizer) {
         let _ = maj.isCharlestonActive() ? nextCharleston() : nextState()
-        checkForMahjong()
     }
     
     func showDebugMessage(_ errorId: ErrorId) {
@@ -1473,7 +1240,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     
     func changeYear(_ segmentIndex: Int) {
         maj.setYearSegment(segment: segmentIndex)
-        yearLabel?.text = maj.getYearText()
         updateViews()
     }
         
@@ -1546,8 +1312,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         if maj.isWinBotEnabled() && maj.botWon() {
             botWon()
         }
-        eightbamLabel.isHidden = maj.isCharlestonActive() ? false : true
-        redealButton.isHidden = eightbamLabel.isHidden
         return true
     }
     
