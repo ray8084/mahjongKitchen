@@ -147,7 +147,6 @@
 		714252D52707A04C001AE6F0 /* DiscardTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252CA2707A04B001AE6F0 /* DiscardTableView.swift */; };
 		714252D62707A04C001AE6F0 /* HelpChapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252CB2707A04B001AE6F0 /* HelpChapter.swift */; };
 		714252D72707A04C001AE6F0 /* StatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252CC2707A04B001AE6F0 /* StatViewController.swift */; };
-		714252D82707A04C001AE6F0 /* TileMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252CD2707A04B001AE6F0 /* TileMatchView.swift */; };
 		714252D92707A04C001AE6F0 /* ValidationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252CE2707A04B001AE6F0 /* ValidationView.swift */; };
 		714252DC2707A0FF001AE6F0 /* IAPHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252DB2707A0FF001AE6F0 /* IAPHelper.swift */; };
 		714252DE2707A24D001AE6F0 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 714252DD2707A24D001AE6F0 /* StoreKit.framework */; };
@@ -324,7 +323,6 @@
 		714252CA2707A04B001AE6F0 /* DiscardTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscardTableView.swift; sourceTree = "<group>"; };
 		714252CB2707A04B001AE6F0 /* HelpChapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpChapter.swift; sourceTree = "<group>"; };
 		714252CC2707A04B001AE6F0 /* StatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatViewController.swift; sourceTree = "<group>"; };
-		714252CD2707A04B001AE6F0 /* TileMatchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileMatchView.swift; sourceTree = "<group>"; };
 		714252CE2707A04B001AE6F0 /* ValidationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationView.swift; sourceTree = "<group>"; };
 		714252DB2707A0FF001AE6F0 /* IAPHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAPHelper.swift; sourceTree = "<group>"; };
 		714252DD2707A24D001AE6F0 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -450,7 +448,6 @@
 				714252C42707A04B001AE6F0 /* RevenueCat.swift */,
 				714252C82707A04B001AE6F0 /* SettingsViewController.swift */,
 				714252CC2707A04B001AE6F0 /* StatViewController.swift */,
-				714252CD2707A04B001AE6F0 /* TileMatchView.swift */,
 				714252CE2707A04B001AE6F0 /* ValidationView.swift */,
 			);
 			path = Views;
@@ -978,7 +975,6 @@
 				714252BC2707A024001AE6F0 /* Card2020.swift in Sources */,
 				7142519E27078624001AE6F0 /* AppDelegate.swift in Sources */,
 				714252D52707A04C001AE6F0 /* DiscardTableView.swift in Sources */,
-				714252D82707A04C001AE6F0 /* TileMatchView.swift in Sources */,
 				714252DC2707A0FF001AE6F0 /* IAPHelper.swift in Sources */,
 				714252BA2707A024001AE6F0 /* Rack.swift in Sources */,
 				714252BF2707A024001AE6F0 /* DiscardTable.swift in Sources */,

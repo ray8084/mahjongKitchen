@@ -11,7 +11,6 @@ enum ErrorId: Int { case swapInHand = 8001, toCharlestonOut, swapInRack, toRack,
 
 class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, SettingsDelegate, ValidationViewDelegate  {
     
-    var revenueCat: RevenueCat!
     var backgroundImageView: UIImageView!
     var viewDidAppear = false
     let BlankColor = UIColor(white: 0.95, alpha: 0.7)
@@ -25,9 +24,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
 
     var handView: [UIView] = []
     var rackView: [UIView] = []
-    var charlestonOutView: [UIView] = []
     var discardView: [UIView] = []
-    let tileMatchView = TileMatchView()
     var discardTableView = DiscardTableView()
     var validationView = ValidationView()
     var newGameMenu =  UIAlertController()
@@ -79,9 +76,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         super.init(coder: aDecoder)
         maj = app.maj
         maj.loadSavedValues()
-        tileMatchView.loadPatterns(maj: maj, letterPatterns: maj.card.letterPatterns)
         lastMaj = Maj(maj)
-        revenueCat = RevenueCat(viewController: self, gameDelegate: self)
     }
      
     override var shouldAutorotate: Bool {
@@ -99,7 +94,8 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     override func viewDidAppear(_ animated: Bool) {
         if viewDidAppear == false {
             setBackground()
-            revenueCat.start()
+            enable2023(true)
+            redeal()
             viewDidAppear = true
         }
     }
@@ -175,18 +171,15 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     func showGame() {
         if maj.isCharlestonActive() {
             clearRack()
-            showCharlestonOut()
         } else {
             showRack()
             showDiscard()
-            clearCharlestonOut()
             showDiscardTable()
         }
         showHand()
         showLabel()
         showButtons()
         showControlPanel()
-        tileMatchView.update(maj)
     }
     
     func gameOver() {
@@ -204,7 +197,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         if maj.isGameOver() {
             maj.card.clearRackFilter()
             maj.east.tileMatches.clearRackFilter()
-            tileMatchView.update(maj)
         }
         if maj.isGameOver() && eastWon {
             showWinMenu()
@@ -289,7 +281,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         
     func showGameMenu(title: String, message: String, win: Bool) {
         newGameMenu = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        self.tileMatchView.update(maj)
         
         newGameMenu.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
             self.addWin()
@@ -310,10 +301,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
         
     func newGameAction(_ win: Bool) {
-        self.revenueCat.refreshPurchaseInfo()
-        if (self.maj.enable2021 == false) && (self.maj.enable2020 == false){
-            self.revenueCat.showPurchaseMenu(self)
-        } else if self.maj.shuffleWithSeed {
+        if self.maj.shuffleWithSeed {
             self.showShuffleKeywordMenu()
         } else if win && (self.maj.card.getTotalWinCount() > 2 ) {
             AppStoreHistory.store.requestReview()
@@ -328,7 +316,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
         
     func eastWon() {
-        tileMatchView.updateRackFilter(maj)
         gameOver()
     }
     
@@ -340,7 +327,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         maj.discardTable.resetCounts()
         discardTableView.hide()
         maj.card.clearRackFilter()
-        tileMatchView.clearRackFilter()
         showGame()
         showBottomView()
         eightbamLabel.isHidden = false
@@ -362,9 +348,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         lossCounted = false
         newDeal = true
         resetMaj()
-        tileMatchView.loadPatterns(maj: maj, letterPatterns: maj.card.letterPatterns)
         discardTableView.hide()
-        tileMatchView.clearRackFilter()
         showGame()
         showBottomView()
         yearLabel?.text = maj.getYearText()
@@ -443,24 +427,8 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         redealButton.isHidden = eightbamLabel.isHidden
         return true
     }
-  
-    func clearCharlestonOut() {
-        for view in charlestonOutView {
-            view.removeFromSuperview()
-        }
-        charlestonOutView = []
-    }
-    
-    func showCharlestonOut() {
-        clearDiscard()
-        clearCharlestonOut()
-        addTiles( tileView: &charlestonOutView, hand: maj.charleston, col: charlestonOutIndex, row: discardRow)
 
-        let start = charlestonOutIndex + maj.charleston.tiles.count
-        let end = maj.maxHand - 1
-        let addGestures = maj.charlestonState == 6 || maj.charlestonState == 3 || maj.isBlindPass()
-        addBlanks( tileView: &charlestonOutView, col: start, row: discardRow, count: end-start, addGestures: addGestures)
-    }
+    
     
     
     // -----------------------------------------------------------------------------------------
@@ -519,7 +487,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             showLabel()
             maj.lastDiscard = nil
             undo = true
-            tileMatchView.update(maj)
             discardTableView.showCounts(maj: maj)
             showHand()
         }
@@ -768,8 +735,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
         
     @objc func settingsButtonAction(sender: UIButton!) {
-        let settings = SettingsViewController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self, settingsDelegate: self, revenueCat: revenueCat)
-        show(settings, sender: self)
     }
     
     @objc func menuButtonAction(sender: UIButton!) {
@@ -864,35 +829,9 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
     
     @objc func controlPanelValueChanged(_ sender: Any) {
-        switch (sender as AnyObject).selectedSegmentIndex {
-        case 1:
-            triggerCardView()
-            defaults.set(1, forKey: "controlPanel")
-        case 2:
-            triggerTileMatchView()
-            defaults.set(2, forKey: "controlPanel")
-        default:
-            triggerBotView()
-            defaults.set(0, forKey: "controlPanel")
-        }
     }
     
-    func triggerCardView() {
-        hideTileMatchView()
-    }
     
-    func triggerTileMatchView() {
-        if tileMatchView.isHidden {
-            showTileMatchView()
-            tileMatchView.updateRackFilter(maj)
-        } else {
-            hideTileMatchView()
-        }
-    }
-    
-    func triggerBotView() {
-        hideTileMatchView()
-    }
 
     
     // -----------------------------------------------------------------------------------------
@@ -902,7 +841,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     // -----------------------------------------------------------------------------------------
     
     func updateViews() {
-        tileMatchView.update(maj)
         updateMahjButton2()
     }
     
@@ -915,27 +853,8 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
     
     func showBottomView() {
-        switch(controlPanel.selectedSegmentIndex) {
-            case 2: showTileMatchView()
-            default:
-                controlPanel.selectedSegmentIndex = 1
-        }
     }
    
-    
-    func showTileMatchView() {
-        tileMatchView.isHidden = false
-        tileMatchView.showView(self, x: cardMarginX(), y: cardLocationY(), width: cardWidth(), height: cardHeight(), bgcolor: getBackgroundColor())
-        view.addSubview(tileMatchView.tableView)
-        tileMatchView.update(maj)
-    }
-    
-    func hideTileMatchView() {
-        tileMatchView.isHidden = true
-        tileMatchView.tableView.removeFromSuperview()
-    }
-   
-    
     
     // -----------------------------------------------------------------------------------------
     //
@@ -954,21 +873,11 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             self.replay()
         }));
         
-        alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: {(action:UIAlertAction) in
-            let settings = SettingsViewController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self, settingsDelegate: self, revenueCat: self.revenueCat)
-            self.show(settings, sender: self)
-        }));
         
         alert.addAction(UIAlertAction(title: "Stats", style: .default, handler: {(action:UIAlertAction) in
             let stats = StatViewController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self)
             self.show(stats, sender: self)
         }));
-        
-        if self.revenueCat.purchased2023 == false && self.revenueCat.monthlyActive == false {
-            alert.addAction(UIAlertAction(title: "2023 Pattern Access", style: .default, handler: {(action:UIAlertAction) in
-                self.revenueCat.showPurchaseMenu(self)
-            }));
-        }
         
         alert.addAction(UIAlertAction(title: "Continue", style: .cancel, handler: {(action:UIAlertAction) in
         }));
@@ -1106,8 +1015,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 view.image = UIImage(named: tile.getImage(maj:maj))
             }
         }
-        
-        tileMatchView.update(maj)
     }
     
     
@@ -1331,8 +1238,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 maj.charleston.tiles.append(maj.east.tiles[startIndex])
                 maj.east.tiles.remove(at: startIndex)
                 showHand()
-                showCharlestonOut()
-                tileMatchView.update(maj)
                 if label != nil {
                     label.text = maj.stateLabel()
                 }
@@ -1354,7 +1259,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 maj.east.tiles.remove(at: index)
                 showHand()
                 showDiscard()
-                tileMatchView.update(maj)
                 moved = true
             } else {
                 showDebugMessage(ErrorId.toDiscard)
@@ -1432,9 +1336,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             let tile = maj.charleston.tiles.remove(at: index)
             maj.east.tiles.append(tile)
             showHand()
-            showCharlestonOut()
             removed = true
-            tileMatchView.update(maj)
             label.text = maj.stateLabel()
         } else {
             showDebugMessage(ErrorId.charlestonToHand)
@@ -1455,7 +1357,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             showDiscard()
             showHand()
             moved = true
-            tileMatchView.update(maj)
         }
         return moved
     }
@@ -1477,7 +1378,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             moved = true
             maj.letterPatternRackFilterPending = true
             maj.tileMatchesRackFilterPending = true
-            tileMatchView.update(maj)
             if maj.east.rack?.tiles.count == 14 {
                 maj.card.match(maj.east.tiles + (maj.east.rack?.tiles)!, ignoreFilters: false)
                 gameOver()
@@ -1495,8 +1395,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 maj.discardTile = maj.east.removeFromRack(index)
                 showDiscard()
                 showRack()
-                tileMatchView.update(maj)
-                moved = true
+                 moved = true
             } else {
                 showDebugMessage(ErrorId.rackToDiscard)
             }
@@ -1574,7 +1473,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     
     func changeYear(_ segmentIndex: Int) {
         maj.setYearSegment(segment: segmentIndex)
-        tileMatchView.loadPatterns(maj: maj, letterPatterns: maj.card.letterPatterns)
         yearLabel?.text = maj.getYearText()
         updateViews()
     }
@@ -1639,7 +1537,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 discardTableView.showCounts(maj: maj)
                 maj.discardCalled = false
             }
-            tileMatchView.updateRackFilter(maj)
         }
         showGame()
         showDiscard()
