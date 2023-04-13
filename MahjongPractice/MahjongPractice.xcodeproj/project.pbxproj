@@ -141,11 +141,9 @@
 		714252C22707A024001AE6F0 /* LetterPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252B12707A024001AE6F0 /* LetterPattern.swift */; };
 		714252C32707A024001AE6F0 /* Tile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252B22707A024001AE6F0 /* Tile.swift */; };
 		714252CF2707A04B001AE6F0 /* RevenueCat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252C42707A04B001AE6F0 /* RevenueCat.swift */; };
-		714252D02707A04B001AE6F0 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252C52707A04B001AE6F0 /* CardView.swift */; };
 		714252D12707A04B001AE6F0 /* NarrowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252C62707A04B001AE6F0 /* NarrowViewController.swift */; };
 		714252D22707A04C001AE6F0 /* HelpTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252C72707A04B001AE6F0 /* HelpTableController.swift */; };
 		714252D32707A04C001AE6F0 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252C82707A04B001AE6F0 /* SettingsViewController.swift */; };
-		714252D42707A04C001AE6F0 /* BotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252C92707A04B001AE6F0 /* BotView.swift */; };
 		714252D52707A04C001AE6F0 /* DiscardTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252CA2707A04B001AE6F0 /* DiscardTableView.swift */; };
 		714252D62707A04C001AE6F0 /* HelpChapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252CB2707A04B001AE6F0 /* HelpChapter.swift */; };
 		714252D72707A04C001AE6F0 /* StatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252CC2707A04B001AE6F0 /* StatViewController.swift */; };
@@ -320,11 +318,9 @@
 		714252B12707A024001AE6F0 /* LetterPattern.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LetterPattern.swift; sourceTree = "<group>"; };
 		714252B22707A024001AE6F0 /* Tile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tile.swift; sourceTree = "<group>"; };
 		714252C42707A04B001AE6F0 /* RevenueCat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RevenueCat.swift; sourceTree = "<group>"; };
-		714252C52707A04B001AE6F0 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		714252C62707A04B001AE6F0 /* NarrowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NarrowViewController.swift; sourceTree = "<group>"; };
 		714252C72707A04B001AE6F0 /* HelpTableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpTableController.swift; sourceTree = "<group>"; };
 		714252C82707A04B001AE6F0 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		714252C92707A04B001AE6F0 /* BotView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BotView.swift; sourceTree = "<group>"; };
 		714252CA2707A04B001AE6F0 /* DiscardTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscardTableView.swift; sourceTree = "<group>"; };
 		714252CB2707A04B001AE6F0 /* HelpChapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpChapter.swift; sourceTree = "<group>"; };
 		714252CC2707A04B001AE6F0 /* StatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatViewController.swift; sourceTree = "<group>"; };
@@ -447,8 +443,6 @@
 		714251CD27079FA4001AE6F0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				714252C92707A04B001AE6F0 /* BotView.swift */,
-				714252C52707A04B001AE6F0 /* CardView.swift */,
 				714252CA2707A04B001AE6F0 /* DiscardTableView.swift */,
 				714252CB2707A04B001AE6F0 /* HelpChapter.swift */,
 				714252C72707A04B001AE6F0 /* HelpTableController.swift */,
@@ -971,7 +965,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				714252B32707A024001AE6F0 /* Deck.swift in Sources */,
-				714252D42707A04C001AE6F0 /* BotView.swift in Sources */,
 				714252D72707A04C001AE6F0 /* StatViewController.swift in Sources */,
 				714252C32707A024001AE6F0 /* Tile.swift in Sources */,
 				714252BD2707A024001AE6F0 /* TileMatches.swift in Sources */,
@@ -980,7 +973,6 @@
 				714252C22707A024001AE6F0 /* LetterPattern.swift in Sources */,
 				714252BE2707A024001AE6F0 /* Hand.swift in Sources */,
 				716E74E827C44CFC0031145C /* Card2022.swift in Sources */,
-				714252D02707A04B001AE6F0 /* CardView.swift in Sources */,
 				714252D62707A04C001AE6F0 /* HelpChapter.swift in Sources */,
 				714252C12707A024001AE6F0 /* TileIdMapList.swift in Sources */,
 				714252BC2707A024001AE6F0 /* Card2020.swift in Sources */,

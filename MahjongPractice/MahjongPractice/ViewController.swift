@@ -27,9 +27,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     var rackView: [UIView] = []
     var charlestonOutView: [UIView] = []
     var discardView: [UIView] = []
-    var cardView = CardView()
     let tileMatchView = TileMatchView()
-    let botView = BotView()
     var discardTableView = DiscardTableView()
     var validationView = ValidationView()
     var newGameMenu =  UIAlertController()
@@ -188,7 +186,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         showLabel()
         showButtons()
         showControlPanel()
-        cardView.update(maj)
         tileMatchView.update(maj)
     }
     
@@ -204,20 +201,12 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     
     func showGameMenu() {
         let eastWon = maj.eastWon()
-        //addWin()
         if maj.isGameOver() {
-            //addWin()
             maj.card.clearRackFilter()
-            //addWin()
             maj.east.tileMatches.clearRackFilter()
-            //addWin()
-            cardView.update(maj)
-            //addWin()
             tileMatchView.update(maj)
-            //addWin()
         }
         if maj.isGameOver() && eastWon {
-            //addWin()
             showWinMenu()
         } else if maj.isGameOver() && !lossCounted {
             addLoss()
@@ -300,7 +289,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         
     func showGameMenu(title: String, message: String, win: Bool) {
         newGameMenu = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        self.cardView.update(maj)
         self.tileMatchView.update(maj)
         
         newGameMenu.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
@@ -340,7 +328,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
         
     func eastWon() {
-        cardView.updateRackFilter(maj)
         tileMatchView.updateRackFilter(maj)
         gameOver()
     }
@@ -355,8 +342,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         maj.card.clearRackFilter()
         tileMatchView.clearRackFilter()
         showGame()
-        botView.showHighestPatternMatch = false
-        hideBotView()
         showBottomView()
         eightbamLabel.isHidden = false
         redealButton.isHidden = false
@@ -381,8 +366,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         discardTableView.hide()
         tileMatchView.clearRackFilter()
         showGame()
-        botView.showHighestPatternMatch = false
-        hideBotView()
         showBottomView()
         yearLabel?.text = maj.getYearText()
         mahjButton.isHidden = true
@@ -451,7 +434,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     func nextCharleston() -> Bool {
         maj.nextCharleston()
         showGame()
-        botView.update(maj)
         if maj.isCharlestonActive() == false {
             if discardTableView.isHidden == false {
                 discardTableView.show(parent: view, rowHeader: tableLocation(), maj: maj, margin: cardMarginX())
@@ -537,9 +519,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             showLabel()
             maj.lastDiscard = nil
             undo = true
-            cardView.update(maj)
             tileMatchView.update(maj)
-            botView.update(maj)
             discardTableView.showCounts(maj: maj)
             showHand()
         }
@@ -899,18 +879,9 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     
     func triggerCardView() {
         hideTileMatchView()
-        hideBotView()
-        if cardView.isHidden {
-            showCard()
-            cardView.updateRackFilter(maj)
-        } else {
-            hideCard()
-        }
     }
     
     func triggerTileMatchView() {
-        hideCard()
-        hideBotView()
         if tileMatchView.isHidden {
             showTileMatchView()
             tileMatchView.updateRackFilter(maj)
@@ -920,13 +891,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
     
     func triggerBotView() {
-        hideCard()
         hideTileMatchView()
-        if botView.isHidden {
-            showBotView()
-        } else {
-            hideBotView()
-        }
     }
 
     
@@ -937,8 +902,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     // -----------------------------------------------------------------------------------------
     
     func updateViews() {
-        cardView.filter(maj)
-        cardView.update(maj)
         tileMatchView.update(maj)
         updateMahjButton2()
     }
@@ -953,37 +916,14 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     
     func showBottomView() {
         switch(controlPanel.selectedSegmentIndex) {
-            case 0: showBotView()
-            case 1: showCard()
             case 2: showTileMatchView()
             default:
                 controlPanel.selectedSegmentIndex = 1
-                showCard()
         }
-    }
-    
-    func showCard() {
-        if maj.isCharlestonActive() {
-            hideBotView()
-        }
-        if maj.isGameOver() {
-            maj.card.clearRackFilter()
-        }
-        cardView.isHidden = false
-        cardView.showCard(self, x: cardMarginX(), y: cardLocationY(), width: cardWidth(), height: cardHeight(), bgcolor: self.getBackgroundColor(), maj: maj)
-        view.addSubview(cardView.cardView)
-        cardView.update(maj)
     }
    
-    func hideCard() {
-        cardView.isHidden = true
-        cardView.cardView.removeFromSuperview()
-    }
     
     func showTileMatchView() {
-        if maj.isCharlestonActive() {
-            hideBotView()
-        }
         tileMatchView.isHidden = false
         tileMatchView.showView(self, x: cardMarginX(), y: cardLocationY(), width: cardWidth(), height: cardHeight(), bgcolor: getBackgroundColor())
         view.addSubview(tileMatchView.tableView)
@@ -994,24 +934,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         tileMatchView.isHidden = true
         tileMatchView.tableView.removeFromSuperview()
     }
-    
-    func showBotView() {
-        hideCard()
-        hideTileMatchView()
-        if maj.isCharlestonActive() == false {
-            botView.isHidden = false
-            botView.showView(self, x: cardMarginX(), y: cardLocationPhone(), width: cardWidth(), height: botHeight(), blankColor: BlankColor)
-            view.addSubview(botView.tableView)
-            botView.update(maj)
-        }
-    }
-    
-    func hideBotView() {
-        if isTall() == false || maj.isCharlestonActive() {
-            botView.isHidden = true
-            botView.tableView.removeFromSuperview()
-        }
-    }
+   
     
     
     // -----------------------------------------------------------------------------------------
@@ -1284,9 +1207,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             handled = rackToDiscard(end: end, startTag: startTag)
         } else if didStartDiscard && shouldUndoDiscard(start, location: end) {
             handled = undoDiscard()
-        } else if didStartHand && isBot(end) {
-            handled = stealJoker(tag: startTag)
-        }
+        } 
         if !handled {
             sender.view!.center = start
         }
@@ -1353,7 +1274,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     func stealJoker(handLocation: CGPoint) -> Bool {
         let steal = maj.stealJoker(tile: getTile(location: start))
         if steal {
-            botView.update(maj)
             showHand()
         }
         return steal
@@ -1362,7 +1282,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     func stealJoker(tag: Int) -> Bool {
         let steal = maj.stealJoker(tile: getTile(tag: tag))
         if steal {
-            botView.update(maj)
             showHand()
         }
         return steal
@@ -1413,7 +1332,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 maj.east.tiles.remove(at: startIndex)
                 showHand()
                 showCharlestonOut()
-                cardView.update(maj)
                 tileMatchView.update(maj)
                 if label != nil {
                     label.text = maj.stateLabel()
@@ -1436,7 +1354,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 maj.east.tiles.remove(at: index)
                 showHand()
                 showDiscard()
-                cardView.update(maj)
                 tileMatchView.update(maj)
                 moved = true
             } else {
@@ -1517,9 +1434,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             showHand()
             showCharlestonOut()
             removed = true
-            cardView.update(maj)
             tileMatchView.update(maj)
-            botView.update(maj)
             label.text = maj.stateLabel()
         } else {
             showDebugMessage(ErrorId.charlestonToHand)
@@ -1540,7 +1455,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             showDiscard()
             showHand()
             moved = true
-            cardView.update(maj)
             tileMatchView.update(maj)
         }
         return moved
@@ -1563,7 +1477,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
             moved = true
             maj.letterPatternRackFilterPending = true
             maj.tileMatchesRackFilterPending = true
-            cardView.update(maj)
             tileMatchView.update(maj)
             if maj.east.rack?.tiles.count == 14 {
                 maj.card.match(maj.east.tiles + (maj.east.rack?.tiles)!, ignoreFilters: false)
@@ -1582,7 +1495,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 maj.discardTile = maj.east.removeFromRack(index)
                 showDiscard()
                 showRack()
-                cardView.update(maj)
                 tileMatchView.update(maj)
                 moved = true
             } else {
@@ -1680,7 +1592,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         showDiscard()
         showDiscardTable()
         maj.rackOpponentHands()
-        botView.update(maj)
         showBotWinMenu()
     }
     
@@ -1728,7 +1639,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
                 discardTableView.showCounts(maj: maj)
                 maj.discardCalled = false
             }
-            cardView.updateRackFilter(maj)
             tileMatchView.updateRackFilter(maj)
         }
         showGame()
@@ -1736,7 +1646,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
         if maj.wall.tiles.count == 98 {
             showBottomView()
         }
-        botView.update(maj)
         if maj.isWinBotEnabled() && maj.botWon() {
             botWon()
         }
@@ -1796,8 +1705,7 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     }
     
     func cardLocationPad() -> CGFloat {
-        let rackViewHeight = botView.isHidden ? 0 : botView.totalTileHeight()
-        return cardLocationPhone() + rackViewHeight + 20
+        return cardLocationPhone() + 0 + 20
     }
     
     func tableLocation() -> CGFloat { return charlestonTop() }
@@ -1821,7 +1729,6 @@ class ViewController: UIViewController, GameDelegate, NarrowViewDelegate, Settin
     func isHand(tag: Int) -> Bool { return tag / 100 == 2 }
     func isCharlestonOut(tag: Int) -> Bool { return tag / 100 == 3 }
     func isDiscard(tag: Int) -> Bool { return tag / 100 == 3}
-    func isBot(_ location: CGPoint) -> Bool { return botView.lowerCorner(location, tileHeight: tileHeight()) }
     
     func isCharlestonOut(_ location: CGPoint) -> Bool {
         let top = charlestonTop()
