@@ -24,6 +24,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
 
     var handView: [UIView] = []
     var rackView: [UIView] = []
+    
     var discardView: [UIView] = []
     var discardTableView = DiscardTableView()
     var newGameMenu =  UIAlertController()
@@ -170,7 +171,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             showDiscardTable()
         }
         showHand()
-        showLabel()
         showButtons()
     }
     
@@ -464,7 +464,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             discardTableView.countTile(maj.lastDiscard, increment: -1, maj: maj)
             maj.copy(lastMaj)
             showDiscard()
-            showLabel()
             maj.lastDiscard = nil
             undo = true
             discardTableView.showCounts(maj: maj)
@@ -516,37 +515,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     func hideDiscardTable() {
         discardTableView.isHidden = true
         discardTableView.hide()
-    }
-    
-   
-    // -----------------------------------------------------------------------------------------
-    //
-    //  State Label
-    //
-    // -----------------------------------------------------------------------------------------
-    
-    func showLabel() {
-        label?.removeFromSuperview()
-        var width: CGFloat = 120
-        var height: CGFloat = 50
-        var x = (CGFloat(discardIndex) * (tileWidth() + space)) - width - (margin * 2) + notch()
-        var y: CGFloat = charlestonTop()
-        if maj.isCharlestonActive() {
-            width = 300
-            x = (CGFloat(charlestonOutIndex) * (tileWidth() + space)) - width - (margin * 2) + notch()
-            y = row1()
-        } else if maj.stateLabel() == "Discard >" {
-            height = 20
-        }
-        let labelFrame = CGRect(x: x, y: y, width: width, height: height)
-        label = UILabel(frame: labelFrame)
-        label.text =  maj.stateLabel()
-        label.frame = labelFrame
-        label.textAlignment = .right
-        label.font = UIFont(name: "Chalkduster", size: 15)
-        label.textColor = UIColor.black
-        label.numberOfLines = 0
-        view.addSubview(label)
     }
     
     
