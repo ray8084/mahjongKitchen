@@ -133,30 +133,14 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         redeal()
     }
     
-    func enable2020(_ enable: Bool) {
-        maj.enable2020 = enable
-    }
-    
-    func enable2021(_ enable: Bool) {
-        maj.enable2021 = enable
-    }
-    
-    func enable2022(_ enable: Bool) {
-        maj.enable2022 = enable
-    }
-    
     func enable2023(_ enable: Bool) {
         maj.enable2023 = enable
     }
     
     func showGame() {
-        if maj.isCharlestonActive() {
-            clearRack()
-        } else {
-            showRack()
-            showDiscard()
-            showDiscardTable()
-        }
+        showRack()
+        showDiscard()
+        showDiscardTable()
         showHand()
         showButtons()
     }
@@ -503,7 +487,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     
     func showDiscardTable() {
         discardTableView.isHidden = false
-        discardTableView.show(parent: view, rowHeader: tableLocation(), maj: maj, margin: cardMarginX())
+        discardTableView.show(parent: view, rowHeader: tableLocation(), maj: maj, margin: 200)
     }
     
     func hideDiscardTable() {
@@ -1333,7 +1317,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         return cardLocationPhone() + 0 + 20
     }
     
-    func tableLocation() -> CGFloat { return charlestonTop() }
+    func tableLocation() -> CGFloat { return tileHeight() * 4 + margin * 5 }
     func cardMarginX() -> CGFloat { return notch() + margin }
     func cardHeight() -> CGFloat { return viewHeight() - cardLocationY() - 10 - controlPanelHeight() }
     func botHeight() -> CGFloat { return viewHeight() - botLocationY() - 10 - controlPanelHeight() }
@@ -1347,7 +1331,10 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     func row2() -> CGFloat { return row1() + rowHeight }
     func row3() -> CGFloat { return row2() + rowHeight }
     func row4() -> CGFloat { return row3() + rowHeight }
-    func discardTableBottom() -> CGFloat{ return row3() + rowHeight }
+    func row5() -> CGFloat { return row4() + rowHeight }
+    func row6() -> CGFloat { return row5() + rowHeight }
+    func row7() -> CGFloat { return row6() + rowHeight }
+    func discardTableBottom() -> CGFloat{ return row4() + rowHeight }
     func isRack(_ location: CGPoint) -> Bool { return location.y < handTop() }
     func isHand(_ location: CGPoint) -> Bool { return (location.y < handBottom() + margin) && (location.y > handTop()) }
     func isRack(tag: Int) -> Bool { return tag / 100 == 1 }
