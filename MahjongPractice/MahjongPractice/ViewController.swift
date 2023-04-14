@@ -793,6 +793,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         let end = sender.location(in: sender.view!.superview!)
         let endRow = getRow(end.y)
         var handled = false
+        print("\(row) \(endRow)")
         switch(row) {
         case 3:
             switch(endRow) {
@@ -815,11 +816,11 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     
     func getRow(_ location: Double) -> Int {
         var row = 0
-        if location < rackView2[0].frame.origin.y {
+        if location < rack1Bottom() {
             row = 1
-        } else if location < handView1[0].frame.origin.y {
+        } else if location < rack2Bottom() {
             row = 2
-        } else if location < handView2[0].frame.origin.y {
+        } else if location < hand1Bottom() {
             row = 3
         } else {
             row = 4
@@ -898,7 +899,11 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         let endIndex = getTileIndex(end)
         if startIndex < startHand.tiles.count {
             let tile = startHand.tiles.remove(at: startIndex)
-            if endIndex >= endHand.tiles.count {
+            if endHand.tiles.count == 15 {
+                let moveTile = endHand.tiles.remove(at: endHand.tiles.count - 1)
+                startHand.tiles.append(moveTile)
+                endHand.tiles.insert(tile, at: endIndex)
+            } else if endIndex >= endHand.tiles.count {
                 endHand.tiles.append(tile)
             } else {
                 endHand.tiles.insert(tile, at: endIndex)
@@ -1297,6 +1302,10 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     func botHeight() -> CGFloat { return viewHeight() - botLocationY() - 10 - controlPanelHeight() }
     func cardWidth() -> CGFloat { return viewWidth() - 20 }
     func handTop() -> CGFloat { return margin + tileHeight() + margin }
+    func rack1Bottom() -> CGFloat { return margin + tileHeight() + margin }
+    func rack2Bottom() -> CGFloat { return rack1Bottom() + tileHeight() + margin }
+    func hand1Bottom() -> CGFloat { return rack2Bottom() + tileHeight() + margin }
+    func hand2Bottom() -> CGFloat { return hand1Bottom() + tileHeight() + margin }
     func handBottom() -> CGFloat { return handTop() + tileHeight() }
     func charlestonTop() -> CGFloat { return handBottom() + margin }
     func charlestonBottom() -> CGFloat { return charlestonTop() + tileHeight() }
