@@ -735,11 +735,8 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             let tile = maj.east.removeFromRack(startIndex)
             maj.east.addToRack(tile, index: endIndex)
             showRack()
-            // markJoker(tile, index: endIndex)
             maj.east.rack?.markJokers()
             swapped = true
-        } else {
-            showDebugMessage(ErrorId.swapInRack)
         }
         return swapped
     }
@@ -755,8 +752,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
                 showHand()
                 showDiscard()
                 moved = true
-            } else {
-                showDebugMessage(ErrorId.toDiscard)
             }
             rackingInProgress = false
         }
@@ -779,38 +774,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             moved = true
         }
         return moved
-    }
-        
-    func markJoker(_ tile: Tile, index: Int) {
-        if (tile.isJoker()) {
-            maj.east.rack?.markJoker(joker: tile, index: index)
-        }
-    }
-    
-    func showJokerExposeLastMessage() {
-        let title = "Jokers to the Right"
-        let message = "Please expose jokers after other tiles. We automatically match jokers with the tile to the left.\nThis is not a Mahjong rule."
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
-        }));
-        
-        present(alert, animated: true, completion: nil)
-    }
-    
-    func charlestonToHand(startTag: Int) -> Bool {
-        var removed = false
-        let index = getTileColIndex(tag: startTag) - charlestonOutIndex
-        if index < maj.charleston.tiles.count {
-            let tile = maj.charleston.tiles.remove(at: index)
-            maj.east.tiles.append(tile)
-            showHand()
-            removed = true
-            label.text = maj.stateLabel()
-        } else {
-            showDebugMessage(ErrorId.charlestonToHand)
-        }
-        return removed
     }
     
     func discardToHand(end: CGPoint) -> Bool {
@@ -865,9 +828,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
                 showDiscard()
                 showRack()
                  moved = true
-            } else {
-                showDebugMessage(ErrorId.rackToDiscard)
-            }
+            } 
         }
         return moved
     }
@@ -891,13 +852,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             return false
         }
     }
-
-    func moveEntireRackToHand() {
-        while maj.east.rack?.tiles.count != 0 {
-            let tile = maj.east.rack?.tiles.remove(at: 0)
-            maj.east.tiles.append(tile!)
-        }
-    }
     
     func addTapGestureDiscard(_ tile: UIView) {
         if maj.disableTapToDiscard == false {
@@ -908,27 +862,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     
     @objc func handleTapGestureDiscard(_ sender: UITapGestureRecognizer) {
         let _ = nextState()
-    }
-    
-    func showDebugMessage(_ errorId: ErrorId) {
-        if maj.techSupportDebug {
-            let title = "ErrorId: \(errorId.rawValue)"
-            var message = "Unknown"
-            switch(errorId) {
-                case .charlestonToHand: message = "Error moving from charleston to hand."
-                case .rackToDiscard: message = "Error moving from rack to discard."
-                case .swapInHand: message = "Error swapping in hand."
-                case .swapInRack: message = "Error swapping in rack."
-                case .toCharlestonOut: message = "Error moving to charleston out."
-                case .toDiscard: message = "Error moving to discard."
-                case .toRack: message = "Error moving to rack."
-            }
-            message += " Take a screenshot if possible and contact support@eightbam.com."
-            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Continue", style: .default, handler: {(action:UIAlertAction) in
-            }));
-            present(alert, animated: true, completion: nil)
-        }
     }
            
     
