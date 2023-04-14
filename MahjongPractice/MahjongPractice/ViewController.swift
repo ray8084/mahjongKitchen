@@ -652,6 +652,20 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         var handled = false
         print("\(row) \(endRow)")
         switch(row) {
+        case 1:
+            switch(endRow) {
+            case 1: handled = swapInHand(hand: maj.east.rack!, end: end, startTag: startTag)
+            case 2: handled = swapBetweenHands(startHand: maj.east.rack!, endHand: maj.south.rack!, end: end, startTag: startTag)
+            case 3: handled = swapBetweenHands(startHand: maj.east.rack!, endHand: maj.east, end: end, startTag: startTag)
+            case 4: handled = swapBetweenHands(startHand: maj.east.rack!, endHand: maj.south, end: end, startTag: startTag)
+            default: handled = false }
+        case 2:
+            switch(endRow) {
+            case 1: handled = swapBetweenHands(startHand: maj.south.rack!, endHand: maj.east.rack!, end: end, startTag: startTag)
+            case 2: handled = swapBetweenHands(startHand: maj.south.rack!, endHand: maj.south.rack!, end: end, startTag: startTag)
+            case 3: handled = swapBetweenHands(startHand: maj.south.rack!, endHand: maj.east, end: end, startTag: startTag)
+            case 4: handled = swapBetweenHands(startHand: maj.south.rack!, endHand: maj.south, end: end, startTag: startTag)
+            default: handled = false }
         case 3:
             switch(endRow) {
             case 1: handled = moveToRack(hand: maj.east, rack: maj.east.rack!, end: end, startTag: startTag)
@@ -701,6 +715,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
                 hand.tiles.insert(tile, at: endIndex)
             }
             showHand()
+            showRack()
             swapped = true
         }
         return swapped
@@ -722,6 +737,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
                 endHand.tiles.insert(tile, at: endIndex)
             }
             showHand()
+            showRack()
             swapped = true
         }
         return swapped
@@ -828,7 +844,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
                 showDiscard()
                 showRack()
                  moved = true
-            } 
+            }
         }
         return moved
     }
