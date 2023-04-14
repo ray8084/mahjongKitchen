@@ -797,6 +797,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         switch(row) {
         case 3:
             switch(endRow) {
+            case 1: handled = moveToRack1(hand: maj.east, end: end, startTag: startTag)
             case 3: handled = swapInHand(hand: maj.east, end: end, startTag: startTag)
             case 4: handled = swapBetweenHands(startHand: maj.east, endHand: maj.south, end: end, startTag: startTag)
             default: handled = false }
@@ -969,40 +970,20 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         return moved
     }
     
-    func moveToRack(end: CGPoint, startTag: Int) -> Bool {
+    func moveToRack1(hand: Hand, end: CGPoint, startTag: Int) -> Bool {
         var moved = false
-        if maj.isCharlestonActive() == false {
-            let startIndex = getTileColIndex(tag: startTag)
-            let endIndex = getTileIndex(end)
-            if startIndex < maj.east.tiles.count {
-                let tile = maj.east.tiles.remove(at: startIndex)
-                if tile.isJoker() && !rackingInProgress {
-                    showJokerExposeLastMessage()
-                    maj.east.tiles.append(tile)
-                } else {
-                    if endIndex < (maj.east.rack?.tiles.count)! {
-                        maj.east.rack?.tiles.insert(tile,at: endIndex)
-                    } else {
-                        maj.east.rack?.tiles.append(tile)
-                    }
-                    if maj.east.rack?.tiles.count == 14 {
-                        maj.card.match(maj.east.tiles + (maj.east.rack?.tiles)!, ignoreFilters: false)
-                        gameOver()
-                    }
-                    rackingInProgress = true
-                    showHand()
-                    showRack()
-                    maj.letterPatternRackFilterPending = true
-                    maj.tileMatchesRackFilterPending = true
-                    // markJoker(tile, index: endIndex)
-                    maj.east.rack?.markJokers()
-                    moved = true
-                    updateViews()
-                   
-                }
+        let startIndex = getTileColIndex(tag: startTag)
+        let endIndex = getTileIndex(end)
+        if startIndex < hand.tiles.count {
+            let tile = hand.tiles.remove(at: startIndex)
+            if endIndex < (hand.rack?.tiles.count)! {
+                hand.rack?.tiles.insert(tile,at: endIndex)
             } else {
-                showDebugMessage(ErrorId.toRack)
+                hand.rack?.tiles.append(tile)
             }
+            showHand()
+            showRack()
+            moved = true
         }
         return moved
     }
