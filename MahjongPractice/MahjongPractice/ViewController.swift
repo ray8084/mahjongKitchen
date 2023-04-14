@@ -23,6 +23,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     let defaults = UserDefaults.standard
 
     var handView: [UIView] = []
+    var handView1: [UIView] = []
     var handView2: [UIView] = []
     var rackView: [UIView] = []
     var rackView2: [UIView] = []
@@ -48,7 +49,8 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     var newStart = true
     let rackRow = 0
     let handRow = 1
-    let handRow2 = 2
+    let handRow1 = 2
+    let handRow2 = 3
     let discardRow = 4
     var winCounted = false
     var lossCounted = false
@@ -90,7 +92,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         if viewDidAppear == false {
             setBackground()
             enable2023(true)
-            maj.setYearSegment(segment: Year.y2023)
+            load2023()
             redeal()
             viewDidAppear = true
         }
@@ -118,13 +120,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         }
     }
 
-    func getMaj() -> Maj {
-        return maj
-    }
-    
-    func override2021() -> Bool {
-        return maj.override2021
-    }
     
     
     // -----------------------------------------------------------------------------------------
@@ -132,17 +127,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     //  Game
     //
     // -----------------------------------------------------------------------------------------
-    
-    func load2021() {
-        changeYear(YearSegment.segment2021)
-        redeal()
-    }
-    
-    func load2022() {
-        changeYear(YearSegment.segment2022)
-        redeal()
-    }
-    
+       
     func load2023() {
         changeYear(YearSegment.segment2023)
         redeal()
@@ -356,28 +341,25 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     }
     
     func clearHand() {
-        for view in handView {
-            view.removeFromSuperview()
-        }
+        for view in handView { view.removeFromSuperview() }
+        for view in handView1 { view.removeFromSuperview() }
+        for view in handView2 { view.removeFromSuperview() }
         handView = []
-        
-        for view in handView2 {
-            view.removeFromSuperview()
-        }
+        handView1 = []
         handView2 = []
     }
         
     func showHand() {
         clearHand()
-        addTiles( tileView: &handView, hand: maj.east, col: 0, row: handRow)
-        let start = maj.east.tiles.count
-        let count = maxHandIndex - start
-        addBlanks( tileView: &handView, col: start, row: handRow, count: count, addGestures: false)
+        addTiles( tileView: &handView1, hand: maj.east, col: 0, row: handRow1)
+        var start = maj.east.tiles.count
+        var count = maxHandIndex - start + 1
+        addBlanks( tileView: &handView1, col: start, row: handRow1, count: count, addGestures: false)
         
-        addTiles( tileView: &handView2, hand: maj.east, col: 0, row: handRow2)
-        //start = maj.east.tiles.count
-        //let count = maxHandIndex - start
-        //addBlanks( tileView: &handView2, col: 0, row: handRow2, count: 13, addGestures: false)
+        addTiles( tileView: &handView2, hand: maj.south, col: 0, row: handRow2)
+        start = maj.south.tiles.count
+        count = maxHandIndex - start + 1
+        addBlanks( tileView: &handView2, col: start, row: handRow2, count: count, addGestures: false)
     }
     
     
@@ -701,6 +683,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             case 0: y = margin
             case 1: y = handTop()
             case 2: y = charlestonTop()
+            case 3: y = handTop() + charlestonTop() - margin
             default: y = 0.0
         }
         for tile in hand.tiles {
@@ -723,14 +706,14 @@ class ViewController: UIViewController, NarrowViewDelegate  {
                 addTapGestureDiscard(v)
             }
             
-            if newDeal && (row == 1) {
+            if newDeal && (row == 1 || row == 2 || row == 3) {
                 UIView.animate(withDuration: 0.5, delay: 0.2, options: [],
                     animations: {v.center.x += x},
                     completion: nil
                 )
             }
         }
-        if row == 1 {
+        if row == 3 {
             newDeal = false
         }
     }
@@ -757,6 +740,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             case 0: y = margin
             case 1: y = handTop()
             case 2: y = charlestonTop()
+            case 3: y = handTop() + charlestonTop() - margin
             default: y = 0.0
         }
         if start <= end {
@@ -1320,7 +1304,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         return height
     }
     
-    func tileWidth() -> CGFloat { return (viewWidth() - notch()) / 14.5 }
+    func tileWidth() -> CGFloat { return (viewWidth() - notch()) / 15.5 }
     func tileHeight() -> CGFloat { return tileWidth() * 62.5 / 46.0 }
     
     func notch() -> CGFloat {
