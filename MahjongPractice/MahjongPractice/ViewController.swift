@@ -232,7 +232,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         discardTableView.hide()
         maj.card.clearRackFilter()
         showGame()
-        showBottomView()
         reviewInProgress = false
     }
     
@@ -251,7 +250,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         resetMaj()
         discardTableView.hide()
         showGame()
-        showBottomView()
     }
     
     func resetMaj() {
@@ -450,56 +448,10 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         }
     }
     
-    @objc func helpButtonAction(sender: UIButton!) {
-        let help = HelpTableController(frame: view.frame, narrowViewDelegate: self)
-        show(help, sender: self)
-    }
-        
-    @objc func settingsButtonAction(sender: UIButton!) {
-    }
-    
     @objc func menuButtonAction(sender: UIButton!) {
         showSystemMenu()
     }
-    
-    @objc func sortButtonAction(sender: UIButton!) {
-        if maj.hideSortMessage == false {
-            let message = "Sort alternates between suits and numbers. Tap twice to resort with same method."
-            let alert = UIAlertController(title: "", message: message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
-                self.maj.userSort()
-                self.showHand()
-            }));
-            present(alert, animated: false, completion: nil)
-        } else {
-            self.maj.userSort()
-            self.showHand()
-        }
-    }
-   
-
-    
-    // -----------------------------------------------------------------------------------------
-    //
-    //  Bottom views
-    //
-    // -----------------------------------------------------------------------------------------
-    
-    func updateViews() {
-        updateMahjButton2()
-    }
-    
-    func updateMahjButton2() {
-        if maj.isCharlestonActive() {
-            //mahjButton2.isHidden = true
-        } else {
-            //mahjButton2.isHidden = !maj.disableAutomaj
-        }
-    }
-    
-    func showBottomView() {
-    }
-   
+      
     
     // -----------------------------------------------------------------------------------------
     //
@@ -934,7 +886,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             showRack()
             maj.letterPatternRackFilterPending = true
             maj.tileMatchesRackFilterPending = true
-            updateViews()
             return true
         } else {
             return false
@@ -1043,12 +994,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         }
         showGame()
         showDiscard()
-        if maj.wall.tiles.count == 98 {
-            showBottomView()
-        }
-        if maj.isWinBotEnabled() && maj.botWon() {
-            botWon()
-        }
         return true
     }
     
