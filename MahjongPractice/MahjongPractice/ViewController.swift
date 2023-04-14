@@ -282,7 +282,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     //  Discard
     //
     // -----------------------------------------------------------------------------------------
-    
+        
     func clearDiscard() {
         for view in discardView {
             view.removeFromSuperview()
@@ -301,6 +301,15 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         }
     }
 
+    func discard() -> Bool {
+        maj.discardLastDiscard()
+        showHand()
+        showRack()
+        showDiscard()
+        showDiscardTable()
+        return true
+    }
+        
     func offScreen(_ location: CGPoint) -> Bool {
         return Int(location.x / (tileWidth() + space)) > maxHandIndex
     }
@@ -470,9 +479,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             view.addSubview(v)
             tileView.append(v)
             index += 1
-            if row == discardRow {
-                addTapGestureDiscard(v)
-            }
             
             if newDeal && (row == 1 || row == 2 || row == 3) {
                 UIView.animate(withDuration: 0.5, delay: 0.2, options: [],
@@ -640,6 +646,14 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             case 4: handled = swapInHand(hand: maj.south, end: end, startTag: startTag)
             case 5: handled = moveToDiscard(hand: maj.south, startTag: startTag)
             default: handled = false }
+        case 5:
+            switch(endRow) {
+            case 1: print("todo")
+            case 2: print("todo")
+            case 3: print("todo")
+            case 4: print("todo")
+            case 5: handled = discard()
+            default: handled = false }
         default:
             print("todo")
         }
@@ -805,37 +819,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             }
         }
         return moved
-    }
-    
-    func removeFromRack(end: CGPoint, startTag: Int) -> Bool {
-        let startIndex = getTileColIndex(tag: startTag)
-        let endIndex = getTileIndex(end)
-        if (startIndex < (maj.east.rack?.tiles.count)!) && !maj.disableUndo {
-            let tile = maj.east.rack?.tiles.remove(at: startIndex)
-            if endIndex < maj.east.tiles.count {
-                maj.east.tiles.insert(tile!,at: endIndex)
-            } else {
-                maj.east.tiles.append(tile!)
-            }
-            showHand()
-            showRack()
-            maj.letterPatternRackFilterPending = true
-            maj.tileMatchesRackFilterPending = true
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    func addTapGestureDiscard(_ tile: UIView) {
-        if maj.disableTapToDiscard == false {
-            let tap = UITapGestureRecognizer(target: self, action: #selector(handleTapGestureDiscard(_:)))
-            tile.addGestureRecognizer(tap)
-        }
-    }
-    
-    @objc func handleTapGestureDiscard(_ sender: UITapGestureRecognizer) {
-        let _ = nextState()
     }
             
     
