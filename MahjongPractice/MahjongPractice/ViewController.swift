@@ -126,7 +126,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     // -----------------------------------------------------------------------------------------
        
     func load2023() {
-        changeYear(YearSegment.segment2023)
+        maj.setYearSegment(segment: YearSegment.segment2023)
         redeal()
     }
     
@@ -184,60 +184,12 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     }
     
     func showWinMenu() {
-        if (maj.unrecognizedHandDeclared() == false && doubleCheckYouWin()) {
-            let title = "Mahjong - You Win!"
-            let message = maj.card.winningHand(maj: maj)
-            showGameMenu(title: title, message: message, win: true)
-            addWin() // debugging
-        }
+        let title = "Mahjong - You Win!"
+        let message = maj.card.winningHand(maj: maj)
+        showGameMenu(title: title, message: message, win: true)
+        addWin() // debugging
     }
-    
-    func doubleCheckYouWin() -> Bool {
-        print("doubleCheckYouWin")
-        let highest = maj.card.getClosestPattern(tiles: maj.rackTiles())
-        var validMahjong = (highest.matchCount == 14)
-        if highest.year == Year.y2022 && highest.id == 2 {                                    // special case for FFFF 2022 222 222
-            if maj.specialCase2022Rack.count == 6 || maj.specialCase2022Rack.count == 10 {    // 2 sets of 2s are already racked
-                var rackedSuits = Set<String>()
-                for tile in maj.specialCase2022Rack {
-                    rackedSuits.insert(tile.suit)
-                }
-                print(rackedSuits)
-                var countOf2022Twos = 0
-                for tile in maj.east.rack!.tiles {
-                    if tile.number == 2 && rackedSuits.contains(tile.suit) == false {
-                        countOf2022Twos += 1
-                    }
-                }
-                print(countOf2022Twos)
-                if countOf2022Twos != 3 {
-                    validMahjong = false
-                    show2022JokerError()
-                }
-            }
-        }
-        return validMahjong
-    }
-    
-    func show2022JokerError() {
-        let message = "Joker error in 2022. Jokers are not allowed in singles and pairs including years, news"
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
-            self.newGameAction(false)
-        }));
-        
-        alert.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
-            self.replay()
-        }));
-        
-        alert.addAction(UIAlertAction(title: "Review", style: .default, handler: {(action:UIAlertAction) in
-            self.reviewInProgress = true
-        }));
-        
-        present(alert, animated: true, completion: nil)
-    }
-        
+           
     func showGameMenu(title: String, message: String, win: Bool) {
         newGameMenu = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
@@ -260,14 +212,11 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     }
         
     func newGameAction(_ win: Bool) {
-        if self.maj.shuffleWithSeed {
-            self.showShuffleKeywordMenu()
-        } else if win && (self.maj.card.getTotalWinCount() > 2 ) {
+        if win && (self.maj.card.getTotalWinCount() > 2 ) {
             self.redeal()
         } else {
             self.redeal()
         }
-        reviewInProgress = false
     }
         
     func eastWon() {
@@ -368,27 +317,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         count = maxHandIndex - start!
         addBlanks( tileView: &rackView2, col: start!, row: rackRow2, count: count, addGestures: false)
     }
-    
-    
-    // -----------------------------------------------------------------------------------------
-    //
-    //  Charleston
-    //
-    // -----------------------------------------------------------------------------------------
-    
-    func nextCharleston() -> Bool {
-        maj.nextCharleston()
-        showGame()
-        if maj.isCharlestonActive() == false {
-            if discardTableView.isHidden == false {
-                discardTableView.show(parent: view, rowHeader: tableLocation(), maj: maj, margin: cardMarginX())
-            }
-        }
-        return true
-    }
-
-    
-    
+        
     
     // -----------------------------------------------------------------------------------------
     //
@@ -590,30 +519,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         }));
         
         alert.addAction(UIAlertAction(title: "Continue", style: .cancel, handler: {(action:UIAlertAction) in
-        }));
-        
-        present(alert, animated: true, completion: nil)
-    }
-    
-    
-    // -----------------------------------------------------------------------------------------
-    //
-    //  Shuffle Keyword
-    //
-    // -----------------------------------------------------------------------------------------
-    
-    func showShuffleKeywordMenu() {
-        let title = "Duplicate Enabled"
-        let message = "Duplicate mode is enabled with keyword \(maj.shuffleSeed).  Every hand will be the same every time for all users with this keyword."
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "Disable Duplicate", style: .default, handler: {(action:UIAlertAction) in
-            self.maj.setShuffleWithSeed(false)
-            self.redeal()
-        }));
-        
-        alert.addAction(UIAlertAction(title: "Continue", style: .default, handler: {(action:UIAlertAction) in
-            self.redeal()
         }));
         
         present(alert, animated: true, completion: nil)
@@ -832,54 +737,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         return row
     }
        
-    func countSuitsForRacked2s() -> Int {
-        var suits = Set<String>()
-        for tile in maj.east.rack!.tiles {
-            if tile.number == 2 {
-                suits.insert(tile.suit)
-            }
-        }
-        return suits.count
-    }
-
-    func getTile(location: CGPoint) -> Tile{
-        var tile = Tile()
-        if isHand(location) {
-            let index = getTileIndex(location)
-            if index < maj.east.tiles.count {
-                tile = maj.east.tiles[index]
-            }
-        }
-        return tile
-    }
-    
-    func getTile(tag: Int) -> Tile {
-        var tile = Tile()
-        if isHand(tag: tag) {
-            let index = getTileColIndex(tag: tag)
-            if index < maj.east.tiles.count {
-                tile = maj.east.tiles[index]
-            }
-        }
-        return tile
-    }
-    
-    func stealJoker(handLocation: CGPoint) -> Bool {
-        let steal = maj.stealJoker(tile: getTile(location: start))
-        if steal {
-            showHand()
-        }
-        return steal
-    }
-    
-    func stealJoker(tag: Int) -> Bool {
-        let steal = maj.stealJoker(tile: getTile(tag: tag))
-        if steal {
-            showHand()
-        }
-        return steal
-    }
-       
     func swapInHand(hand: Hand, end: CGPoint, startTag: Int) -> Bool {
         var swapped = false
         let startIndex = getTileColIndex(tag: startTag)
@@ -935,25 +792,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         return swapped
     }
     
-    func moveToCharlestonOut(end: CGPoint, startTag: Int) -> Bool {
-        var moved = false
-        if maj.charleston.tiles.count < maj.maxCharleston {
-            let startIndex = getTileColIndex(tag: startTag)
-            if startIndex < maj.east.tiles.count {
-                maj.charleston.tiles.append(maj.east.tiles[startIndex])
-                maj.east.tiles.remove(at: startIndex)
-                showHand()
-                if label != nil {
-                    label.text = maj.stateLabel()
-                }
-                moved = true
-            } else {
-                showDebugMessage(ErrorId.toCharlestonOut)
-            }
-        }
-        return moved
-    }
-    
     func moveToDiscard(startTag: Int) -> Bool {
         print("moveToDiscard")
         var moved = false
@@ -971,7 +809,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             rackingInProgress = false
         }
         return moved
-    }  
+    }
     
     func moveToRack(hand: Hand, rack: Rack, end: CGPoint, startTag: Int) -> Bool {
         var moved = false
@@ -1118,7 +956,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     }
     
     @objc func handleTapGestureDiscard(_ sender: UITapGestureRecognizer) {
-        let _ = maj.isCharlestonActive() ? nextCharleston() : nextState()
+        let _ = nextState()
     }
     
     func showDebugMessage(_ errorId: ErrorId) {
@@ -1141,19 +979,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             present(alert, animated: true, completion: nil)
         }
     }
-    
-    
-    // -----------------------------------------------------------------------------------------
-    //
-    //  Change Years
-    //
-    // -----------------------------------------------------------------------------------------
-    
-    func changeYear(_ segmentIndex: Int) {
-        maj.setYearSegment(segment: segmentIndex)
-        updateViews()
-    }
-        
+           
     
     // -----------------------------------------------------------------------------------------
     //
