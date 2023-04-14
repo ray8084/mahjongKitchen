@@ -795,13 +795,15 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         var handled = false
         switch(row) {
         case 3:
-            if endRow == 3 {
-                handled = swap(hand: maj.east, end: end, startTag: startTag)
-            }
+            switch(endRow) {
+            case 3: handled = swapInHand(hand: maj.east, end: end, startTag: startTag)
+            case 4: handled = swapBetweenHands(startHand: maj.east, endHand: maj.south, end: end, startTag: startTag)
+            default: handled = false }
         case 4:
-            if endRow == 4 {
-                handled = swap(hand: maj.south, end: end, startTag: startTag)
-            }
+            switch(endRow) {
+            case 4: handled = swapInHand(hand: maj.south, end: end, startTag: startTag)
+            case 3: handled = swapBetweenHands(startHand: maj.south, endHand: maj.east, end: end, startTag: startTag)
+            default: handled = false }
         default:
             print("todo")
         }
@@ -873,7 +875,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         return steal
     }
        
-    func swap(hand: Hand, end: CGPoint, startTag: Int) -> Bool {
+    func swapInHand(hand: Hand, end: CGPoint, startTag: Int) -> Bool {
         var swapped = false
         let startIndex = getTileColIndex(tag: startTag)
         let endIndex = getTileIndex(end)
@@ -883,6 +885,23 @@ class ViewController: UIViewController, NarrowViewDelegate  {
                 hand.tiles.append(tile)
             } else {
                 hand.tiles.insert(tile, at: endIndex)
+            }
+            showHand()
+            swapped = true
+        }
+        return swapped
+    }
+    
+    func swapBetweenHands(startHand: Hand, endHand: Hand, end: CGPoint, startTag: Int) -> Bool {
+        var swapped = false
+        let startIndex = getTileColIndex(tag: startTag)
+        let endIndex = getTileIndex(end)
+        if startIndex < startHand.tiles.count {
+            let tile = startHand.tiles.remove(at: startIndex)
+            if endIndex >= endHand.tiles.count {
+                endHand.tiles.append(tile)
+            } else {
+                endHand.tiles.insert(tile, at: endIndex)
             }
             showHand()
             swapped = true
