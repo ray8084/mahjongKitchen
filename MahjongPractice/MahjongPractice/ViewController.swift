@@ -51,10 +51,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     let handRow1 = 2
     let handRow2 = 3
     let discardRow = 4
-    var winCounted = false
-    var lossCounted = false
-    var rackingInProgress = false
-    var reviewInProgress = false
     
     var menuButton: UIButton!
     var versionLabel: UILabel!
@@ -160,26 +156,8 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         }
         if maj.isGameOver() && eastWon {
             showWinMenu()
-        } else if maj.isGameOver() && !lossCounted {
-            addLoss()
-            showGameMenu(title: "Game", message: "", win: false)
         } else {
             showGameMenu(title: "Game", message: "", win: false);
-        }
-    }
-    
-    func addWin() {
-        print("ViewController addWin")
-        if maj.eastWon() && winCounted == false {
-            winCounted = maj.card.addWin(maj.card.winningIndex((maj.east.rack?.jokerCount())!))
-        }
-    }
-    
-    func addLoss() {
-        if lossCounted == false {
-            self.lossCounted = true
-            let letterPattern = maj.card.getClosestPattern(tiles: maj.east.tiles + maj.rackTiles())
-            self.maj.card.addLoss(letterPattern)
         }
     }
     
@@ -187,27 +165,19 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         let title = "Mahjong - You Win!"
         let message = maj.card.winningHand(maj: maj)
         showGameMenu(title: title, message: message, win: true)
-        addWin() // debugging
     }
            
     func showGameMenu(title: String, message: String, win: Bool) {
         newGameMenu = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         newGameMenu.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
-            self.addWin()
             self.newGameAction(win)
         }));
         
         newGameMenu.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
-            self.addWin()
             self.replay()
         }));
-        
-        newGameMenu.addAction(UIAlertAction(title: "Review", style: .default, handler: {(action:UIAlertAction) in
-            self.addWin()
-            self.reviewInProgress = true
-        }));
-        
+                
         present(newGameMenu, animated: true, completion: nil)
     }
         
@@ -224,15 +194,14 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     }
     
     func replay() {
-        winCounted = false
-        lossCounted = false
         newDeal = true
         maj.replay()
+        maj.south.draw(maj)
+        maj.south.sort()
         maj.discardTable.resetCounts()
         discardTableView.hide()
         maj.card.clearRackFilter()
         showGame()
-        reviewInProgress = false
     }
     
     
@@ -244,8 +213,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     
     @objc func redeal() {
         print("redeal")
-        winCounted = false
-        lossCounted = false
         newDeal = true
         resetMaj()
         discardTableView.hide()
@@ -253,17 +220,10 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     }
     
     func resetMaj() {
-        let enable2020 = maj.enable2020
-        let enable2021 = maj.enable2021
-        let shuffleSeed = maj.shuffleSeed
-        let shuffleWithSeed = maj.shuffleWithSeed
         app.maj = Maj()
         maj = app.maj
-        maj.enable2020 = enable2020
-        maj.enable2021 = enable2021
-        maj.shuffleSeed = shuffleSeed
-        maj.shuffleWithSeed = shuffleWithSeed
-        if maj.shuffleWithSeed { maj.deal() }
+        maj.south.draw(maj)
+        maj.south.sort()
         maj.discardTable.resetCounts()
         maj.card.clearRackFilter()
     }
@@ -548,6 +508,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             case 1: y = handTop()
             case 2: y = charlestonTop()
             case 3: y = handTop() + charlestonTop() - margin
+            case 4: y = hand2Bottom() + margin
             default: y = 0.0
         }
         if start <= end {
@@ -601,11 +562,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
                 break
             case .ended:
                 if sender.view!.superview != nil {
-                    if reviewInProgress {
-                        handlePanGestureDuringReview(sender)
-                    } else {
-                        handlePanGestureEnded(sender)
-                    }
+                    handlePanGestureEnded(sender)
                 }
                 break
             case .changed:
@@ -769,7 +726,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
                 showDiscard()
                 moved = true
             }
-            rackingInProgress = false
         }
         return moved
     }
@@ -830,7 +786,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
                 maj.card.match(maj.east.tiles + (maj.east.rack?.tiles)!, ignoreFilters: false)
                 gameOver()
             }
-            rackingInProgress = true
         }
         return moved
     }
@@ -879,46 +834,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     @objc func handleTapGestureDiscard(_ sender: UITapGestureRecognizer) {
         let _ = nextState()
     }
-           
-    
-    // -----------------------------------------------------------------------------------------
-    //
-    //  Bot Win
-    //
-    // -----------------------------------------------------------------------------------------
-        
-    func botWon() {
-        addLoss()
-        maj.discardLastDiscard()
-        showDiscard()
-        showDiscardTable()
-        maj.rackOpponentHands()
-        showBotWinMenu()
-    }
-    
-    func showBotWinMenu() {
-        let bot = maj.getWinningBot()
-        if bot != nil {
-            let title = "\(bot!.name) declared Mahjong\n"
-            let message = maj.getWinningBotPattern() + "\n" + maj.getWinningBotPatternNote()
-            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
             
-            alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
-                self.newGameAction(false)
-            }));
-            
-            alert.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
-                self.replay()
-            }));
-            
-            alert.addAction(UIAlertAction(title: "Review", style: .cancel, handler: {(action:UIAlertAction) in
-                self.reviewInProgress = true
-            }));
-            
-            present(alert, animated: true, completion: nil)
-        }
-    }
-    
     
     // -----------------------------------------------------------------------------------------
     //
@@ -928,9 +844,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     
     func nextState() -> Bool {
         print("nextState")
-        if maj.isWinBotEnabled() && maj.botWon() {
-            botWon()
-        } else if maj.isGameOver(){
+        if maj.isGameOver(){
             eastWon()
         } else {
             discardTableView.showCounts(maj: maj)
