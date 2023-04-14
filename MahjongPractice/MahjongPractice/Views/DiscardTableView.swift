@@ -110,9 +110,9 @@ class DiscardTableView {
         for i in 1...9 {
             let _ = showText(CGFloat((i+1)*gap)+offset, y: rowHeader, text: "\(i)", alignment: .center)
         }
-        let _ = showText(offset, y: row1(), text: "Dot", alignment: .left)
-        let _ = showText(offset, y: row2(), text: "Bam", alignment: .left)
-        let _ = showText(offset, y: row3(), text: "Crak", alignment: .left)
+        let _ = showText(offset+15, y: row1(), text: "Dot", alignment: .left)
+        let _ = showText(offset+15, y: row2(), text: "Bam", alignment: .left)
+        let _ = showText(offset+15, y: row3(), text: "Crak", alignment: .left)
         let _ = showText(CGFloat(11*gap)+offset, y: rowHeader, text: "D", alignment: .center)
         let _ = showText(CGFloat(13*gap)+offset, y: row1(), text: "Wind", alignment: .right)
         let _ = showText(CGFloat(13*gap)+offset, y: row2(), text: "Joker", alignment: .right)
@@ -121,6 +121,7 @@ class DiscardTableView {
         let _ = showText(CGFloat(16*gap)+offset, y: rowHeader, text: "S", alignment: .center)
         let _ = showText(CGFloat(17*gap)+offset, y: rowHeader, text: "W", alignment: .center)
         let _ = showText(CGFloat(18*gap)+offset, y: rowHeader, text: "E", alignment: .center)
+        let _ = showText(CGFloat(20*gap)+offset, y: rowHeader, text: "Wall", alignment: .right)
         showCounts(maj: maj)
     }
     
@@ -243,7 +244,7 @@ class DiscardTableView {
     func showWallCount(maj: Maj) {
         let wallCount =  maj.wall.tiles.count
         wallCountView.removeFromSuperview()
-        let v = showTextWide(CGFloat(21*gap)+offset, y: row3(), text: "\(wallCount) tiles remaining", alignment: .right)
+        let v = showText(CGFloat(20*gap)+offset, y: row1(), text: "\(wallCount)", alignment: .right)
         wallCountView = v
         
         //print("TotalCount \(wallCount) + \(maj.discardTable.getCount()) = \(wallCount + maj.discardTable.getCount())")

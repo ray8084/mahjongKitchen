@@ -58,8 +58,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     var reviewInProgress = false
     
     var menuButton: UIButton!
-    var settingsButton: UIButton!
-    var helpButton: UIButton!
     var versionLabel: UILabel!
 
     
@@ -503,36 +501,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     // -----------------------------------------------------------------------------------------
     
     func showButtons() {
-        addHelpButton()
-        addSettingsButton()
         addMenuButton()
-    }
-    
-    func addHelpButton() {
-        if helpButton == nil {
-            helpButton = UIButton()
-            helpButton.frame = CGRect(x: helpButtonLocationX(), y: buttonLocationY(),  width: buttonSize()+20, height: buttonSize())
-            helpButton.layer.cornerRadius = 5
-            helpButton.titleLabel!.font = UIFont(name: "Chalkduster", size: 16)!
-            helpButton.backgroundColor = .black
-            helpButton.setTitle("Help", for: .normal)
-            helpButton.alpha = 0.8
-            helpButton.addTarget(self, action: #selector(helpButtonAction), for: .touchUpInside)
-            view.addSubview(helpButton)
-        }
-    }
-    
-    func addSettingsButton() {
-        if settingsButton == nil {
-            settingsButton = UIButton()
-            settingsButton.frame = CGRect(x: settingsButtonLocationX(), y: buttonLocationY(),  width: buttonSize(), height: buttonSize())
-            let image = UIImage(named: "sideButtonSettings.png")
-            settingsButton.setImage(image, for: .normal)
-            settingsButton.imageView?.contentMode = .scaleAspectFit
-            settingsButton.alpha = 0.95
-            settingsButton.addTarget(self, action: #selector(settingsButtonAction), for: .touchUpInside)
-            view.addSubview(settingsButton)
-        }
     }
     
     func addMenuButton() {
@@ -575,13 +544,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             self.showHand()
         }
     }
-
-    func helpButtonLocationX() -> CGFloat { return viewWidth() - buttonSize() - 15 - 30 }
-    func menuButtonLocationX() -> CGFloat { return settingsButton.frame.origin.x - buttonSize() - 20 - 15 }
-    func settingsButtonLocationX() -> CGFloat { return helpButton.frame.origin.x - buttonSize() - 15 }
-    func buttonLocationY() -> CGFloat { return controlPanelLocationY() }
-    func buttonSize() -> CGFloat { return controlPanelHeight() }
-    
+   
 
     
     // -----------------------------------------------------------------------------------------
@@ -1352,5 +1315,8 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     func controlPanelHeight() -> CGFloat { return isTall() ? 45 : 32 }
     func controlPanelLocationX() -> CGFloat { return cardMarginX() }
     func controlPanelLocationY() -> CGFloat{ return cardLocationY() + cardHeight() + 5 }
+    func menuButtonLocationX() -> CGFloat { return cardMarginX() }
+    func buttonLocationY() -> CGFloat { return tableLocation() + rowHeight * 4 - buttonSize() }
+    func buttonSize() -> CGFloat { return controlPanelHeight() }
 }
 
