@@ -451,6 +451,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             case 1: y = handTop()
             case 2: y = charlestonTop()
             case 3: y = handTop() + charlestonTop() - margin
+            case 4: y = hand2Bottom() + margin
             default: y = 0.0
         }
         for tile in hand.tiles {
@@ -629,6 +630,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             case 2: handled = moveToRack(hand: maj.east, rack: maj.south.rack!, end: end, startTag: startTag)
             case 3: handled = swapInHand(hand: maj.east, end: end, startTag: startTag)
             case 4: handled = swapBetweenHands(startHand: maj.east, endHand: maj.south, end: end, startTag: startTag)
+            case 5: handled = moveToDiscard(hand: maj.east, startTag: startTag)
             default: handled = false }
         case 4:
             switch(endRow) {
@@ -636,6 +638,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             case 2: handled = moveToRack(hand: maj.south, rack: maj.south.rack!, end: end, startTag: startTag)
             case 3: handled = swapBetweenHands(startHand: maj.south, endHand: maj.east, end: end, startTag: startTag)
             case 4: handled = swapInHand(hand: maj.south, end: end, startTag: startTag)
+            case 5: handled = moveToDiscard(hand: maj.south, startTag: startTag)
             default: handled = false }
         default:
             print("todo")
@@ -647,14 +650,14 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     }
     
     func getRow(_ location: Double) -> Int {
-        var row = 0
+        var row = 5
         if location < rack1Bottom() {
             row = 1
         } else if location < rack2Bottom() {
             row = 2
         } else if location < hand1Bottom() {
             row = 3
-        } else {
+        } else if location < hand2Bottom() {
             row = 4
         }
         return row
@@ -714,14 +717,14 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         return swapped
     }
     
-    func moveToDiscard(startTag: Int) -> Bool {
+    func moveToDiscard(hand: Hand, startTag: Int) -> Bool {
         print("moveToDiscard")
         var moved = false
         if maj.discardTile == nil {
             let index = getTileColIndex(tag: startTag)
-            if index < maj.east.tiles.count {
-                maj.discardTile = maj.east.tiles[index]
-                maj.east.tiles.remove(at: index)
+            if index < hand.tiles.count {
+                maj.discardTile = hand.tiles[index]
+                hand.tiles.remove(at: index)
                 showHand()
                 showDiscard()
                 moved = true
