@@ -789,51 +789,42 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     
     func handlePanGestureEnded(_ sender: UIPanGestureRecognizer) {
         let startTag = sender.view?.tag ?? 0
-        let didStartRack = isRack(tag: startTag)
-        let didStartHand = isHand(tag: startTag)
-        let didStartDiscard = isDiscard(tag: startTag) && !maj.isCharlestonActive()
-        let didStartCharlestonOut = isCharlestonOut(tag: startTag)
+        let row = startTag / 100
         let end = sender.location(in: sender.view!.superview!)
+        let endRow = getRow(end.y)
         var handled = false
-        if didStartHand && isHand(end) {
-            handled = swapInHand(end: end, startTag: startTag)
-        } else if maj.isCharlestonActive() && didStartHand && isCharlestonOut(end) {
-            handled = moveToCharlestonOut(end: end, startTag: startTag)
-        } else if maj.isCharlestonActive() && didStartCharlestonOut && isHand(end) {
-            handled = charlestonToHand(startTag: startTag)
-        } else if maj.isCharlestonActive() && didStartCharlestonOut && maj.isCharlestonOutDone() && isCharlestonOut(end) {
-            handled = nextCharleston()
-        } else if maj.isCharlestonActive() && didStartCharlestonOut && maj.isCharlestonOutDone() && offScreen(end) {
-            handled = nextCharleston()
-        } else if didStartHand && isRack(end) {
-            handled = moveToRack(end: end, startTag: startTag)
-            validatePending = true
-        } else if didStartRack && isHand(end) {
-            handled = removeFromRack(end: end, startTag: startTag)
-        } else if didStartRack && isRack(end) {
-            handled = swapInRack(end: end, startTag: startTag)
-        } else if didStartHand && isDiscard(end) {
-            handled = moveToDiscard(startTag: startTag)
-            validateRack(maj)
-        } else if didStartDiscard && isHand(end) {
-            handled = discardToHand(end: end)
-        } else if didStartDiscard && shouldRemoveDiscard(start, location: end) {
-            handled = nextState()
-        } else if didStartDiscard && isRack(end) {
-            handled = moveFromDiscardToRack(end: end)
-            validatePending = true
-        } else if didStartRack && isDiscard(end) {
-            handled = rackToDiscard(end: end, startTag: startTag)
-        } else if didStartDiscard && shouldUndoDiscard(start, location: end) {
-            handled = undoDiscard()
-        } 
+        switch(row) {
+        case 3:
+            if endRow == 3 {
+                handled = swap(hand: maj.east, end: end, startTag: startTag)
+            }
+        case 4:
+            if endRow == 4 {
+                handled = swap(hand: maj.south, end: end, startTag: startTag)
+            }
+        default:
+            print("todo")
+        }
+
         if !handled {
             sender.view!.center = start
         }
     }
-   
-
     
+    func getRow(_ location: Double) -> Int {
+        var row = 0
+        if location < rackView2[0].frame.origin.y {
+            row = 1
+        } else if location < handView1[0].frame.origin.y {
+            row = 2
+        } else if location < handView2[0].frame.origin.y {
+            row = 3
+        } else {
+            row = 4
+        }
+        return row
+    }
+       
     func countSuitsForRacked2s() -> Int {
         var suits = Set<String>()
         for tile in maj.east.rack!.tiles {
@@ -881,22 +872,20 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         }
         return steal
     }
-    
-    func swapInHand(end: CGPoint, startTag: Int) -> Bool {
+       
+    func swap(hand: Hand, end: CGPoint, startTag: Int) -> Bool {
         var swapped = false
         let startIndex = getTileColIndex(tag: startTag)
         let endIndex = getTileIndex(end)
-        if startIndex < maj.east.tiles.count {
-            let tile = maj.east.tiles.remove(at: startIndex)
-            if endIndex >= maj.east.tiles.count {
-                maj.east.tiles.append(tile)
+        if startIndex < hand.tiles.count {
+            let tile = hand.tiles.remove(at: startIndex)
+            if endIndex >= hand.tiles.count {
+                hand.tiles.append(tile)
             } else {
-                maj.east.tiles.insert(tile, at: endIndex)
+                hand.tiles.insert(tile, at: endIndex)
             }
             showHand()
             swapped = true
-        } else {
-            showDebugMessage(ErrorId.swapInHand)
         }
         return swapped
     }
@@ -1293,18 +1282,17 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     func charlestonTop() -> CGFloat { return handBottom() + margin }
     func charlestonBottom() -> CGFloat { return charlestonTop() + tileHeight() }
     func rowHeader() -> CGFloat { return tileHeight() * 2 + (rowHeight/1.5) }
-    func row1() -> CGFloat { return rowHeader() + rowHeight }
+    func row1() -> CGFloat { return rowHeader() + rowHeight }   // these rows are not tile rows!  they are text rows.
     func row2() -> CGFloat { return row1() + rowHeight }
     func row3() -> CGFloat { return row2() + rowHeight }
     func row4() -> CGFloat { return row3() + rowHeight }
-    func row5() -> CGFloat { return row4() + rowHeight }
-    func row6() -> CGFloat { return row5() + rowHeight }
-    func row7() -> CGFloat { return row6() + rowHeight }
     func discardTableBottom() -> CGFloat{ return row4() + rowHeight }
     func isRack(_ location: CGPoint) -> Bool { return location.y < handTop() }
     func isHand(_ location: CGPoint) -> Bool { return (location.y < handBottom() + margin) && (location.y > handTop()) }
     func isRack(tag: Int) -> Bool { return tag / 100 == 1 }
     func isHand(tag: Int) -> Bool { return tag / 100 == 2 }
+    func isHand1(tag: Int) -> Bool { return tag / 100 == 3 }
+    func isHand2(tag: Int) -> Bool { return tag / 100 == 4 }
     func isCharlestonOut(tag: Int) -> Bool { return tag / 100 == 3 }
     func isDiscard(tag: Int) -> Bool { return tag / 100 == 3}
     
