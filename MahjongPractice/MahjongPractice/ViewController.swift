@@ -22,10 +22,9 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     let app = UIApplication.shared.delegate as! AppDelegate
     let defaults = UserDefaults.standard
 
-    var handView: [UIView] = []
     var handView1: [UIView] = []
     var handView2: [UIView] = []
-    var rackView: [UIView] = []
+    var rackView1: [UIView] = []
     var rackView2: [UIView] = []
     var discardView: [UIView] = []
     var discardTableView = DiscardTableView()
@@ -47,8 +46,8 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     var validatePending = false
     var redealPending = false
     var newStart = true
-    let rackRow = 0
-    let handRow = 1
+    let rackRow1 = 0
+    let rackRow2 = 1
     let handRow1 = 2
     let handRow2 = 3
     let discardRow = 4
@@ -323,10 +322,8 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     }
     
     func clearHand() {
-        for view in handView { view.removeFromSuperview() }
         for view in handView1 { view.removeFromSuperview() }
         for view in handView2 { view.removeFromSuperview() }
-        handView = []
         handView1 = []
         handView2 = []
     }
@@ -352,18 +349,24 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     // -----------------------------------------------------------------------------------------
     
     func clearRack() {
-        for view in rackView {
-            view.removeFromSuperview()
-        }
-        rackView = []
+        for view in rackView1 { view.removeFromSuperview() }
+        for view in rackView2 { view.removeFromSuperview() }
+        rackView1 = []
+        rackView2 = []
     }
 
     func showRack() {
         clearRack()
-        addTiles( tileView: &rackView, hand: maj.east.rack!, col: 0, row: rackRow)
-        let start = maj.east.rack?.tiles.count
-        let count = maxHandIndex - start!
-        addBlanks( tileView: &rackView, col: start!, row: rackRow, count: count, addGestures: false)
+        
+        addTiles( tileView: &rackView1, hand: maj.east.rack!, col: 0, row: rackRow1)
+        var start = maj.east.rack?.tiles.count
+        var count = maxHandIndex - start!
+        addBlanks( tileView: &rackView1, col: start!, row: rackRow1, count: count, addGestures: false)
+        
+        addTiles( tileView: &rackView2, hand: maj.south.rack!, col: 0, row: rackRow2)
+        start = maj.south.rack?.tiles.count
+        count = maxHandIndex - start!
+        addBlanks( tileView: &rackView2, col: start!, row: rackRow2, count: count, addGestures: false)
     }
     
     
@@ -712,15 +715,15 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         
     func changeTileImages() {
         for (index, tile) in maj.east.tiles.enumerated() {
-            if index < handView.count {
-                let view = handView[index] as! UIImageView
+            if index < handView1.count {
+                let view = handView1[index] as! UIImageView
                 view.image = UIImage(named: tile.getImage(maj:maj))
             }
         }
         
         for (index, tile) in maj.east.rack!.tiles.enumerated() {
-            if index < rackView.count {
-                let view = rackView[index] as! UIImageView
+            if index < rackView1.count {
+                let view = rackView1[index] as! UIImageView
                 view.image = UIImage(named: tile.getImage(maj:maj))
             }
         }
