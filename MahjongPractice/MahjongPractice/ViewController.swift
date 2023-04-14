@@ -797,14 +797,17 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         switch(row) {
         case 3:
             switch(endRow) {
-            case 1: handled = moveToRack1(hand: maj.east, end: end, startTag: startTag)
+            case 1: handled = moveToRack(hand: maj.east, rack: maj.east.rack!, end: end, startTag: startTag)
+            case 2: handled = moveToRack(hand: maj.east, rack: maj.south.rack!, end: end, startTag: startTag)
             case 3: handled = swapInHand(hand: maj.east, end: end, startTag: startTag)
             case 4: handled = swapBetweenHands(startHand: maj.east, endHand: maj.south, end: end, startTag: startTag)
             default: handled = false }
         case 4:
             switch(endRow) {
-            case 4: handled = swapInHand(hand: maj.south, end: end, startTag: startTag)
+            case 1: handled = moveToRack(hand: maj.south, rack: maj.east.rack!, end: end, startTag: startTag)
+            case 2: handled = moveToRack(hand: maj.south, rack: maj.south.rack!, end: end, startTag: startTag)
             case 3: handled = swapBetweenHands(startHand: maj.south, endHand: maj.east, end: end, startTag: startTag)
+            case 4: handled = swapInHand(hand: maj.south, end: end, startTag: startTag)
             default: handled = false }
         default:
             print("todo")
@@ -968,18 +971,18 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             rackingInProgress = false
         }
         return moved
-    }
+    }  
     
-    func moveToRack1(hand: Hand, end: CGPoint, startTag: Int) -> Bool {
+    func moveToRack(hand: Hand, rack: Rack, end: CGPoint, startTag: Int) -> Bool {
         var moved = false
         let startIndex = getTileColIndex(tag: startTag)
         let endIndex = getTileIndex(end)
         if startIndex < hand.tiles.count {
             let tile = hand.tiles.remove(at: startIndex)
-            if endIndex < (hand.rack?.tiles.count)! {
-                hand.rack?.tiles.insert(tile,at: endIndex)
+            if endIndex < rack.tiles.count {
+                rack.tiles.insert(tile,at: endIndex)
             } else {
-                hand.rack?.tiles.append(tile)
+                rack.tiles.append(tile)
             }
             showHand()
             showRack()
@@ -987,7 +990,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         }
         return moved
     }
-    
+        
     func markJoker(_ tile: Tile, index: Int) {
         if (tile.isJoker()) {
             maj.east.rack?.markJoker(joker: tile, index: index)
