@@ -135,6 +135,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         showDiscard()
         showDiscardTable()
         showHand()
+        showLabel()
         showButtons()
     }
     
@@ -303,8 +304,22 @@ class ViewController: UIViewController, NarrowViewDelegate  {
 
     func discard() -> Bool {
         maj.discardLastDiscard()
-        showHand()
-        showRack()
+        switch(maj.state) {
+        case State.east:
+            maj.discardTile = maj.west.getRandomDiscard(withFlowers: true)
+            maj.west.draw(maj)
+            maj.state = State.west
+        case State.west:
+            maj.discardTile = maj.wall.pullTiles(count: 1)[0]   // todo end of game
+            maj.state = State.wall
+        case State.wall:
+            maj.discardTile = maj.west.getRandomDiscard(withFlowers: true)
+            maj.west.draw(maj)
+            maj.state = State.west
+        default:
+            print("todo discard state")
+        }
+        showLabel()
         showDiscard()
         showDiscardTable()
         return true
@@ -390,6 +405,47 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     func hideDiscardTable() {
         discardTableView.isHidden = true
         discardTableView.hide()
+    }
+    
+    
+    // -----------------------------------------------------------------------------------------
+    //
+    //  State Label
+    //
+    // -----------------------------------------------------------------------------------------
+    
+    func showLabel() {
+        label?.removeFromSuperview()
+        let width: CGFloat = 120
+        let height: CGFloat = 75
+        let x = (CGFloat(discardIndex) * (tileWidth() + space)) - width - (margin * 2) + notch()
+        let y: CGFloat = hand2Bottom()
+        let labelFrame = CGRect(x: x, y: y, width: width, height: height)
+        label = UILabel(frame: labelFrame)
+        label.text =  getStateLabel()
+        label.frame = labelFrame
+        label.textAlignment = .right
+        label.font = UIFont(name: "Chalkduster", size: 15)
+        label.textColor = UIColor.black
+        label.numberOfLines = 0
+        view.addSubview(label)
+    }
+    
+    func getStateLabel() -> String {
+        var state = ""
+        
+        switch(maj.state) {
+        case State.west: state = "Discard from West"
+        case State.wall: state = "Tile from Wall"
+        default:
+            if maj.discardTile == nil {
+                state = "Drag discard tile here >"
+            } else {
+                state = "Drag off screen to discard"
+            }
+        }
+
+        return state
     }
     
     
@@ -741,6 +797,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
                 hand.tiles.remove(at: index)
                 showHand()
                 showDiscard()
+                showLabel()
                 moved = true
             }
         }
