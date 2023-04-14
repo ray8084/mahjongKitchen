@@ -310,12 +310,14 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             maj.west.draw(maj)
             maj.state = State.west
         case State.west:
-            maj.discardTile = maj.wall.pullTiles(count: 1)[0]   // todo end of game
+            maj.discardTile = maj.wall.tiles.count == 0 ? nil : maj.wall.pullTiles(count: 1)[0]
             maj.state = State.wall
         case State.wall:
-            maj.discardTile = maj.west.getRandomDiscard(withFlowers: true)
-            maj.west.draw(maj)
-            maj.state = State.west
+            if maj.wall.tiles.count != 0 {
+                maj.west.draw(maj)
+                maj.discardTile = maj.west.getRandomDiscard(withFlowers: true)
+                maj.state = State.west
+            }
         default:
             print("todo discard state")
         }
@@ -390,6 +392,17 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         present(alert, animated: true, completion: nil)
     }
     
+    func addTapGestureDiscard(_ tile: UIView) {
+        if maj.disableTapToDiscard == false {
+            let tap = UITapGestureRecognizer(target: self, action: #selector(handleTapGestureDiscard(_:)))
+            tile.addGestureRecognizer(tap)
+        }
+    }
+    
+    @objc func handleTapGestureDiscard(_ sender: UITapGestureRecognizer) {
+        let _ = discard()
+    }
+    
         
     // -----------------------------------------------------------------------------------------
     //
@@ -399,7 +412,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     
     func showDiscardTable() {
         discardTableView.isHidden = false
-        discardTableView.show(parent: view, rowHeader: tableLocation(), maj: maj, margin: 200)
+        discardTableView.show(parent: view, rowHeader: tableLocation(), maj: maj, margin: 120)
     }
     
     func hideDiscardTable() {
@@ -536,7 +549,11 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             tileView.append(v)
             index += 1
             
-            if newDeal && (row == 1 || row == 2 || row == 3) {
+            if row == discardRow {
+                addTapGestureDiscard(v)
+            }
+            
+            if newDeal && (row == 2 || row == 3) {
                 UIView.animate(withDuration: 0.5, delay: 0.2, options: [],
                     animations: {v.center.x += x},
                     completion: nil
