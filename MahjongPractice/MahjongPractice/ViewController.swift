@@ -23,8 +23,9 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     let defaults = UserDefaults.standard
 
     var handView: [UIView] = []
+    var handView2: [UIView] = []
     var rackView: [UIView] = []
-    
+    var rackView2: [UIView] = []
     var discardView: [UIView] = []
     var discardTableView = DiscardTableView()
     var newGameMenu =  UIAlertController()
@@ -47,7 +48,8 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     var newStart = true
     let rackRow = 0
     let handRow = 1
-    let discardRow = 2
+    let handRow2 = 2
+    let discardRow = 4
     var winCounted = false
     var lossCounted = false
     var rackingInProgress = false
@@ -358,6 +360,11 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             view.removeFromSuperview()
         }
         handView = []
+        
+        for view in handView2 {
+            view.removeFromSuperview()
+        }
+        handView2 = []
     }
         
     func showHand() {
@@ -366,6 +373,11 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         let start = maj.east.tiles.count
         let count = maxHandIndex - start
         addBlanks( tileView: &handView, col: start, row: handRow, count: count, addGestures: false)
+        
+        addTiles( tileView: &handView2, hand: maj.east, col: 0, row: handRow2)
+        //start = maj.east.tiles.count
+        //let count = maxHandIndex - start
+        //addBlanks( tileView: &handView2, col: 0, row: handRow2, count: 13, addGestures: false)
     }
     
     
