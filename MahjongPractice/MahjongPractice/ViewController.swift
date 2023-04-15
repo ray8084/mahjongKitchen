@@ -301,8 +301,20 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             addBlanks( tileView: &discardView, col: discardIndex, row: discardRow, count: 0, addGestures: false)
         }
     }
-
+    
+    func checkDiscard(end: CGPoint) -> Bool {
+        let endIndex = getTileIndex(end)
+        if endIndex > 13 {
+            return discard()
+        } else if endIndex < 13 {
+            return undoDiscard()
+        }
+        return false
+    }
+        
     func discard() -> Bool {
+        lastMaj.copy(maj)
+        maj.lastDiscard = maj.discardTile
         maj.discardLastDiscard()
         switch(maj.state) {
         case State.east:
@@ -352,14 +364,15 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     func undoDiscard() -> Bool {
         print("undoDiscard")
         var undo = false
-        if (maj.lastDiscard != nil) && !maj.disableUndo {
+        if maj.lastDiscard != nil {
             discardTableView.countTile(maj.lastDiscard, increment: -1, maj: maj)
             maj.copy(lastMaj)
-            showDiscard()
             maj.lastDiscard = nil
-            undo = true
             discardTableView.showCounts(maj: maj)
             showHand()
+            showDiscard()
+            showLabel()
+            undo = true
         }
         return undo
     }
@@ -459,7 +472,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             if maj.discardTile == nil {
                 state = "Drag discard tile here >"
             } else {
-                state = "Drag off screen to discard"
+                state = "Drag right to discard"
             }
         }
 
@@ -729,7 +742,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             case 2: handled = discardToHand(hand: maj.south.rack!, end: end)
             case 3: handled = discardToHand(hand: maj.east, end: end)
             case 4: handled = discardToHand(hand: maj.south, end: end)
-            case 5: handled = discard()
+            case 5: handled = checkDiscard(end: end)
             default: handled = false }
         default:
             print("todo")
