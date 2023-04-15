@@ -131,12 +131,12 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     }
     
     func showGame() {
+        showButtons()
         showRack()
         showDiscard()
         showDiscardTable()
         showHand()
         showLabel()
-        showButtons()
     }
     
     func gameOver() {
@@ -412,7 +412,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     
     func showDiscardTable() {
         discardTableView.isHidden = false
-        discardTableView.show(parent: view, rowHeader: tableLocation(), maj: maj, margin: 120)
+        discardTableView.show(parent: view, rowHeader: tableLocation(), maj: maj, margin: cardMarginX() + menuButton.frame.width)
     }
     
     func hideDiscardTable() {
@@ -433,6 +433,11 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         let height: CGFloat = 75
         let x = (CGFloat(discardIndex) * (tileWidth() + space)) - width - (margin * 2) + notch()
         let y: CGFloat = hand2Bottom()
+        
+        if view.frame.width < 569 {
+           // todo move the label below the discard spot for iphone SE
+        }
+        
         let labelFrame = CGRect(x: x, y: y, width: width, height: height)
         label = UILabel(frame: labelFrame)
         label.text =  getStateLabel()
@@ -569,8 +574,8 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         var index = Int((location.x - notch()) / (tileWidth() + space))
         if index < 0 {
             index = 0
-        } else if index > maxHandIndex {
-            index = maxHandIndex
+        } else if index > maxHandIndex + 1 {
+            index = maxHandIndex + 1
         }
         return index
     }
@@ -687,7 +692,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         let end = sender.location(in: sender.view!.superview!)
         let endRow = getRow(end.y)
         var handled = false
-        print("\(row) \(endRow)")
         switch(row) {
         case 1:
             switch(endRow) {
@@ -721,10 +725,10 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             default: handled = false }
         case 5:
             switch(endRow) {
-            case 1: print("todo")
-            case 2: print("todo")
-            case 3: print("todo")
-            case 4: print("todo")
+            case 1: handled = discardToHand(hand: maj.east.rack!, end: end)
+            case 2: handled = discardToHand(hand: maj.south.rack!, end: end)
+            case 3: handled = discardToHand(hand: maj.east, end: end)
+            case 4: handled = discardToHand(hand: maj.south, end: end)
             case 5: handled = discard()
             default: handled = false }
         default:
@@ -839,21 +843,20 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         return moved
     }
     
-    func discardToHand(end: CGPoint) -> Bool {
-        var moved = false
-        if maj.state == State.east {
-            let endIndex = getTileIndex(end)
-            if endIndex < maj.east.tiles.count {
-                maj.east.tiles.insert(maj.discardTile, at: endIndex)
-            } else {
-                maj.east.tiles.append(maj.discardTile)
-            }
-            maj.discardTile = nil
-            showDiscard()
-            showHand()
-            moved = true
+    func discardToHand(hand: Hand, end: CGPoint) -> Bool {
+        let endIndex = getTileIndex(end)
+        if endIndex < hand.tiles.count {
+            hand.tiles.insert(maj.discardTile, at: endIndex)
+        } else {
+            hand.tiles.append(maj.discardTile)
         }
-        return moved
+        maj.discardTile = nil
+        maj.state = State.east
+        showDiscard()
+        showHand()
+        showRack()
+        showLabel()
+        return true
     }
     
     func moveFromDiscardToRack(end: CGPoint) -> Bool {
