@@ -322,17 +322,14 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             maj.west.draw(maj)
             maj.state = State.west
         case State.west:
-            maj.discardTile = maj.wall.tiles.count == 0 ? nil : maj.wall.pullTiles(count: 1)[0]
-            maj.state = State.wall
-        case State.wall:
-            if maj.wall.tiles.count != 0 {
-                maj.west.draw(maj)
-                maj.discardTile = maj.west.getRandomDiscard(withFlowers: true)
-                maj.state = State.west
+            if maj.wall.tiles.count > 0 && maj.east.tiles.count < 15 {
+                maj.east.draw(maj)
             }
+            maj.state = State.east
         default:
             print("todo discard state")
         }
+        showHand()
         showLabel()
         showDiscard()
         showDiscardTable()
@@ -467,7 +464,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         
         switch(maj.state) {
         case State.west: state = "Discard from West"
-        case State.wall: state = "Tile from Wall"
         default:
             if maj.discardTile == nil {
                 state = "Drag discard tile here >"
