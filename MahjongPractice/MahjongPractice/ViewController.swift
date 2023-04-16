@@ -216,7 +216,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         print("redeal")
         newDeal = true
         resetMaj()
-        discardTableView.hide()
         showGame()
     }
     
@@ -224,9 +223,22 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         app.maj = Maj()
         maj = app.maj
         maj.south.draw(maj)
-        maj.south.sort()
         maj.discardTable.resetCounts()
-        maj.card.clearRackFilter()
+        sort()
+    }
+    
+    func sort() {
+        for tile in maj.south.tiles {
+            maj.east.tiles.append(tile)
+        }
+        maj.south.tiles = []
+        
+        maj.east.sort()
+        for _ in 1...14 {
+            let tile = maj.east.tiles.removeLast()
+            maj.south.tiles.append(tile)
+        }
+        maj.south.sort()
     }
     
     func clearHand() {
