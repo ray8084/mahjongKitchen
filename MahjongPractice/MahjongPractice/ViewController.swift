@@ -241,6 +241,21 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         maj.south.sort()
     }
     
+    func sortNumbers() {
+        for tile in maj.south.tiles {
+            maj.east.tiles.append(tile)
+        }
+        maj.south.tiles = []
+        
+        maj.east.sortNumbers()
+        for _ in 1...14 {
+            let tile = maj.east.tiles.removeLast()
+            maj.south.tiles.append(tile)
+        }
+        maj.south.sortNumbers()
+    }
+    
+    
     func clearHand() {
         for view in handView1 { view.removeFromSuperview() }
         for view in handView2 { view.removeFromSuperview() }
@@ -347,28 +362,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         showDiscardTable()
         return true
     }
-        
-    func offScreen(_ location: CGPoint) -> Bool {
-        return Int(location.x / (tileWidth() + space)) > maxHandIndex
-    }
-
-    func isDiscard(_ location: CGPoint) -> Bool {
-        let isDiscardRow = (location.y < charlestonBottom() + margin) && (location.y > charlestonTop())
-        let isDiscardIndex = (getTileIndex(location) == discardIndex)
-        return isDiscardRow && isDiscardIndex
-    }
-    
-    func shouldRemoveDiscard(_ start: CGPoint, location: CGPoint) -> Bool {
-        let movedRight = start.x < location.x
-        let isDiscardRow = (location.y > charlestonTop())
-        let isDiscardIndex = (getTileIndex(location) == discardIndex)
-        return isDiscardRow && isDiscardIndex && movedRight
-    }
-    
-    func shouldUndoDiscard(_ start: CGPoint, location: CGPoint) -> Bool {
-        let movedLeft = (start.x - 20) > location.x
-        return movedLeft
-    }
     
     func undoDiscard() -> Bool {
         print("undoDiscard")
@@ -384,34 +377,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             undo = true
         }
         return undo
-    }
-        
-    func validateRack(_ maj: Maj) {
-        if validatePending {
-            let message = maj.validateRack()
-            validatePending = false
-            if message != "" {
-                showRackError(message)
-            }
-        }
-    }
-
-    func showRackError(_ message: String) {
-        let alert = UIAlertController(title: "Singles and Pairs Error", message: message, preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
-            self.redeal()
-        }));
-        
-        alert.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
-            self.replay()
-        }));
-        
-        alert.addAction(UIAlertAction(title: "Continue", style: .cancel, handler: {(action:UIAlertAction) in
-            self.validatePending = true
-        }));
-        
-        present(alert, animated: true, completion: nil)
     }
     
     func addTapGestureDiscard(_ tile: UIView) {
@@ -696,17 +661,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         }
     }
     
-    func handlePanGestureDuringReview(_ sender: UIPanGestureRecognizer ) {
-        let startTag = sender.view?.tag ?? 0
-        let endLocation = sender.location(in: sender.view!.superview!)
-        if isRack(tag: startTag) && isRack(endLocation) {
-            let _ = swapInRack(end: endLocation, startTag: startTag)
-        } else {
-            sender.view!.center = start
-            showGameMenu()
-        }
-    }
-    
     func handlePanGestureEnded(_ sender: UIPanGestureRecognizer) {
         let startTag = sender.view?.tag ?? 0
         let row = startTag / 100
@@ -880,70 +834,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         return true
     }
     
-    func moveFromDiscardToRack(end: CGPoint) -> Bool {
-        var moved = false
-        if maj.state != State.east {
-            let endIndex = getTileIndex(end)
-            if endIndex < (maj.east.rack?.tiles.count)! {
-                maj.east.rack?.tiles.insert(maj.discardTile, at: endIndex)
-            } else {
-                maj.east.rack?.tiles.append(maj.discardTile)
-            }
-            maj.state = State.east
-            label.text = maj.stateLabel()
-            maj.discardTile = nil
-            showDiscard()
-            showRack()
-            moved = true
-            maj.letterPatternRackFilterPending = true
-            maj.tileMatchesRackFilterPending = true
-            if maj.east.rack?.tiles.count == 14 {
-                maj.card.match(maj.east.tiles + (maj.east.rack?.tiles)!, ignoreFilters: false)
-                gameOver()
-            }
-        }
-        return moved
-    }
-
-    func rackToDiscard(end: CGPoint, startTag: Int) -> Bool {
-        var moved = false
-        if !maj.disableUndo {
-            let index = getTileColIndex(tag: startTag)
-            if index < maj.east.getRackCount() {
-                maj.discardTile = maj.east.removeFromRack(index)
-                showDiscard()
-                showRack()
-                 moved = true
-            }
-        }
-        return moved
-    }
-            
-    
-    // -----------------------------------------------------------------------------------------
-    //
-    //  State Machine
-    //
-    // -----------------------------------------------------------------------------------------
-    
-    func nextState() -> Bool {
-        print("nextState")
-        if maj.isGameOver(){
-            eastWon()
-        } else {
-            discardTableView.showCounts(maj: maj)
-            lastMaj.copy(maj)
-            label.text = maj.nextState()
-            if maj.discardCalled {
-                discardTableView.showCounts(maj: maj)
-                maj.discardCalled = false
-            }
-        }
-        showGame()
-        showDiscard()
-        return true
-    }
-    
     
     // -----------------------------------------------------------------------------------------
     //
@@ -1001,8 +891,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     func tableLocation() -> CGFloat { return tileHeight() * 4 + margin * 5 }
     func cardMarginX() -> CGFloat { return notch() + margin }
     func cardHeight() -> CGFloat { return viewHeight() - cardLocationY() - 10 - controlPanelHeight() }
-    func botHeight() -> CGFloat { return viewHeight() - botLocationY() - 10 - controlPanelHeight() }
-    func cardWidth() -> CGFloat { return viewWidth() - 20 }
     func handTop() -> CGFloat { return margin + tileHeight() + margin }
     func rack1Bottom() -> CGFloat { return margin + tileHeight() + margin }
     func rack2Bottom() -> CGFloat { return rack1Bottom() + tileHeight() + margin }
@@ -1023,16 +911,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     func isHand(tag: Int) -> Bool { return tag / 100 == 2 }
     func isHand1(tag: Int) -> Bool { return tag / 100 == 3 }
     func isHand2(tag: Int) -> Bool { return tag / 100 == 4 }
-    func isCharlestonOut(tag: Int) -> Bool { return tag / 100 == 3 }
-    func isDiscard(tag: Int) -> Bool { return tag / 100 == 3}
-    
-    func isCharlestonOut(_ location: CGPoint) -> Bool {
-        let top = charlestonTop()
-        let bottom = charlestonBottom() + margin
-        return (location.y > top) && (location.y < bottom) && (getTileIndex(location) >= charlestonOutIndex)
-    }
-    
-    func controlPanelWidth() -> CGFloat { return isTall() ? 450 : 300 }
     func controlPanelHeight() -> CGFloat { return isTall() ? 45 : 32 }
     func controlPanelLocationX() -> CGFloat { return cardMarginX() }
     func controlPanelLocationY() -> CGFloat{ return cardLocationY() + cardHeight() + 5 }
