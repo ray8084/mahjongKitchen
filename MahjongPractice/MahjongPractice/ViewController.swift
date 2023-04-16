@@ -13,9 +13,10 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     
     var backgroundImageView: UIImageView!
     var viewDidAppear = false
-    let BlankColor = UIColor(white: 0.95, alpha: 0.7)
+    let RackColor = UIColor(white: 0.93, alpha: 0.7)
+    let HandColor = UIColor(white: 0.99, alpha: 0.9)
     let BackgroundColor = UIColor.init(red: 225.0/255.0, green: 230.0/255.0, blue: 223.0/255.0, alpha: 1)
-    let BackgroundColorDarkMode = UIColor.init(red: 225.0/255.0, green: 230.0/255.0, blue: 223.0/255.0, alpha: 1)
+    let BackgroundColorDarkMode = UIColor.init(red: 185.0/255.0, green: 190.0/255.0, blue: 183.0/255.0, alpha: 1)
     
     var maj: Maj!
     var lastMaj: Maj!
@@ -107,7 +108,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     
     func getBackgroundColor() -> UIColor {
         if #available(iOS 12.0, *) {
-            return traitCollection.userInterfaceStyle == .light ? BackgroundColor : BackgroundColorDarkMode
+            return traitCollection.userInterfaceStyle == .light ? BackgroundColorDarkMode : BackgroundColorDarkMode
         } else {
             return BackgroundColor
         }
@@ -288,12 +289,12 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         addTiles( tileView: &handView1, hand: maj.east, col: 0, row: handRow1)
         var start = maj.east.tiles.count
         var count = maxHandIndex - start + 1
-        addBlanks( tileView: &handView1, col: start, row: handRow1, count: count, addGestures: false)
+        addBlanks( tileView: &handView1, col: start, row: handRow1, count: count, addGestures: false, color: HandColor)
         
         addTiles( tileView: &handView2, hand: maj.south, col: 0, row: handRow2)
         start = maj.south.tiles.count
         count = maxHandIndex - start + 1
-        addBlanks( tileView: &handView2, col: start, row: handRow2, count: count, addGestures: false)
+        addBlanks( tileView: &handView2, col: start, row: handRow2, count: count, addGestures: false, color: HandColor)
     }
     
     
@@ -315,13 +316,13 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         
         addTiles( tileView: &rackView1, hand: maj.east.rack!, col: 0, row: rackRow1)
         var start = maj.east.rack?.tiles.count
-        var count = maxHandIndex - start!
-        addBlanks( tileView: &rackView1, col: start!, row: rackRow1, count: count, addGestures: false)
+        var count = maxHandIndex - start! + 1
+        addBlanks( tileView: &rackView1, col: start!, row: rackRow1, count: count, addGestures: false, color: RackColor)
         
         addTiles( tileView: &rackView2, hand: maj.south.rack!, col: 0, row: rackRow2)
         start = maj.south.rack?.tiles.count
-        count = maxHandIndex - start!
-        addBlanks( tileView: &rackView2, col: start!, row: rackRow2, count: count, addGestures: false)
+        count = maxHandIndex - start! + 1
+        addBlanks( tileView: &rackView2, col: start!, row: rackRow2, count: count, addGestures: false, color: RackColor)
     }
         
     
@@ -345,7 +346,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             discard.tiles.append(maj.discardTile)
             addTiles( tileView: &discardView, hand: discard, col: discardIndex, row: discardRow)
         } else {
-            addBlanks( tileView: &discardView, col: discardIndex, row: discardRow, count: 0, addGestures: false)
+            addBlanks( tileView: &discardView, col: discardIndex, row: discardRow, count: 0, addGestures: false, color: RackColor)
         }
     }
     
@@ -618,7 +619,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         return tag % 100 - 1
     }
     
-    func addBlanks( tileView: inout [UIView], col: Int, row: Int, count: Int, addGestures: Bool) {
+    func addBlanks( tileView: inout [UIView], col: Int, row: Int, count: Int, addGestures: Bool, color: UIColor) {
         let start = col
         let end = col + count
         var y: CGFloat = 0.0
@@ -634,7 +635,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             for index in start...end {
                 let x = CGFloat(index) * (tileWidth() + space) + margin + notch()
                 let v = UIView(frame:CGRect(x: x, y: y, width: tileWidth(),height: tileHeight()))
-                v.backgroundColor = BlankColor
+                v.backgroundColor = color
                 v.layer.masksToBounds = true
                 v.layer.cornerRadius = tileWidth() / 8
                 if addGestures {
