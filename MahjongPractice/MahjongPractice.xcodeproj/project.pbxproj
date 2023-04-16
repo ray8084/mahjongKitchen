@@ -124,15 +124,9 @@
 		714252A027079FED001AE6F0 /* blind3.png in Resources */ = {isa = PBXBuildFile; fileRef = 7142523727079FED001AE6F0 /* blind3.png */; };
 		714252A127079FED001AE6F0 /* 2bam.png in Resources */ = {isa = PBXBuildFile; fileRef = 7142523827079FED001AE6F0 /* 2bam.png */; };
 		714252B32707A024001AE6F0 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252A22707A023001AE6F0 /* Deck.swift */; };
-		714252B42707A024001AE6F0 /* Card2019.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252A32707A023001AE6F0 /* Card2019.swift */; };
-		714252B52707A024001AE6F0 /* Card2021.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252A42707A023001AE6F0 /* Card2021.swift */; };
-		714252B62707A024001AE6F0 /* Card2016.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252A52707A023001AE6F0 /* Card2016.swift */; };
-		714252B72707A024001AE6F0 /* Card2018.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252A62707A023001AE6F0 /* Card2018.swift */; };
 		714252B82707A024001AE6F0 /* TileIdListList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252A72707A023001AE6F0 /* TileIdListList.swift */; };
 		714252B92707A024001AE6F0 /* Maj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252A82707A023001AE6F0 /* Maj.swift */; };
 		714252BA2707A024001AE6F0 /* Rack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252A92707A023001AE6F0 /* Rack.swift */; };
-		714252BB2707A024001AE6F0 /* Card2017.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252AA2707A023001AE6F0 /* Card2017.swift */; };
-		714252BC2707A024001AE6F0 /* Card2020.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252AB2707A023001AE6F0 /* Card2020.swift */; };
 		714252BD2707A024001AE6F0 /* TileMatches.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252AC2707A023001AE6F0 /* TileMatches.swift */; };
 		714252BE2707A024001AE6F0 /* Hand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252AD2707A023001AE6F0 /* Hand.swift */; };
 		714252BF2707A024001AE6F0 /* DiscardTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714252AE2707A023001AE6F0 /* DiscardTable.swift */; };
@@ -152,6 +146,12 @@
 		716E74E827C44CFC0031145C /* Card2022.swift in Sources */ = {isa = PBXBuildFile; fileRef = 716E74E727C44CFC0031145C /* Card2022.swift */; };
 		7182A9DD2997F3660043A3EA /* Card2023.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7182A9DC2997F3660043A3EA /* Card2023.swift */; };
 		71980F9B28B43B9D00BFAD57 /* lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 71980F9A28B43B9D00BFAD57 /* lock.png */; };
+		71AA192729EB995200BC3CD0 /* Card2021.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AA192129EB995200BC3CD0 /* Card2021.swift */; };
+		71AA192829EB995200BC3CD0 /* Card2017.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AA192229EB995200BC3CD0 /* Card2017.swift */; };
+		71AA192929EB995200BC3CD0 /* Card2018.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AA192329EB995200BC3CD0 /* Card2018.swift */; };
+		71AA192A29EB995200BC3CD0 /* Card2019.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AA192429EB995200BC3CD0 /* Card2019.swift */; };
+		71AA192B29EB995200BC3CD0 /* Card2016.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AA192529EB995200BC3CD0 /* Card2016.swift */; };
+		71AA192C29EB995200BC3CD0 /* Card2020.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AA192629EB995200BC3CD0 /* Card2020.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -296,15 +296,9 @@
 		7142523727079FED001AE6F0 /* blind3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blind3.png; sourceTree = "<group>"; };
 		7142523827079FED001AE6F0 /* 2bam.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 2bam.png; sourceTree = "<group>"; };
 		714252A22707A023001AE6F0 /* Deck.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
-		714252A32707A023001AE6F0 /* Card2019.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card2019.swift; sourceTree = "<group>"; };
-		714252A42707A023001AE6F0 /* Card2021.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card2021.swift; sourceTree = "<group>"; };
-		714252A52707A023001AE6F0 /* Card2016.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card2016.swift; sourceTree = "<group>"; };
-		714252A62707A023001AE6F0 /* Card2018.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card2018.swift; sourceTree = "<group>"; };
 		714252A72707A023001AE6F0 /* TileIdListList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileIdListList.swift; sourceTree = "<group>"; };
 		714252A82707A023001AE6F0 /* Maj.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Maj.swift; sourceTree = "<group>"; };
 		714252A92707A023001AE6F0 /* Rack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rack.swift; sourceTree = "<group>"; };
-		714252AA2707A023001AE6F0 /* Card2017.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card2017.swift; sourceTree = "<group>"; };
-		714252AB2707A023001AE6F0 /* Card2020.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card2020.swift; sourceTree = "<group>"; };
 		714252AC2707A023001AE6F0 /* TileMatches.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileMatches.swift; sourceTree = "<group>"; };
 		714252AD2707A023001AE6F0 /* Hand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hand.swift; sourceTree = "<group>"; };
 		714252AE2707A023001AE6F0 /* DiscardTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscardTable.swift; sourceTree = "<group>"; };
@@ -325,6 +319,12 @@
 		716E74E727C44CFC0031145C /* Card2022.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card2022.swift; sourceTree = "<group>"; };
 		7182A9DC2997F3660043A3EA /* Card2023.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card2023.swift; sourceTree = "<group>"; };
 		71980F9A28B43B9D00BFAD57 /* lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock.png; sourceTree = "<group>"; };
+		71AA192129EB995200BC3CD0 /* Card2021.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card2021.swift; sourceTree = "<group>"; };
+		71AA192229EB995200BC3CD0 /* Card2017.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card2017.swift; sourceTree = "<group>"; };
+		71AA192329EB995200BC3CD0 /* Card2018.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card2018.swift; sourceTree = "<group>"; };
+		71AA192429EB995200BC3CD0 /* Card2019.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card2019.swift; sourceTree = "<group>"; };
+		71AA192529EB995200BC3CD0 /* Card2016.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card2016.swift; sourceTree = "<group>"; };
+		71AA192629EB995200BC3CD0 /* Card2020.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card2020.swift; sourceTree = "<group>"; };
 		8A035980D389C5C22DDD03CB /* Pods-MahjongPractice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MahjongPractice.release.xcconfig"; path = "Target Support Files/Pods-MahjongPractice/Pods-MahjongPractice.release.xcconfig"; sourceTree = "<group>"; };
 		A668A2FB6B118FAF6D0F3252 /* Pods_MahjongPractice_MahjongPracticeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MahjongPractice_MahjongPracticeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3B66BE8F9ED207F6CA2AB29 /* Pods-MahjongPractice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MahjongPractice.debug.xcconfig"; path = "Target Support Files/Pods-MahjongPractice/Pods-MahjongPractice.debug.xcconfig"; sourceTree = "<group>"; };
@@ -445,12 +445,12 @@
 			isa = PBXGroup;
 			children = (
 				714252AF2707A023001AE6F0 /* Card.swift */,
-				714252A52707A023001AE6F0 /* Card2016.swift */,
-				714252AA2707A023001AE6F0 /* Card2017.swift */,
-				714252A62707A023001AE6F0 /* Card2018.swift */,
-				714252A32707A023001AE6F0 /* Card2019.swift */,
-				714252AB2707A023001AE6F0 /* Card2020.swift */,
-				714252A42707A023001AE6F0 /* Card2021.swift */,
+				71AA192529EB995200BC3CD0 /* Card2016.swift */,
+				71AA192229EB995200BC3CD0 /* Card2017.swift */,
+				71AA192329EB995200BC3CD0 /* Card2018.swift */,
+				71AA192429EB995200BC3CD0 /* Card2019.swift */,
+				71AA192629EB995200BC3CD0 /* Card2020.swift */,
+				71AA192129EB995200BC3CD0 /* Card2021.swift */,
 				716E74E727C44CFC0031145C /* Card2022.swift */,
 				7182A9DC2997F3660043A3EA /* Card2023.swift */,
 				714252A22707A023001AE6F0 /* Deck.swift */,
@@ -956,24 +956,24 @@
 				714252B82707A024001AE6F0 /* TileIdListList.swift in Sources */,
 				714252C22707A024001AE6F0 /* LetterPattern.swift in Sources */,
 				714252BE2707A024001AE6F0 /* Hand.swift in Sources */,
+				71AA192A29EB995200BC3CD0 /* Card2019.swift in Sources */,
+				71AA192829EB995200BC3CD0 /* Card2017.swift in Sources */,
 				716E74E827C44CFC0031145C /* Card2022.swift in Sources */,
 				714252D62707A04C001AE6F0 /* HelpChapter.swift in Sources */,
 				714252C12707A024001AE6F0 /* TileIdMapList.swift in Sources */,
-				714252BC2707A024001AE6F0 /* Card2020.swift in Sources */,
 				7142519E27078624001AE6F0 /* AppDelegate.swift in Sources */,
 				714252D52707A04C001AE6F0 /* DiscardTableView.swift in Sources */,
 				714252DC2707A0FF001AE6F0 /* IAPHelper.swift in Sources */,
 				714252BA2707A024001AE6F0 /* Rack.swift in Sources */,
 				714252BF2707A024001AE6F0 /* DiscardTable.swift in Sources */,
-				714252B72707A024001AE6F0 /* Card2018.swift in Sources */,
-				714252B52707A024001AE6F0 /* Card2021.swift in Sources */,
 				714252D22707A04C001AE6F0 /* HelpTableController.swift in Sources */,
 				7182A9DD2997F3660043A3EA /* Card2023.swift in Sources */,
-				714252BB2707A024001AE6F0 /* Card2017.swift in Sources */,
+				71AA192B29EB995200BC3CD0 /* Card2016.swift in Sources */,
 				714252D12707A04B001AE6F0 /* NarrowViewController.swift in Sources */,
-				714252B62707A024001AE6F0 /* Card2016.swift in Sources */,
+				71AA192C29EB995200BC3CD0 /* Card2020.swift in Sources */,
+				71AA192929EB995200BC3CD0 /* Card2018.swift in Sources */,
+				71AA192729EB995200BC3CD0 /* Card2021.swift in Sources */,
 				714252B92707A024001AE6F0 /* Maj.swift in Sources */,
-				714252B42707A024001AE6F0 /* Card2019.swift in Sources */,
 				714252C02707A024001AE6F0 /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
