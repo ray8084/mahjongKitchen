@@ -16,6 +16,7 @@ class Tile {
     var id = 0
     var sortId = 0
     var sortNumbers = 0
+    var sortOddEven = 0
     var jokerFlag = false
     
     func copy(_ copy: Tile) {
@@ -28,19 +29,21 @@ class Tile {
         id = copy.id
         sortId = copy.sortId
         sortNumbers = copy.sortNumbers
+        sortOddEven = copy.sortOddEven
         jokerFlag = copy.jokerFlag
     }
     
     init() {
     }
     
-    init(named: String, num: Int, suit: String, id: Int, sortId: Int, sortNum: Int) {
+    init(named: String, num: Int, suit: String, id: Int, sortId: Int, sortNum: Int, sortOddEven: Int) {
         self.name = named
         self.number = num
         self.suit = suit
         self.id = id
         self.sortId = sortId
         self.sortNumbers = sortNum
+        self.sortOddEven = sortOddEven
     }
     
     init(_ tile: Tile) {
@@ -54,6 +57,7 @@ class Tile {
         self.jokerNumber = tile.jokerNumber
         self.jokerId = tile.jokerId
         self.jokerFlag = tile.jokerFlag
+        self.sortOddEven = tile.sortOddEven
     }
     
     func isJoker() -> Bool {

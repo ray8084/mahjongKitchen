@@ -239,6 +239,8 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             maj.south.tiles.append(tile)
         }
         maj.south.sort()
+    
+        showHand()
     }
     
     func sortNumbers() {
@@ -253,6 +255,24 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             maj.south.tiles.append(tile)
         }
         maj.south.sortNumbers()
+        
+        showHand()
+    }
+    
+    func sortOddEven() {
+        for tile in maj.south.tiles {
+            maj.east.tiles.append(tile)
+        }
+        maj.south.tiles = []
+        
+        maj.east.sortOddEven()
+        for _ in 1...14 {
+            let tile = maj.east.tiles.removeLast()
+            maj.south.tiles.append(tile)
+        }
+        maj.south.sortOddEven()
+        
+        showHand()
     }
     
     
@@ -499,11 +519,37 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             self.replay()
         }));
         
-        alert.addAction(UIAlertAction(title: "Continue", style: .cancel, handler: {(action:UIAlertAction) in
+        alert.addAction(UIAlertAction(title: "Sort", style: .default, handler: {(action:UIAlertAction) in
+            self.showSortMenu()
+        }));
+                
+        alert.addAction(UIAlertAction(title: "Continue", style: .default, handler: {(action:UIAlertAction) in
         }));
         
         present(alert, animated: true, completion: nil)
     }
+    
+    func showSortMenu() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Sort by Suit", style: .default, handler: {(action:UIAlertAction) in
+            self.sort()
+        }));
+        
+        alert.addAction(UIAlertAction(title: "Sort by Numbers", style: .default, handler: {(action:UIAlertAction) in
+            self.sortNumbers()
+        }));
+        
+        alert.addAction(UIAlertAction(title: "Sort by Even then Odd", style: .default, handler: {(action:UIAlertAction) in
+            self.sortOddEven()
+        }));
+                
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action:UIAlertAction) in
+        }));
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
     
     
     // -----------------------------------------------------------------------------------------

@@ -29,35 +29,38 @@ class Deck {
         for loop in 1...4 {
             for index in 1...9 {
                 let sortNum = 7 + (index * 3)
-                tiles.append(Tile(named: "\(index)dot", num: index, suit: "dot", id: index, sortId: index+10, sortNum: sortNum))
+                let sortOddEven = index % 2 == 0 ? 10 + index : 40 + index
+                tiles.append(Tile(named: "\(index)dot", num: index, suit: "dot", id: index, sortId: index+10, sortNum: sortNum, sortOddEven: sortOddEven))
             }
             for index in 1...9 {
                 let sortNum = 8 + (index * 3)
-                tiles.append(Tile(named: "\(index)bam", num: index, suit: "bam", id: index+10, sortId: index+20, sortNum: sortNum))
+                let sortOddEven = index % 2 == 0 ? 20 + index : 50 + index
+                tiles.append(Tile(named: "\(index)bam", num: index, suit: "bam", id: index+10, sortId: index+20, sortNum: sortNum, sortOddEven: sortOddEven))
             }
             for index in 1...9 {
                 let sortNum = 9 + (index * 3)
-                tiles.append(Tile(named: "\(index)crak", num: index, suit: "crak", id: index+20, sortId: index+30, sortNum: sortNum))
+                let sortOddEven = index % 2 == 0 ? 30 + index : 60 + index
+                tiles.append(Tile(named: "\(index)crak", num: index, suit: "crak", id: index+20, sortId: index+30, sortNum: sortNum, sortOddEven: sortOddEven))
             }
             appendJoker()
             appendJoker()
-            tiles.append(Tile(named: "red", num: 10, suit: "crak", id: 30, sortId: 43, sortNum: 43))
-            tiles.append(Tile(named: "green", num: 10, suit: "bam", id: 20, sortId: 42, sortNum: 42))
-            tiles.append(Tile(named: "soap", num: 10, suit: "dot", id: 10, sortId: 41, sortNum: 41))
-            tiles.append(Tile(named: "north", num: 1, suit: "wnd", id: 31, sortId: 51, sortNum: 51))
-            tiles.append(Tile(named: "south", num: 2, suit: "wnd", id: 32, sortId: 52, sortNum: 52))
-            tiles.append(Tile(named: "west", num: 3, suit: "wnd", id: 33, sortId: 53, sortNum: 53))
-            tiles.append(Tile(named: "east", num: 4, suit: "wnd", id: 34, sortId: 54, sortNum: 54))
-            tiles.append(Tile(named: "f\(loop)", num: 12, suit: "flwr", id: 35, sortId: 1, sortNum: 1))
+            tiles.append(Tile(named: "red", num: 10, suit: "crak", id: 30, sortId: 43, sortNum: 43, sortOddEven: 73))
+            tiles.append(Tile(named: "green", num: 10, suit: "bam", id: 20, sortId: 42, sortNum: 42, sortOddEven: 72))
+            tiles.append(Tile(named: "soap", num: 10, suit: "dot", id: 10, sortId: 41, sortNum: 41, sortOddEven: 71))
+            tiles.append(Tile(named: "north", num: 1, suit: "wnd", id: 31, sortId: 51, sortNum: 51, sortOddEven: 81))
+            tiles.append(Tile(named: "south", num: 2, suit: "wnd", id: 32, sortId: 52, sortNum: 52, sortOddEven: 82))
+            tiles.append(Tile(named: "west", num: 3, suit: "wnd", id: 33, sortId: 53, sortNum: 53, sortOddEven: 83))
+            tiles.append(Tile(named: "east", num: 4, suit: "wnd", id: 34, sortId: 54, sortNum: 54, sortOddEven: 84))
+            tiles.append(Tile(named: "f\(loop)", num: 12, suit: "flwr", id: 35, sortId: 1, sortNum: 1, sortOddEven: 1))
         }
-        tiles.append(Tile(named: "sum", num: 12, suit: "flwr", id: 35, sortId: 2, sortNum: 2))
-        tiles.append(Tile(named: "aut", num: 12, suit: "flwr", id: 35, sortId: 3, sortNum: 3))
-        tiles.append(Tile(named: "win", num: 12, suit: "flwr", id: 35, sortId: 4, sortNum: 4))
-        tiles.append(Tile(named: "spr", num: 12, suit: "flwr", id: 35, sortId: 5, sortNum: 5))
+        tiles.append(Tile(named: "sum", num: 12, suit: "flwr", id: 35, sortId: 2, sortNum: 2, sortOddEven: 2))
+        tiles.append(Tile(named: "aut", num: 12, suit: "flwr", id: 35, sortId: 3, sortNum: 3, sortOddEven: 3))
+        tiles.append(Tile(named: "win", num: 12, suit: "flwr", id: 35, sortId: 4, sortNum: 4, sortOddEven: 4))
+        tiles.append(Tile(named: "spr", num: 12, suit: "flwr", id: 35, sortId: 5, sortNum: 5, sortOddEven: 5))
     }
     
     func appendJoker() {
-        let joker = Tile(named: "joker", num: 11, suit: "jkr", id: 36, sortId: 55, sortNum: 55)
+        let joker = Tile(named: "joker", num: 11, suit: "jkr", id: 36, sortId: 55, sortNum: 55, sortOddEven: 85)
         joker.jokerFlag = true
         tiles.append(joker)
     }

@@ -521,7 +521,7 @@ class Maj {
     }
                           
     func forceDebugHand() {
-        east.tiles = []
+        /*east.tiles = []
         let joker1 = Tile(named: "joker", num: 11, suit: "jkr", id: 36, sortId: 55, sortNum: 55)
         joker1.jokerFlag = true
         east.tiles.append(joker1)
@@ -539,7 +539,7 @@ class Maj {
         east.tiles.append(Tile(named: "2bam", num: 2, suit: "bam", id: 12, sortId: 12, sortNum: 12))
         east.tiles.append(Tile(named: "2crak", num: 2, suit: "crak", id: 22, sortId: 22, sortNum: 22))
         east.tiles.append(Tile(named: "2crak", num: 2, suit: "crak", id: 22, sortId: 22, sortNum: 22))
-        east.tiles.append(Tile(named: "2crak", num: 2, suit: "crak", id: 22, sortId: 22, sortNum: 22))
+        east.tiles.append(Tile(named: "2crak", num: 2, suit: "crak", id: 22, sortId: 22, sortNum: 22))*/
     }
     
     func replay() {

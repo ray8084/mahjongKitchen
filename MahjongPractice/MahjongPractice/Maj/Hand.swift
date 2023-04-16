@@ -287,11 +287,15 @@ class Hand {
     func sortNumbers() {
         tiles.sort(by: { $0.sortNumbers < $1.sortNumbers })
     }
+    
+    func sortOddEven() {
+        tiles.sort(by: { $0.sortOddEven < $1.sortOddEven })
+    }
 
     func getSortedTiles() -> Hand {
         let sortedTiles = Hand("")
         for tile in tiles {
-            let newTile = Tile(named: tile.name, num: tile.number, suit: tile.suit, id: tile.id, sortId: tile.sortId, sortNum: tile.sortNumbers)
+            let newTile = Tile(named: tile.name, num: tile.number, suit: tile.suit, id: tile.id, sortId: tile.sortId, sortNum: tile.sortNumbers, sortOddEven: tile.sortOddEven)
             sortedTiles.tiles.append(newTile)
         }
         sortedTiles.sort()
@@ -369,7 +373,7 @@ class Hand {
     }
    
     func addJoker() {
-        tiles.append(Tile(named: "joker", num: 11, suit: "jkr", id: 36, sortId: 55, sortNum: 55))
+        tiles.append(Tile(named: "joker", num: 11, suit: "jkr", id: 36, sortId: 55, sortNum: 55, sortOddEven: 85))
     }
     
     func printTiles() {
