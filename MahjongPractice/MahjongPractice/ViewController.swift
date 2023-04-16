@@ -723,6 +723,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             case 2: handled = swapBetweenHands(startHand: maj.east.rack!, endHand: maj.south.rack!, end: end, startTag: startTag)
             case 3: handled = swapBetweenHands(startHand: maj.east.rack!, endHand: maj.east, end: end, startTag: startTag)
             case 4: handled = swapBetweenHands(startHand: maj.east.rack!, endHand: maj.south, end: end, startTag: startTag)
+            case 5: handled = moveToDiscard(hand: maj.east.rack!, startTag: startTag)
             default: handled = false }
         case 2:
             switch(endRow) {
@@ -730,6 +731,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             case 2: handled = swapBetweenHands(startHand: maj.south.rack!, endHand: maj.south.rack!, end: end, startTag: startTag)
             case 3: handled = swapBetweenHands(startHand: maj.south.rack!, endHand: maj.east, end: end, startTag: startTag)
             case 4: handled = swapBetweenHands(startHand: maj.south.rack!, endHand: maj.south, end: end, startTag: startTag)
+            case 5: handled = moveToDiscard(hand: maj.south.rack!, startTag: startTag)
             default: handled = false }
         case 3:
             switch(endRow) {
