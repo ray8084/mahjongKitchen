@@ -114,8 +114,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         }
     }
 
-    
-    
+        
     // -----------------------------------------------------------------------------------------
     //
     //  Game
@@ -478,6 +477,34 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     
     // -----------------------------------------------------------------------------------------
     //
+    //  Check for Mahjong
+    //
+    // -----------------------------------------------------------------------------------------
+    
+    func checkForMahjong() {
+        let highest = maj.card.getClosestPattern(tiles: maj.east.rack!.tiles)
+        print(highest.text.string)
+        print(highest.matchCount)
+        if highest.matchCount == 14 {
+            showFirstMahjong(pattern: highest)
+        }
+        
+    }
+        
+    
+    func showFirstMahjong(pattern: LetterPattern) {
+        let message = pattern.text.string + " " + pattern.note.string
+        
+        let alert = UIAlertController(title: "First Mahjong!", message: message, preferredStyle: .alert)
+                
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
+        }));
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    // -----------------------------------------------------------------------------------------
+    //
     //  Buttons
     //
     // -----------------------------------------------------------------------------------------
@@ -763,6 +790,10 @@ class ViewController: UIViewController, NarrowViewDelegate  {
 
         if !handled {
             sender.view!.center = start
+        }
+        
+        if handled {
+            checkForMahjong()
         }
     }
     
