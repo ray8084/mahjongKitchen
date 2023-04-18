@@ -93,7 +93,26 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             load2023()
             redeal()
             viewDidAppear = true
+            // buildIcon()
         }
+    }
+    
+    func buildIcon() {
+        view.backgroundColor = getBackgroundColor()
+        let v = UIImageView(frame:CGRect(x: 0, y: 0, width: 1024, height: 1024))
+        v.contentMode = .scaleAspectFit
+        v.layer.masksToBounds = true
+        v.image = UIImage(named: "TRANS-ICON-WHITE.png")
+        view.addSubview(v)
+        
+        let title = UILabel(frame: CGRect(x: 0, y: 412, width: 1024, height: 200))
+        title.text =  "Two Hand"
+        title.textAlignment = .center
+        title.textColor = UIColor.white
+        title.alpha = 1.0
+        title.backgroundColor = getBackgroundColor()
+        title.font = UIFont.boldSystemFont(ofSize: 200.0)
+        view.addSubview(title)
     }
     
     func setBackground(){
@@ -910,6 +929,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             if index < hand.tiles.count {
                 maj.discardTile = hand.tiles[index]
                 hand.tiles.remove(at: index)
+                showRack()
                 showHand()
                 showDiscard()
                 showLabel()
