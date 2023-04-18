@@ -142,41 +142,12 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         showHand()
         showLabel()
     }
-    
-    func gameOver() {
-        maj.discardLastDiscard()
-        maj.state = State.wall
-        label.text = "Game Over"
-        if maj.eastWon() == false {
-            maj.rackOpponentHands()
-        }
-        showGameMenu()
-    }
-    
-    func showGameMenu() {
-        let eastWon = maj.eastWon()
-        if maj.isGameOver() {
-            maj.card.clearRackFilter()
-            maj.east.tileMatches.clearRackFilter()
-        }
-        if maj.isGameOver() && eastWon {
-            showWinMenu()
-        } else {
-            showGameMenu(title: "Game", message: "", win: false);
-        }
-    }
-    
-    func showWinMenu() {
-        let title = "Mahjong - You Win!"
-        let message = maj.card.winningHand(maj: maj)
-        showGameMenu(title: title, message: message, win: true)
-    }
            
     func showGameMenu(title: String, message: String, win: Bool) {
         newGameMenu = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         newGameMenu.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
-            self.newGameAction(win)
+            self.redeal()
         }));
         
         newGameMenu.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
@@ -184,18 +155,6 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         }));
                 
         present(newGameMenu, animated: true, completion: nil)
-    }
-        
-    func newGameAction(_ win: Bool) {
-        if win && (self.maj.card.getTotalWinCount() > 2 ) {
-            self.redeal()
-        } else {
-            self.redeal()
-        }
-    }
-        
-    func eastWon() {
-        gameOver()
     }
     
     func replay() {
@@ -372,8 +331,12 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         switch(maj.state) {
         case State.east:
             maj.discardTile = maj.west.getRandomDiscard(withFlowers: true)
-            maj.west.draw(maj)
-            maj.state = State.west
+            if maj.wall.tiles.count > 0 {
+                maj.west.draw(maj)
+                maj.state = State.west
+            } else {
+                showGameMenu(title: "Game Over", message: "Wall hand.  No tiles left.", win: false);
+            }
         case State.west:
             if maj.wall.tiles.count > 0 && maj.east.tiles.count < 15 {
                 maj.east.draw(maj)
@@ -612,7 +575,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
-            self.newGameAction(false)
+            self.redeal()
         }));
         
         alert.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
