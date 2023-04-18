@@ -17,6 +17,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     let HandColor = UIColor(white: 0.99, alpha: 0.9)
     let BackgroundColor = UIColor.init(red: 225.0/255.0, green: 230.0/255.0, blue: 223.0/255.0, alpha: 1)
     let BackgroundColorDarkMode = UIColor.init(red: 185.0/255.0, green: 190.0/255.0, blue: 183.0/255.0, alpha: 1)
+    let BackgroundColorDefense = UIColor.init(red: 74.0/255.0, green: 96.0/255.0, blue: 42.0/255.0, alpha: 1)
     
     var maj: Maj!
     var lastMaj: Maj!
@@ -98,19 +99,20 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     }
     
     func buildIcon() {
-        view.backgroundColor = getBackgroundColor()
         let v = UIImageView(frame:CGRect(x: 0, y: 0, width: 1024, height: 1024))
         v.contentMode = .scaleAspectFit
         v.layer.masksToBounds = true
+        v.alpha = 1.0
+        v.backgroundColor = BackgroundColorDefense
         v.image = UIImage(named: "TRANS-ICON-WHITE.png")
         view.addSubview(v)
         
         let title = UILabel(frame: CGRect(x: 0, y: 412, width: 1024, height: 200))
-        title.text =  "Two Hand"
+        title.text = "Defense"
         title.textAlignment = .center
         title.textColor = UIColor.white
         title.alpha = 1.0
-        title.backgroundColor = getBackgroundColor()
+        title.backgroundColor = BackgroundColorDefense
         title.font = UIFont.boldSystemFont(ofSize: 200.0)
         view.addSubview(title)
     }
