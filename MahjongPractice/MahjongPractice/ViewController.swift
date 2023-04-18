@@ -30,6 +30,8 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     var discardView: [UIView] = []
     var discardTableView = DiscardTableView()
     var newGameMenu =  UIAlertController()
+    var menuButton: UIButton!
+    var versionLabel: UILabel!
     
     let margin: CGFloat = 5
     let space: CGFloat = 1
@@ -52,10 +54,12 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     let handRow1 = 2
     let handRow2 = 3
     let discardRow = 4
-    
-    var menuButton: UIButton!
-    var versionLabel: UILabel!
-
+    var firstMahjong = false
+    var firstMahjongRack1 = false
+    var firstMahjongRack2 = false
+    var firstMahjongHand1 = false
+    var firstMahjongHand2 = false
+        
     
     // -----------------------------------------------------------------------------------------
     //
@@ -195,6 +199,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     }
     
     func replay() {
+        clearFirstMahjong()
         newDeal = true
         maj.replay()
         maj.south.draw(maj)
@@ -214,6 +219,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     
     @objc func redeal() {
         print("redeal")
+        clearFirstMahjong()
         newDeal = true
         resetMaj()
         showGame()
@@ -374,6 +380,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             } else if maj.wall.tiles.count > 0 && maj.south.tiles.count < 15 {
                 maj.south.draw(maj)
             }
+            checkForMahjong()
             maj.state = State.east
         default:
             print("todo discard state")
@@ -481,16 +488,62 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     //
     // -----------------------------------------------------------------------------------------
     
-    func checkForMahjong() {
-        let highest = maj.card.getClosestPattern(tiles: maj.east.rack!.tiles)
-        print(highest.text.string)
-        print(highest.matchCount)
-        if highest.matchCount == 14 {
-            showFirstMahjong(pattern: highest)
-        }
-        
+    func clearFirstMahjong() {
+        firstMahjong = false
+        firstMahjongRack1 = false
+        firstMahjongRack2 = false
+        firstMahjongHand1 = false
+        firstMahjongHand2 = false
     }
-        
+    
+    func checkForMahjong() {
+        if firstMahjong == false {
+            if isFirstMahjong(hand: maj.east.rack!) {
+                firstMahjong = true
+                firstMahjongRack1 = true
+            } else if isFirstMahjong(hand: maj.south.rack!) {
+                firstMahjong = true
+                firstMahjongRack2 = true
+            } else if isFirstMahjong(hand: maj.east) {
+                firstMahjong = true
+                firstMahjongHand1 = true
+            } else if isFirstMahjong(hand: maj.south) {
+                firstMahjong = true
+                firstMahjongHand2 = true
+            }
+        } else {
+            if firstMahjongRack1 == false && isSecondMahjong(hand: maj.east.rack!) {
+                // todo
+            } else if firstMahjongRack2 == false && isSecondMahjong(hand: maj.south.rack!) {
+                // todo
+            } else if firstMahjongHand1 == false && isSecondMahjong(hand: maj.east) {
+                // todo
+            } else if firstMahjongHand2 == false && isSecondMahjong(hand: maj.south) {
+                // todo
+            }
+        }
+         
+    }
+    
+    func isFirstMahjong(hand: Hand) -> Bool {
+        var mahj = false
+        let highest = maj.card.getClosestPattern(tiles: hand.tiles)
+        if highest.matchCount == 14 {
+            showFirstMahjong(pattern: maj.card.getClosestPattern(tiles: hand.tiles))
+            mahj = true
+        }
+        return mahj
+    }
+    
+    func isSecondMahjong(hand: Hand) -> Bool {
+        var mahj = false
+        let highest = maj.card.getClosestPattern(tiles: hand.tiles)
+        if highest.matchCount == 14 {
+            showSecondMahjong(pattern: maj.card.getClosestPattern(tiles: hand.tiles))
+            mahj = true
+        }
+        return mahj
+    }
     
     func showFirstMahjong(pattern: LetterPattern) {
         let message = pattern.text.string + " " + pattern.note.string
@@ -502,6 +555,23 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         
         present(alert, animated: true, completion: nil)
     }
+    
+    func showSecondMahjong(pattern: LetterPattern) {
+        let message = pattern.text.string + " " + pattern.note.string
+        
+        let alert = UIAlertController(title: "Second Mahjong - You Win!", message: message, preferredStyle: .alert)
+                
+        alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
+            self.redeal()
+        }));
+        
+        alert.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
+            self.replay()
+        }));
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
     
     // -----------------------------------------------------------------------------------------
     //
