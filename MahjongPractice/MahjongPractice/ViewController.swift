@@ -340,11 +340,15 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         case State.west:
             if maj.wall.tiles.count > 0 && maj.east.tiles.count < 15 {
                 maj.east.draw(maj)
+                checkForMahjong()
+                maj.state = State.east
             } else if maj.wall.tiles.count > 0 && maj.south.tiles.count < 15 {
                 maj.south.draw(maj)
+                checkForMahjong()
+                maj.state = State.east
+            } else {
+                showGameMenu(title: "Game Over", message: "Wall hand.  No tiles left.", win: false);
             }
-            checkForMahjong()
-            maj.state = State.east
         default:
             print("todo discard state")
         }
