@@ -27,9 +27,9 @@ class HelpTableController: NarrowViewController, UITableViewDelegate, UITableVie
         addMovingTiles()
         addDiscarding()
         addPassing()
+        addCalling()
+        addWinning()
         addEndCap()
-        // test
-        // test2
     }
     
     
@@ -231,6 +231,40 @@ class HelpTableController: NarrowViewController, UITableViewDelegate, UITableVie
         chapters.append(chapter)
     }
     
+    
+    // -----------------------------------------------------------------------------------------
+    //
+    //  Calling
+    //
+    // -----------------------------------------------------------------------------------------
+    
+    private func addCalling() {
+        let chapter = HelpChapter("Calling", xOffset: xOffset, width: view.frame.width)
+        chapter.addLabel("Call a discard from West by dragging up and dropping on the exposed section of your rack.")
+        chapter.addScreenShot("doublescall1.png")
+        
+        chapter.addLabel("\nThen add the rest of the tiles from your hand to complete the set.")
+        chapter.addScreenShot("doublescall2.png")
+        chapter.addScreenShot("doublescall3.png")
+        
+        chapters.append(chapter)
+    }
+    
+    
+    // -----------------------------------------------------------------------------------------
+    //
+    //  Winning
+    //
+    // -----------------------------------------------------------------------------------------
+    
+    private func addWinning() {
+        let chapter = HelpChapter("Winning", xOffset: xOffset, width: view.frame.width)
+        chapter.addLabel("Expose winning hands on the rows above your hand.")
+        chapter.addScreenShot("doublesmaj1.png")
+        chapter.addScreenShot("doublesmaj2.png")
+        
+        chapters.append(chapter)
+    }
     
     
     // -----------------------------------------------------------------------------------------
