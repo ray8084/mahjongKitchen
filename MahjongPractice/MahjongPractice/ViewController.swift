@@ -611,6 +611,11 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             self.showSortMenu()
         }));
                 
+        alert.addAction(UIAlertAction(title: "Help", style: .default, handler: {(action:UIAlertAction) in
+            let help = HelpTableController(frame: self.view.frame, narrowViewDelegate: self)
+            self.show(help, sender: self)
+        }));
+                
         alert.addAction(UIAlertAction(title: "Continue", style: .default, handler: {(action:UIAlertAction) in
         }));
         
