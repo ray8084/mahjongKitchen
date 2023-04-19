@@ -157,6 +157,7 @@
 		71AA192A29EB995200BC3CD0 /* Card2019.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AA192429EB995200BC3CD0 /* Card2019.swift */; };
 		71AA192B29EB995200BC3CD0 /* Card2016.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AA192529EB995200BC3CD0 /* Card2016.swift */; };
 		71AA192C29EB995200BC3CD0 /* Card2020.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71AA192629EB995200BC3CD0 /* Card2020.swift */; };
+		71F64DB529F055FC002F29C4 /* doublescall1.png in Resources */ = {isa = PBXBuildFile; fileRef = 71F64DB429F055FC002F29C4 /* doublescall1.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -335,6 +336,7 @@
 		71AA192429EB995200BC3CD0 /* Card2019.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card2019.swift; sourceTree = "<group>"; };
 		71AA192529EB995200BC3CD0 /* Card2016.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card2016.swift; sourceTree = "<group>"; };
 		71AA192629EB995200BC3CD0 /* Card2020.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card2020.swift; sourceTree = "<group>"; };
+		71F64DB429F055FC002F29C4 /* doublescall1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doublescall1.png; sourceTree = "<group>"; };
 		8A035980D389C5C22DDD03CB /* Pods-MahjongPractice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MahjongPractice.release.xcconfig"; path = "Target Support Files/Pods-MahjongPractice/Pods-MahjongPractice.release.xcconfig"; sourceTree = "<group>"; };
 		A668A2FB6B118FAF6D0F3252 /* Pods_MahjongPractice_MahjongPracticeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MahjongPractice_MahjongPracticeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3B66BE8F9ED207F6CA2AB29 /* Pods-MahjongPractice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MahjongPractice.debug.xcconfig"; path = "Target Support Files/Pods-MahjongPractice/Pods-MahjongPractice.debug.xcconfig"; sourceTree = "<group>"; };
@@ -485,6 +487,7 @@
 				71547E0729EF62A900E574B4 /* discard3.png */,
 				71547E0929EF65C000E574B4 /* discard4.png */,
 				71547E0B29EF663C00E574B4 /* discard5.png */,
+				71F64DB429F055FC002F29C4 /* doublescall1.png */,
 				71980F9A28B43B9D00BFAD57 /* lock.png */,
 				7142522B27079FEC001AE6F0 /* 1bam.png */,
 				714251D327079FE5001AE6F0 /* 1bamnew.png */,
@@ -755,6 +758,7 @@
 				7142523B27079FED001AE6F0 /* west.png in Resources */,
 				7142524427079FED001AE6F0 /* 5craknew.png in Resources */,
 				7142526627079FED001AE6F0 /* flowernew.png in Resources */,
+				71F64DB529F055FC002F29C4 /* doublescall1.png in Resources */,
 				7142526927079FED001AE6F0 /* iconfinder_circle-02_600789.png in Resources */,
 				7142529027079FED001AE6F0 /* charles11.png in Resources */,
 				7142529827079FED001AE6F0 /* 6bam.png in Resources */,
