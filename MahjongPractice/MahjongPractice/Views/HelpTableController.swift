@@ -28,6 +28,7 @@ class HelpTableController: NarrowViewController, UITableViewDelegate, UITableVie
         addDiscarding()
         addPassing()
         addEndCap()
+        // test
     }
     
     
