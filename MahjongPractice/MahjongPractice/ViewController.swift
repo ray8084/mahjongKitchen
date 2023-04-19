@@ -492,22 +492,13 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             } else if isFirstMahjong(hand: maj.south.rack!) {
                 firstMahjong = true
                 firstMahjongRack2 = true
-            } else if isFirstMahjong(hand: maj.east) {
-                firstMahjong = true
-                firstMahjongHand1 = true
-            } else if isFirstMahjong(hand: maj.south) {
-                firstMahjong = true
-                firstMahjongHand2 = true
             }
         } else {
-            if firstMahjongRack1 == false && isSecondMahjong(hand: maj.east.rack!) {
-                // todo
-            } else if firstMahjongRack2 == false && isSecondMahjong(hand: maj.south.rack!) {
-                // todo
-            } else if firstMahjongHand1 == false && isSecondMahjong(hand: maj.east) {
-                // todo
-            } else if firstMahjongHand2 == false && isSecondMahjong(hand: maj.south) {
-                // todo
+            if firstMahjongRack1 == false {
+                checkSecondMahjong(hand: maj.east.rack!)
+            }
+            if firstMahjongRack2 == false {
+                checkSecondMahjong(hand: maj.south.rack!)
             }
         }
          
@@ -523,14 +514,11 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         return mahj
     }
     
-    func isSecondMahjong(hand: Hand) -> Bool {
-        var mahj = false
+    func checkSecondMahjong(hand: Hand) {
         let highest = maj.card.getClosestPattern(tiles: hand.tiles)
         if highest.matchCount == 14 {
             showSecondMahjong(pattern: maj.card.getClosestPattern(tiles: hand.tiles))
-            mahj = true
         }
-        return mahj
     }
     
     func showFirstMahjong(pattern: LetterPattern) {
