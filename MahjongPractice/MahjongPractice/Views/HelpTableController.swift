@@ -176,7 +176,7 @@ class HelpTableController: NarrowViewController, UITableViewDelegate, UITableVie
     
     private func addIntro() {
         let intro = HelpChapter("2 Handed American Mahjong Practice", xOffset: xOffset, yOffset: 30, width: view.frame.width)
-        intro.addLabel("Advanced practice for experienced players. You must know the rules of 2 handed mahjong before playing. Rules are not enforced. There are lots of references online, but if you are a beginning player you should start with the American Mahjong Practice app before playing 2 handed.\n\nContact support@eightbam.com for help.")
+        intro.addLabel("Advanced practice for experienced players. You must know the rules of 2 handed mahjong before playing. Rules are not enforced. There are lots of references online, but if you are a beginning player you should start with the American Mahjong Practice app.\n\nContact support@eightbam.com for help.")
         intro.expand()
         chapters.append(intro)
     }
