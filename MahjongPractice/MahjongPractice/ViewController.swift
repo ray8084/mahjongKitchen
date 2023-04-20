@@ -416,7 +416,11 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     
     func showDiscardTable() {
         discardTableView.isHidden = false
-        discardTableView.show(parent: view, rowHeader: tableLocation(), maj: maj, margin: cardMarginX() + menuButton.frame.width)
+        var margin = cardMarginX() + menuButton.frame.width * 2
+        if view.frame.width < 569  {
+            margin = cardMarginX() + menuButton.frame.width
+        }
+        discardTableView.show(parent: view, rowHeader: tableLocation(), maj: maj, margin: margin)
     }
     
     func hideDiscardTable() {
@@ -433,13 +437,16 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     
     func showLabel() {
         label?.removeFromSuperview()
+       
         let width: CGFloat = 120
         let height: CGFloat = 75
-        let x = (CGFloat(discardIndex) * (tileWidth() + space)) - width - (margin * 2) + notch()
-        let y: CGFloat = hand2Bottom()
+        var x = (CGFloat(discardIndex) * (tileWidth() + space)) - width - (margin * 2) + notch()
+        var y: CGFloat = hand2Bottom()
         
-        if view.frame.width < 569 {
-           // todo move the label below the discard spot for iphone SE
+        print(view.frame.width)
+        if view.frame.width < 668 {
+            x = x + 50
+            y = hand2Bottom() + tileHeight() - 10
         }
         
         let labelFrame = CGRect(x: x, y: y, width: width, height: height)
@@ -460,7 +467,11 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         case State.west: state = "Discard from West"
         default:
             if maj.discardTile == nil {
-                state = "Drag discard tile here >"
+                if view.frame.width < 668 {
+                    state = "Drag discard tile here \u{21E7}"
+                } else {
+                    state = "Drag discard tile here >"
+                }
             } else {
                 state = "Drag right to discard"
             }
