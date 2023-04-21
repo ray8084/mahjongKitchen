@@ -13,6 +13,8 @@ class Card {
     let defaults = UserDefaults.standard
     var showLosses = false
     var year = Year.uninitialized
+    var singleWins = 0
+    var doubleWins = 0
     
     init() {
     }
@@ -149,6 +151,8 @@ class Card {
             p.winsSinceVersion22 = defaults.integer( forKey: p.winKeySinceVersion22() + getYear()) + defaults.integer( forKey: p.winKeySinceVersion22() )
             p.wins = defaults.integer(forKey: p.key() + getYear())
         }
+        singleWins = defaults.integer( forKey: "singleWins" + getYear() )
+        doubleWins = defaults.integer( forKey: "doubleWins" + getYear())
     }
     
     func addWin(_ index: Int) -> Bool {
@@ -163,9 +167,20 @@ class Card {
         }
     }
     
-    func saveWin(pattern: LetterPattern) {
+    func saveFirstWin(pattern: LetterPattern) {
         pattern.wins += 1
+        singleWins += 1
         defaults.set(pattern.wins, forKey: pattern.key() + getYear())
+        defaults.set(singleWins, forKey: "singleWins" + getYear())
+    }
+    
+    func saveSecondWin(pattern: LetterPattern) {
+        pattern.wins += 1
+        singleWins -= 1
+        doubleWins += 1
+        defaults.set(pattern.wins, forKey: pattern.key() + getYear())
+        defaults.set(singleWins, forKey: "singleWins" + getYear())
+        defaults.set(doubleWins, forKey: "doubleWins" + getYear())
     }
     
     func addLoss(_ letterPattern: LetterPattern) {

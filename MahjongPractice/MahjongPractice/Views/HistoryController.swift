@@ -33,7 +33,8 @@ class HistoryController: NarrowViewController, UITableViewDelegate, UITableViewD
     }
     
     func addChapters() {
-        addSection(name: "2023 - Wins", family: Family.year)
+        addHeader()
+        addSection(name: "2023", family: Family.year)
         addSection(name: "2468", family: Family.f2468)
         addSection(name: "Like Numbers", family: Family.likeNumbers)
         addSection(name: "Addition", family: Family.addition)
@@ -181,25 +182,26 @@ class HistoryController: NarrowViewController, UITableViewDelegate, UITableViewD
         }
     }
         
-    
+   
     // -----------------------------------------------------------------------------------------
     //
-    //  Year
+    //  Header
     //
     // -----------------------------------------------------------------------------------------
     
-    private func addYear() {
-        let chapter = HelpChapter("2023", xOffset: xOffset, yOffset: 30, width: view.frame.width)
-        for pattern in maj.card.letterPatterns {
-            if pattern.family == Family.year {
-                chapter.addLabel(pattern.text.string)
-                
-            }
-        }
-        
+    private func addHeader() {
+        let chapter = HelpChapter("Wins", xOffset: xOffset, yOffset: 30, width: view.frame.width)
+        chapter.addLabel("Singles \(maj.card.singleWins)    Doubles \(maj.card.doubleWins)")
         chapter.expand()
         chapters.append(chapter)
     }
+        
+    
+    // -----------------------------------------------------------------------------------------
+    //
+    //  Section
+    //
+    // -----------------------------------------------------------------------------------------
     
     private func addSection(name: String, family: Int) {
         let chapter = HelpChapter(name, xOffset: xOffset, yOffset: 30, width: view.frame.width)
@@ -216,7 +218,6 @@ class HistoryController: NarrowViewController, UITableViewDelegate, UITableViewD
         chapter.expand()
         chapters.append(chapter)
     }
-
     
     
     // -----------------------------------------------------------------------------------------

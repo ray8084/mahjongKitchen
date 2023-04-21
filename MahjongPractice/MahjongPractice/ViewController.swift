@@ -519,7 +519,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         var mahj = false
         let highest = maj.card.getClosestPattern(tiles: hand.tiles)
         if highest.matchCount == 14 {
-            maj.card.saveWin(pattern: highest)
+            maj.card.saveFirstWin(pattern: highest)
             showFirstMahjong(pattern: highest)
             mahj = true
         }
@@ -529,7 +529,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     func checkSecondMahjong(hand: Hand) {
         let highest = maj.card.getClosestPattern(tiles: hand.tiles)
         if highest.matchCount == 14 {
-            maj.card.saveWin(pattern: highest)
+            maj.card.saveSecondWin(pattern: highest)
             showSecondMahjong(pattern: highest)
         }
     }
