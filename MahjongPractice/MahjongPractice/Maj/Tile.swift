@@ -113,7 +113,11 @@ class Tile {
     }
     
     func getImage(maj: Maj) -> String {
-        return Tile.getImage(id: id, maj: maj)
+        if maj.dotTileStyle == TileStyle.largeFont {
+            return Tile.getImage(id: id, maj: maj)
+        } else {
+            return name
+        }
     }
     
     static func getImage(id: Int, maj: Maj) -> String {

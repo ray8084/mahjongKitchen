@@ -79,6 +79,19 @@ class HelpChapter: UIView {
         body.addSubview(label)
     }
     
+    func addLabelCourier(_ text: String) {
+        let width = Int(Double(self.width) * 0.7)
+        let label = UITextView(frame: CGRect(x: xOffset, y: Int(body.frame.height), width: width, height: 21))
+        label.text = text
+        label.isScrollEnabled = false
+        label.isEditable = false
+        label.font = UIFont(name: "CourierNewPSMT", size: 16)
+        label.sizeToFit()
+        expandBody(label.frame.height)
+        body.addSubview(label)
+    }
+    
+    
     func addLabelItalic(_ text: String) {
         let width = Int(Double(self.width) * 0.7)
         let label = UITextView(frame: CGRect(x: xOffset, y: Int(body.frame.height), width: width, height: 21))
@@ -91,6 +104,18 @@ class HelpChapter: UIView {
         body.addSubview(label)
     }
 
+    func addLabelNarrow(_ text: String, height: Int) {
+        let width = Int(Double(self.width) * 0.7)
+        let label = UITextView(frame: CGRect(x: xOffset, y: Int(body.frame.height), width: width, height: height))
+        label.text = text
+        label.isScrollEnabled = false
+        label.isEditable = false
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.sizeToFit()
+        expandBody(label.frame.height)
+        body.addSubview(label)
+    }
+    
     
     // -----------------------------------------------------------------------------------------
     //

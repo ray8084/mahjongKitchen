@@ -611,7 +611,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         }));
                 
         alert.addAction(UIAlertAction(title: "History", style: .default, handler: {(action:UIAlertAction) in
-            let history = HistoryController(frame: self.view.frame, narrowViewDelegate: self)
+            let history = HistoryController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self)
             self.show(history, sender: self)
         }));
         

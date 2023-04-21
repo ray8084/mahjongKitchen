@@ -12,7 +12,17 @@ class HistoryController: NarrowViewController, UITableViewDelegate, UITableViewD
   
     var table: UITableView  = UITableView()
     var chapters: [HelpChapter] = []
+    private var maj: Maj!
     
+    init(maj: Maj, frame: CGRect, narrowViewDelegate: NarrowViewDelegate) {
+        self.maj = maj
+        super.init(frame: frame, narrowViewDelegate: narrowViewDelegate)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+        
     override func addControls() {
         maxWidth = 620
         narrowView()
@@ -23,7 +33,16 @@ class HistoryController: NarrowViewController, UITableViewDelegate, UITableViewD
     }
     
     func addChapters() {
-        addYear()
+        addSection(name: "2023 - Wins", family: Family.year)
+        addSection(name: "2468", family: Family.f2468)
+        addSection(name: "Like Numbers", family: Family.likeNumbers)
+        addSection(name: "Addition", family: Family.addition)
+        addSection(name: "Quints", family: Family.quints)
+        addSection(name: "Consecutive Runs", family: Family.run)
+        addSection(name: "13579", family: Family.f13579)
+        addSection(name: "Winds", family: Family.winds)
+        addSection(name: "369", family: Family.f369)
+        addSection(name: "Singles & Pairs", family: Family.pairs)
         addEndCap()
     }
     
@@ -99,7 +118,7 @@ class HistoryController: NarrowViewController, UITableViewDelegate, UITableViewD
         if indexPath.row < chapters.count {
             removeChapters(cell)
             cell.addSubview(chapters[indexPath.row])
-            removeButtons(cell)
+            // removeButtons(cell)
         }
         return cell
     }
@@ -170,12 +189,34 @@ class HistoryController: NarrowViewController, UITableViewDelegate, UITableViewD
     // -----------------------------------------------------------------------------------------
     
     private func addYear() {
-        let year = HelpChapter("2023", xOffset: xOffset, yOffset: 30, width: view.frame.width)
-        year.addLabel("test")
-        year.expand()
-        chapters.append(year)
+        let chapter = HelpChapter("2023", xOffset: xOffset, yOffset: 30, width: view.frame.width)
+        for pattern in maj.card.letterPatterns {
+            if pattern.family == Family.year {
+                chapter.addLabel(pattern.text.string)
+                
+            }
+        }
+        
+        chapter.expand()
+        chapters.append(chapter)
     }
     
+    private func addSection(name: String, family: Int) {
+        let chapter = HelpChapter(name, xOffset: xOffset, yOffset: 30, width: view.frame.width)
+        for pattern in maj.card.letterPatterns {
+            if pattern.family == family {
+                var text = pattern.text.string
+                let start = text.index(text.startIndex, offsetBy: 8);
+                let end = text.index(text.startIndex, offsetBy: text.count );
+                text.replaceSubrange(start..<end, with: "********")
+                text = text.padding(toLength: 20, withPad: " ", startingAt: 0)
+                chapter.addLabelCourier(text + "\(pattern.wins)")
+            }
+        }
+        chapter.expand()
+        chapters.append(chapter)
+    }
+
     
     
     // -----------------------------------------------------------------------------------------
