@@ -610,6 +610,11 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             self.showSortMenu()
         }));
                 
+        alert.addAction(UIAlertAction(title: "History", style: .default, handler: {(action:UIAlertAction) in
+            let history = HistoryController(frame: self.view.frame, narrowViewDelegate: self)
+            self.show(history, sender: self)
+        }));
+        
         alert.addAction(UIAlertAction(title: "Help", style: .default, handler: {(action:UIAlertAction) in
             let help = HelpTableController(frame: self.view.frame, narrowViewDelegate: self)
             self.show(help, sender: self)
