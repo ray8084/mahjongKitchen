@@ -18,6 +18,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     let BackgroundColor = UIColor.init(red: 225.0/255.0, green: 230.0/255.0, blue: 223.0/255.0, alpha: 1)
     let BackgroundColorDarkMode = UIColor.init(red: 185.0/255.0, green: 190.0/255.0, blue: 183.0/255.0, alpha: 1)
     let BackgroundColorDefense = UIColor.init(red: 74.0/255.0, green: 96.0/255.0, blue: 42.0/255.0, alpha: 1)
+    let BackgroundColorIconRed = UIColor.init(red: 232.0/255.0, green: 54.0/255.0, blue: 49.0/255.0, alpha: 1)
     
     var maj: Maj!
     var lastMaj: Maj!
@@ -94,7 +95,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             load2023()
             redeal()
             viewDidAppear = true
-            // buildIcon()
+            buildIcon()
         }
     }
     
@@ -103,16 +104,16 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         v.contentMode = .scaleAspectFit
         v.layer.masksToBounds = true
         v.alpha = 1.0
-        v.backgroundColor = BackgroundColorDefense
+        v.backgroundColor = BackgroundColorIconRed
         v.image = UIImage(named: "TRANS-ICON-WHITE.png")
         view.addSubview(v)
         
         let title = UILabel(frame: CGRect(x: 0, y: 412, width: 1024, height: 200))
-        title.text = "Defense"
+        title.text = "Two Hand"
         title.textAlignment = .center
         title.textColor = UIColor.white
         title.alpha = 1.0
-        title.backgroundColor = BackgroundColorDefense
+        title.backgroundColor = BackgroundColorIconRed
         title.font = UIFont.boldSystemFont(ofSize: 200.0)
         view.addSubview(title)
     }
