@@ -147,6 +147,7 @@ class Card {
         for p in letterPatterns {
             p.losses = defaults.integer( forKey: p.lossKey() + getYear() ) + defaults.integer( forKey: p.lossKey() )
             p.winsSinceVersion22 = defaults.integer( forKey: p.winKeySinceVersion22() + getYear()) + defaults.integer( forKey: p.winKeySinceVersion22() )
+            p.wins = defaults.integer(forKey: p.key() + getYear())
         }
     }
     
@@ -160,6 +161,11 @@ class Card {
         } else {
             return false
         }
+    }
+    
+    func saveWin(pattern: LetterPattern) {
+        pattern.wins += 1
+        defaults.set(pattern.wins, forKey: pattern.key() + getYear())
     }
     
     func addLoss(_ letterPattern: LetterPattern) {
