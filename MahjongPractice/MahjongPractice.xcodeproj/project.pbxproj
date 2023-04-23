@@ -165,6 +165,7 @@
 		71F64DBF29F314B4002F29C4 /* HistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F64DBE29F314B4002F29C4 /* HistoryController.swift */; };
 		71F64DC129F5DB84002F29C4 /* HandsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F64DC029F5DB84002F29C4 /* HandsController.swift */; };
 		71F64DC529F5DE18002F29C4 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F64DC429F5DE18002F29C4 /* CardView.swift */; };
+		71F64DC729F5F5CA002F29C4 /* TileMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F64DC629F5F5CA002F29C4 /* TileMatchView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -351,6 +352,7 @@
 		71F64DBE29F314B4002F29C4 /* HistoryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryController.swift; sourceTree = "<group>"; };
 		71F64DC029F5DB84002F29C4 /* HandsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandsController.swift; sourceTree = "<group>"; };
 		71F64DC429F5DE18002F29C4 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		71F64DC629F5F5CA002F29C4 /* TileMatchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileMatchView.swift; sourceTree = "<group>"; };
 		8A035980D389C5C22DDD03CB /* Pods-MahjongPractice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MahjongPractice.release.xcconfig"; path = "Target Support Files/Pods-MahjongPractice/Pods-MahjongPractice.release.xcconfig"; sourceTree = "<group>"; };
 		A668A2FB6B118FAF6D0F3252 /* Pods_MahjongPractice_MahjongPracticeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MahjongPractice_MahjongPracticeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3B66BE8F9ED207F6CA2AB29 /* Pods-MahjongPractice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MahjongPractice.debug.xcconfig"; path = "Target Support Files/Pods-MahjongPractice/Pods-MahjongPractice.debug.xcconfig"; sourceTree = "<group>"; };
@@ -466,6 +468,7 @@
 				714252C72707A04B001AE6F0 /* HelpTableController.swift */,
 				71F64DBE29F314B4002F29C4 /* HistoryController.swift */,
 				714252C62707A04B001AE6F0 /* NarrowViewController.swift */,
+				71F64DC629F5F5CA002F29C4 /* TileMatchView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1024,6 +1027,7 @@
 				71F64DC529F5DE18002F29C4 /* CardView.swift in Sources */,
 				71F64DBF29F314B4002F29C4 /* HistoryController.swift in Sources */,
 				71AA192929EB995200BC3CD0 /* Card2018.swift in Sources */,
+				71F64DC729F5F5CA002F29C4 /* TileMatchView.swift in Sources */,
 				71AA192729EB995200BC3CD0 /* Card2021.swift in Sources */,
 				714252B92707A024001AE6F0 /* Maj.swift in Sources */,
 				714252C02707A024001AE6F0 /* Card.swift in Sources */,

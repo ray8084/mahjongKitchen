@@ -11,7 +11,8 @@ import UIKit
 class HandsController: NarrowViewController  {
 
     private var maj: Maj!
-    private var handView = CardView()
+    private var cardView = CardView()
+    private var tileMatchView = TileMatchView()
     private var filterSegmentControl: UISegmentedControl!
     
     init(maj: Maj, frame: CGRect, narrowViewDelegate: NarrowViewDelegate) {
@@ -24,17 +25,24 @@ class HandsController: NarrowViewController  {
     }
         
     override func addControls() {
-        maxWidth = 620
+        maxWidth = 700
         narrowView()
         xOffset = (Int(view.frame.width) - maxWidth) / 2
         
         addFilterSegmentControl()
         addCloseButton()
+
+        cardView.isHidden = false
+        cardView.showCard(self, x: 30, y: 60, width: view.frame.width - 50, height: 100, bgcolor: .white, maj: maj)
+        view.addSubview(cardView.cardView)
+        cardView.update(maj)
         
-        handView.showCard(self, x: 30, y: 60, width: view.frame.width - 50, height: view.frame.height - 150, bgcolor: .black, maj: maj)
-        handView.isHidden = false
-        view.addSubview(handView.cardView)
-        handView.update(maj)
+        tileMatchView.isHidden = false
+        tileMatchView.showView(self, x: 30, y: 180, width: view.frame.width - 50, height: view.frame.height - 200, bgcolor: .black)
+        view.addSubview(tileMatchView.tableView)
+        tileMatchView.loadPatterns(maj: maj, letterPatterns: maj.card.letterPatterns)
+        tileMatchView.update(maj)
+        
     }
     
     
@@ -65,7 +73,7 @@ class HandsController: NarrowViewController  {
         let items = ["2023", "2468", "Like", "Add", "Quints", "Runs", "13579", "W&D", "369", "S&P", "All"]
         filterSegmentControl = UISegmentedControl(items: items)
         filterSegmentControl.selectedSegmentIndex = 10
-        filterSegmentControl.frame = CGRect(x: 25, y: 20, width: maxWidth - 50, height: Int(filterSegmentControl.frame.height))
+        filterSegmentControl.frame = CGRect(x: 25, y: 20, width: 580, height: Int(filterSegmentControl.frame.height))
         filterSegmentControl.addTarget(self, action: #selector(changeFilter), for: .valueChanged)
         view.addSubview(filterSegmentControl)
     }
@@ -98,8 +106,9 @@ class HandsController: NarrowViewController  {
         maj.east.filterOutWinds = winds
         maj.east.filterOut369 = three
         maj.east.filterOutPairs = pairs
-        handView.filter(maj)
-        handView.update(maj)
+        cardView.filter(maj)
+        cardView.update(maj)
+        tileMatchView.update(maj)
     }
     
 
