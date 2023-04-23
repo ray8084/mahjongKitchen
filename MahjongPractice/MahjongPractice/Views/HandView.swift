@@ -17,7 +17,7 @@ class HandView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     let cellHeight: CGFloat = 20.0
     var root: UIViewController!
     // var sorted = true
-    var maxRows = 10
+    var maxRows = 15
     var isHidden = true
     let darkBamboo:UIColor = UIColor(red: 114/255, green: 123/255, blue: 102/255, alpha: 1.0)
     
@@ -76,10 +76,14 @@ class HandView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
 
+    func allTiles(_ maj: Maj) -> [Tile] {
+        return maj.east.tiles + maj.south.tiles + (maj.east.rack?.tiles)! + (maj.south.rack?.tiles)!
+    }
+    
     func update(_ maj: Maj) {
         if isHidden == false {
             self.maj = maj
-            maj.card.match(maj.east.tiles + (maj.east.rack?.tiles)!, ignoreFilters: false)
+             maj.card.match(allTiles(maj), ignoreFilters: false)
             sort(maj)
             cardView.reloadData()
         }
@@ -88,13 +92,13 @@ class HandView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func updateRackFilter(_ maj: Maj) {
         if maj.isGameOver() {
             maj.card.clearRackFilter()
-            maj.card.match(maj.east.tiles + (maj.east.rack?.tiles)!, ignoreFilters: false)
+            maj.card.match(allTiles(maj), ignoreFilters: false)
             sort(maj)
             cardView.reloadData()
         }
         else if isHidden == false && maj.letterPatternRackFilterPending {
             maj.card.rackFilter(maj.east.rack!)
-            maj.card.match(maj.east.tiles + (maj.east.rack?.tiles)!, ignoreFilters: false)
+            maj.card.match(allTiles(maj), ignoreFilters: false)
             sort(maj)
             cardView.reloadData()
             maj.letterPatternRackFilterPending = false

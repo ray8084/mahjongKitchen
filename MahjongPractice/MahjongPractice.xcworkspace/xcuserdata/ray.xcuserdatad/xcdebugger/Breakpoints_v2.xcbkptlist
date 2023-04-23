@@ -1112,8 +1112,8 @@
             filePath = "MahjongPractice/Views/HandView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "update(_:)"
             landmarkType = "7">
          </BreakpointContent>
