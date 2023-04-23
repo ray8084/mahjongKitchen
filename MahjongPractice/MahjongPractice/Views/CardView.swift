@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HandView: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var cardView: UITableView  = UITableView()
     var maj: Maj!
     var columnWidth: CGFloat = 0
@@ -55,7 +55,7 @@ class HandView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func addLongPress() {
-        lp = UILongPressGestureRecognizer(target: self, action: #selector(HandView.longPress))
+        lp = UILongPressGestureRecognizer(target: self, action: #selector(CardView.longPress))
         lp.minimumPressDuration = 0.6;
         lp.allowableMovement = 100.0;
         cardView.addGestureRecognizer(lp)
@@ -249,7 +249,7 @@ class HandView: UIViewController, UITableViewDelegate, UITableViewDataSource {
             button.tag = tag
             button.setTitle("[hide]", for: .normal)
             button.setTitleColor(UIColor.darkGray, for: .normal)
-            button.addTarget(self, action: #selector(HandView.hideButton), for: .touchUpInside)
+            button.addTarget(self, action: #selector(CardView.hideButton), for: .touchUpInside)
             cell.addSubview(button)
         }
     }

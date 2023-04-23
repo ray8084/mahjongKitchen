@@ -11,7 +11,7 @@ import UIKit
 class HandsController: NarrowViewController  {
 
     private var maj: Maj!
-    private var handView = HandView()
+    private var handView = CardView()
     private var filterSegmentControl: UISegmentedControl!
     
     init(maj: Maj, frame: CGRect, narrowViewDelegate: NarrowViewDelegate) {
