@@ -34,6 +34,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     var newGameMenu =  UIAlertController()
     var menuButton: UIButton!
     var versionLabel: UILabel!
+    var handsButton: UIButton!
     
     let margin: CGFloat = 5
     let space: CGFloat = 1
@@ -571,12 +572,13 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     
     func showButtons() {
         addMenuButton()
+        addHandsButton()
     }
     
     func addMenuButton() {
         if menuButton == nil {
             menuButton = UIButton()
-            menuButton.frame = CGRect(x: menuButtonLocationX(), y: buttonLocationY(),  width: buttonSize() + 20, height: buttonSize())
+            menuButton.frame = CGRect(x: menuButtonLocationX(), y: buttonLocationY(),  width: buttonSize() + 30, height: buttonSize())
             menuButton.layer.cornerRadius = 5
             menuButton.titleLabel!.font = UIFont(name: "Chalkduster", size: 16)!
             menuButton.backgroundColor = .black
@@ -589,6 +591,25 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     
     @objc func menuButtonAction(sender: UIButton!) {
         showSystemMenu()
+    }
+    
+    func addHandsButton() {
+        if handsButton == nil {
+            handsButton = UIButton()
+            handsButton.frame = CGRect(x: menuButtonLocationX(), y: buttonLocationY() - buttonSize() - 5,  width: buttonSize() + 30, height: buttonSize())
+            handsButton.layer.cornerRadius = 5
+            handsButton.titleLabel!.font = UIFont(name: "Chalkduster", size: 16)!
+            handsButton.backgroundColor = .black
+            handsButton.alpha = 0.8
+            handsButton.setTitle("Hands", for: .normal)
+            handsButton.addTarget(self, action: #selector(handsButtonAction), for: .touchUpInside)
+            view.addSubview(handsButton)
+        }
+    }
+    
+    @objc func handsButtonAction(sender: UIButton!) {
+        let hands = HandsController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self)
+        self.show(hands, sender: self)
     }
       
     

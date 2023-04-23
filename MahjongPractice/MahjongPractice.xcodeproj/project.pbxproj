@@ -163,6 +163,7 @@
 		71F64DBB29F05798002F29C4 /* doublesmaj1.png in Resources */ = {isa = PBXBuildFile; fileRef = 71F64DBA29F05798002F29C4 /* doublesmaj1.png */; };
 		71F64DBD29F057C3002F29C4 /* doublesmaj2.png in Resources */ = {isa = PBXBuildFile; fileRef = 71F64DBC29F057C3002F29C4 /* doublesmaj2.png */; };
 		71F64DBF29F314B4002F29C4 /* HistoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F64DBE29F314B4002F29C4 /* HistoryController.swift */; };
+		71F64DC129F5DB84002F29C4 /* HandsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F64DC029F5DB84002F29C4 /* HandsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -347,6 +348,7 @@
 		71F64DBA29F05798002F29C4 /* doublesmaj1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doublesmaj1.png; sourceTree = "<group>"; };
 		71F64DBC29F057C3002F29C4 /* doublesmaj2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doublesmaj2.png; sourceTree = "<group>"; };
 		71F64DBE29F314B4002F29C4 /* HistoryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryController.swift; sourceTree = "<group>"; };
+		71F64DC029F5DB84002F29C4 /* HandsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HandsController.swift; sourceTree = "<group>"; };
 		8A035980D389C5C22DDD03CB /* Pods-MahjongPractice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MahjongPractice.release.xcconfig"; path = "Target Support Files/Pods-MahjongPractice/Pods-MahjongPractice.release.xcconfig"; sourceTree = "<group>"; };
 		A668A2FB6B118FAF6D0F3252 /* Pods_MahjongPractice_MahjongPracticeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MahjongPractice_MahjongPracticeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3B66BE8F9ED207F6CA2AB29 /* Pods-MahjongPractice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MahjongPractice.debug.xcconfig"; path = "Target Support Files/Pods-MahjongPractice/Pods-MahjongPractice.debug.xcconfig"; sourceTree = "<group>"; };
@@ -456,6 +458,7 @@
 			isa = PBXGroup;
 			children = (
 				714252CA2707A04B001AE6F0 /* DiscardTableView.swift */,
+				71F64DC029F5DB84002F29C4 /* HandsController.swift */,
 				714252CB2707A04B001AE6F0 /* HelpChapter.swift */,
 				714252C72707A04B001AE6F0 /* HelpTableController.swift */,
 				71F64DBE29F314B4002F29C4 /* HistoryController.swift */,
@@ -994,6 +997,7 @@
 			files = (
 				714252B32707A024001AE6F0 /* Deck.swift in Sources */,
 				714252C32707A024001AE6F0 /* Tile.swift in Sources */,
+				71F64DC129F5DB84002F29C4 /* HandsController.swift in Sources */,
 				714252BD2707A024001AE6F0 /* TileMatches.swift in Sources */,
 				714251A227078624001AE6F0 /* ViewController.swift in Sources */,
 				714252B82707A024001AE6F0 /* TileIdListList.swift in Sources */,
