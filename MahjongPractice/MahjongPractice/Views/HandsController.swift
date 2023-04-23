@@ -65,9 +65,20 @@ class HandsController: NarrowViewController  {
     
     @objc private func changeFilter(sender: UISegmentedControl) {
         switch( sender.selectedSegmentIndex ) {
+            case 0: filter2023()
+            case 1: filter2468()
             default: print("here")
         }
     }
     
+    func filter2023() {
+        maj.toggleYearsFilter()
+        maj.toggleLikeNumbersFilter()
+        handView.update(maj)
+    }
+    
+    func filter2468() {
+        
+    }
 
 }
