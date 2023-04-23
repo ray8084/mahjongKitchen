@@ -11,6 +11,7 @@ import UIKit
 class HandsController: NarrowViewController  {
 
     private var maj: Maj!
+    private var handView = HandView()
     
     init(maj: Maj, frame: CGRect, narrowViewDelegate: NarrowViewDelegate) {
         self.maj = maj
@@ -26,6 +27,11 @@ class HandsController: NarrowViewController  {
         narrowView()
         xOffset = (Int(view.frame.width) - maxWidth) / 2
         addCloseButton()
+        
+        handView.showCard(self, x: 10, y: 50, width: view.frame.width - 50, height: 1000, bgcolor: .black, maj: maj)
+        handView.isHidden = false
+        view.addSubview(handView.cardView)
+        handView.update(maj)
     }
     
      
