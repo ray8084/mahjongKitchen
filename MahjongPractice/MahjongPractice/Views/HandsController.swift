@@ -28,7 +28,7 @@ class HandsController: NarrowViewController  {
         xOffset = (Int(view.frame.width) - maxWidth) / 2
         addCloseButton()
         
-        handView.showCard(self, x: 10, y: 50, width: view.frame.width - 50, height: 1000, bgcolor: .black, maj: maj)
+        handView.showCard(self, x: 30, y: 50, width: view.frame.width - 50, height: view.frame.height - 150, bgcolor: .black, maj: maj)
         handView.isHidden = false
         view.addSubview(handView.cardView)
         handView.update(maj)
