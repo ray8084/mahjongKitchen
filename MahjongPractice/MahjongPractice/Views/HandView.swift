@@ -16,8 +16,7 @@ class HandView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var lp: UILongPressGestureRecognizer! = nil
     let cellHeight: CGFloat = 20.0
     var root: UIViewController!
-    // var sorted = true
-    var maxRows = 10
+    var maxRows = 5
     var isHidden = true
     let darkBamboo:UIColor = UIColor(red: 114/255, green: 123/255, blue: 102/255, alpha: 1.0)
     
