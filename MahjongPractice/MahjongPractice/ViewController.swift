@@ -95,7 +95,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
             load2023()
             redeal()
             viewDidAppear = true
-            buildIcon()
+            // buildIcon()
         }
     }
     
