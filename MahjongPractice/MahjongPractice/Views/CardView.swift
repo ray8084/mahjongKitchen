@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol CardViewDelegate {
+    func showSelectedTiles(letterPattern: LetterPattern)
+}
+
 class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var cardView: UITableView  = UITableView()
     var maj: Maj!
@@ -19,8 +23,9 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var maxRows = 5
     var isHidden = true
     let darkBamboo:UIColor = UIColor(red: 114/255, green: 123/255, blue: 102/255, alpha: 1.0)
+    var cardViewDelegate: CardViewDelegate!
     
-    func showCard(_ rootView: UIViewController, x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, bgcolor: UIColor, maj: Maj) {
+    func showCard(_ rootView: UIViewController, delegate: CardViewDelegate, x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, bgcolor: UIColor, maj: Maj) {
         self.maj = maj
         if location != y {
             location = y
@@ -37,6 +42,7 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
             cardView.separatorColor = UIColor(white: 128, alpha: 0.5)
             columnWidth = width / 3.0
             root = rootView
+            cardViewDelegate = delegate
         }
         filter(maj)
     }
@@ -130,6 +136,9 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let pattern = maj.card.letterPatterns[indexPath.row]
+        print( "\(pattern.text.string) \(pattern.matchCount)" )
+        cardViewDelegate.showSelectedTiles(letterPattern: pattern)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

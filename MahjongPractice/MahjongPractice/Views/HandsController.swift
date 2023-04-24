@@ -8,12 +8,12 @@
 
 import UIKit
 
-class HandsController: NarrowViewController  {
+class HandsController: NarrowViewController, CardViewDelegate  {
 
     private var maj: Maj!
     private var cardView = CardView()
-    private var tileMatchView = TileMatchView()
     private var filterSegmentControl: UISegmentedControl!
+    private var label: UILabel!
     
     init(maj: Maj, frame: CGRect, narrowViewDelegate: NarrowViewDelegate) {
         self.maj = maj
@@ -33,18 +33,26 @@ class HandsController: NarrowViewController  {
         addCloseButton()
 
         cardView.isHidden = false
-        cardView.showCard(self, x: 30, y: 60, width: view.frame.width - 50, height: 100, bgcolor: .white, maj: maj)
+        cardView.showCard(self, delegate: self, x: 50, y: 70, width: view.frame.width - 50, height: 100, bgcolor: .white, maj: maj)
         view.addSubview(cardView.cardView)
         cardView.update(maj)
-        
-        //tileMatchView.isHidden = false
-        //tileMatchView.showView(self, x: 30, y: 180, width: view.frame.width - 50, height: view.frame.height - 200, bgcolor: .black)
-        //view.addSubview(tileMatchView.tableView)
-        //tileMatchView.loadPatterns(maj: maj, letterPatterns: maj.card.letterPatterns)
-        //tileMatchView.update(maj)
-        
     }
     
+    func showSelectedTiles(letterPattern: LetterPattern) {
+        label?.removeFromSuperview()
+        let width: CGFloat = 300
+        let height: CGFloat = 75
+        let labelFrame = CGRect(x: 50, y: 160, width: width, height: height)
+        label = UILabel(frame: labelFrame)
+        label.attributedText = letterPattern.text
+        label.frame = labelFrame
+        label.textAlignment = .left
+        label.numberOfLines = 0
+        view.addSubview(label)
+        
+        print(letterPattern.matchCount)
+        
+    }
     
     // -----------------------------------------------------------------------------------------
     //
@@ -73,7 +81,7 @@ class HandsController: NarrowViewController  {
         let items = ["2023", "2468", "Like", "Add", "Quints", "Runs", "13579", "W&D", "369", "S&P", "All"]
         filterSegmentControl = UISegmentedControl(items: items)
         filterSegmentControl.selectedSegmentIndex = 10
-        filterSegmentControl.frame = CGRect(x: 25, y: 20, width: 580, height: Int(filterSegmentControl.frame.height))
+        filterSegmentControl.frame = CGRect(x: 45, y: 20, width: 580, height: Int(filterSegmentControl.frame.height))
         filterSegmentControl.addTarget(self, action: #selector(changeFilter), for: .valueChanged)
         view.addSubview(filterSegmentControl)
     }
@@ -108,7 +116,6 @@ class HandsController: NarrowViewController  {
         maj.east.filterOutPairs = pairs
         cardView.filter(maj)
         cardView.update(maj)
-        tileMatchView.update(maj)
     }
     
 
