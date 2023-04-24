@@ -34,10 +34,9 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
             cardView.dataSource    =   self
             cardView.register(UITableViewCell.self, forCellReuseIdentifier: "cardViewCell")
             cardView.backgroundColor = UIColor.clear
-            cardView.separatorColor = UIColor(white: 0, alpha: 0)
+            cardView.separatorColor = UIColor(white: 128, alpha: 0.5)
             columnWidth = width / 3.0
             root = rootView
-            addLongPress()
         }
         filter(maj)
     }
@@ -52,27 +51,6 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
         }));
         present(alert, animated: true, completion: nil)
-    }
-    
-    func addLongPress() {
-        lp = UILongPressGestureRecognizer(target: self, action: #selector(CardView.longPress))
-        lp.minimumPressDuration = 0.6;
-        lp.allowableMovement = 100.0;
-        cardView.addGestureRecognizer(lp)
-    }
-    
-    @objc func longPress(_ sender: UILongPressGestureRecognizer) {
-        switch sender.state {
-        case .began:
-            let touchPoint = sender.location(in: cardView)
-            if let indexPath = cardView.indexPathForRow(at: touchPoint) {
-                cardView.tag = indexPath.row + 100
-                hideButton(cardView)
-            }
-            break
-        default:
-            break
-        }
     }
 
     func allTiles(_ maj: Maj) -> [Tile] {
@@ -158,7 +136,7 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cardViewCell")! as UITableViewCell
         cell.backgroundColor = UIColor.clear
         cell.textLabel!.font = cell.textLabel!.font.withSize(16)
-        cell.selectionStyle = .none
+        // cell.selectionStyle = .none
 
         let index = indexPath.row
         

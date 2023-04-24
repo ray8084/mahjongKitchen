@@ -37,11 +37,11 @@ class HandsController: NarrowViewController  {
         view.addSubview(cardView.cardView)
         cardView.update(maj)
         
-        tileMatchView.isHidden = false
-        tileMatchView.showView(self, x: 30, y: 180, width: view.frame.width - 50, height: view.frame.height - 200, bgcolor: .black)
-        view.addSubview(tileMatchView.tableView)
-        tileMatchView.loadPatterns(maj: maj, letterPatterns: maj.card.letterPatterns)
-        tileMatchView.update(maj)
+        //tileMatchView.isHidden = false
+        //tileMatchView.showView(self, x: 30, y: 180, width: view.frame.width - 50, height: view.frame.height - 200, bgcolor: .black)
+        //view.addSubview(tileMatchView.tableView)
+        //tileMatchView.loadPatterns(maj: maj, letterPatterns: maj.card.letterPatterns)
+        //tileMatchView.update(maj)
         
     }
     
