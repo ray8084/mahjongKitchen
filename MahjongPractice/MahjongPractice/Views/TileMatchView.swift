@@ -104,10 +104,6 @@ class TileMatchView: UIViewController, UITableViewDelegate, UITableViewDataSourc
         return tileHeight() + 4.0
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        lockSorting(tableView)
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "tileMatchCell")! as UITableViewCell
         cell.backgroundColor = UIColor.clear
@@ -115,9 +111,7 @@ class TileMatchView: UIViewController, UITableViewDelegate, UITableViewDataSourc
         for v in cell.subviews {
             v.removeFromSuperview()
         }
-        
-        //print("index \(maj.east.tileMatches.list[indexPath.row].letterPatternId)")
-     
+             
         var tileIndex = CGFloat(0.0)
         for id in maj?.east.tileMatches.list[indexPath.row].tileIds ?? [] {
             let x = tileIndex * (tileWidth() + 1.0)
@@ -135,65 +129,11 @@ class TileMatchView: UIViewController, UITableViewDelegate, UITableViewDataSourc
         var x = tileIndex * (tileWidth() + 1.0) + 2.0
         label1.frame = CGRect(x: x, y: 8.0, width: 40, height: tileHeight())
         if maj?.east.tileMatches.list[indexPath.row].concealed ?? false {
-            // label1.text = "(C)"
-            // label1.font = UIFont(name: "Chalkduster", size: 15)
             label1.textColor = UIColor.black
             cell.addSubview(label1)
-        }
-        
-        let label2 = UILabel()
-        x = tileIndex * (tileWidth() + 1.0) + 40
-        label2.frame = CGRect(x: x, y: 8.0, width: 150, height: tileHeight())
-        let matchCount = String(maj?.east.tileMatches.list[indexPath.row].matchCount ?? 0)
-        if indexPath.row == 0 {
-            label2.text = matchCount + " tiles"
-        } else {
-            label2.text = matchCount
-        }
-        // label2.font = UIFont(name: "Chalkduster", size: 15)
-        label2.textColor = UIColor.black
-        cell.addSubview(label2)
-        
-        if indexPath.row == 0 {
-            let button = UIButton()
-            button.frame = CGRect(x: x + 50, y: 8.0, width: 80, height: tileHeight())
-            if self.maj!.east.tileMatches.stopSorting == true {
-                button.setTitle("[unlock]", for: .normal)
-            } else {
-                button.setTitle("[lock]", for: .normal)
-            }
-            button.setTitleColor(UIColor.darkGray, for: .normal)
-            button.addTarget(self, action: #selector(TileMatchView.lockSorting), for: .touchUpInside)
-            cell.addSubview(button)
         }
             
         return cell
     }
-  
-    @objc func lockSorting(_ sender: UIView) {
-        if self.maj!.east.tileMatches.stopSorting == true {
-            let alert = UIAlertController(title: "Unlock pattern sorting", message: "", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Unlock", style: .default, handler: {(action:UIAlertAction) in
-                self.maj!.east.tileMatches.stopSorting = false
-                self.tableView.reloadData()
-            }));
-            
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil));
-            root.present(alert, animated: true, completion: nil)
-        } else {
-            let message = "Stop the Patterns and Tiles views from sorting.  When unlocked these views match your hand with all possible hands and sort based on the highest matching tile count.  For example if 10 tiles in your had match a pattern it will be higher in the list than a pattern that only matches 9 tiles.  If you don't want to see any more updates and stop the constant sorting of these lists use lock"
-            let alert = UIAlertController(title: "Lock pattern sorting", message: message, preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Lock", style: .default, handler: {(action:UIAlertAction) in
-                self.maj!.east.tileMatches.stopSorting = true
-                self.tableView.reloadData()
-            }));
-            
-            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil));
-            root.present(alert, animated: true, completion: nil)
-        }
-    }
-    
     
 }
