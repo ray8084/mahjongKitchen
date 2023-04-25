@@ -14,6 +14,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
     private var cardView = CardView()
     private var filterSegmentControl: UISegmentedControl!
     private var label: UILabel!
+    private var tileViews: [UIView] = []
     
     init(maj: Maj, frame: CGRect, narrowViewDelegate: NarrowViewDelegate) {
         self.maj = maj
@@ -68,15 +69,9 @@ class HandsController: NarrowViewController, CardViewDelegate  {
                 jokerCount += 1
             }
         }
-        
-        //letterPattern.buildIdMap()
-        //for (index, map) in letterPattern.idMap.list.enumerated() {
-        //    let count = letterPattern.countMatches(tiles: tiles, map: map.map, jokerCount: jokerCount, subId: index)
-        //    if count == letterPattern.matchCount {
-        //        print(map.map)
-        //    }
-        //}
-        
+
+        for view in tileViews { view.removeFromSuperview() }
+        var y = label.frame.origin.y + 55
         for (index, idlist) in letterPattern.idList.list.enumerated() {
             let idMap = TileIdMap(idlist.ids)
             let count = letterPattern.countMatches(tiles: tiles, map: idMap.map, jokerCount: jokerCount, subId: index)
@@ -85,18 +80,18 @@ class HandsController: NarrowViewController, CardViewDelegate  {
                 print(idlist)
                 
                 var tileIndex = CGFloat(0.0)
-                for id in maj?.east.tileMatches.list[indexPath.row].tileIds ?? [] {
-                    let x = tileIndex * (tileWidth() + 1.0)
-                    let y: CGFloat = 0.0 + 2
+                for id in idlist.ids {
+                    let x = tileIndex * (tileWidth() + 1.0) + 50
                     let v = UIImageView(frame:CGRect(x: x, y: y, width: tileWidth(), height: tileHeight()))
                     v.contentMode = .scaleAspectFit
                     v.layer.masksToBounds = true
                     v.layer.cornerRadius = tileWidth() / 8
                     v.image = UIImage(named: Tile.getImage(id: id, maj: maj!))
-                    cell.addSubview(v)
+                    view.addSubview(v)
                     tileIndex += 1
+                    tileViews.append(v)
                 }
-                
+                y = y + tileHeight() + 4
             }
         }
     }
@@ -165,5 +160,20 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         cardView.update(maj)
     }
     
+    
+    
+    // -----------------------------------------------------------------------------------------
+    //
+    //  Tile Sizes
+    //
+    // -----------------------------------------------------------------------------------------
 
+    func tileWidth() -> CGFloat {
+        return view.frame.width / 28
+    }
+    
+    func tileHeight() -> CGFloat {
+        return tileWidth() * 62.5 / 46.0
+    }
+    
 }
