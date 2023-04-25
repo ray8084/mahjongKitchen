@@ -38,6 +38,17 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         cardView.update(maj)
     }
     
+    
+    // -----------------------------------------------------------------------------------------
+    //
+    //  Selected Tiles
+    //
+    // -----------------------------------------------------------------------------------------
+    
+    func allTiles() -> [Tile] {
+        return maj.east.tiles + maj.south.tiles + (maj.east.rack?.tiles)! + (maj.south.rack?.tiles)!
+    }
+        
     func showSelectedTiles(letterPattern: LetterPattern) {
         label?.removeFromSuperview()
         let width: CGFloat = 300
@@ -50,8 +61,44 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         label.numberOfLines = 0
         view.addSubview(label)
         
-        print(letterPattern.matchCount)
+        let tiles = allTiles()
+        var jokerCount = 0
+        for tile in tiles {
+            if tile.isJoker() {
+                jokerCount += 1
+            }
+        }
         
+        //letterPattern.buildIdMap()
+        //for (index, map) in letterPattern.idMap.list.enumerated() {
+        //    let count = letterPattern.countMatches(tiles: tiles, map: map.map, jokerCount: jokerCount, subId: index)
+        //    if count == letterPattern.matchCount {
+        //        print(map.map)
+        //    }
+        //}
+        
+        for (index, idlist) in letterPattern.idList.list.enumerated() {
+            let idMap = TileIdMap(idlist.ids)
+            let count = letterPattern.countMatches(tiles: tiles, map: idMap.map, jokerCount: jokerCount, subId: index)
+            if count == letterPattern.matchCount {
+                print(idMap.map)
+                print(idlist)
+                
+                var tileIndex = CGFloat(0.0)
+                for id in maj?.east.tileMatches.list[indexPath.row].tileIds ?? [] {
+                    let x = tileIndex * (tileWidth() + 1.0)
+                    let y: CGFloat = 0.0 + 2
+                    let v = UIImageView(frame:CGRect(x: x, y: y, width: tileWidth(), height: tileHeight()))
+                    v.contentMode = .scaleAspectFit
+                    v.layer.masksToBounds = true
+                    v.layer.cornerRadius = tileWidth() / 8
+                    v.image = UIImage(named: Tile.getImage(id: id, maj: maj!))
+                    cell.addSubview(v)
+                    tileIndex += 1
+                }
+                
+            }
+        }
     }
     
     // -----------------------------------------------------------------------------------------

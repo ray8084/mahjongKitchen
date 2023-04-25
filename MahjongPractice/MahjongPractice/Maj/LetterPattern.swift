@@ -141,7 +141,7 @@ class LetterPattern {
         }
     }
     
-    private func countMatches(tiles: [Tile], map: [Int], jokerCount: Int, subId: Int) -> Int {
+    func countMatches(tiles: [Tile], map: [Int], jokerCount: Int, subId: Int) -> Int {
         var remainder = map
         for tile in tiles {
             if remainder[tile.id] != 0 {
