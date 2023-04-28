@@ -13,8 +13,13 @@ class HandsController: NarrowViewController, CardViewDelegate  {
     private var maj: Maj!
     public var cardView = CardView()
     private var filterSegmentControl: UISegmentedControl!
+    private var selectSegmentControl: UISegmentedControl!
     private var label: UILabel!
     private var tileViews: [UIView] = []
+    private var selectedPattern: LetterPattern!
+    var suggestedHand1: LetterPattern!
+    var suggestedHand2: LetterPattern!
+    var suggestedHandAlt: LetterPattern!
     
     init(maj: Maj, frame: CGRect, narrowViewDelegate: NarrowViewDelegate) {
         self.maj = maj
@@ -51,6 +56,8 @@ class HandsController: NarrowViewController, CardViewDelegate  {
     }
         
     func showSelectedTiles(letterPattern: LetterPattern) {
+        selectedPattern = letterPattern
+        
         label?.removeFromSuperview()
         let width: CGFloat = 500
         let height: CGFloat = 75
@@ -67,6 +74,16 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         label.textAlignment = .left
         label.numberOfLines = 0
         view.addSubview(label)
+        
+        if selectSegmentControl == nil {
+            let items = ["Hand1", "Hand2", "Alt"]
+            let x = Int(view.frame.width - 220)
+            selectSegmentControl = UISegmentedControl(items: items)
+            // segmentControl.selectedSegmentIndex =
+            selectSegmentControl.frame = CGRect(x: x, y: 185, width: 200, height: Int(selectSegmentControl.frame.height))
+            selectSegmentControl.addTarget(self, action: #selector(changeSelect), for: .valueChanged)
+            view.addSubview(selectSegmentControl)
+        }
         
         let tiles = allTiles()
         var jokerCount = 0
@@ -101,6 +118,16 @@ class HandsController: NarrowViewController, CardViewDelegate  {
             }
         }
     }
+    
+    @objc private func changeSelect(sender: UISegmentedControl) {
+        switch( sender.selectedSegmentIndex ) {
+        case 0: suggestedHand1 = selectedPattern
+        case 1: suggestedHand2 = selectedPattern
+        case 2: suggestedHandAlt = selectedPattern
+        default: print("todo changeSelect")
+        }
+    }
+    
     
     // -----------------------------------------------------------------------------------------
     //

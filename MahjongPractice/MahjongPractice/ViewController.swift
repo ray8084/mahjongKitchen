@@ -629,23 +629,61 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     
     func showSuggestedHands() {
         suggestedHand1?.removeFromSuperview()
-       
-        if suggestedHandsView != nil && suggestedHandsView.cardView.suggestedHand1 != nil {
+        suggestedHand2?.removeFromSuperview()
+        suggestedHandAlt?.removeFromSuperview()
+        
+        if suggestedHandsView != nil && suggestedHandsView.suggestedHand1 != nil {
             let width: CGFloat = 400
-            let height: CGFloat = 30
+            let height: CGFloat = 25
             let x = cardMarginX() + menuButton.frame.width + 15
             let y: CGFloat = tableLocation()
             
             let labelFrame = CGRect(x: x, y: y, width: width, height: height)
             suggestedHand1 = UILabel(frame: labelFrame)
-            let text = suggestedHandsView.cardView.suggestedHand1.text
+            let text = suggestedHandsView.suggestedHand1.text
             text.append(NSMutableAttributedString(string: "  "))
-            text.append(suggestedHandsView.cardView.suggestedHand1.note)
+            text.append(suggestedHandsView.suggestedHand1.note)
             suggestedHand1.attributedText = text
             suggestedHand1.frame = labelFrame
             suggestedHand1.textAlignment = .left
             suggestedHand1.numberOfLines = 1
             view.addSubview(suggestedHand1)
+        }
+        
+        if suggestedHandsView != nil && suggestedHandsView.suggestedHand2 != nil {
+            let width: CGFloat = 400
+            let height: CGFloat = 25
+            let x = cardMarginX() + menuButton.frame.width + 15
+            let y: CGFloat = tableLocation() + 25
+            
+            let labelFrame = CGRect(x: x, y: y, width: width, height: height)
+            suggestedHand2 = UILabel(frame: labelFrame)
+            let text = suggestedHandsView.suggestedHand2.text
+            text.append(NSMutableAttributedString(string: "  "))
+            text.append(suggestedHandsView.suggestedHand2.note)
+            suggestedHand2.attributedText = text
+            suggestedHand2.frame = labelFrame
+            suggestedHand2.textAlignment = .left
+            suggestedHand2.numberOfLines = 1
+            view.addSubview(suggestedHand2)
+        }
+        
+        if suggestedHandsView != nil && suggestedHandsView.suggestedHandAlt != nil {
+            let width: CGFloat = 400
+            let height: CGFloat = 25
+            let x = cardMarginX() + menuButton.frame.width + 15
+            let y: CGFloat = tableLocation() + 50
+            
+            let labelFrame = CGRect(x: x, y: y, width: width, height: height)
+            suggestedHandAlt = UILabel(frame: labelFrame)
+            let text = suggestedHandsView.suggestedHandAlt.text
+            text.append(NSMutableAttributedString(string: "  "))
+            text.append(suggestedHandsView.suggestedHandAlt.note)
+            suggestedHandAlt.attributedText = text
+            suggestedHandAlt.frame = labelFrame
+            suggestedHandAlt.textAlignment = .left
+            suggestedHandAlt.numberOfLines = 1
+            view.addSubview(suggestedHandAlt)
         }
     }
     
