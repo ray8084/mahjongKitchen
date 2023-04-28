@@ -50,6 +50,12 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         cardView.update(maj)
     }
     
+    func clear() {
+        suggestedHandA = nil
+        suggestedHandB = nil
+        suggestedHandC = nil
+        selectSegmentControl.selectedSegmentIndex = UISegmentedControl.noSegment
+    }
     
     // -----------------------------------------------------------------------------------------
     //

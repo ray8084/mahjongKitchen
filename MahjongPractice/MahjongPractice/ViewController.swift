@@ -209,6 +209,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         newDeal = true
         resetMaj()
         showGame()
+        suggestedHandsView?.clear()
+        showSuggestedHands()
     }
     
     func resetMaj() {
