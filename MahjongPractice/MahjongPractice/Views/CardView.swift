@@ -24,6 +24,9 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var isHidden = true
     let darkBamboo:UIColor = UIColor(red: 114/255, green: 123/255, blue: 102/255, alpha: 1.0)
     var cardViewDelegate: CardViewDelegate!
+    var suggestedHand1: LetterPattern!
+    var suggestedHand2: LetterPattern!
+    var suggestedHandAlt: LetterPattern!
     
     func showCard(_ rootView: UIViewController, delegate: CardViewDelegate, x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, bgcolor: UIColor, maj: Maj) {
         self.maj = maj
@@ -139,6 +142,7 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let pattern = maj.card.letterPatterns[indexPath.row]
         print( "\(pattern.text.string) \(pattern.matchCount)" )
         cardViewDelegate.showSelectedTiles(letterPattern: pattern)
+        suggestedHand1 = pattern
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

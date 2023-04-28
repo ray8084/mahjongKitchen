@@ -35,6 +35,10 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     var menuButton: UIButton!
     var versionLabel: UILabel!
     var handsButton: UIButton!
+    var suggestedHand1: UILabel!
+    var suggestedHand2: UILabel!
+    var suggestedHandAlt: UILabel!
+    var suggestedHandsView: HandsController!
     
     let margin: CGFloat = 5
     let space: CGFloat = 1
@@ -418,10 +422,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     
     func showDiscardTable() {
         discardTableView.isHidden = false
-        var margin = cardMarginX() + menuButton.frame.width * 2
-        if view.frame.width < 569  {
-            margin = cardMarginX() + menuButton.frame.width
-        }
+        var margin = cardMarginX() + menuButton.frame.width
         discardTableView.show(parent: view, rowHeader: tableLocation(), maj: maj, margin: margin)
     }
     
@@ -608,10 +609,52 @@ class ViewController: UIViewController, NarrowViewDelegate  {
     }
     
     @objc func handsButtonAction(sender: UIButton!) {
-        let hands = HandsController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self)
-        self.show(hands, sender: self)
+        if discardTableView.isHidden {
+            showDiscardTable()
+            handsButton.setTitle("Hands", for: .normal)
+            hideSuggestedHands()
+        } else {
+            hideDiscardTable()
+            handsButton.setTitle("Table", for: .normal)
+            showSuggestedHands()
+        }
     }
       
+    
+    // -----------------------------------------------------------------------------------------
+    //
+    //  Suggested Hands
+    //
+    // -----------------------------------------------------------------------------------------
+    
+    func showSuggestedHands() {
+        suggestedHand1?.removeFromSuperview()
+       
+        if suggestedHandsView != nil && suggestedHandsView.cardView.suggestedHand1 != nil {
+            let width: CGFloat = 400
+            let height: CGFloat = 30
+            let x = cardMarginX() + menuButton.frame.width + 15
+            let y: CGFloat = tableLocation()
+            
+            let labelFrame = CGRect(x: x, y: y, width: width, height: height)
+            suggestedHand1 = UILabel(frame: labelFrame)
+            let text = suggestedHandsView.cardView.suggestedHand1.text
+            text.append(NSMutableAttributedString(string: "  "))
+            text.append(suggestedHandsView.cardView.suggestedHand1.note)
+            suggestedHand1.attributedText = text
+            suggestedHand1.frame = labelFrame
+            suggestedHand1.textAlignment = .left
+            suggestedHand1.numberOfLines = 1
+            view.addSubview(suggestedHand1)
+        }
+    }
+    
+    func hideSuggestedHands() {
+        suggestedHand1?.removeFromSuperview()
+        suggestedHand2?.removeFromSuperview()
+        suggestedHandAlt?.removeFromSuperview()
+    }
+    
     
     // -----------------------------------------------------------------------------------------
     //
@@ -628,6 +671,13 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         
         alert.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
             self.replay()
+        }));
+        
+        alert.addAction(UIAlertAction(title: "Suggested Hands", style: .default, handler: {(action:UIAlertAction) in
+            if self.suggestedHandsView == nil {
+                self.suggestedHandsView = HandsController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self)
+            }
+            self.show(self.suggestedHandsView, sender: self)
         }));
         
         alert.addAction(UIAlertAction(title: "Sort", style: .default, handler: {(action:UIAlertAction) in
@@ -1033,7 +1083,7 @@ class ViewController: UIViewController, NarrowViewDelegate  {
         return height
     }
     
-    func tileWidth() -> CGFloat { return (viewWidth() - notch()) / 15.5 }
+    func tileWidth() -> CGFloat { return (viewWidth() - notch()) / 16.5 }
     func tileHeight() -> CGFloat { return tileWidth() * 62.5 / 46.0 }
     
     func notch() -> CGFloat {

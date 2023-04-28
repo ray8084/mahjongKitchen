@@ -11,7 +11,7 @@ import UIKit
 class HandsController: NarrowViewController, CardViewDelegate  {
 
     private var maj: Maj!
-    private var cardView = CardView()
+    public var cardView = CardView()
     private var filterSegmentControl: UISegmentedControl!
     private var label: UILabel!
     private var tileViews: [UIView] = []
@@ -52,11 +52,17 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         
     func showSelectedTiles(letterPattern: LetterPattern) {
         label?.removeFromSuperview()
-        let width: CGFloat = 300
+        let width: CGFloat = 500
         let height: CGFloat = 75
         let labelFrame = CGRect(x: 50, y: 160, width: width, height: height)
         label = UILabel(frame: labelFrame)
-        label.attributedText = letterPattern.text
+        
+        let text = NSMutableAttributedString(string: "")
+        text.append(letterPattern.text)
+        text.append(NSMutableAttributedString(string: "  "))
+        text.append(letterPattern.note)
+        
+        label.attributedText = text
         label.frame = labelFrame
         label.textAlignment = .left
         label.numberOfLines = 0
