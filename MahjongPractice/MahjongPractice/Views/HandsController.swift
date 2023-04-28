@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol HandsControllerDelegate {
+    func showSuggestedHands()
+}
+
 class HandsController: NarrowViewController, CardViewDelegate  {
 
     private var maj: Maj!
@@ -17,12 +21,14 @@ class HandsController: NarrowViewController, CardViewDelegate  {
     private var label: UILabel!
     private var tileViews: [UIView] = []
     private var selectedPattern: LetterPattern!
-    var suggestedHand1: LetterPattern!
-    var suggestedHand2: LetterPattern!
-    var suggestedHandAlt: LetterPattern!
+    var suggestedHandA: LetterPattern!
+    var suggestedHandB: LetterPattern!
+    var suggestedHandC: LetterPattern!
+    var handsControllerDelegate: HandsControllerDelegate
     
-    init(maj: Maj, frame: CGRect, narrowViewDelegate: NarrowViewDelegate) {
+    init(maj: Maj, frame: CGRect, narrowViewDelegate: NarrowViewDelegate, handsControllerDelegate: HandsControllerDelegate) {
         self.maj = maj
+        self.handsControllerDelegate = handsControllerDelegate
         super.init(frame: frame, narrowViewDelegate: narrowViewDelegate)
     }
     
@@ -79,11 +85,15 @@ class HandsController: NarrowViewController, CardViewDelegate  {
             let items = ["Hand1", "Hand2", "Alt"]
             let x = Int(view.frame.width - 220)
             selectSegmentControl = UISegmentedControl(items: items)
-            // segmentControl.selectedSegmentIndex =
             selectSegmentControl.frame = CGRect(x: x, y: 185, width: 200, height: Int(selectSegmentControl.frame.height))
             selectSegmentControl.addTarget(self, action: #selector(changeSelect), for: .valueChanged)
             view.addSubview(selectSegmentControl)
         }
+        
+        selectSegmentControl.selectedSegmentIndex = UISegmentedControl.noSegment
+        if suggestedHandA != nil && suggestedHandA.id == selectedPattern.id { selectSegmentControl.selectedSegmentIndex = 0 }
+        if suggestedHandB != nil && suggestedHandB.id == selectedPattern.id { selectSegmentControl.selectedSegmentIndex = 1 }
+        if suggestedHandC != nil && suggestedHandC.id == selectedPattern.id { selectSegmentControl.selectedSegmentIndex = 2 }
         
         let tiles = allTiles()
         var jokerCount = 0
@@ -121,11 +131,13 @@ class HandsController: NarrowViewController, CardViewDelegate  {
     
     @objc private func changeSelect(sender: UISegmentedControl) {
         switch( sender.selectedSegmentIndex ) {
-        case 0: suggestedHand1 = selectedPattern
-        case 1: suggestedHand2 = selectedPattern
-        case 2: suggestedHandAlt = selectedPattern
+        case 0: suggestedHandA = selectedPattern
+        case 1: suggestedHandB = selectedPattern
+        case 2: suggestedHandC = selectedPattern
         default: print("todo changeSelect")
         }
+        
+        handsControllerDelegate.showSuggestedHands()
     }
     
     
