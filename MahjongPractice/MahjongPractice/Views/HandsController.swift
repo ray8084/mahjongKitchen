@@ -19,7 +19,9 @@ class HandsController: NarrowViewController, CardViewDelegate  {
     private var filterSegmentControl: UISegmentedControl!
     private var selectSegmentControl: UISegmentedControl!
     private var label: UILabel!
+    private var yourHandLabel: UILabel!
     private var tileViews: [UIView] = []
+    private var yourTileViews: [UIView] = []
     private var selectedPattern: LetterPattern!
     var suggestedHandA: LetterPattern!
     var suggestedHandB: LetterPattern!
@@ -42,7 +44,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         narrowView()
         xOffset = (Int(view.frame.width) - maxWidth) / 2
         
-        addYourTiles()
+        showYourTiles()
         addFilterSegmentControl()
         addCloseButton()
 
@@ -67,11 +69,13 @@ class HandsController: NarrowViewController, CardViewDelegate  {
     //
     // -----------------------------------------------------------------------------------------
     
-    func addYourTiles() {
-        let label = UILabel(frame: CGRect(x: 50, y: 5, width: 80, height: 25))
-        label.text = "Your Hand"
-        label.textAlignment = .left
-        view.addSubview(label)
+    func showYourTiles() {
+        if yourHandLabel == nil {
+            yourHandLabel = UILabel(frame: CGRect(x: 50, y: 5, width: 80, height: 25))
+            yourHandLabel.text = "Your Tiles"
+            yourHandLabel.textAlignment = .left
+            view.addSubview(yourHandLabel)
+        }
         
         var tiles: [Tile] = []
         for tile in maj.east.rack!.tiles { tiles.append(tile) }
@@ -82,6 +86,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         let height = tileHeight() * 1.2
         let width = tileWidth() * 1.2
         
+        yourTileViews = []
         for (index, tile) in tiles.enumerated() {
             let x = CGFloat(index < 14 ? index : index - 14) * (width + 1.0) + 150
             let y = index < 14 ? 10.0 : 10.0 + height
@@ -91,7 +96,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
             v.layer.cornerRadius = width / 8
             v.image = UIImage(named: Tile.getImage(id: tile.id, maj: maj!))
             view.addSubview(v)
-            // tileViews.append(v)
+            yourTileViews.append(v)
         }
     }
     

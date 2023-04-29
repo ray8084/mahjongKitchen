@@ -424,7 +424,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     
     func showDiscardTable() {
         discardTableView.isHidden = false
-        var margin = cardMarginX() + menuButton.frame.width
+        let margin = cardMarginX() + menuButton.frame.width
         discardTableView.show(parent: view, rowHeader: tableLocation(), maj: maj, margin: margin)
     }
     
@@ -745,6 +745,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         alert.addAction(UIAlertAction(title: "Suggested Hands", style: .default, handler: {(action:UIAlertAction) in
             if self.suggestedHandsView == nil {
                 self.suggestedHandsView = HandsController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self, handsControllerDelegate: self)
+            } else {
+                self.suggestedHandsView.showYourTiles()
             }
             self.show(self.suggestedHandsView, sender: self)
         }));
