@@ -30,6 +30,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         self.maj = maj
         self.handsControllerDelegate = handsControllerDelegate
         super.init(frame: frame, narrowViewDelegate: narrowViewDelegate)
+        view.backgroundColor = UIColor.init(red: 185.0/255.0, green: 190.0/255.0, blue: 183.0/255.0, alpha: 1)
     }
     
     required init?(coder: NSCoder) {
@@ -41,11 +42,12 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         narrowView()
         xOffset = (Int(view.frame.width) - maxWidth) / 2
         
+        addYourTiles()
         addFilterSegmentControl()
         addCloseButton()
 
         cardView.isHidden = false
-        cardView.showCard(self, delegate: self, x: 50, y: 70, width: view.frame.width - 50, height: 100, bgcolor: .white, maj: maj)
+        cardView.showCard(self, delegate: self, x: 50, y: 160, width: view.frame.width - 50, height: 100, bgcolor: .white, maj: maj)
         view.addSubview(cardView.cardView)
         cardView.update(maj)
         cardView.cardView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .bottom)
@@ -58,6 +60,41 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         suggestedHandC = nil
         selectSegmentControl.selectedSegmentIndex = UISegmentedControl.noSegment
     }
+    
+    // -----------------------------------------------------------------------------------------
+    //
+    //  Your Tiles
+    //
+    // -----------------------------------------------------------------------------------------
+    
+    func addYourTiles() {
+        let label = UILabel(frame: CGRect(x: 50, y: 5, width: 80, height: 25))
+        label.text = "Your Hand"
+        label.textAlignment = .left
+        view.addSubview(label)
+        
+        var tiles: [Tile] = []
+        for tile in maj.east.rack!.tiles { tiles.append(tile) }
+        for tile in maj.south.rack!.tiles { tiles.append(tile) }
+        for tile in maj.east.tiles { tiles.append(tile) }
+        for tile in maj.south.tiles { tiles.append(tile) }
+        
+        let height = tileHeight() * 1.2
+        let width = tileWidth() * 1.2
+        
+        for (index, tile) in tiles.enumerated() {
+            let x = CGFloat(index < 14 ? index : index - 14) * (width + 1.0) + 150
+            let y = index < 14 ? 10.0 : 10.0 + height
+            let v = UIImageView(frame:CGRect(x: x, y: y, width: width, height: height))
+            v.contentMode = .scaleAspectFit
+            v.layer.masksToBounds = true
+            v.layer.cornerRadius = width / 8
+            v.image = UIImage(named: Tile.getImage(id: tile.id, maj: maj!))
+            view.addSubview(v)
+            // tileViews.append(v)
+        }
+    }
+    
     
     // -----------------------------------------------------------------------------------------
     //
@@ -75,7 +112,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         label?.removeFromSuperview()
         let width: CGFloat = 500
         let height: CGFloat = 75
-        let labelFrame = CGRect(x: 50, y: 160, width: width, height: height)
+        let labelFrame = CGRect(x: 50, y: 240, width: width, height: height)
         label = UILabel(frame: labelFrame)
         
         let text = NSMutableAttributedString(string: "")
@@ -93,7 +130,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         selectSegmentControl?.removeFromSuperview()
         let x = Int(view.frame.width - 250)
         selectSegmentControl = UISegmentedControl(items: items)
-        selectSegmentControl.frame = CGRect(x: x, y: 185, width: 230, height: Int(selectSegmentControl.frame.height))
+        selectSegmentControl.frame = CGRect(x: x, y: 285, width: 230, height: Int(selectSegmentControl.frame.height))
         selectSegmentControl.addTarget(self, action: #selector(changeSelect), for: .valueChanged)
         view.addSubview(selectSegmentControl)
         
@@ -174,7 +211,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         let items = ["2023", "2468", "Like", "Add", "Quints", "Runs", "13579", "W&D", "369", "S&P", "All"]
         filterSegmentControl = UISegmentedControl(items: items)
         filterSegmentControl.selectedSegmentIndex = 10
-        filterSegmentControl.frame = CGRect(x: 45, y: 20, width: 580, height: Int(filterSegmentControl.frame.height))
+        filterSegmentControl.frame = CGRect(x: 45, y: 120, width: 580, height: Int(filterSegmentControl.frame.height))
         filterSegmentControl.addTarget(self, action: #selector(changeFilter), for: .valueChanged)
         view.addSubview(filterSegmentControl)
     }
