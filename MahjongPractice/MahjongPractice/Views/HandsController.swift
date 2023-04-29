@@ -86,7 +86,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         let height = tileHeight() * 1.2
         let width = tileWidth() * 1.2
         
-        yourTileViews = []
+        for v in yourTileViews { v.removeFromSuperview() }
         for (index, tile) in tiles.enumerated() {
             let x = CGFloat(index < 14 ? index : index - 14) * (width + 1.0) + 150
             let y = index < 14 ? 10.0 : 10.0 + height
