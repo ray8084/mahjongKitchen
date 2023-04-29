@@ -193,6 +193,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         maj.discardTable.resetCounts()
         discardTableView.hide()
         maj.card.clearRackFilter()
+        suggestedHandsView?.showYourTiles()
         showGame()
     }
     
@@ -210,6 +211,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         resetMaj()
         showGame()
         suggestedHandsView?.clear()
+        suggestedHandsView?.showYourTiles()
         showSuggestedHands()
     }
     
@@ -384,7 +386,9 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         showHand()
         showLabel()
         showDiscard()
-        showDiscardTable()
+        if discardTableView.isHidden == false {
+            showDiscardTable()
+        }
         return true
     }
     
