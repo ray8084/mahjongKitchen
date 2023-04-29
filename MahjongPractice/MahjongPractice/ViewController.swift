@@ -642,10 +642,12 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             
             let labelFrame = CGRect(x: x, y: y, width: width, height: height)
             suggestedHand1 = UILabel(frame: labelFrame)
-            let text = suggestedHandsView.suggestedHandA.text
-            text.append(NSMutableAttributedString(string: "  "))
-            text.append(suggestedHandsView.suggestedHandA.note)
-            suggestedHand1.attributedText = text
+            
+            let text1 = NSMutableAttributedString(string: "")
+            text1.append(suggestedHandsView.suggestedHandA.text)
+            text1.append(NSMutableAttributedString(string: "  "))
+            text1.append(suggestedHandsView.suggestedHandA.note)
+            suggestedHand1.attributedText = text1
             suggestedHand1.frame = labelFrame
             suggestedHand1.textAlignment = .left
             suggestedHand1.numberOfLines = 1
@@ -660,10 +662,11 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             
             let labelFrame = CGRect(x: x, y: y, width: width, height: height)
             suggestedHand2 = UILabel(frame: labelFrame)
-            let text = suggestedHandsView.suggestedHandB.text
-            text.append(NSMutableAttributedString(string: "  "))
-            text.append(suggestedHandsView.suggestedHandB.note)
-            suggestedHand2.attributedText = text
+            let text2 = NSMutableAttributedString(string: "")
+            text2.append(suggestedHandsView.suggestedHandB.text)
+            text2.append(NSMutableAttributedString(string: "  "))
+            text2.append(suggestedHandsView.suggestedHandB.note)
+            suggestedHand2.attributedText = text2
             suggestedHand2.frame = labelFrame
             suggestedHand2.textAlignment = .left
             suggestedHand2.numberOfLines = 1
@@ -678,10 +681,11 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             
             let labelFrame = CGRect(x: x, y: y, width: width, height: height)
             suggestedHandAlt = UILabel(frame: labelFrame)
-            let text = suggestedHandsView.suggestedHandC.text
-            text.append(NSMutableAttributedString(string: "  "))
-            text.append(suggestedHandsView.suggestedHandC.note)
-            suggestedHandAlt.attributedText = text
+            let text3 = NSMutableAttributedString(string: "")
+            text3.append(suggestedHandsView.suggestedHandC.text)
+            text3.append(NSMutableAttributedString(string: "  "))
+            text3.append(suggestedHandsView.suggestedHandC.note)
+            suggestedHandAlt.attributedText = text3
             suggestedHandAlt.frame = labelFrame
             suggestedHandAlt.textAlignment = .left
             suggestedHandAlt.numberOfLines = 1

@@ -137,16 +137,13 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let pattern = maj.card.letterPatterns[indexPath.row]
-        print( "\(pattern.text.string) \(pattern.matchCount)" )
         cardViewDelegate.showSelectedTiles(letterPattern: pattern)
-        // suggestedHand1 = pattern
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cardViewCell")! as UITableViewCell
         cell.backgroundColor = UIColor.clear
         cell.textLabel!.font = cell.textLabel!.font.withSize(16)
-        // cell.selectionStyle = .none
 
         let index = indexPath.row
         

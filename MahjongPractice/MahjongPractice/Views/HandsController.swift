@@ -48,6 +48,8 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         cardView.showCard(self, delegate: self, x: 50, y: 70, width: view.frame.width - 50, height: 100, bgcolor: .white, maj: maj)
         view.addSubview(cardView.cardView)
         cardView.update(maj)
+        cardView.cardView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .bottom)
+        showSelectedTiles(letterPattern: maj.card.letterPatterns[0])
     }
     
     func clear() {
@@ -84,17 +86,16 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         label.attributedText = text
         label.frame = labelFrame
         label.textAlignment = .left
-        label.numberOfLines = 0
+        label.numberOfLines = 1
         view.addSubview(label)
-        
-        if selectSegmentControl == nil {
-            let items = ["Hand1", "Hand2", "Alt"]
-            let x = Int(view.frame.width - 220)
-            selectSegmentControl = UISegmentedControl(items: items)
-            selectSegmentControl.frame = CGRect(x: x, y: 185, width: 200, height: Int(selectSegmentControl.frame.height))
-            selectSegmentControl.addTarget(self, action: #selector(changeSelect), for: .valueChanged)
-            view.addSubview(selectSegmentControl)
-        }
+                
+        let items = ["Hand1", "Hand2", "Alt"]
+        selectSegmentControl?.removeFromSuperview()
+        let x = Int(view.frame.width - 250)
+        selectSegmentControl = UISegmentedControl(items: items)
+        selectSegmentControl.frame = CGRect(x: x, y: 185, width: 230, height: Int(selectSegmentControl.frame.height))
+        selectSegmentControl.addTarget(self, action: #selector(changeSelect), for: .valueChanged)
+        view.addSubview(selectSegmentControl)
         
         selectSegmentControl.selectedSegmentIndex = UISegmentedControl.noSegment
         if suggestedHandA != nil && suggestedHandA.id == selectedPattern.id { selectSegmentControl.selectedSegmentIndex = 0 }
@@ -140,9 +141,8 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         case 0: suggestedHandA = selectedPattern
         case 1: suggestedHandB = selectedPattern
         case 2: suggestedHandC = selectedPattern
-        default: print("todo changeSelect")
+        default: selectSegmentControl.selectedSegmentIndex = UISegmentedControl.noSegment
         }
-        
         handsControllerDelegate.showSuggestedHands()
     }
     
