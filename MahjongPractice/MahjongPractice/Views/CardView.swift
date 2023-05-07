@@ -71,22 +71,6 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
             cardView.reloadData()
         }
     }
-    
-    func updateRackFilter(_ maj: Maj) {
-        if maj.isGameOver() {
-            maj.card.clearRackFilter()
-            maj.card.match(allTiles(maj), ignoreFilters: false)
-            sort(maj)
-            cardView.reloadData()
-        }
-        else if isHidden == false && maj.letterPatternRackFilterPending {
-            maj.card.rackFilter(maj.east.rack!)
-            maj.card.match(allTiles(maj), ignoreFilters: false)
-            sort(maj)
-            cardView.reloadData()
-            maj.letterPatternRackFilterPending = false
-        }
-    }
         
     func sort(_ maj: Maj) {
         if maj.east.tileMatches.stopSorting == false {
