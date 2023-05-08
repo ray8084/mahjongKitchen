@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CardViewDelegate {
-    func showSelectedTiles(letterPattern: LetterPattern)
+    // func showSelectedTiles(letterPattern: LetterPattern)
 }
 
 class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -123,7 +123,7 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let pattern = maj.card.letterPatterns[indexPath.row]
-        cardViewDelegate.showSelectedTiles(letterPattern: pattern)
+        // cardViewDelegate.showSelectedTiles(letterPattern: pattern)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

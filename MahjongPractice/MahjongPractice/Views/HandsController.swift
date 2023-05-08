@@ -48,17 +48,18 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         xOffset = (Int(view.frame.width) - maxWidth) / 2
         
         showYourTiles()
-        addFilterButton()
+        // addFilterButton()
         addFilterSegmentControl()
 
+        let offset = view.frame.width < 668 ? 10.0 : 50.0
         cardView.isHidden = false
-        cardView.showCard(self, delegate: self, x: 50, y: 160, width: view.frame.width - 50, height: 100, bgcolor: .white, maj: maj)
+        cardView.showCard(self, delegate: self, x: offset, y: 160, width: view.frame.width - 50, height: 100, bgcolor: .white, maj: maj)
         view.addSubview(cardView.cardView)
         let allTiles = maj.east.tiles + maj.south.tiles + (maj.east.rack?.tiles)! + (maj.south.rack?.tiles)!
         cardView.update(maj, tiles: allTiles )
         cardView.cardView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .bottom)
         
-        showSelectedTiles(letterPattern: maj.card.letterPatterns[0])
+        // showSelectedTiles(letterPattern: maj.card.letterPatterns[0])
         addCloseButton()
     }
     
@@ -77,20 +78,20 @@ class HandsController: NarrowViewController, CardViewDelegate  {
     // -----------------------------------------------------------------------------------------
     
     func showYourTiles() {
-        if yourHandLabel == nil {
-            yourHandLabel = UILabel(frame: CGRect(x: 50, y: 5, width: 80, height: 25))
-            yourHandLabel.text = "Your Tiles"
-            yourHandLabel.textAlignment = .left
-            view.addSubview(yourHandLabel)
-        }
+        //if yourHandLabel == nil {
+        //    yourHandLabel = UILabel(frame: CGRect(x: 50, y: 5, width: 80, height: 25))
+        //    yourHandLabel.text = "Your Tiles"
+        //    yourHandLabel.textAlignment = .left
+        //    view.addSubview(yourHandLabel)
+        //}
        
         let height = tileHeight() * 1.2
         let width = tileWidth() * 1.2
         for v in yourTileViews { v.removeFromSuperview() }
-                
+        let offset = view.frame.width < 668 ? 10.0 : 50.0
         let tiles = allTiles()
         for (index, tile) in tiles.enumerated() {
-            let x = CGFloat(index < 14 ? index : index - 14) * (width + 1.0) + 150
+            let x = CGFloat(index < 14 ? index : index - 14) * (width + 1.0) + offset
             let y = index < 14 ? 10.0 : 10.0 + height
             let v = UIImageView(frame:CGRect(x: x, y: y, width: width, height: height))
             v.contentMode = .scaleAspectFit
@@ -212,7 +213,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         return jokerCount
     }
         
-    func showSelectedTiles(letterPattern: LetterPattern) {
+    /*func showSelectedTiles(letterPattern: LetterPattern) {
         selectedPattern = letterPattern
         
         label?.removeFromSuperview()
@@ -268,7 +269,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
                 y = y + tileHeight() + 4
             }
         }
-    }
+    }*/
     
     @objc private func changeSelect(sender: UISegmentedControl) {
         switch( sender.selectedSegmentIndex ) {
@@ -305,10 +306,11 @@ class HandsController: NarrowViewController, CardViewDelegate  {
     // -----------------------------------------------------------------------------------------
     
     func addFilterSegmentControl() {
+        let offset = view.frame.width < 668 ? 10 : 45
         let items = ["2023", "2468", "Like", "Add", "Quints", "Runs", "13579", "W&D", "369", "S&P", "All"]
         filterSegmentControl = UISegmentedControl(items: items)
         filterSegmentControl.selectedSegmentIndex = 10
-        filterSegmentControl.frame = CGRect(x: 45, y: 120, width: 580, height: Int(filterSegmentControl.frame.height))
+        filterSegmentControl.frame = CGRect(x: offset, y: 120, width: 580, height: Int(filterSegmentControl.frame.height))
         filterSegmentControl.addTarget(self, action: #selector(changeFilter), for: .valueChanged)
         view.addSubview(filterSegmentControl)
     }

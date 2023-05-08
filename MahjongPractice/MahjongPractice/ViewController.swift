@@ -705,7 +705,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             var labelFrame = CGRect(x: x, y: y, width: width, height: height)
             suggestedHand1 = UILabel(frame: labelFrame)
             suggestedHand1.font = UIFont(name: "Chalkduster", size: 16)!
-            suggestedHand1.text = "< Switch from Suggested Hands to Discard Table"
+            suggestedHand1.text = "< Show Target Hands or Discard Table"
             suggestedHand1.frame = labelFrame
             suggestedHand1.textAlignment = .left
             suggestedHand1.numberOfLines = 2
@@ -714,7 +714,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             labelFrame = CGRect(x: x, y: y + 35, width: width, height: height)
             suggestedHandAlt = UILabel(frame: labelFrame)
             suggestedHandAlt.font = UIFont(name: "Chalkduster", size: 16)!
-            suggestedHandAlt.text = "< Select Suggested Hands in the Menu"
+            suggestedHandAlt.text = "< Select Target Hands"
             suggestedHandAlt.frame = labelFrame
             suggestedHandAlt.textAlignment = .left
             suggestedHandAlt.numberOfLines = 1
@@ -746,7 +746,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             self.replay()
         }));
         
-        alert.addAction(UIAlertAction(title: "Suggested Hands", style: .default, handler: {(action:UIAlertAction) in
+        alert.addAction(UIAlertAction(title: "Target Hands", style: .default, handler: {(action:UIAlertAction) in
             if self.suggestedHandsView == nil {
                 self.suggestedHandsView = HandsController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self, handsControllerDelegate: self)
             } else {
