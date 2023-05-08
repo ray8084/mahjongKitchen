@@ -23,6 +23,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
     private var tileViews: [UIView] = []
     private var yourTileViews: [UIView] = []
     private var filterButton: UIButton!
+    private var remainingTiles: [Tile] = []
     
     private var selectedPattern: LetterPattern!
     var suggestedHandA: LetterPattern!
@@ -53,7 +54,8 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         cardView.isHidden = false
         cardView.showCard(self, delegate: self, x: 50, y: 160, width: view.frame.width - 50, height: 100, bgcolor: .white, maj: maj)
         view.addSubview(cardView.cardView)
-        cardView.update(maj)
+        let allTiles = maj.east.tiles + maj.south.tiles + (maj.east.rack?.tiles)! + (maj.south.rack?.tiles)!
+        cardView.update(maj, tiles: allTiles )
         cardView.cardView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .bottom)
         
         showSelectedTiles(letterPattern: maj.card.letterPatterns[0])
@@ -137,7 +139,9 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         }));
                 
         alert.addAction(UIAlertAction(title: "Clear Filters", style: .default, handler: {(action:UIAlertAction) in
+            self.remainingTiles = self.allTiles()
             self.showYourTiles()
+            self.cardView.update(self.maj, tiles: self.allTiles())
         }));
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action:UIAlertAction) in
@@ -154,6 +158,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
             let tiles = allTiles()
             let jokerCount = jokerCount(tiles: tiles)
             var tileIndex = CGFloat(0.0)
+            var remainingTiles: [Tile] = []
             for tile in tiles {
                 var found = false
                 for (index, idlist) in suggestedHandA.idList.list.enumerated() {
@@ -179,8 +184,10 @@ class HandsController: NarrowViewController, CardViewDelegate  {
                     view.addSubview(v)
                     yourTileViews.append(v)
                     tileIndex += 1
+                    remainingTiles.append(tile)
                 }
             }
+            cardView.update(maj, tiles: remainingTiles)
         }
     }
     
@@ -335,7 +342,8 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         maj.east.filterOut369 = three
         maj.east.filterOutPairs = pairs
         cardView.filter(maj)
-        cardView.update(maj)
+        let tiles = maj.east.tiles + maj.south.tiles + (maj.east.rack?.tiles)! + (maj.south.rack?.tiles)!
+        cardView.update(maj, tiles: tiles)
     }
     
     

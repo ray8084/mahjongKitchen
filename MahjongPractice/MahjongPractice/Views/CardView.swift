@@ -24,6 +24,7 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var isHidden = true
     let darkBamboo:UIColor = UIColor(red: 114/255, green: 123/255, blue: 102/255, alpha: 1.0)
     var cardViewDelegate: CardViewDelegate!
+    var hand: [Tile] = []
     
     func showCard(_ rootView: UIViewController, delegate: CardViewDelegate, x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, bgcolor: UIColor, maj: Maj) {
         self.maj = maj
@@ -63,10 +64,11 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return maj.east.tiles + maj.south.tiles + (maj.east.rack?.tiles)! + (maj.south.rack?.tiles)!
     }
     
-    func update(_ maj: Maj) {
+    func update(_ maj: Maj, tiles: [Tile]) {
         if isHidden == false {
             self.maj = maj
-             maj.card.match(allTiles(maj), ignoreFilters: false)
+            self.hand = tiles
+            maj.card.match(hand, ignoreFilters: false)
             sort(maj)
             cardView.reloadData()
         }
@@ -234,12 +236,12 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
             
             alert.addAction(UIAlertAction(title: "Hide", style: .default, handler: {(action:UIAlertAction) in
                 self.maj.card.hidePattern(sender.tag-100)
-                self.update(self.maj)
+                self.update(self.maj, tiles: self.hand)
             }));
             
             alert.addAction(UIAlertAction(title: "Unhide All", style: .default, handler: {(action:UIAlertAction) in
                 self.maj.card.unhideAll()
-                self.update(self.maj)
+                self.update(self.maj, tiles: self.hand)
             }));
             
             alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil));
