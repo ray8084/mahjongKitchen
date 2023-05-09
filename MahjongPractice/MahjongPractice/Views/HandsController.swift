@@ -51,14 +51,26 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         // addFilterButton()
         addFilterSegmentControl()
 
-        let offset = view.frame.width < 668 ? 10.0 : 50.0
+        let x = view.frame.width < 668 ? 10.0 : 50.0
+        var y = tileHeight() * 2 + 30 + 50
         cardView.isHidden = false
-        cardView.showCard(self, delegate: self, x: offset, y: 160, width: view.frame.width - 50, height: 100, bgcolor: .white, maj: maj)
+        cardView.showCard(self, delegate: self, x: x, y: y, width: view.frame.width - 50, height: 100, bgcolor: .white, maj: maj)
         view.addSubview(cardView.cardView)
         let allTiles = maj.east.tiles + maj.south.tiles + (maj.east.rack?.tiles)! + (maj.south.rack?.tiles)!
         cardView.update(maj, tiles: allTiles )
         cardView.cardView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .bottom)
         
+        y = y + 100
+        let frame = CGRect(x: x, y: y, width: 500, height: 50)
+        let note = UILabel(frame: frame)
+        note.text =  "Select 3 patterns to see under your hand"
+        note.frame = frame
+        note.textAlignment = .left
+        note.font = UIFont(name: "Chalkduster", size: 15)
+        //note.textColor = UIColor.black
+        //note.numberOfLines = 0
+        view.addSubview(note)
+                
         // showSelectedTiles(letterPattern: maj.card.letterPatterns[0])
         addCloseButton()
     }
@@ -85,8 +97,8 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         //    view.addSubview(yourHandLabel)
         //}
        
-        let height = tileHeight() * 1.2
-        let width = tileWidth() * 1.2
+        let height = tileHeight()
+        let width = tileWidth()
         for v in yourTileViews { v.removeFromSuperview() }
         let offset = view.frame.width < 668 ? 10.0 : 50.0
         let tiles = allTiles()
@@ -310,7 +322,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         let items = ["2023", "2468", "Like", "Add", "Quints", "Runs", "13579", "W&D", "369", "S&P", "All"]
         filterSegmentControl = UISegmentedControl(items: items)
         filterSegmentControl.selectedSegmentIndex = 10
-        filterSegmentControl.frame = CGRect(x: offset, y: 120, width: 580, height: Int(filterSegmentControl.frame.height))
+        filterSegmentControl.frame = CGRect(x: offset, y: Int(tileHeight() * 2) + 40, width: Int(view.frame.width - 50), height: Int(filterSegmentControl.frame.height))
         filterSegmentControl.addTarget(self, action: #selector(changeFilter), for: .valueChanged)
         view.addSubview(filterSegmentControl)
     }
@@ -357,7 +369,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
     // -----------------------------------------------------------------------------------------
 
     func tileWidth() -> CGFloat {
-        return view.frame.width / 28
+        return view.frame.width / 16
     }
     
     func tileHeight() -> CGFloat {

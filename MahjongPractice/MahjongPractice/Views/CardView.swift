@@ -40,7 +40,7 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
             cardView.dataSource    =   self
             cardView.register(UITableViewCell.self, forCellReuseIdentifier: "cardViewCell")
             cardView.backgroundColor = UIColor.clear
-            cardView.separatorColor = UIColor(white: 128, alpha: 0.5)
+            cardView.separatorColor = UIColor.clear
             columnWidth = width / 3.0
             root = rootView
             cardViewDelegate = delegate
@@ -124,11 +124,17 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let pattern = maj.card.letterPatterns[indexPath.row]
         // cardViewDelegate.showSelectedTiles(letterPattern: pattern)
+        pattern.selected = !pattern.selected
+        cardView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cardViewCell")! as UITableViewCell
         cell.backgroundColor = UIColor.clear
+        //let backgroundView = UIView()
+        //backgroundView.backgroundColor = UIColor.clear
+        //cell.selectedBackgroundView = backgroundView
+        cell.selectionStyle = .none
         cell.textLabel!.font = cell.textLabel!.font.withSize(16)
 
         let index = indexPath.row
@@ -146,10 +152,17 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         col3?.attributedText = maj.card.matchCountText(index)
         
         // column 4 wins
-        let col4 = getLabel(cell, x: col1Width() + col2Width() + col3Width() + 5, width: col4Width(), tag: 4)
-        col4?.attributedText =  maj.card.winCountText(index)
+        //let col4 = getLabel(cell, x: col1Width() + col2Width() + col3Width() + 5, width: col4Width(), tag: 4)
+        //col4?.attributedText =  maj.card.winCountText(index)
+        //addHideButton(cell, x: col1Width() + col2Width() + col3Width() + col4Width() + 5, width: hideButtonWidth(), tag: index+100)
         
-        addHideButton(cell, x: col1Width() + col2Width() + col3Width() + col4Width() + 5, width: hideButtonWidth(), tag: index+100)
+        if maj.card.letterPatterns[index].selected {
+            cell.accessoryType = .checkmark
+            cell.tintColor = .darkGray
+        } else {
+            cell.accessoryType = .none
+        }
+        
         return cell
     }
     
@@ -172,7 +185,7 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func col3Width() -> CGFloat {
-        let col3 = isNarrow() ? 60 : width() * 0.08
+        let col3 = isNarrow() ? 60 : width() * 0.15
         return col3 > 100 ? 100 : col3
     }
     

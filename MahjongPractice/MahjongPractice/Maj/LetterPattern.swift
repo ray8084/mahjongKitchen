@@ -44,6 +44,7 @@ class LetterPattern {
     var rackFilter = false
     var hide = false
     var year = Year.uninitialized
+    var selected = false
     
     init(text: NSMutableAttributedString, mask: String, note: String, id: Int, family: Int, concealed: Bool, points: Int, year: Int) {
         self.text = text
