@@ -1214,7 +1214,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     func controlPanelLocationX() -> CGFloat { return cardMarginX() }
     func controlPanelLocationY() -> CGFloat{ return cardLocationY() + cardHeight() + 5 }
     func menuButtonLocationX() -> CGFloat { return cardMarginX() }
-    func buttonLocationY() -> CGFloat { return tableLocation() + rowHeight * 4 - buttonSize() }
+    // func buttonLocationY() -> CGFloat { return tableLocation() + rowHeight * 4 - buttonSize() }
+    func buttonLocationY() -> CGFloat { return tableLocation() + buttonSize() + 10}
     func buttonSize() -> CGFloat { return controlPanelHeight() }
 }
 

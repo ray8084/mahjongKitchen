@@ -51,7 +51,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         // addFilterButton()
         addFilterSegmentControl()
 
-        let x = view.frame.width < 668 ? 10.0 : 50.0
+        let x = view.frame.width < 668 || view.frame.height > 650 ? 15.0 : 50.0
         var y = tileHeight() * 2 + 30 + 50
         cardView.isHidden = false
         cardView.showCard(self, delegate: self, x: x, y: y, width: view.frame.width - 50, height: 100, bgcolor: .white, maj: maj)
@@ -61,14 +61,14 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         cardView.cardView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .bottom)
         
         y = y + 100
-        let frame = CGRect(x: x, y: y, width: 500, height: 50)
+        let frame = CGRect(x: x, y: y, width: 600, height: 50)
         let note = UILabel(frame: frame)
-        note.text =  "Select 3 patterns to see under your hand"
+        note.text =  "Select up to 3 hands to see under your tiles while you are playing."
         note.frame = frame
         note.textAlignment = .left
         note.font = UIFont(name: "Chalkduster", size: 15)
         //note.textColor = UIColor.black
-        //note.numberOfLines = 0
+        note.numberOfLines = 0
         view.addSubview(note)
                 
         // showSelectedTiles(letterPattern: maj.card.letterPatterns[0])
@@ -100,7 +100,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         let height = tileHeight()
         let width = tileWidth()
         for v in yourTileViews { v.removeFromSuperview() }
-        let offset = view.frame.width < 668 ? 10.0 : 50.0
+        let offset = view.frame.width < 668 || view.frame.height > 650 ? 10.0 : 50.0
         let tiles = allTiles()
         for (index, tile) in tiles.enumerated() {
             let x = CGFloat(index < 14 ? index : index - 14) * (width + 1.0) + offset
@@ -318,8 +318,8 @@ class HandsController: NarrowViewController, CardViewDelegate  {
     // -----------------------------------------------------------------------------------------
     
     func addFilterSegmentControl() {
-        let offset = view.frame.width < 668 ? 10 : 45
-        let items = ["2023", "2468", "Like", "Add", "Quints", "Runs", "13579", "W&D", "369", "S&P", "All"]
+        let offset = view.frame.width < 668 || view.frame.height > 650 ? 10 : 45
+        let items = ["2023", "Even", "Like", "Add", "Quints", "Runs", "Odds", "W&D", "369", "S&P", "All", "Slctd"]
         filterSegmentControl = UISegmentedControl(items: items)
         filterSegmentControl.selectedSegmentIndex = 10
         filterSegmentControl.frame = CGRect(x: offset, y: Int(tileHeight() * 2) + 40, width: Int(view.frame.width - 50), height: Int(filterSegmentControl.frame.height))
