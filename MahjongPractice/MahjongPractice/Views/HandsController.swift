@@ -48,7 +48,6 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         xOffset = (Int(view.frame.width) - maxWidth) / 2
         
         showYourTiles()
-        // addFilterButton()
         addFilterSegmentControl()
 
         let x = view.frame.width < 668 || view.frame.height > 650 ? 15.0 : 50.0
@@ -67,7 +66,6 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         note.frame = frame
         note.textAlignment = .left
         note.font = UIFont(name: "Chalkduster", size: 15)
-        //note.textColor = UIColor.black
         note.numberOfLines = 0
         view.addSubview(note)
                 
@@ -90,13 +88,6 @@ class HandsController: NarrowViewController, CardViewDelegate  {
     // -----------------------------------------------------------------------------------------
     
     func showYourTiles() {
-        //if yourHandLabel == nil {
-        //    yourHandLabel = UILabel(frame: CGRect(x: 50, y: 5, width: 80, height: 25))
-        //    yourHandLabel.text = "Your Tiles"
-        //    yourHandLabel.textAlignment = .left
-        //    view.addSubview(yourHandLabel)
-        //}
-       
         let height = tileHeight()
         let width = tileWidth()
         for v in yourTileViews { v.removeFromSuperview() }
@@ -340,6 +331,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         case 8: filter(year: true, evens: true, like: true, add: true, quints: true, runs: true, odds: true, winds: true, three: false, pairs: true )
         case 9: filter(year: true, evens: true, like: true, add: true, quints: true, runs: true, odds: true, winds: true, three: true, pairs: false )
         case 10: filter(year: false, evens: false, like: false, add: false, quints: false, runs: false, odds: false, winds: false, three: false, pairs: false )
+        case 11: filter(year: true, evens: true, like: true, add: true, quints: true, runs: true, odds: true, winds: true, three: true, pairs: true )
         default: print("new filter")
         }
     }

@@ -118,45 +118,50 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if maj.isGameOver() {
             count = 0
         }
+        
+        if maj.east.filterOutYears && maj.east.filterOut2468 {
+            for lp in maj.card.letterPatterns {
+                if lp.selected == true {
+                    count += 1
+                }
+            }
+        }
         return count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let pattern = maj.card.letterPatterns[indexPath.row]
-        // cardViewDelegate.showSelectedTiles(letterPattern: pattern)
-        pattern.selected = !pattern.selected
+        if allFiltersAreOn() {
+            let pattern = getSelectedPattern(indexPath.row)
+            pattern.selected = !pattern.selected
+        } else {
+            let pattern = maj.card.letterPatterns[indexPath.row]
+            pattern.selected = !pattern.selected
+        }
         cardView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cardViewCell")! as UITableViewCell
         cell.backgroundColor = UIColor.clear
-        //let backgroundView = UIView()
-        //backgroundView.backgroundColor = UIColor.clear
-        //cell.selectedBackgroundView = backgroundView
         cell.selectionStyle = .none
         cell.textLabel!.font = cell.textLabel!.font.withSize(16)
 
         let index = indexPath.row
-        
+               
         // column 1 patterns
         let col1 = getLabel(cell, x: 0, width: col1Width(), tag: 1)
-        col1?.attributedText = maj.card.text(index)
+        col1?.attributedText = allFiltersAreOn() ? getSelectedPattern(index).text : maj.card.text(index)
  
         // column 2 notes
         let col2 = getLabel(cell, x: col1Width(), width: col2Width(), tag: 2)
-        col2?.attributedText = maj.card.note(index)
+        col2?.attributedText = allFiltersAreOn() ? getSelectedPattern(index).note : maj.card.note(index)
         
         // column 3 matching tiles
         let col3 = getLabel(cell, x: col1Width() + col2Width() + 5, width: col3Width(), tag: 3)
-        col3?.attributedText = maj.card.matchCountText(index)
-        
-        // column 4 wins
-        //let col4 = getLabel(cell, x: col1Width() + col2Width() + col3Width() + 5, width: col4Width(), tag: 4)
-        //col4?.attributedText =  maj.card.winCountText(index)
-        //addHideButton(cell, x: col1Width() + col2Width() + col3Width() + col4Width() + 5, width: hideButtonWidth(), tag: index+100)
-        
-        if maj.card.letterPatterns[index].selected {
+        col3?.attributedText = allFiltersAreOn() ? maj.card.matchCountText(getSelectedPattern(index).id) : maj.card.matchCountText(index) // todo
+           
+        let selected = allFiltersAreOn() ? getSelectedPattern(index).selected : maj.card.letterPatterns[index].selected
+        if selected {
             cell.accessoryType = .checkmark
             cell.tintColor = .darkGray
         } else {
@@ -165,7 +170,24 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
+        
+    func allFiltersAreOn() -> Bool {
+        return maj.east.filterOutYears && maj.east.filterOut2468 && maj.east.filterOutLikeNumbers && maj.east.filterOutAdditionHands && maj.east.filterOutQuints && maj.east.filterOutRuns && maj.east.filterOut13579 && maj.east.filterOutWinds && maj.east.filterOut369 && maj.east.filterOutPairs
+    }
     
+    func getSelectedPattern(_ index: Int) -> LetterPattern {
+        var count = 0
+        for lp in maj.card.letterPatterns {
+            if lp.selected == true {
+                if count == index {
+                    return lp
+                }
+                count += 1
+            }
+        }
+        return maj.card.letterPatterns[0]
+    }
+        
     func width() -> CGFloat {
         return cardView.frame.width
     }
