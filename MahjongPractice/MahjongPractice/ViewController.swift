@@ -748,12 +748,14 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         }));
         
         alert.addAction(UIAlertAction(title: "Target Hands", style: .default, handler: {(action:UIAlertAction) in
-            if self.suggestedHandsView == nil {
-                self.suggestedHandsView = HandsController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self, handsControllerDelegate: self)
-            } else {
-                self.suggestedHandsView.showYourTiles()
-            }
-            self.show(self.suggestedHandsView, sender: self)
+            //if self.suggestedHandsView == nil {
+            //    self.suggestedHandsView = HandsController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self, handsControllerDelegate: self)
+            //} else {
+            //    self.suggestedHandsView.showYourTiles()
+            //}
+            //self.show(self.suggestedHandsView, sender: self)
+            let targetHands = HandsController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self, handsControllerDelegate: self)
+            self.show(targetHands, sender: self)
         }));
         
         alert.addAction(UIAlertAction(title: "Sort", style: .default, handler: {(action:UIAlertAction) in
