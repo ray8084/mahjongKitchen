@@ -287,7 +287,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
     
     // -----------------------------------------------------------------------------------------
     //
-    //  Clost Button
+    //  Close Button
     //
     // -----------------------------------------------------------------------------------------
      
@@ -300,7 +300,12 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         closeButton.addTarget(self, action: #selector(closeButtonAction), for: .touchUpInside)
         view.addSubview(closeButton)
     }
-
+    
+    @objc override func closeButtonAction(sender: UIButton!) {
+        handsControllerDelegate.showSuggestedHands()
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     
     // -----------------------------------------------------------------------------------------
     //

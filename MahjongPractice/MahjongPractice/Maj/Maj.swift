@@ -959,6 +959,23 @@ class Maj {
         return found
     }
     
+        
+    // --------------------------------------------------------------
+    //
+    //  Selected Patterns
+    //
+    // --------------------------------------------------------------
+        
+    func getSelectedPatterns() -> [LetterPattern] {
+        var patterns: [LetterPattern] = []
+        for lp in card.letterPatterns {
+            if lp.selected == true {
+                patterns.append(lp)
+            }
+        }
+        return patterns
+    }
+    
     
     // --------------------------------------------------------------
     //

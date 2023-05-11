@@ -637,8 +637,9 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         suggestedHand1?.removeFromSuperview()
         suggestedHand2?.removeFromSuperview()
         suggestedHandAlt?.removeFromSuperview()
+        let selectedPatterns = maj.getSelectedPatterns()
         
-        if suggestedHandsView != nil && suggestedHandsView.suggestedHandA != nil {
+        if selectedPatterns.count > 0 {
             let width: CGFloat = 400
             let height: CGFloat = 25
             let x = cardMarginX() + menuButton.frame.width + 15
@@ -648,9 +649,9 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             suggestedHand1 = UILabel(frame: labelFrame)
             
             let text1 = NSMutableAttributedString(string: "")
-            text1.append(suggestedHandsView.suggestedHandA.text)
+            text1.append(selectedPatterns[0].text)
             text1.append(NSMutableAttributedString(string: "  "))
-            text1.append(suggestedHandsView.suggestedHandA.note)
+            text1.append(selectedPatterns[0].note)
             suggestedHand1.attributedText = text1
             suggestedHand1.frame = labelFrame
             suggestedHand1.textAlignment = .left
@@ -658,7 +659,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             view.addSubview(suggestedHand1)
         }
         
-        if suggestedHandsView != nil && suggestedHandsView.suggestedHandB != nil {
+        if selectedPatterns.count > 1 {
             let width: CGFloat = 400
             let height: CGFloat = 25
             let x = cardMarginX() + menuButton.frame.width + 15
@@ -667,9 +668,9 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             let labelFrame = CGRect(x: x, y: y, width: width, height: height)
             suggestedHand2 = UILabel(frame: labelFrame)
             let text2 = NSMutableAttributedString(string: "")
-            text2.append(suggestedHandsView.suggestedHandB.text)
+            text2.append(selectedPatterns[1].text)
             text2.append(NSMutableAttributedString(string: "  "))
-            text2.append(suggestedHandsView.suggestedHandB.note)
+            text2.append(selectedPatterns[1].note)
             suggestedHand2.attributedText = text2
             suggestedHand2.frame = labelFrame
             suggestedHand2.textAlignment = .left
@@ -677,7 +678,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             view.addSubview(suggestedHand2)
         }
         
-        if suggestedHandsView != nil && suggestedHandsView.suggestedHandC != nil {
+        if selectedPatterns.count > 2 {
             let width: CGFloat = 400
             let height: CGFloat = 25
             let x = cardMarginX() + menuButton.frame.width + 15
@@ -686,9 +687,9 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             let labelFrame = CGRect(x: x, y: y, width: width, height: height)
             suggestedHandAlt = UILabel(frame: labelFrame)
             let text3 = NSMutableAttributedString(string: "")
-            text3.append(suggestedHandsView.suggestedHandC.text)
+            text3.append(selectedPatterns[2].text)
             text3.append(NSMutableAttributedString(string: "  "))
-            text3.append(suggestedHandsView.suggestedHandC.note)
+            text3.append(selectedPatterns[2].note)
             suggestedHandAlt.attributedText = text3
             suggestedHandAlt.frame = labelFrame
             suggestedHandAlt.textAlignment = .left
@@ -696,7 +697,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             view.addSubview(suggestedHandAlt)
         }
         
-        if suggestedHandsView == nil || (suggestedHandsView != nil && suggestedHandsView.suggestedHandA == nil && suggestedHandsView.suggestedHandB == nil && suggestedHandsView.suggestedHandC == nil) {
+        if selectedPatterns.count == 0 {
             let width: CGFloat = 420
             let height: CGFloat = 50
             let x = cardMarginX() + menuButton.frame.width + 15
@@ -1214,7 +1215,6 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     func controlPanelLocationX() -> CGFloat { return cardMarginX() }
     func controlPanelLocationY() -> CGFloat{ return cardLocationY() + cardHeight() + 5 }
     func menuButtonLocationX() -> CGFloat { return cardMarginX() }
-    // func buttonLocationY() -> CGFloat { return tableLocation() + rowHeight * 4 - buttonSize() }
     func buttonLocationY() -> CGFloat { return tableLocation() + buttonSize() + 10}
     func buttonSize() -> CGFloat { return controlPanelHeight() }
 }
