@@ -53,7 +53,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         let x = view.frame.width < 668 || view.frame.height > 650 ? 15.0 : 50.0
         var y = tileHeight() * 2 + 30 + 50
         cardView.isHidden = false
-        cardView.showCard(self, delegate: self, x: x, y: y, width: view.frame.width - 50, height: 100, bgcolor: .white, maj: maj)
+        cardView.showCard(self, delegate: self, x: x, y: y, width: view.frame.width - 100, height: 100, bgcolor: .white, maj: maj)
         view.addSubview(cardView.cardView)
         let allTiles = maj.east.tiles + maj.south.tiles + (maj.east.rack?.tiles)! + (maj.south.rack?.tiles)!
         cardView.update(maj, tiles: allTiles )
@@ -315,10 +315,10 @@ class HandsController: NarrowViewController, CardViewDelegate  {
     
     func addFilterSegmentControl() {
         let offset = view.frame.width < 668 || view.frame.height > 650 ? 10 : 45
-        let items = ["2023", "Even", "Like", "Add", "Quints", "Runs", "Odds", "W&D", "369", "S&P", "All", "Slctd"]
+        let items = ["2023", "Even", "Like", "Add", "Quints", "Runs", "Odds", "W&D", "369", "S&P", "All", "Sel"]
         filterSegmentControl = UISegmentedControl(items: items)
         filterSegmentControl.selectedSegmentIndex = 10
-        filterSegmentControl.frame = CGRect(x: offset, y: Int(tileHeight() * 2) + 40, width: Int(view.frame.width - 50), height: Int(filterSegmentControl.frame.height))
+        filterSegmentControl.frame = CGRect(x: offset, y: Int(tileHeight() * 2) + 40, width: Int(view.frame.width - 100), height: Int(filterSegmentControl.frame.height))
         filterSegmentControl.addTarget(self, action: #selector(changeFilter), for: .valueChanged)
         view.addSubview(filterSegmentControl)
     }
@@ -366,7 +366,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
     // -----------------------------------------------------------------------------------------
 
     func tileWidth() -> CGFloat {
-        return view.frame.width / 16
+        return view.frame.width / 17
     }
     
     func tileHeight() -> CGFloat {
