@@ -15,8 +15,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     var viewDidAppear = false
     let RackColor = UIColor(white: 0.93, alpha: 0.7)
     let HandColor = UIColor(white: 0.99, alpha: 0.9)
-    let BackgroundColor = UIColor.init(red: 225.0/255.0, green: 230.0/255.0, blue: 223.0/255.0, alpha: 1)
-    let BackgroundColorDarkMode = UIColor.init(red: 185.0/255.0, green: 190.0/255.0, blue: 183.0/255.0, alpha: 1)
+    let BackgroundColor = UIColor.init(red: 185.0/255.0, green: 190.0/255.0, blue: 183.0/255.0, alpha: 1)
+    let BackgroundColorDarkMode = UIColor.init(red: 39.0/255.0, green: 39.0/255.0, blue: 41.0/255.0, alpha: 1)
     let BackgroundColorDefense = UIColor.init(red: 74.0/255.0, green: 96.0/255.0, blue: 42.0/255.0, alpha: 1)
     let BackgroundColorIconRed = UIColor.init(red: 232.0/255.0, green: 54.0/255.0, blue: 49.0/255.0, alpha: 1)
     
@@ -132,19 +132,31 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         backgroundImageView.clipsToBounds = true
         backgroundImageView.image = background
         backgroundImageView.center = view.center
-        backgroundImageView.alpha = 0.15
+        backgroundImageView.alpha = 0.0
         view.addSubview(backgroundImageView)
         view.sendSubviewToBack(backgroundImageView)
     }
     
+    
+    // -----------------------------------------------------------------------------------------
+    //
+    //  Dark Mode
+    //
+    // -----------------------------------------------------------------------------------------
+    
     func getBackgroundColor() -> UIColor {
         if #available(iOS 12.0, *) {
-            return traitCollection.userInterfaceStyle == .light ? BackgroundColorDarkMode : BackgroundColorDarkMode
+            return traitCollection.userInterfaceStyle == .light ? BackgroundColor : BackgroundColorDarkMode
         } else {
             return BackgroundColor
         }
     }
-
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        showGame()
+    }
+    
         
     // -----------------------------------------------------------------------------------------
     //
@@ -168,6 +180,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         showSuggestedHands()
         showHand()
         showLabel()
+        view.backgroundColor = getBackgroundColor()
     }
            
     func showGameMenu(title: String, message: String, win: Bool) {
@@ -464,7 +477,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         label.frame = labelFrame
         label.textAlignment = .right
         label.font = UIFont(name: "Chalkduster", size: 15)
-        label.textColor = UIColor.black
+        // label.textColor = UIColor.black
         label.numberOfLines = 0
         view.addSubview(label)
     }
