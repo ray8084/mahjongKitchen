@@ -796,7 +796,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "272"
             endingLineNumber = "272"
-            landmarkName = "winningIndex(_:)"
+            landmarkName = "getHand(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -812,7 +812,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "154"
             endingLineNumber = "154"
-            landmarkName = "addWin(_:)"
+            landmarkName = "loadSavedValues()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

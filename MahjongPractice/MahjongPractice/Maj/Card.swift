@@ -40,7 +40,7 @@ class Card {
     
     func text(_ index: Int) -> NSAttributedString {
         if index < letterPatterns.count {
-            return letterPatterns[index].text
+            return letterPatterns[index].getDarkModeString()
         } else {
             return NSAttributedString(string: "")
         }
@@ -48,7 +48,7 @@ class Card {
     
     func note(_ index: Int) -> NSAttributedString {
         if index < letterPatterns.count {
-            return toBlack( letterPatterns[index].note)
+            return letterPatterns[index].note
         } else {
             return NSAttributedString(string: "")
         }

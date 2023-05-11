@@ -9,7 +9,7 @@
 // For example pattern "11 222 3333 444 55".
 // Contains all expressions of that pattern in a TileIdList
 
-import Foundation
+import UIKit
 
 class Family {
     static let year = 0
@@ -270,5 +270,38 @@ class LetterPattern {
     func generateList() {
         idList.generateList(text: text, family: family, mask: mask)
     }
+ 
+    func getDarkModeString() -> NSMutableAttributedString {
+        let red = [NSAttributedString.Key.foregroundColor: UIColor.red]
+        let green = [NSAttributedString.Key.foregroundColor: UIColor(red: 0.0, green: 0.5, blue: 0.0, alpha: 1.0)  ]
+        var color = [NSAttributedString.Key.foregroundColor: UIColor.gray]
+        if #available(iOS 13.0, *) { color = [NSAttributedString.Key.foregroundColor: UIColor.label] }
+        let darkModeString = NSMutableAttributedString(string: text.string)
+        var index = 0
+        for char in mask {
+            switch char {
+            case "g":
+                darkModeString.addAttributes(green, range: NSRange(location:index,length:1))
+                break
+            case "r":
+                darkModeString.addAttributes(red, range: NSRange(location:index,length:1))
+                break
+            default:
+                darkModeString.addAttributes(color, range: NSRange(location:index,length:1))
+                break
+            }
+            index += 1
+        }
+        
+        // Assumes (C) in the concealed string, if this crashes check it
+        if concealed {
+            for i in index...darkModeString.length-1 {
+                darkModeString.addAttributes(color, range: NSRange(location:i,length:1))
+            }
+        }
+        
+        return darkModeString
+    }
+    
     
 }

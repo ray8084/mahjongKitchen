@@ -145,25 +145,29 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         cell.backgroundColor = UIColor.clear
         cell.selectionStyle = .none
         cell.textLabel!.font = cell.textLabel!.font.withSize(16)
-
+        
         let index = indexPath.row
-               
+        
         // column 1 patterns
         let col1 = getLabel(cell, x: 0, width: col1Width(), tag: 1)
-        col1?.attributedText = allFiltersAreOn() ? getSelectedPattern(index).text : maj.card.text(index)
- 
+        col1?.attributedText = allFiltersAreOn() ? getSelectedPattern(index).getDarkModeString() : maj.card.text(index)
+        
         // column 2 notes
         let col2 = getLabel(cell, x: col1Width(), width: col2Width(), tag: 2)
         col2?.attributedText = allFiltersAreOn() ? getSelectedPattern(index).note : maj.card.note(index)
         
         // column 3 matching tiles
         let col3 = getLabel(cell, x: col1Width() + col2Width() + 5, width: col3Width(), tag: 3)
-        col3?.attributedText = allFiltersAreOn() ? maj.card.matchCountText(getSelectedPattern(index).id) : maj.card.matchCountText(index) // todo
+        if allFiltersAreOn() {
+            col3?.text = maj.card.matchCountText(getSelectedPattern(index).id).string   // todo
+        } else {
+            col3?.text = maj.card.matchCountText(index).string
+        }
            
         let selected = allFiltersAreOn() ? getSelectedPattern(index).selected : maj.card.letterPatterns[index].selected
         if selected {
             cell.accessoryType = .checkmark
-            cell.tintColor = .darkGray
+            // cell.tintColor = .darkGray
         } else {
             cell.accessoryType = .none
         }
