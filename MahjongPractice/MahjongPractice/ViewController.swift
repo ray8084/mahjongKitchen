@@ -38,7 +38,6 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     var suggestedHand1: UILabel!
     var suggestedHand2: UILabel!
     var suggestedHandAlt: UILabel!
-    var suggestedHandsView: HandsController!
     
     let margin: CGFloat = 5
     let space: CGFloat = 1
@@ -206,7 +205,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         maj.discardTable.resetCounts()
         discardTableView.hide()
         maj.card.clearRackFilter()
-        suggestedHandsView?.showYourTiles()
+        // suggestedHandsView?.showYourTiles()
         showGame()
     }
     
@@ -223,8 +222,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         newDeal = true
         resetMaj()
         showGame()
-        suggestedHandsView?.clear()
-        suggestedHandsView?.showYourTiles()
+        //suggestedHandsView?.clear()
+        //suggestedHandsView?.showYourTiles()
         showSuggestedHands()
     }
     
@@ -761,13 +760,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         }));
         
         alert.addAction(UIAlertAction(title: "Target Hands", style: .default, handler: {(action:UIAlertAction) in
-            //if self.suggestedHandsView == nil {
-            //    self.suggestedHandsView = HandsController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self, handsControllerDelegate: self)
-            //} else {
-            //    self.suggestedHandsView.showYourTiles()
-            //}
-            //self.show(self.suggestedHandsView, sender: self)
-            let targetHands = HandsController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self, handsControllerDelegate: self)
+            let targetHands = HandsController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self, handsControllerDelegate: self, backgroundColor: self.getBackgroundColor())
             self.show(targetHands, sender: self)
         }));
         

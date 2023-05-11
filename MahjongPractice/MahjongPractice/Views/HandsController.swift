@@ -31,11 +31,11 @@ class HandsController: NarrowViewController, CardViewDelegate  {
     var suggestedHandC: LetterPattern!
     var handsControllerDelegate: HandsControllerDelegate
     
-    init(maj: Maj, frame: CGRect, narrowViewDelegate: NarrowViewDelegate, handsControllerDelegate: HandsControllerDelegate) {
+    init(maj: Maj, frame: CGRect, narrowViewDelegate: NarrowViewDelegate, handsControllerDelegate: HandsControllerDelegate, backgroundColor: UIColor) {
         self.maj = maj
         self.handsControllerDelegate = handsControllerDelegate
         super.init(frame: frame, narrowViewDelegate: narrowViewDelegate)
-        view.backgroundColor = UIColor.init(red: 185.0/255.0, green: 190.0/255.0, blue: 183.0/255.0, alpha: 1)
+        view.backgroundColor = backgroundColor
     }
     
     required init?(coder: NSCoder) {
