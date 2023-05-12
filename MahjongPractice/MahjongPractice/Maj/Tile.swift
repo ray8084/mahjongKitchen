@@ -113,29 +113,24 @@ class Tile {
     }
     
     func getImage(maj: Maj) -> String {
-        if maj.dotTileStyle == TileStyle.largeFont {
-            return Tile.getImage(id: id, maj: maj)
-        } else {
-            return name
+        var image = ""
+        switch (maj.dotTileStyle) {
+        case TileStyle.largeFont: image = Tile.getImageNew(id)
+        case TileStyle.solid: image = Tile.getImageSolidColor(id)
+        default: image = name
         }
+        if id == 30 && maj.alternateRedDragon {
+            image = "redAlt.png"
+        }
+        return image
     }
     
     static func getImage(id: Int, maj: Maj) -> String {
-        var image = Tile.getImage(id)
-        if id < 10 && maj.dotTileStyle == TileStyle.largeFont {
-            image = Tile.getImageNew(id)
-        }
-        if id > 10 && id < 20 && maj.bamTileStyle == TileStyle.largeFont {
-            image = Tile.getImageNew(id)
-        }
-        if id > 20 && id < 30 && maj.crakTileStyle == TileStyle.largeFont {
-            image = Tile.getImageNew(id)
-        }
-        if id > 30 && id < 35 && maj.windTileStyle == TileStyle.largeFont {
-            image = Tile.getImageNew(id)
-        }
-        if id == 35 && maj.flowerTileStyle == TileStyle.largeFont {
-            image = Tile.getImageNew(id)
+        var image = ""
+        switch(maj.dotTileStyle) {
+        case TileStyle.largeFont: image = Tile.getImageNew(id)
+        case TileStyle.solid: image = Tile.getImageSolidColor(id)
+        default: image = Tile.getImage(id)
         }
         if id == 30 && maj.alternateRedDragon {
             image = "redAlt.png"
@@ -182,6 +177,50 @@ class Tile {
         case 34: image = "east.png"
         case 35: image = "f1.png"
         case 36: image = "joker.png"
+        default: image = ""
+        }
+        return image
+    }
+    
+    static func getImageSolidColor(_ id: Int) -> String {
+        var image = ""
+        switch(id) {
+        case 1: image = "1d-super.png"
+        case 2: image = "2d-super.png"
+        case 3: image = "3d-super.png"
+        case 4: image = "4d-super.png"
+        case 5: image = "5d-super.png"
+        case 6: image = "6d-super.png"
+        case 7: image = "7d-super.png"
+        case 8: image = "8d-super.png"
+        case 9: image = "9d-super.png"
+        case 10: image = "0-super.png"
+        case 11: image = "1b-super.png"
+        case 12: image = "2b-super.png"
+        case 13: image = "3b-super.png"
+        case 14: image = "4b-super.png"
+        case 15: image = "5b-super.png"
+        case 16: image = "6b-super.png"
+        case 17: image = "7b-super.png"
+        case 18: image = "8b-super.png"
+        case 19: image = "9b-super.png"
+        case 20: image = "g-super.png"
+        case 21: image = "1c-super.png"
+        case 22: image = "2c-super.png"
+        case 23: image = "3c-super.png"
+        case 24: image = "4c-super.png"
+        case 25: image = "5c-super.png"
+        case 26: image = "6c-super.png"
+        case 27: image = "7c-super.png"
+        case 28: image = "8c-super.png"
+        case 29: image = "9c-super.png"
+        case 30: image = "r-super.png"
+        case 31: image = "n-super.png"
+        case 32: image = "s-super.png"
+        case 33: image = "w-super.png"
+        case 34: image = "e-super.png"
+        case 35: image = "f-super.png"
+        case 36: image = "j-super-alt7.png"
         default: image = ""
         }
         return image

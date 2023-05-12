@@ -40,6 +40,7 @@ class YearSegment {
 class TileStyle {
     static let classic = 0
     static let largeFont = 1
+    static let solid = 2
 }
 
 class SortStyle {

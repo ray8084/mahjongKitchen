@@ -47,7 +47,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     let charlestonOutIndex = 11
     let maxHandIndex = 13
     var label: UILabel!
-    var discardIndex = 13
+    var discardIndex = 14
     var gameButton: UIButton!
     var filterButton: UIButton!
     var gameView = true
@@ -66,7 +66,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     var firstMahjongHand1 = false
     var firstMahjongHand2 = false
         
-    
+
     // -----------------------------------------------------------------------------------------
     //
     //  Init
@@ -434,7 +434,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     
     func showDiscardTable() {
         discardTableView.isHidden = false
-        let margin = cardMarginX() + menuButton.frame.width
+        let margin = cardMarginX() - 15
         discardTableView.show(parent: view, rowHeader: tableLocation(), maj: maj, margin: margin)
     }
     
@@ -458,12 +458,6 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         var x = (CGFloat(discardIndex) * (tileWidth() + space)) - width - (margin * 2) + notch()
         var y: CGFloat = hand2Bottom()
         
-        print(view.frame.width)
-        if view.frame.width < 668 {
-            x = x + 50
-            y = hand2Bottom() + tileHeight() - 10
-        }
-        
         let labelFrame = CGRect(x: x, y: y, width: width, height: height)
         label = UILabel(frame: labelFrame)
         label.text =  getStateLabel()
@@ -481,11 +475,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         case State.west: state = "Discard from West"
         default:
             if maj.discardTile == nil {
-                if view.frame.width < 668 {
-                    state = "Drag discard tile here \u{21E7}"
-                } else {
-                    state = "Drag discard tile here >"
-                }
+                state = "Drag discard tile here >"
             } else {
                 state = "Drag right to discard"
             }
@@ -647,7 +637,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         if selectedPatterns.count > 0 {
             let width: CGFloat = 400
             let height: CGFloat = 25
-            let x = cardMarginX() + menuButton.frame.width + 15
+            let x = cardMarginX()
             let y: CGFloat = tableLocation()
             
             let labelFrame = CGRect(x: x, y: y, width: width, height: height)
@@ -667,7 +657,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         if selectedPatterns.count > 1 {
             let width: CGFloat = 400
             let height: CGFloat = 25
-            let x = cardMarginX() + menuButton.frame.width + 15
+            let x = cardMarginX()
             let y: CGFloat = tableLocation() + 25
             
             let labelFrame = CGRect(x: x, y: y, width: width, height: height)
@@ -686,7 +676,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         if selectedPatterns.count > 2 {
             let width: CGFloat = 400
             let height: CGFloat = 25
-            let x = cardMarginX() + menuButton.frame.width + 15
+            let x = cardMarginX()
             let y: CGFloat = tableLocation() + 50
             
             let labelFrame = CGRect(x: x, y: y, width: width, height: height)
@@ -702,7 +692,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             view.addSubview(suggestedHandAlt)
         }
         
-        if selectedPatterns.count == 0 {
+        /*if selectedPatterns.count == 0 {
             let width: CGFloat = 420
             let height: CGFloat = 50
             let x = cardMarginX() + menuButton.frame.width + 15
@@ -725,7 +715,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             suggestedHandAlt.textAlignment = .left
             suggestedHandAlt.numberOfLines = 1
             view.addSubview(suggestedHandAlt)
-        }
+        }*/
     }
     
     func hideSuggestedHands() {
@@ -815,11 +805,13 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Classic Tiles", style: .default, handler: {(action:UIAlertAction) in
-
+            self.maj.setDotTileStyle(style: TileStyle.classic)
+            self.showGame()
         }));
         
         alert.addAction(UIAlertAction(title: "Solid Color Tiles", style: .default, handler: {(action:UIAlertAction) in
-
+            self.maj.setDotTileStyle(style: TileStyle.solid)
+            self.showGame()
         }));
                 
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action:UIAlertAction) in
@@ -1189,7 +1181,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         return height
     }
     
-    func tileWidth() -> CGFloat { return (viewWidth() - notch()) / 16.5 }
+    func tileWidth() -> CGFloat { return (viewWidth() - notch()) / 17.5 }
     func tileHeight() -> CGFloat { return tileWidth() * 62.5 / 46.0 }
     
     func notch() -> CGFloat {
@@ -1244,8 +1236,10 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     func controlPanelHeight() -> CGFloat { return isTall() ? 45 : 32 }
     func controlPanelLocationX() -> CGFloat { return cardMarginX() }
     func controlPanelLocationY() -> CGFloat{ return cardLocationY() + cardHeight() + 5 }
-    func menuButtonLocationX() -> CGFloat { return cardMarginX() }
-    func buttonLocationY() -> CGFloat { return tableLocation() + buttonSize() + 10}
+    // func menuButtonLocationX() -> CGFloat { return cardMarginX() }
+    func menuButtonLocationX() -> CGFloat { return view.frame.width - controlPanelHeight() - 40 }
+    // func buttonLocationY() -> CGFloat { return tableLocation() + buttonSize() + 10}
+    func buttonLocationY() -> CGFloat { return 80}
     func buttonSize() -> CGFloat { return controlPanelHeight() }
 }
 
