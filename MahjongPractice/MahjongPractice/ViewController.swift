@@ -205,7 +205,6 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         maj.discardTable.resetCounts()
         discardTableView.hide()
         maj.card.clearRackFilter()
-        // suggestedHandsView?.showYourTiles()
         showGame()
     }
     
@@ -217,13 +216,10 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     // ----------------------------------------------------------------------------------------
     
     @objc func redeal() {
-        print("redeal")
         clearFirstMahjong()
         newDeal = true
         resetMaj()
         showGame()
-        //suggestedHandsView?.clear()
-        //suggestedHandsView?.showYourTiles()
         showSuggestedHands()
     }
     
@@ -282,8 +278,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         
         showHand()
     }
-    
-    
+        
     func clearHand() {
         for view in handView1 { view.removeFromSuperview() }
         for view in handView2 { view.removeFromSuperview() }
@@ -405,7 +400,6 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     }
     
     func undoDiscard() -> Bool {
-        print("undoDiscard")
         var undo = false
         if maj.lastDiscard != nil {
             discardTableView.countTile(maj.lastDiscard, increment: -1, maj: maj)
@@ -476,7 +470,6 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         label.frame = labelFrame
         label.textAlignment = .right
         label.font = UIFont(name: "Chalkduster", size: 15)
-        // label.textColor = UIColor.black
         label.numberOfLines = 0
         view.addSubview(label)
     }
@@ -661,7 +654,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             suggestedHand1 = UILabel(frame: labelFrame)
             
             let text1 = NSMutableAttributedString(string: "")
-            text1.append(selectedPatterns[0].text)
+            text1.append(selectedPatterns[0].getDarkModeString())
             text1.append(NSMutableAttributedString(string: "  "))
             text1.append(selectedPatterns[0].note)
             suggestedHand1.attributedText = text1
@@ -680,7 +673,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             let labelFrame = CGRect(x: x, y: y, width: width, height: height)
             suggestedHand2 = UILabel(frame: labelFrame)
             let text2 = NSMutableAttributedString(string: "")
-            text2.append(selectedPatterns[1].text)
+            text2.append(selectedPatterns[1].getDarkModeString())
             text2.append(NSMutableAttributedString(string: "  "))
             text2.append(selectedPatterns[1].note)
             suggestedHand2.attributedText = text2
@@ -699,7 +692,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             let labelFrame = CGRect(x: x, y: y, width: width, height: height)
             suggestedHandAlt = UILabel(frame: labelFrame)
             let text3 = NSMutableAttributedString(string: "")
-            text3.append(selectedPatterns[2].text)
+            text3.append(selectedPatterns[2].getDarkModeString())
             text3.append(NSMutableAttributedString(string: "  "))
             text3.append(selectedPatterns[2].note)
             suggestedHandAlt.attributedText = text3
@@ -751,26 +744,17 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     func showSystemMenu() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
-            self.redeal()
+        alert.addAction(UIAlertAction(title: "Game", style: .default, handler: {(action:UIAlertAction) in
+            self.showNewGameMenu()
         }));
         
-        alert.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
-            self.replay()
-        }));
-        
-        alert.addAction(UIAlertAction(title: "Target Hands", style: .default, handler: {(action:UIAlertAction) in
+        alert.addAction(UIAlertAction(title: "Select Target Hands", style: .default, handler: {(action:UIAlertAction) in
             let targetHands = HandsController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self, handsControllerDelegate: self, backgroundColor: self.getBackgroundColor())
             self.show(targetHands, sender: self)
         }));
         
-        alert.addAction(UIAlertAction(title: "Sort", style: .default, handler: {(action:UIAlertAction) in
-            self.showSortMenu()
-        }));
-                
-        alert.addAction(UIAlertAction(title: "History", style: .default, handler: {(action:UIAlertAction) in
-            let history = HistoryController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self)
-            self.show(history, sender: self)
+        alert.addAction(UIAlertAction(title: "Settings", style: .default, handler: {(action:UIAlertAction) in
+            self.showSettingsMenu()
         }));
         
         alert.addAction(UIAlertAction(title: "Help", style: .default, handler: {(action:UIAlertAction) in
@@ -805,6 +789,44 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         present(alert, animated: true, completion: nil)
     }
     
+    func showNewGameMenu() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
+            self.redeal()
+        }));
+        
+        alert.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
+            self.replay()
+        }));
+                
+        alert.addAction(UIAlertAction(title: "History", style: .default, handler: {(action:UIAlertAction) in
+            let history = HistoryController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self)
+            self.show(history, sender: self)
+        }));
+                
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action:UIAlertAction) in
+        }));
+        
+        present(alert, animated: true, completion: nil)
+    }
+        
+    func showSettingsMenu() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Classic Tiles", style: .default, handler: {(action:UIAlertAction) in
+
+        }));
+        
+        alert.addAction(UIAlertAction(title: "Solid Color Tiles", style: .default, handler: {(action:UIAlertAction) in
+
+        }));
+                
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action:UIAlertAction) in
+        }));
+        
+        present(alert, animated: true, completion: nil)
+    }
     
     
     // -----------------------------------------------------------------------------------------

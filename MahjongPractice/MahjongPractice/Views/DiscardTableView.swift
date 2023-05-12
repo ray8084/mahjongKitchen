@@ -74,7 +74,11 @@ class DiscardTableView {
     }
     
     func showText(_ x: CGFloat, y: CGFloat, text: String, alignment: NSTextAlignment) -> UILabel {
-        return showTextColor(x, y:y, text: text, alignment: alignment, color: UIColor.black)
+        if #available(iOS 13.0, *) {
+            return showTextColor(x, y:y, text: text, alignment: alignment, color: UIColor.label)
+        } else {
+            return showTextColor(x, y:y, text: text, alignment: alignment, color: UIColor.gray)
+        }
     }
     
     func showTextColor(_ x: CGFloat, y: CGFloat, text: String, alignment: NSTextAlignment, color: UIColor) -> UILabel {
