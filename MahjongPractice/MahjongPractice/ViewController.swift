@@ -156,6 +156,21 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         showGame()
     }
     
+    
+    // -----------------------------------------------------------------------------------------
+    //
+    //  Toolbar
+    //
+    // -----------------------------------------------------------------------------------------
+    
+    func showToolbar() {
+        let toolbar = UIView(frame: CGRect(x: view.frame.width - 60, y: 0, width: 60, height: view.frame.height))
+        toolbar.backgroundColor = .white
+        toolbar.alpha = 0.5
+        view.addSubview(toolbar)
+        
+    }
+    
         
     // -----------------------------------------------------------------------------------------
     //
@@ -180,6 +195,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         showHand()
         showLabel()
         view.backgroundColor = getBackgroundColor()
+        showToolbar()
     }
            
     func showGameMenu(title: String, message: String, win: Bool) {
