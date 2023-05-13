@@ -165,62 +165,77 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     // -----------------------------------------------------------------------------------------
     
     func showToolbar() {
-        let toolbar = UIView(frame: CGRect(x: view.frame.width - 80, y: 0, width: 80, height: view.frame.height))
+        let width = isNarrow() ? 60.0 : 80.0
+        let toolbar = UIView(frame: CGRect(x: view.frame.width - width, y: 0, width: width, height: view.frame.height))
         toolbar.backgroundColor = .white
         toolbar.alpha = 0.5
         view.addSubview(toolbar)
                 
-        let gameButton = UIButton(frame: CGRect(x: 20, y: 40, width: 40, height: 40))
+        let offset = (width - 40) / 2
+        let gameButton = UIButton(frame: CGRect(x: offset, y: 40, width: 40, height: 40))
         let gameImage = UIImage(named: "play")
         gameButton.setImage(gameImage, for: .normal)
         gameButton.alpha = 0.7
         gameButton.addTarget(self, action: #selector(gameButtonAction), for: .touchUpInside)
         toolbar.addSubview(gameButton)
-        let gameLabel = UILabel(frame: CGRect(x: 0, y: 77, width: 80, height: 20))
+        let gameLabel = UILabel(frame: CGRect(x: 0, y: 77, width: width, height: 20))
         gameLabel.text = "Game"
         gameLabel.textAlignment = .center
         gameLabel.font = UIFont.systemFont(ofSize: 10.0)
         gameLabel.alpha = 0.7
         toolbar.addSubview(gameLabel)
         
-        let button1 = UIButton(frame: CGRect(x: 20, y: 120, width: 40, height: 40))
+        let button1 = UIButton(frame: CGRect(x: offset, y: 120, width: 40, height: 40))
         let cardImage = UIImage(named: "card")
         button1.setImage(cardImage, for: .normal)
         button1.alpha = 0.7
         button1.addTarget(self, action: #selector(cardButtonAction), for: .touchUpInside)
         toolbar.addSubview(button1)
-        let label1 = UILabel(frame: CGRect(x: 0, y: 157, width: 80, height: 20))
+        let label1 = UILabel(frame: CGRect(x: 0, y: 157, width: width, height: 20))
         label1.text = "Hands"
         label1.textAlignment = .center
         label1.font = UIFont.systemFont(ofSize: 10.0)
         label1.alpha = 0.7
         toolbar.addSubview(label1)
                 
-        let settingsButton = UIButton(frame: CGRect(x: 20, y: 200, width: 40, height: 40))
+        let settingsButton = UIButton(frame: CGRect(x: offset, y: 200, width: 40, height: 40))
         let settingsImage = UIImage(named: "settings")
         settingsButton.setImage(settingsImage, for: .normal)
         settingsButton.alpha = 0.7
         settingsButton.addTarget(self, action: #selector(settingsButtonAction), for: .touchUpInside)
         toolbar.addSubview(settingsButton)
-        let settingsLabel = UILabel(frame: CGRect(x: 0, y: 237, width: 80, height: 20))
+        let settingsLabel = UILabel(frame: CGRect(x: 0, y: 237, width: width, height: 20))
         settingsLabel.text = "Settings"
         settingsLabel.textAlignment = .center
         settingsLabel.font = UIFont.systemFont(ofSize: 10.0)
         settingsLabel.alpha = 0.7
         toolbar.addSubview(settingsLabel)
         
-        let button2 = UIButton(frame: CGRect(x: 20, y: 280, width: 40, height: 40))
+        let helpButton = UIButton(frame: CGRect(x: offset, y: 280, width: 40, height: 40))
+        let helpImage = UIImage(named: "help")
+        helpButton.setImage(helpImage, for: .normal)
+        helpButton.alpha = 0.7
+        helpButton.addTarget(self, action: #selector(helpButtonAction), for: .touchUpInside)
+        toolbar.addSubview(helpButton)
+        let helpLabel = UILabel(frame: CGRect(x: 0, y: 317, width: width, height: 20))
+        helpLabel.text = "Help"
+        helpLabel.textAlignment = .center
+        helpLabel.font = UIFont.systemFont(ofSize: 10.0)
+        helpLabel.alpha = 0.7
+        toolbar.addSubview(helpLabel)
+        
+        /*let button2 = UIButton(frame: CGRect(x: 20, y: 360, width: 40, height: 40))
         let image2 = UIImage(named: "switch")
         button2.setImage(image2, for: .normal)
         button2.alpha = 0.7
         button2.addTarget(self, action: #selector(handsButtonAction), for: .touchUpInside)
         toolbar.addSubview(button2)
-        let label2 = UILabel(frame: CGRect(x: 0, y: 317, width: 80, height: 20))
+        let label2 = UILabel(frame: CGRect(x: 0, y: 397, width: 80, height: 20))
         label2.text = "Discards"
         label2.textAlignment = .center
         label2.font = UIFont.systemFont(ofSize: 10.0)
         label2.alpha = 0.7
-        toolbar.addSubview(label2)
+        toolbar.addSubview(label2)*/
         
     }
 
@@ -229,14 +244,19 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     }
     
     @objc func cardButtonAction(sender: UIButton!) {
-        showSystemMenu()
+        let targetHands = HandsController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self, handsControllerDelegate: self, backgroundColor: self.getBackgroundColor())
+        self.show(targetHands, sender: self)
     }
     
     @objc func settingsButtonAction(sender: UIButton!) {
         showSettingsMenu()
     }
     
-
+    @objc func helpButtonAction(sender: UIButton!) {
+        let help = HelpTableController(frame: self.view.frame, narrowViewDelegate: self)
+        self.show(help, sender: self)
+    }
+        
         
     // -----------------------------------------------------------------------------------------
     //
@@ -819,7 +839,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         alert.addAction(UIAlertAction(title: "Select Target Hands", style: .default, handler: {(action:UIAlertAction) in
             let targetHands = HandsController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self, handsControllerDelegate: self, backgroundColor: self.getBackgroundColor())
             self.show(targetHands, sender: self)
-        }));       
+        }));
         
         alert.addAction(UIAlertAction(title: "Help", style: .default, handler: {(action:UIAlertAction) in
             let help = HelpTableController(frame: self.view.frame, narrowViewDelegate: self)
@@ -1267,6 +1287,10 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     }
     
     func isTall() -> Bool { return viewHeight() > 500 }
+    func isNarrow() -> Bool {
+        print(view.frame.width)
+        return view.frame.width < 668
+    }
     func cardLocationY() -> CGFloat { return isTall() ? cardLocationPad() : cardLocationPhone()}
     func botLocationY() -> CGFloat { return cardLocationPhone() }
      
