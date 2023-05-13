@@ -173,14 +173,14 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         let button1 = UIButton(frame: CGRect(x: 20, y: 60, width: 40, height: 40))
         let cardImage = UIImage(named: "card")
         button1.setImage(cardImage, for: .normal)
-        button1.alpha = 0.5
+        button1.alpha = 0.7
         button1.addTarget(self, action: #selector(cardButtonAction), for: .touchUpInside)
         toolbar.addSubview(button1)
-        
+                
         let button2 = UIButton(frame: CGRect(x: 20, y: 120, width: 40, height: 40))
         let image2 = UIImage(named: "card")
         button2.setImage(image2, for: .normal)
-        button2.alpha = 0.5
+        button2.alpha = 0.7
         button2.addTarget(self, action: #selector(handsButtonAction), for: .touchUpInside)
         toolbar.addSubview(button2)
         
