@@ -170,19 +170,31 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         toolbar.alpha = 0.5
         view.addSubview(toolbar)
         
-        let button1 = UIButton(frame: CGRect(x: 20, y: 60, width: 40, height: 40))
+        let button1 = UIButton(frame: CGRect(x: 20, y: 40, width: 40, height: 40))
         let cardImage = UIImage(named: "card")
         button1.setImage(cardImage, for: .normal)
         button1.alpha = 0.7
         button1.addTarget(self, action: #selector(cardButtonAction), for: .touchUpInside)
         toolbar.addSubview(button1)
+        let label1 = UILabel(frame: CGRect(x: 0, y: 77, width: 80, height: 20))
+        label1.text = "Hands"
+        label1.textAlignment = .center
+        label1.font = UIFont.systemFont(ofSize: 10.0)
+        label1.alpha = 0.7
+        toolbar.addSubview(label1)
                 
         let button2 = UIButton(frame: CGRect(x: 20, y: 120, width: 40, height: 40))
-        let image2 = UIImage(named: "card")
+        let image2 = UIImage(named: "switch")
         button2.setImage(image2, for: .normal)
         button2.alpha = 0.7
         button2.addTarget(self, action: #selector(handsButtonAction), for: .touchUpInside)
         toolbar.addSubview(button2)
+        let label2 = UILabel(frame: CGRect(x: 0, y: 157, width: 80, height: 20))
+        label2.text = "Discards"
+        label2.textAlignment = .center
+        label2.font = UIFont.systemFont(ofSize: 10.0)
+        label2.alpha = 0.7
+        toolbar.addSubview(label2)
         
     }
 
