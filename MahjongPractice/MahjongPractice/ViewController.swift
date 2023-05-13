@@ -15,7 +15,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     var viewDidAppear = false
     let RackColor = UIColor(white: 0.93, alpha: 0.7)
     let HandColor = UIColor(white: 0.99, alpha: 0.9)
-    let BackgroundColor = UIColor.init(red: 185.0/255.0, green: 190.0/255.0, blue: 183.0/255.0, alpha: 1)
+    // let BackgroundColor = UIColor.init(red: 185.0/255.0, green: 190.0/255.0, blue: 183.0/255.0, alpha: 1)
+    let BackgroundColor = UIColor.init(red: 203.0/255.0, green: 200.0/255.0, blue: 197.0/255.0, alpha: 1)
     let BackgroundColorDarkMode = UIColor.init(red: 39.0/255.0, green: 39.0/255.0, blue: 41.0/255.0, alpha: 1)
     let BackgroundColorDefense = UIColor.init(red: 74.0/255.0, green: 96.0/255.0, blue: 42.0/255.0, alpha: 1)
     let BackgroundColorIconRed = UIColor.init(red: 232.0/255.0, green: 54.0/255.0, blue: 49.0/255.0, alpha: 1)
@@ -164,13 +165,32 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     // -----------------------------------------------------------------------------------------
     
     func showToolbar() {
-        let toolbar = UIView(frame: CGRect(x: view.frame.width - 60, y: 0, width: 60, height: view.frame.height))
+        let toolbar = UIView(frame: CGRect(x: view.frame.width - 80, y: 0, width: 80, height: view.frame.height))
         toolbar.backgroundColor = .white
         toolbar.alpha = 0.5
         view.addSubview(toolbar)
         
+        let button1 = UIButton(frame: CGRect(x: 20, y: 60, width: 40, height: 40))
+        let cardImage = UIImage(named: "card")
+        button1.setImage(cardImage, for: .normal)
+        button1.alpha = 0.5
+        button1.addTarget(self, action: #selector(cardButtonAction), for: .touchUpInside)
+        toolbar.addSubview(button1)
+        
+        let button2 = UIButton(frame: CGRect(x: 20, y: 120, width: 40, height: 40))
+        let image2 = UIImage(named: "card")
+        button2.setImage(image2, for: .normal)
+        button2.alpha = 0.5
+        button2.addTarget(self, action: #selector(handsButtonAction), for: .touchUpInside)
+        toolbar.addSubview(button2)
+        
+    }
+
+    @objc func cardButtonAction(sender: UIButton!) {
+        showSystemMenu()
     }
     
+
         
     // -----------------------------------------------------------------------------------------
     //
@@ -471,8 +491,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
        
         let width: CGFloat = 120
         let height: CGFloat = 75
-        var x = (CGFloat(discardIndex) * (tileWidth() + space)) - width - (margin * 2) + notch()
-        var y: CGFloat = hand2Bottom()
+        let x = (CGFloat(discardIndex) * (tileWidth() + space)) - width - (margin * 2) + notch()
+        let y: CGFloat = hand2Bottom()
         
         let labelFrame = CGRect(x: x, y: y, width: width, height: height)
         label = UILabel(frame: labelFrame)
@@ -589,8 +609,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     // -----------------------------------------------------------------------------------------
     
     func showButtons() {
-        addMenuButton()
-        addHandsButton()
+        //addMenuButton()
+        //addHandsButton()
     }
     
     func addMenuButton() {
@@ -628,7 +648,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     @objc func handsButtonAction(sender: UIButton!) {
         if discardTableView.isHidden {
             showDiscardTable()
-            handsButton.setTitle("Hands", for: .normal)
+            // handsButton.setTitle("Hands", for: .normal)
             hideSuggestedHands()
         } else {
             showSuggestedHands()
@@ -644,7 +664,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     
     func showSuggestedHands() {
         hideDiscardTable()
-        handsButton.setTitle("Table", for: .normal)
+        // handsButton.setTitle("Table", for: .normal)
         suggestedHand1?.removeFromSuperview()
         suggestedHand2?.removeFromSuperview()
         suggestedHandAlt?.removeFromSuperview()
