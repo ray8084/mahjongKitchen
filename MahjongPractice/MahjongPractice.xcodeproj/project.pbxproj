@@ -12,6 +12,9 @@
 		6D61DE8E53AC034CBE92CA40 /* Pods_MahjongPractice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5207B81F59BE7F62510E662B /* Pods_MahjongPractice.framework */; };
 		7128C7E52A0F146E008564D1 /* card.png in Resources */ = {isa = PBXBuildFile; fileRef = 7128C7E42A0F146E008564D1 /* card.png */; };
 		7128C7E72A0F32F5008564D1 /* switch.png in Resources */ = {isa = PBXBuildFile; fileRef = 7128C7E62A0F32F5008564D1 /* switch.png */; };
+		7128C7E92A0FE010008564D1 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 7128C7E82A0FE010008564D1 /* play.png */; };
+		7128C7EB2A0FE1F8008564D1 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 7128C7EA2A0FE1F8008564D1 /* settings.png */; };
+		7128C7ED2A0FE405008564D1 /* help.png in Resources */ = {isa = PBXBuildFile; fileRef = 7128C7EC2A0FE405008564D1 /* help.png */; };
 		712AEB812745D8AE006C8D4B /* redAlt.png in Resources */ = {isa = PBXBuildFile; fileRef = 712AEB802745D8AD006C8D4B /* redAlt.png */; };
 		7142519E27078624001AE6F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7142519D27078624001AE6F0 /* AppDelegate.swift */; };
 		714251A227078624001AE6F0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714251A127078624001AE6F0 /* ViewController.swift */; };
@@ -234,6 +237,9 @@
 		5FF6196C5BB18EFFE44E83B6 /* Pods_MahjongPracticeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MahjongPracticeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7128C7E42A0F146E008564D1 /* card.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = card.png; sourceTree = "<group>"; };
 		7128C7E62A0F32F5008564D1 /* switch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = switch.png; sourceTree = "<group>"; };
+		7128C7E82A0FE010008564D1 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
+		7128C7EA2A0FE1F8008564D1 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
+		7128C7EC2A0FE405008564D1 /* help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help.png; sourceTree = "<group>"; };
 		712AEB802745D8AD006C8D4B /* redAlt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redAlt.png; sourceTree = "<group>"; };
 		7142519A27078624001AE6F0 /* MahjongPractice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MahjongPractice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7142519D27078624001AE6F0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -582,6 +588,9 @@
 		714251CF27079FB9001AE6F0 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				7128C7EC2A0FE405008564D1 /* help.png */,
+				7128C7EA2A0FE1F8008564D1 /* settings.png */,
+				7128C7E82A0FE010008564D1 /* play.png */,
 				7128C7E62A0F32F5008564D1 /* switch.png */,
 				7128C7E42A0F146E008564D1 /* card.png */,
 				715B7BE52A0DC6CB00B482FD /* j-super-alt7.png */,
@@ -958,6 +967,7 @@
 				7142528B27079FED001AE6F0 /* 5dot.png in Resources */,
 				7142524827079FED001AE6F0 /* sideButtonSettings.png in Resources */,
 				7142526027079FED001AE6F0 /* 7craknew.png in Resources */,
+				7128C7ED2A0FE405008564D1 /* help.png in Resources */,
 				7142528427079FED001AE6F0 /* 4bam.png in Resources */,
 				714251A727078626001AE6F0 /* Assets.xcassets in Resources */,
 				7142525027079FED001AE6F0 /* 1crak.png in Resources */,
@@ -989,6 +999,7 @@
 				7142525427079FED001AE6F0 /* 6craknew.png in Resources */,
 				7142529327079FED001AE6F0 /* 9crak.png in Resources */,
 				7142525927079FED001AE6F0 /* 9dotnew.png in Resources */,
+				7128C7E92A0FE010008564D1 /* play.png in Resources */,
 				715B7BDF2A0DC6AF00B482FD /* 4d-super.png in Resources */,
 				715B7BE42A0DC6AF00B482FD /* s-super.png in Resources */,
 				7142528827079FED001AE6F0 /* green.png in Resources */,
@@ -1031,6 +1042,7 @@
 				7142527127079FED001AE6F0 /* 3dot.png in Resources */,
 				715B7BC82A0DC6AF00B482FD /* 7c-super.png in Resources */,
 				7142523D27079FED001AE6F0 /* sum.png in Resources */,
+				7128C7EB2A0FE1F8008564D1 /* settings.png in Resources */,
 				7142528327079FED001AE6F0 /* sideButtonInfo.png in Resources */,
 				715B7BE32A0DC6AF00B482FD /* 4c-super.png in Resources */,
 				7142525627079FED001AE6F0 /* eastnew.png in Resources */,
