@@ -187,6 +187,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             gameLabel.textAlignment = .center
             gameLabel.font = UIFont.systemFont(ofSize: 12.0)
             gameLabel.textColor = ToolbarTextColor
+            gameLabel.alpha = 0.9
             toolbar.addSubview(gameLabel)
             
             let button1 = UIButton(frame: CGRect(x: offset, y: 120, width: 40, height: 40))
@@ -200,6 +201,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             label1.textAlignment = .center
             label1.font = UIFont.systemFont(ofSize: 12.0)
             label1.textColor = ToolbarTextColor
+            label1.alpha = 0.9
             toolbar.addSubview(label1)
             
             let settingsButton = UIButton(frame: CGRect(x: offset, y: 200, width: 40, height: 40))
@@ -213,6 +215,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             settingsLabel.textAlignment = .center
             settingsLabel.font = UIFont.systemFont(ofSize: 12.0)
             settingsLabel.textColor = ToolbarTextColor
+            settingsLabel.alpha = 0.9
             toolbar.addSubview(settingsLabel)
             
             let helpButton = UIButton(frame: CGRect(x: offset, y: 280, width: 40, height: 40))
@@ -226,6 +229,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             helpLabel.textAlignment = .center
             helpLabel.font = UIFont.systemFont(ofSize: 12.0)
             helpLabel.textColor = ToolbarTextColor
+            helpLabel.alpha = 0.9
             toolbar.addSubview(helpLabel)
         }
     }
@@ -808,30 +812,21 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             view.addSubview(suggestedHandAlt)
         }
         
-        /*if selectedPatterns.count == 0 {
-            let width: CGFloat = 420
+        if selectedPatterns.count == 0 {
+            let width: CGFloat = 500
             let height: CGFloat = 50
-            let x = cardMarginX() + menuButton.frame.width + 15
+            let x = cardMarginX() + 15
             let y: CGFloat = tableLocation()
             
-            var labelFrame = CGRect(x: x, y: y, width: width, height: height)
+            let labelFrame = CGRect(x: x, y: y, width: width, height: height)
             suggestedHand1 = UILabel(frame: labelFrame)
             suggestedHand1.font = UIFont(name: "Chalkduster", size: 16)!
-            suggestedHand1.text = "< Show Target Hands or Discard Table"
+            suggestedHand1.text = "Select hands to see here with the toolbar to the right."
             suggestedHand1.frame = labelFrame
             suggestedHand1.textAlignment = .left
-            suggestedHand1.numberOfLines = 2
+            suggestedHand1.numberOfLines = 1
             view.addSubview(suggestedHand1)
-            
-            labelFrame = CGRect(x: x, y: y + 35, width: width, height: height)
-            suggestedHandAlt = UILabel(frame: labelFrame)
-            suggestedHandAlt.font = UIFont(name: "Chalkduster", size: 16)!
-            suggestedHandAlt.text = "< Select Target Hands"
-            suggestedHandAlt.frame = labelFrame
-            suggestedHandAlt.textAlignment = .left
-            suggestedHandAlt.numberOfLines = 1
-            view.addSubview(suggestedHandAlt)
-        }*/
+        }
     }
     
     func hideSuggestedHands() {
