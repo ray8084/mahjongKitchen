@@ -20,6 +20,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     let BackgroundColorDarkMode = UIColor.init(red: 39.0/255.0, green: 39.0/255.0, blue: 41.0/255.0, alpha: 1)
     let BackgroundColorDefense = UIColor.init(red: 74.0/255.0, green: 96.0/255.0, blue: 42.0/255.0, alpha: 1)
     let BackgroundColorIconRed = UIColor.init(red: 232.0/255.0, green: 54.0/255.0, blue: 49.0/255.0, alpha: 1)
+    let ToolbarTextColor = UIColor.init(red: 95.0/255.0, green: 95.0/255.0, blue: 94.0/255.0, alpha: 1)
     
     var maj: Maj!
     var lastMaj: Maj!
@@ -40,6 +41,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     var suggestedHand2: UILabel!
     var suggestedHandAlt: UILabel!
     var toolbar: UIView!
+    var discardTableSegmentControl: UISegmentedControl!
     
     let margin: CGFloat = 5
     let space: CGFloat = 1
@@ -183,8 +185,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             let gameLabel = UILabel(frame: CGRect(x: 0, y: 77, width: width, height: 20))
             gameLabel.text = "Game"
             gameLabel.textAlignment = .center
-            gameLabel.font = UIFont.systemFont(ofSize: 10.0)
-            gameLabel.alpha = 0.8
+            gameLabel.font = UIFont.systemFont(ofSize: 12.0)
+            gameLabel.textColor = ToolbarTextColor
             toolbar.addSubview(gameLabel)
             
             let button1 = UIButton(frame: CGRect(x: offset, y: 120, width: 40, height: 40))
@@ -196,8 +198,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             let label1 = UILabel(frame: CGRect(x: 0, y: 157, width: width, height: 20))
             label1.text = "Hands"
             label1.textAlignment = .center
-            label1.font = UIFont.systemFont(ofSize: 10.0)
-            label1.alpha = 0.8
+            label1.font = UIFont.systemFont(ofSize: 12.0)
+            label1.textColor = ToolbarTextColor
             toolbar.addSubview(label1)
             
             let settingsButton = UIButton(frame: CGRect(x: offset, y: 200, width: 40, height: 40))
@@ -209,8 +211,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             let settingsLabel = UILabel(frame: CGRect(x: 0, y: 237, width: width, height: 20))
             settingsLabel.text = "Settings"
             settingsLabel.textAlignment = .center
-            settingsLabel.font = UIFont.systemFont(ofSize: 10.0)
-            settingsLabel.alpha = 0.8
+            settingsLabel.font = UIFont.systemFont(ofSize: 12.0)
+            settingsLabel.textColor = ToolbarTextColor
             toolbar.addSubview(settingsLabel)
             
             let helpButton = UIButton(frame: CGRect(x: offset, y: 280, width: 40, height: 40))
@@ -222,22 +224,9 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             let helpLabel = UILabel(frame: CGRect(x: 0, y: 317, width: width, height: 20))
             helpLabel.text = "Help"
             helpLabel.textAlignment = .center
-            helpLabel.font = UIFont.systemFont(ofSize: 10.0)
-            helpLabel.alpha = 0.8
+            helpLabel.font = UIFont.systemFont(ofSize: 12.0)
+            helpLabel.textColor = ToolbarTextColor
             toolbar.addSubview(helpLabel)
-            
-            /*let button2 = UIButton(frame: CGRect(x: 20, y: 360, width: 40, height: 40))
-             let image2 = UIImage(named: "switch")
-             button2.setImage(image2, for: .normal)
-             button2.alpha = 0.7
-             button2.addTarget(self, action: #selector(handsButtonAction), for: .touchUpInside)
-             toolbar.addSubview(button2)
-             let label2 = UILabel(frame: CGRect(x: 0, y: 397, width: 80, height: 20))
-             label2.text = "Discards"
-             label2.textAlignment = .center
-             label2.font = UIFont.systemFont(ofSize: 10.0)
-             label2.alpha = 0.7
-             toolbar.addSubview(label2)*/
         }
     }
 
@@ -279,11 +268,11 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         showButtons()
         showRack()
         showDiscard()
-        showSuggestedHands()
         showHand()
         showLabel()
         view.backgroundColor = getBackgroundColor()
         showToolbar()
+        showDiscardTable()
     }
            
     func showGameMenu(title: String, message: String, win: Bool) {
@@ -324,7 +313,6 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         newDeal = true
         resetMaj()
         showGame()
-        showSuggestedHands()
     }
     
     func resetMaj() {
@@ -679,7 +667,31 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     func showButtons() {
         //addMenuButton()
         //addHandsButton()
+        addDiscardTableSegmentControl()
     }
+    
+    func addDiscardTableSegmentControl() {
+        if discardTableSegmentControl == nil {
+            let items = ["Hands", "Discards"]
+            discardTableSegmentControl = UISegmentedControl(items: items)
+            discardTableSegmentControl.selectedSegmentIndex = 1
+            discardTableSegmentControl.frame = CGRect(x: cardMarginX(), y: view.frame.height - 40 , width: 130, height: 30)
+            discardTableSegmentControl.addTarget(self, action: #selector(changeDiscardTableSegmentControl), for: .valueChanged)
+            view.addSubview(discardTableSegmentControl)
+        }
+    }
+    
+    @objc private func changeDiscardTableSegmentControl(sender: UISegmentedControl) {
+        switch( sender.selectedSegmentIndex ) {
+            case 0:
+                hideDiscardTable()
+                showSuggestedHands()
+            default:
+                showDiscardTable()
+                hideSuggestedHands()
+        }
+    }
+    
     
     func addMenuButton() {
         if menuButton == nil {
