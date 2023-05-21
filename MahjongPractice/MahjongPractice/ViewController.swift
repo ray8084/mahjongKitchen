@@ -15,11 +15,14 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     var viewDidAppear = false
     let RackColor = UIColor(white: 0.93, alpha: 0.7)
     let HandColor = UIColor(white: 0.99, alpha: 0.9)
+    let BlankColor = UIColor(white: 0.95, alpha: 0.7)
+    let BlankColorDarkMode = UIColor(white: 0.95, alpha: 0.1)
     // let BackgroundColor = UIColor.init(red: 185.0/255.0, green: 190.0/255.0, blue: 183.0/255.0, alpha: 1)
     let BackgroundColor = UIColor.init(red: 203.0/255.0, green: 200.0/255.0, blue: 197.0/255.0, alpha: 1)
     let BackgroundColorDarkMode = UIColor.init(red: 39.0/255.0, green: 39.0/255.0, blue: 41.0/255.0, alpha: 1)
     let BackgroundColorDefense = UIColor.init(red: 74.0/255.0, green: 96.0/255.0, blue: 42.0/255.0, alpha: 1)
     let BackgroundColorIconRed = UIColor.init(red: 232.0/255.0, green: 54.0/255.0, blue: 49.0/255.0, alpha: 1)
+    let BackgroundColorIconRedOrange = UIColor.init(red: 241.0/255.0, green: 98.0/255.0, blue: 72.0/255.0, alpha: 1)
     let ToolbarTextColor = UIColor.init(red: 95.0/255.0, green: 95.0/255.0, blue: 94.0/255.0, alpha: 1)
     
     var maj: Maj!
@@ -112,7 +115,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         v.contentMode = .scaleAspectFit
         v.layer.masksToBounds = true
         v.alpha = 1.0
-        v.backgroundColor = BackgroundColorIconRed
+        v.backgroundColor = BackgroundColorIconRedOrange
         v.image = UIImage(named: "TRANS-ICON-WHITE.png")
         view.addSubview(v)
         
@@ -121,7 +124,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         title.textAlignment = .center
         title.textColor = UIColor.white
         title.alpha = 1.0
-        title.backgroundColor = BackgroundColorIconRed
+        title.backgroundColor = BackgroundColorIconRedOrange
         title.font = UIFont.boldSystemFont(ofSize: 200.0)
         view.addSubview(title)
     }
@@ -160,6 +163,15 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         showGame()
     }
     
+    func getBlankColor() -> UIColor {
+        if #available(iOS 13.0, *) {
+            if maj.dotTileStyle != TileStyle.classic && traitCollection.userInterfaceStyle == .dark {
+                return BlankColorDarkMode
+            }
+        }
+        return BlankColor
+    }
+    
     
     // -----------------------------------------------------------------------------------------
     //
@@ -172,7 +184,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             let width = isNarrow() ? 60.0 : 80.0
             toolbar = UIView(frame: CGRect(x: view.frame.width - width, y: 0, width: width, height: view.frame.height))
             toolbar.backgroundColor = .white
-            toolbar.alpha = 0.8
+            toolbar.alpha = 0.9
             view.addSubview(toolbar)
             
             let offset = (width - 40) / 2
@@ -813,18 +825,18 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         }
         
         if selectedPatterns.count == 0 {
-            let width: CGFloat = 500
-            let height: CGFloat = 50
-            let x = cardMarginX() + 15
+            let width: CGFloat = 400
+            let height: CGFloat = 60
+            let x = cardMarginX()
             let y: CGFloat = tableLocation()
             
             let labelFrame = CGRect(x: x, y: y, width: width, height: height)
             suggestedHand1 = UILabel(frame: labelFrame)
             suggestedHand1.font = UIFont(name: "Chalkduster", size: 16)!
-            suggestedHand1.text = "Select hands to see here with the toolbar to the right."
+            suggestedHand1.text = "Use the toolbar to the right to select hands to see here"
             suggestedHand1.frame = labelFrame
             suggestedHand1.textAlignment = .left
-            suggestedHand1.numberOfLines = 1
+            suggestedHand1.numberOfLines = 2
             view.addSubview(suggestedHand1)
         }
     }
@@ -1004,7 +1016,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             for index in start...end {
                 let x = CGFloat(index) * (tileWidth() + space) + margin + notch()
                 let v = UIView(frame:CGRect(x: x, y: y, width: tileWidth(),height: tileHeight()))
-                v.backgroundColor = color
+                v.backgroundColor = getBlankColor()
                 v.layer.masksToBounds = true
                 v.layer.cornerRadius = tileWidth() / 8
                 if addGestures {
