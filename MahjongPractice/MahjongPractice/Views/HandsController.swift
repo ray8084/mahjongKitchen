@@ -17,18 +17,8 @@ class HandsController: NarrowViewController, CardViewDelegate  {
     private var maj: Maj!
     public var cardView = CardView()
     private var filterSegmentControl: UISegmentedControl!
-    private var selectSegmentControl: UISegmentedControl!
     private var label: UILabel!
-    private var yourHandLabel: UILabel!
     private var tileViews: [UIView] = []
-    private var yourTileViews: [UIView] = []
-    private var filterButton: UIButton!
-    private var remainingTiles: [Tile] = []
-    
-    private var selectedPattern: LetterPattern!
-    var suggestedHandA: LetterPattern!
-    var suggestedHandB: LetterPattern!
-    var suggestedHandC: LetterPattern!
     var handsControllerDelegate: HandsControllerDelegate
     
     init(maj: Maj, frame: CGRect, narrowViewDelegate: NarrowViewDelegate, handsControllerDelegate: HandsControllerDelegate, backgroundColor: UIColor) {
@@ -68,16 +58,8 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         note.font = UIFont(name: "Chalkduster", size: 15)
         note.numberOfLines = 0
         view.addSubview(note)
-                
-        // showSelectedTiles(letterPattern: maj.card.letterPatterns[0])
+
         addCloseButton()
-    }
-    
-    func clear() {
-        suggestedHandA = nil
-        suggestedHandB = nil
-        suggestedHandC = nil
-        selectSegmentControl.selectedSegmentIndex = UISegmentedControl.noSegment
     }
 
     
@@ -90,7 +72,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
     func showYourTiles() {
         let height = tileHeight()
         let width = tileWidth()
-        for v in yourTileViews { v.removeFromSuperview() }
+        for v in tileViews { v.removeFromSuperview() }
         let offset = view.frame.width < 668 || view.frame.height > 650 ? 10.0 : 50.0
         let tiles = allTiles()
         for (index, tile) in tiles.enumerated() {
@@ -102,96 +84,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
             v.layer.cornerRadius = width / 8
             v.image = UIImage(named: Tile.getImage(id: tile.id, maj: maj!))
             view.addSubview(v)
-            yourTileViews.append(v)
-        }
-    }
-    
-    
-    // -----------------------------------------------------------------------------------------
-    //
-    //  Filter Button
-    //
-    // -----------------------------------------------------------------------------------------
-    
-    func addFilterButton() {
-        if filterButton == nil {
-            filterButton = UIButton()
-            filterButton.frame = CGRect(x: 50, y: 30,  width: 55, height: 25)
-            filterButton.layer.cornerRadius = 5
-            filterButton.backgroundColor = .white
-            filterButton.setTitleColor(.black, for: .normal)
-            filterButton.setTitle("Filter", for: .normal)
-            filterButton.titleLabel!.font = UIFont.systemFont(ofSize: 14)
-            filterButton.addTarget(self, action: #selector(filterButtonAction), for: .touchUpInside)
-            view.addSubview(filterButton)
-        }
-    }
-    
-    @objc func filterButtonAction(sender: UIButton!) {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "Filter out Hand1", style: .default, handler: {(action:UIAlertAction) in
-            self.filterOutHand1()
-        }));
-        
-        alert.addAction(UIAlertAction(title: "Filter out Hand2", style: .default, handler: {(action:UIAlertAction) in
-            //self.sortNumbers()
-        }));
-        
-        alert.addAction(UIAlertAction(title: "Filter out Alternate Hand", style: .default, handler: {(action:UIAlertAction) in
-            //self.sortOddEven()
-        }));
-                
-        alert.addAction(UIAlertAction(title: "Clear Filters", style: .default, handler: {(action:UIAlertAction) in
-            self.remainingTiles = self.allTiles()
-            self.showYourTiles()
-            self.cardView.update(self.maj, tiles: self.allTiles())
-        }));
-        
-        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action:UIAlertAction) in
-        }));
-        
-        present(alert, animated: true, completion: nil)
-    }
-    
-    func filterOutHand1() {
-        if suggestedHandA != nil {
-            let height = tileHeight() * 1.2
-            let width = tileWidth() * 1.2
-            for v in self.yourTileViews { v.removeFromSuperview() }
-            let tiles = allTiles()
-            let jokerCount = jokerCount(tiles: tiles)
-            var tileIndex = CGFloat(0.0)
-            var remainingTiles: [Tile] = []
-            for tile in tiles {
-                var found = false
-                for (index, idlist) in suggestedHandA.idList.list.enumerated() {
-                    let idMap = TileIdMap(idlist.ids)
-                    let count = suggestedHandA.countMatches(tiles: tiles, map: idMap.map, jokerCount: jokerCount, subId: index)
-                    if count == suggestedHandA.matchCount {
-                        for id in idlist.ids {
-                            if id == tile.id {
-                                found = true
-                                break
-                            }
-                        }
-                    }
-                }
-                if found == false {
-                    let x = CGFloat(tileIndex < 14 ? tileIndex : tileIndex - 14) * (width + 1.0) + 150
-                    let y = tileIndex < 14 ? 10.0 : 10.0 + height
-                    let v = UIImageView(frame:CGRect(x: x, y: y, width: width, height: height))
-                    v.contentMode = .scaleAspectFit
-                    v.layer.masksToBounds = true
-                    v.layer.cornerRadius = width / 8
-                    v.image = UIImage(named: Tile.getImage(id: tile.id, maj: maj!))
-                    view.addSubview(v)
-                    yourTileViews.append(v)
-                    tileIndex += 1
-                    remainingTiles.append(tile)
-                }
-            }
-            cardView.update(maj, tiles: remainingTiles)
+            tileViews.append(v)
         }
     }
     
@@ -214,74 +107,6 @@ class HandsController: NarrowViewController, CardViewDelegate  {
             }
         }
         return jokerCount
-    }
-        
-    /*func showSelectedTiles(letterPattern: LetterPattern) {
-        selectedPattern = letterPattern
-        
-        label?.removeFromSuperview()
-        let width: CGFloat = 500
-        let height: CGFloat = 75
-        let labelFrame = CGRect(x: 50, y: 240, width: width, height: height)
-        label = UILabel(frame: labelFrame)
-        
-        let text = NSMutableAttributedString(string: "")
-        text.append(letterPattern.text)
-        text.append(NSMutableAttributedString(string: "  "))
-        text.append(letterPattern.note)
-        
-        label.attributedText = text
-        label.frame = labelFrame
-        label.textAlignment = .left
-        label.numberOfLines = 1
-        view.addSubview(label)
-                
-        let items = ["Hand1", "Hand2", "Alt"]
-        selectSegmentControl?.removeFromSuperview()
-        let x = Int(view.frame.width - 250)
-        selectSegmentControl = UISegmentedControl(items: items)
-        selectSegmentControl.frame = CGRect(x: x, y: 285, width: 230, height: Int(selectSegmentControl.frame.height))
-        selectSegmentControl.addTarget(self, action: #selector(changeSelect), for: .valueChanged)
-        view.addSubview(selectSegmentControl)
-        
-        selectSegmentControl.selectedSegmentIndex = UISegmentedControl.noSegment
-        if suggestedHandA != nil && suggestedHandA.id == selectedPattern.id { selectSegmentControl.selectedSegmentIndex = 0 }
-        if suggestedHandB != nil && suggestedHandB.id == selectedPattern.id { selectSegmentControl.selectedSegmentIndex = 1 }
-        if suggestedHandC != nil && suggestedHandC.id == selectedPattern.id { selectSegmentControl.selectedSegmentIndex = 2 }
-        
-        let tiles = allTiles()
-        let jokerCount = jokerCount(tiles: tiles)
-        for view in tileViews { view.removeFromSuperview() }
-        var y = label.frame.origin.y + 55
-        for (index, idlist) in letterPattern.idList.list.enumerated() {
-            let idMap = TileIdMap(idlist.ids)
-            let count = letterPattern.countMatches(tiles: tiles, map: idMap.map, jokerCount: jokerCount, subId: index)
-            if count == letterPattern.matchCount {
-                var tileIndex = CGFloat(0.0)
-                for id in idlist.ids {
-                    let x = tileIndex * (tileWidth() + 1.0) + 50
-                    let v = UIImageView(frame:CGRect(x: x, y: y, width: tileWidth(), height: tileHeight()))
-                    v.contentMode = .scaleAspectFit
-                    v.layer.masksToBounds = true
-                    v.layer.cornerRadius = tileWidth() / 8
-                    v.image = UIImage(named: Tile.getImage(id: id, maj: maj!))
-                    view.addSubview(v)
-                    tileIndex += 1
-                    tileViews.append(v)
-                }
-                y = y + tileHeight() + 4
-            }
-        }
-    }*/
-    
-    @objc private func changeSelect(sender: UISegmentedControl) {
-        switch( sender.selectedSegmentIndex ) {
-        case 0: suggestedHandA = selectedPattern
-        case 1: suggestedHandB = selectedPattern
-        case 2: suggestedHandC = selectedPattern
-        default: selectSegmentControl.selectedSegmentIndex = UISegmentedControl.noSegment
-        }
-        handsControllerDelegate.showSuggestedHands()
     }
     
     
