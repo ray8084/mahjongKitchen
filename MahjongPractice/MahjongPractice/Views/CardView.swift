@@ -95,13 +95,6 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
             case Family.pairs: p.filterOut = maj.east.filterOutPairs
             default: p.filterOut = false
             }
-            if maj.east.filterOutConcealed && p.concealed {
-                p.filterOut = true
-            }
-            let count = maj.east.rack?.tiles.count
-            if (count! > 0) && (count! < 14) && p.concealed {
-                p.filterOut = true
-            }
         }
     }
     
