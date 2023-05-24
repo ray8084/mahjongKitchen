@@ -253,6 +253,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     @objc func cardButtonAction(sender: UIButton!) {
         let targetHands = HandsController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self, handsControllerDelegate: self, backgroundColor: self.getBackgroundColor())
         self.show(targetHands, sender: self)
+        self.discardTableSegmentControl.selectedSegmentIndex = 0
     }
     
     @objc func settingsButtonAction(sender: UIButton!) {
