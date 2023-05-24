@@ -501,9 +501,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         showHand()
         showLabel()
         showDiscard()
-        if discardTableView.isHidden == false {
-            showDiscardTable()
-        }
+        showDiscardTable()
+        showSuggestedHands()
         return true
     }
     
@@ -513,10 +512,12 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             discardTableView.countTile(maj.lastDiscard, increment: -1, maj: maj)
             maj.copy(lastMaj)
             maj.lastDiscard = nil
-            discardTableView.showCounts(maj: maj)
+            // discardTableView.showCounts(maj: maj)
             showHand()
             showDiscard()
             showLabel()
+            showDiscardTable()
+            showSuggestedHands()
             undo = true
         }
         return undo
@@ -541,9 +542,12 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     // -----------------------------------------------------------------------------------------
     
     func showDiscardTable() {
-        discardTableView.isHidden = false
-        let margin = cardMarginX() - 15
-        discardTableView.show(parent: view, rowHeader: tableLocation(), maj: maj, margin: margin)
+        print(discardTableSegmentControl.selectedSegmentIndex)
+        if discardTableSegmentControl.selectedSegmentIndex == 1 {
+            discardTableView.isHidden = false
+            let margin = cardMarginX() - 15
+            discardTableView.show(parent: view, rowHeader: tableLocation(), maj: maj, margin: margin)
+        }
     }
     
     func hideDiscardTable() {
@@ -760,86 +764,88 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     }
     
     func showSuggestedHands() {
-        hideDiscardTable()
-        suggestedHand1?.removeFromSuperview()
-        suggestedHand2?.removeFromSuperview()
-        suggestedHandAlt?.removeFromSuperview()
-        let selectedPatterns = maj.getSelectedPatterns()
-        
-        if selectedPatterns.count > 0 {
-            let width: CGFloat = 400
-            let height: CGFloat = 25
-            let x = cardMarginX()
-            let y: CGFloat = tableLocation()
-            let labelFrame = CGRect(x: x, y: y, width: width, height: height)
-            suggestedHand1 = UILabel(frame: labelFrame)
-            let text1 = NSMutableAttributedString(string: "")
-            selectedPatterns[0].match(allTiles(), ignoreFilters: true)
-            text1.append(NSMutableAttributedString(string: "\(selectedPatterns[0].matchCount) : "))
-            text1.append(selectedPatterns[0].getDarkModeString())
-            text1.append(NSMutableAttributedString(string: "  "))
-            text1.append(selectedPatterns[0].note)
-            suggestedHand1.attributedText = text1
-            suggestedHand1.frame = labelFrame
-            suggestedHand1.textAlignment = .left
-            suggestedHand1.numberOfLines = 1
-            view.addSubview(suggestedHand1)
-        }
-        
-        if selectedPatterns.count > 1 {
-            let width: CGFloat = 400
-            let height: CGFloat = 25
-            let x = cardMarginX()
-            let y: CGFloat = tableLocation() + 25
-            let labelFrame = CGRect(x: x, y: y, width: width, height: height)
-            suggestedHand2 = UILabel(frame: labelFrame)
-            let text2 = NSMutableAttributedString(string: "")
-            selectedPatterns[1].match(allTiles(), ignoreFilters: true)
-            text2.append(NSMutableAttributedString(string: "\(selectedPatterns[1].matchCount) : "))
-            text2.append(selectedPatterns[1].getDarkModeString())
-            text2.append(NSMutableAttributedString(string: "  "))
-            text2.append(selectedPatterns[1].note)
-            suggestedHand2.attributedText = text2
-            suggestedHand2.frame = labelFrame
-            suggestedHand2.textAlignment = .left
-            suggestedHand2.numberOfLines = 1
-            view.addSubview(suggestedHand2)
-        }
-        
-        if selectedPatterns.count > 2 {
-            let width: CGFloat = 400
-            let height: CGFloat = 25
-            let x = cardMarginX()
-            let y: CGFloat = tableLocation() + 50
-            let labelFrame = CGRect(x: x, y: y, width: width, height: height)
-            suggestedHandAlt = UILabel(frame: labelFrame)
-            let text3 = NSMutableAttributedString(string: "")
-            selectedPatterns[2].match(allTiles(), ignoreFilters: true)
-            text3.append(NSMutableAttributedString(string: "\(selectedPatterns[2].matchCount) : "))
-            text3.append(selectedPatterns[2].getDarkModeString())
-            text3.append(NSMutableAttributedString(string: "  "))
-            text3.append(selectedPatterns[2].note)
-            suggestedHandAlt.attributedText = text3
-            suggestedHandAlt.frame = labelFrame
-            suggestedHandAlt.textAlignment = .left
-            suggestedHandAlt.numberOfLines = 1
-            view.addSubview(suggestedHandAlt)
-        }
-        
-        if selectedPatterns.count == 0 {
-            let width: CGFloat = 400
-            let height: CGFloat = 60
-            let x = cardMarginX()
-            let y: CGFloat = tableLocation()
+        if discardTableSegmentControl.selectedSegmentIndex == 0 {
+            hideDiscardTable()
+            suggestedHand1?.removeFromSuperview()
+            suggestedHand2?.removeFromSuperview()
+            suggestedHandAlt?.removeFromSuperview()
+            let selectedPatterns = maj.getSelectedPatterns()
             
-            let labelFrame = CGRect(x: x, y: y, width: width, height: height)
-            suggestedHand1 = UILabel(frame: labelFrame)
-            suggestedHand1.font = UIFont(name: "Chalkduster", size: 16)!
-            suggestedHand1.text = "Use the toolbar to the right to select hands to see here"
-            suggestedHand1.frame = labelFrame
-            suggestedHand1.textAlignment = .left
-            suggestedHand1.numberOfLines = 2
-            view.addSubview(suggestedHand1)
+            if selectedPatterns.count > 0 {
+                let width: CGFloat = 400
+                let height: CGFloat = 25
+                let x = cardMarginX()
+                let y: CGFloat = tableLocation()
+                let labelFrame = CGRect(x: x, y: y, width: width, height: height)
+                suggestedHand1 = UILabel(frame: labelFrame)
+                let text1 = NSMutableAttributedString(string: "")
+                selectedPatterns[0].match(allTiles(), ignoreFilters: true)
+                text1.append(NSMutableAttributedString(string: "\(selectedPatterns[0].matchCount) : "))
+                text1.append(selectedPatterns[0].getDarkModeString())
+                text1.append(NSMutableAttributedString(string: "  "))
+                text1.append(selectedPatterns[0].note)
+                suggestedHand1.attributedText = text1
+                suggestedHand1.frame = labelFrame
+                suggestedHand1.textAlignment = .left
+                suggestedHand1.numberOfLines = 1
+                view.addSubview(suggestedHand1)
+            }
+            
+            if selectedPatterns.count > 1 {
+                let width: CGFloat = 400
+                let height: CGFloat = 25
+                let x = cardMarginX()
+                let y: CGFloat = tableLocation() + 25
+                let labelFrame = CGRect(x: x, y: y, width: width, height: height)
+                suggestedHand2 = UILabel(frame: labelFrame)
+                let text2 = NSMutableAttributedString(string: "")
+                selectedPatterns[1].match(allTiles(), ignoreFilters: true)
+                text2.append(NSMutableAttributedString(string: "\(selectedPatterns[1].matchCount) : "))
+                text2.append(selectedPatterns[1].getDarkModeString())
+                text2.append(NSMutableAttributedString(string: "  "))
+                text2.append(selectedPatterns[1].note)
+                suggestedHand2.attributedText = text2
+                suggestedHand2.frame = labelFrame
+                suggestedHand2.textAlignment = .left
+                suggestedHand2.numberOfLines = 1
+                view.addSubview(suggestedHand2)
+            }
+            
+            if selectedPatterns.count > 2 {
+                let width: CGFloat = 400
+                let height: CGFloat = 25
+                let x = cardMarginX()
+                let y: CGFloat = tableLocation() + 50
+                let labelFrame = CGRect(x: x, y: y, width: width, height: height)
+                suggestedHandAlt = UILabel(frame: labelFrame)
+                let text3 = NSMutableAttributedString(string: "")
+                selectedPatterns[2].match(allTiles(), ignoreFilters: true)
+                text3.append(NSMutableAttributedString(string: "\(selectedPatterns[2].matchCount) : "))
+                text3.append(selectedPatterns[2].getDarkModeString())
+                text3.append(NSMutableAttributedString(string: "  "))
+                text3.append(selectedPatterns[2].note)
+                suggestedHandAlt.attributedText = text3
+                suggestedHandAlt.frame = labelFrame
+                suggestedHandAlt.textAlignment = .left
+                suggestedHandAlt.numberOfLines = 1
+                view.addSubview(suggestedHandAlt)
+            }
+            
+            if selectedPatterns.count == 0 {
+                let width: CGFloat = 400
+                let height: CGFloat = 60
+                let x = cardMarginX()
+                let y: CGFloat = tableLocation()
+                
+                let labelFrame = CGRect(x: x, y: y, width: width, height: height)
+                suggestedHand1 = UILabel(frame: labelFrame)
+                suggestedHand1.font = UIFont(name: "Chalkduster", size: 16)!
+                suggestedHand1.text = "Use the toolbar to the right to select hands to see here"
+                suggestedHand1.frame = labelFrame
+                suggestedHand1.textAlignment = .left
+                suggestedHand1.numberOfLines = 2
+                view.addSubview(suggestedHand1)
+            }
         }
     }
     
@@ -1151,6 +1157,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         if handled {
             checkForMahjong()
         }
+        showSuggestedHands()
     }
     
     func getRow(_ location: Double) -> Int {
@@ -1233,6 +1240,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
                 showHand()
                 showDiscard()
                 showLabel()
+                showSuggestedHands()
                 moved = true
             }
         }
