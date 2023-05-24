@@ -152,7 +152,9 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         // column 3 matching tiles
         let col3 = getLabel(cell, x: col1Width() + col2Width() + 5, width: col3Width(), tag: 3)
         if allFiltersAreOn() {
-            col3?.text = maj.card.matchCountText(getSelectedPattern(index).id).string   // todo
+            let p = getSelectedPattern(index)
+            p.match(allTiles(maj), ignoreFilters: true)
+            col3?.text = index == 0 ? "\(p.matchCount) Tiles" : "\(p.matchCount)"
         } else {
             col3?.text = maj.card.matchCountText(index).string
         }
@@ -160,7 +162,7 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let selected = allFiltersAreOn() ? getSelectedPattern(index).selected : maj.card.letterPatterns[index].selected
         if selected {
             cell.accessoryType = .checkmark
-            // cell.tintColor = .darkGray
+            cell.tintColor = .darkGray
         } else {
             cell.accessoryType = .none
         }
