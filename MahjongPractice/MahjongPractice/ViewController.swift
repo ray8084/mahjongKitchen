@@ -681,8 +681,6 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     // -----------------------------------------------------------------------------------------
     
     func showButtons() {
-        //addMenuButton()
-        //addHandsButton()
         addDiscardTableSegmentControl()
     }
     
@@ -707,8 +705,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
                 hideSuggestedHands()
         }
     }
-    
-    
+        
     func addMenuButton() {
         if menuButton == nil {
             menuButton = UIButton()
@@ -758,9 +755,12 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     //
     // -----------------------------------------------------------------------------------------
     
+    func allTiles() -> [Tile] {
+        return maj.east.tiles + maj.south.tiles + (maj.east.rack?.tiles)! + (maj.south.rack?.tiles)!
+    }
+    
     func showSuggestedHands() {
         hideDiscardTable()
-        // handsButton.setTitle("Table", for: .normal)
         suggestedHand1?.removeFromSuperview()
         suggestedHand2?.removeFromSuperview()
         suggestedHandAlt?.removeFromSuperview()
@@ -771,11 +771,11 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             let height: CGFloat = 25
             let x = cardMarginX()
             let y: CGFloat = tableLocation()
-            
             let labelFrame = CGRect(x: x, y: y, width: width, height: height)
             suggestedHand1 = UILabel(frame: labelFrame)
-            
             let text1 = NSMutableAttributedString(string: "")
+            selectedPatterns[0].match(allTiles(), ignoreFilters: true)
+            text1.append(NSMutableAttributedString(string: "\(selectedPatterns[0].matchCount) : "))
             text1.append(selectedPatterns[0].getDarkModeString())
             text1.append(NSMutableAttributedString(string: "  "))
             text1.append(selectedPatterns[0].note)
@@ -791,10 +791,11 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             let height: CGFloat = 25
             let x = cardMarginX()
             let y: CGFloat = tableLocation() + 25
-            
             let labelFrame = CGRect(x: x, y: y, width: width, height: height)
             suggestedHand2 = UILabel(frame: labelFrame)
             let text2 = NSMutableAttributedString(string: "")
+            selectedPatterns[1].match(allTiles(), ignoreFilters: true)
+            text2.append(NSMutableAttributedString(string: "\(selectedPatterns[1].matchCount) : "))
             text2.append(selectedPatterns[1].getDarkModeString())
             text2.append(NSMutableAttributedString(string: "  "))
             text2.append(selectedPatterns[1].note)
@@ -810,10 +811,11 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             let height: CGFloat = 25
             let x = cardMarginX()
             let y: CGFloat = tableLocation() + 50
-            
             let labelFrame = CGRect(x: x, y: y, width: width, height: height)
             suggestedHandAlt = UILabel(frame: labelFrame)
             let text3 = NSMutableAttributedString(string: "")
+            selectedPatterns[2].match(allTiles(), ignoreFilters: true)
+            text3.append(NSMutableAttributedString(string: "\(selectedPatterns[2].matchCount) : "))
             text3.append(selectedPatterns[2].getDarkModeString())
             text3.append(NSMutableAttributedString(string: "  "))
             text3.append(selectedPatterns[2].note)
