@@ -166,7 +166,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     
     func getBlankColor() -> UIColor {
         if #available(iOS 13.0, *) {
-            if maj.dotTileStyle != TileStyle.classic && traitCollection.userInterfaceStyle == .dark {
+            if traitCollection.userInterfaceStyle == .dark {
                 return BlankColorDarkMode
             }
         }
@@ -312,7 +312,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         newDeal = true
         maj.replay()
         maj.south.draw(maj)
-        maj.south.sort()
+        sort()
         maj.discardTable.resetCounts()
         discardTableView.hide()
         maj.card.clearRackFilter()

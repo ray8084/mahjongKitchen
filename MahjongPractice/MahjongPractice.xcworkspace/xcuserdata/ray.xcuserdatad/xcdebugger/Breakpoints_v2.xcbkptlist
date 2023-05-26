@@ -410,7 +410,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1095"
             endingLineNumber = "1095"
-            landmarkName = "changeTileImages()"
+            landmarkName = "addBlanks(tileView:col:row:count:addGestures:color:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -440,8 +440,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1359"
             endingLineNumber = "1359"
-            landmarkName = "ViewController"
-            landmarkType = "3">
+            landmarkName = "viewHeight()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -456,8 +456,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1410"
             endingLineNumber = "1410"
-            landmarkName = "isRack(_:)"
-            landmarkType = "7">
+            landmarkName = "ViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -502,8 +502,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1374"
             endingLineNumber = "1374"
-            landmarkName = "isNarrow()"
-            landmarkType = "7">
+            landmarkName = "ViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -518,8 +518,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1365"
             endingLineNumber = "1365"
-            landmarkName = "notch()"
-            landmarkType = "7">
+            landmarkName = "ViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1132,7 +1132,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1377"
             endingLineNumber = "1377"
-            landmarkName = "botLocationY()"
+            landmarkName = "isNarrow()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
