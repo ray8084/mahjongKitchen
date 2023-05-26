@@ -244,8 +244,6 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             settingsLabel.textColor = ToolbarTextColor
             settingsLabel.alpha = 0.9
             toolbar.addSubview(settingsLabel)
-            
-
         }
     }
 

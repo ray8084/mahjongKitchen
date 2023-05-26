@@ -87,7 +87,7 @@ class HelpChapter: UIView {
         label.isEditable = false
         label.font = UIFont(name: "CourierNewPSMT", size: 16)
         label.sizeToFit()
-        expandBody(label.frame.height)
+        expandBody(label.frame.height - 12)
         body.addSubview(label)
     }
     
