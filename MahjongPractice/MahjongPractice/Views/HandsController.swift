@@ -56,7 +56,7 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         note.frame = frame
         note.textAlignment = .left
         note.font = UIFont(name: "Chalkduster", size: 15)
-        note.numberOfLines = 0
+        note.numberOfLines = 0 
         view.addSubview(note)
 
         addCloseButton()

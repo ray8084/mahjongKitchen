@@ -334,7 +334,19 @@ class Card {
                 familyTotal += 1
             }
         }
-        return String(count) + "/" + String(familyTotal)
+        return String(count) + " / " + String(familyTotal)
+    }
+    
+    func isSectionComplete(family: Int) -> Bool {
+        var count = 0
+        var familyTotal = 0
+        for lp in letterPatterns {
+            if (family == Family.all) || (lp.family == family) {
+                count += lp.getWins(showLosses: false) > 0 ? 1 : 0
+                familyTotal += 1
+            }
+        }
+        return count == familyTotal
     }
 
     func getPatternWinPercentage(family: Int) -> Double {

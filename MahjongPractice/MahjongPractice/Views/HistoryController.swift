@@ -13,9 +13,12 @@ class HistoryController: NarrowViewController, UITableViewDelegate, UITableViewD
     var table: UITableView  = UITableView()
     var chapters: [HelpChapter] = []
     private var maj: Maj!
+    private var letterPatterns: [LetterPattern] = []
     
     init(maj: Maj, frame: CGRect, narrowViewDelegate: NarrowViewDelegate) {
         self.maj = maj
+        self.letterPatterns = maj.card.letterPatterns
+        self.letterPatterns.sort(by: { $0.id < $1.id } )
         super.init(frame: frame, narrowViewDelegate: narrowViewDelegate)
     }
     
@@ -219,34 +222,63 @@ class HistoryController: NarrowViewController, UITableViewDelegate, UITableViewD
         addItem("LikeNum", x: xOffset, y: 90)
         addItem("Addition", x: xOffset, y: 110)
         
-        addItem("\(maj.card.getPatternWins(family: Family.year))", x: xOffset + 80, y: 50)
-        addItem("\(maj.card.getPatternWins(family: Family.f2468))", x: xOffset + 80, y: 70)
-        addItem("\(maj.card.getPatternWins(family: Family.likeNumbers))", x: xOffset + 80, y: 90)
-        addItem("\(maj.card.getPatternWins(family: Family.addition))", x: xOffset + 80, y: 110)
+        addItemRight("\(maj.card.getPatternWins(family: Family.year))", x: xOffset + 60, y: 50)
+        addItemRight("\(maj.card.getPatternWins(family: Family.f2468))", x: xOffset + 60, y: 70)
+        addItemRight("\(maj.card.getPatternWins(family: Family.likeNumbers))", x: xOffset + 60, y: 90)
+        addItemRight("\(maj.card.getPatternWins(family: Family.addition))", x: xOffset + 60, y: 110)
                         
+        addCheckMark(family: Family.year, x: xOffset + 60 + 60 + 20, y: 50)
+        addCheckMark(family: Family.f2468, x: xOffset + 60 + 60 + 20, y: 70)
+        addCheckMark(family: Family.likeNumbers, x: xOffset + 60 + 60 + 20, y: 90)
+        addCheckMark(family: Family.addition, x: xOffset + 60 + 60 + 20, y: 110)
+        
         addItem("Quints", x: xOffset + 200, y: 50)
         addItem("Runs", x: xOffset + 200, y: 70)
         addItem("13579", x: xOffset + 200, y: 90)
         
-        addItem("\(maj.card.getPatternWins(family: Family.quints))", x: xOffset + 280, y: 50)
-        addItem("\(maj.card.getPatternWins(family: Family.run))", x: xOffset + 280, y: 70)
-        addItem("\(maj.card.getPatternWins(family: Family.f13579))", x: xOffset + 280, y: 90)
+        addItemRight("\(maj.card.getPatternWins(family: Family.quints))", x: xOffset + 260, y: 50)
+        addItemRight("\(maj.card.getPatternWins(family: Family.run))", x: xOffset + 260, y: 70)
+        addItemRight("\(maj.card.getPatternWins(family: Family.f13579))", x: xOffset + 260, y: 90)
+        
+        addCheckMark(family: Family.quints, x: xOffset + 260 + 60 + 20, y: 50)
+        addCheckMark(family: Family.run, x: xOffset + 260 + 60 + 20, y: 70)
+        addCheckMark(family: Family.f13579, x: xOffset + 260 + 60 + 20, y: 90)
 
         addItem("Winds", x: xOffset + 400, y: 50)
         addItem("369", x: xOffset + 400, y: 70)
         addItem("S&P", x: xOffset + 400, y: 90)
         addItem("Total", x: xOffset + 400, y: 110)
         
-        addItem("\(maj.card.getPatternWins(family: Family.winds))", x: xOffset + 480, y: 50)
-        addItem("\(maj.card.getPatternWins(family: Family.f369))", x: xOffset + 480, y: 70)
-        addItem("\(maj.card.getPatternWins(family: Family.pairs))", x: xOffset + 480, y: 90)
-        addItem("\(maj.card.getPatternWins(family: Family.all))", x: xOffset + 480, y: 110)
+        addItemRight("\(maj.card.getPatternWins(family: Family.winds))", x: xOffset + 460, y: 50)
+        addItemRight("\(maj.card.getPatternWins(family: Family.f369))", x: xOffset + 460, y: 70)
+        addItemRight("\(maj.card.getPatternWins(family: Family.pairs))", x: xOffset + 460, y: 90)
+        addItemRight("\(maj.card.getPatternWins(family: Family.all))", x: xOffset + 460, y: 110)
+        
+        addCheckMark(family: Family.winds, x: xOffset + 460 + 60 + 20, y: 50)
+        addCheckMark(family: Family.f369, x: xOffset + 460 + 60 + 20, y: 70)
+        addCheckMark(family: Family.pairs, x: xOffset + 460 + 60 + 20, y: 90)
+        addCheckMark(family: Family.all, x: xOffset + 460 + 60 + 20, y: 110)
     }
     
     private func addItem(_ text: String, x: Int, y: Int) {
         let label = UILabel(frame: CGRect(x: x, y: y, width: 100, height: 30))
         label.text =  text
         view.addSubview(label)
+    }
+    
+    private func addItemRight(_ text: String, x: Int, y: Int) {
+        let label = UILabel(frame: CGRect(x: x, y: y, width: 60, height: 30))
+        label.text =  text
+        label.textAlignment = .right
+        view.addSubview(label)
+    }
+    
+    private func addCheckMark(family: Int, x: Int, y: Int) {
+        if maj.card.isSectionComplete(family: family) {
+            let label = UILabel(frame: CGRect(x: x, y: y, width: 20, height: 30))
+            label.text =  "\u{2713}"
+            view.addSubview(label)
+        }
     }
     
     
@@ -258,7 +290,7 @@ class HistoryController: NarrowViewController, UITableViewDelegate, UITableViewD
     
     private func addSection(name: String, family: Int) {
         let chapter = HelpChapter(name, xOffset: xOffset, yOffset: 30, width: view.frame.width)
-        for pattern in maj.card.letterPatterns {
+        for pattern in letterPatterns {
             if pattern.family == family {
                 var text = pattern.text.string
                 let start = text.index(text.startIndex, offsetBy: 8);
