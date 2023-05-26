@@ -53,7 +53,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     var start = CGPoint()
     let charlestonOutIndex = 11
     let maxHandIndex = 13
-    var label: UILabel!
+    var stateLabel: UILabel!
+    var wallLabel: UILabel!
     var discardIndex = 14
     var gameButton: UIButton!
     var filterButton: UIButton!
@@ -286,7 +287,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         showRack()
         showDiscard()
         showHand()
-        showLabel()
+        showLabels()
         view.backgroundColor = getBackgroundColor()
         showToolbar()
         showDiscardTable()
@@ -500,7 +501,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             print("todo discard state")
         }
         showHand()
-        showLabel()
+        showLabels()
         showDiscard()
         showDiscardTable()
         showSuggestedHands()
@@ -516,7 +517,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             // discardTableView.showCounts(maj: maj)
             showHand()
             showDiscard()
-            showLabel()
+            showLabels()
             showDiscardTable()
             showSuggestedHands()
             undo = true
@@ -559,12 +560,18 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     
     // -----------------------------------------------------------------------------------------
     //
-    //  State Label
+    //   Labels
     //
     // -----------------------------------------------------------------------------------------
     
-    func showLabel() {
-        label?.removeFromSuperview()
+    func showLabels() {
+        showStateLabel()
+        showWallLabel()
+        showVersionLabel()
+    }
+        
+    func showStateLabel() {
+        stateLabel?.removeFromSuperview()
        
         let width: CGFloat = 120
         let height: CGFloat = 75
@@ -572,15 +579,49 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         let y: CGFloat = hand2Bottom()
         
         let labelFrame = CGRect(x: x, y: y, width: width, height: height)
-        label = UILabel(frame: labelFrame)
-        label.text =  getStateLabel()
-        label.frame = labelFrame
-        label.textAlignment = .right
-        label.font = UIFont(name: "Chalkduster", size: 15)
-        label.numberOfLines = 0
-        view.addSubview(label)
+        stateLabel = UILabel(frame: labelFrame)
+        stateLabel.text =  getStateLabel()
+        stateLabel.frame = labelFrame
+        stateLabel.textAlignment = .right
+        stateLabel.font = UIFont(name: "Chalkduster", size: 15)
+        stateLabel.numberOfLines = 0
+        view.addSubview(stateLabel)
     }
     
+    func showWallLabel() {
+        wallLabel?.removeFromSuperview()
+       
+        let width: CGFloat = 100
+        let height: CGFloat = 30
+        let x = view.frame.width - 200
+        let y: CGFloat = view.frame.height - 40
+        
+        let labelFrame = CGRect(x: x, y: y, width: width, height: height)
+        wallLabel = UILabel(frame: labelFrame)
+        wallLabel.text =  "Wall: \(maj.wall.tiles.count)"
+        wallLabel.frame = labelFrame
+        wallLabel.textAlignment = .right
+        wallLabel.numberOfLines = 0
+        view.addSubview(wallLabel)
+    }
+    
+    func showVersionLabel() {
+        if versionLabel == nil {
+            let width: CGFloat = 250
+            let height: CGFloat = 30
+            let x = discardTableSegmentControl.frame.origin.x + discardTableSegmentControl.frame.width + 10
+            let y: CGFloat = view.frame.height - 40
+            
+            let labelFrame = CGRect(x: x, y: y, width: width, height: height)
+            versionLabel = UILabel(frame: labelFrame)
+            versionLabel.text =  "v \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] ?? "") support@eightbam.com"
+            versionLabel.frame = labelFrame
+            versionLabel.textAlignment = .left
+            versionLabel.numberOfLines = 0
+            view.addSubview(versionLabel)
+        }
+    }
+        
     func getStateLabel() -> String {
         var state = ""
         
@@ -1240,7 +1281,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
                 showRack()
                 showHand()
                 showDiscard()
-                showLabel()
+                showLabels()
                 showSuggestedHands()
                 moved = true
             }
@@ -1278,7 +1319,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         showDiscard()
         showHand()
         showRack()
-        showLabel()
+        showLabels()
         return true
     }
     

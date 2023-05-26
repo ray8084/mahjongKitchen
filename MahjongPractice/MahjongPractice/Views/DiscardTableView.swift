@@ -23,7 +23,7 @@ class DiscardTableView {
     var dotView = [UIView(), UIView(), UIView(), UIView(), UIView(), UIView(), UIView(), UIView(), UIView(), UIView()]
     var bamView = [UIView(), UIView(), UIView(), UIView(), UIView(), UIView(), UIView(), UIView(), UIView(), UIView()]
     var crakView = [UIView(), UIView(), UIView(), UIView(), UIView(), UIView(), UIView(), UIView(), UIView(), UIView()]
-    var wallCountView = UIView()
+    // var wallCountView = UIView()
     
     var isHidden = true
     let red = UIColor.red
@@ -125,7 +125,7 @@ class DiscardTableView {
         let _ = showText(CGFloat(16*gap)+offset, y: rowHeader, text: "S", alignment: .center)
         let _ = showText(CGFloat(17*gap)+offset, y: rowHeader, text: "W", alignment: .center)
         let _ = showText(CGFloat(18*gap)+offset, y: rowHeader, text: "E", alignment: .center)
-        let _ = showText(CGFloat(20*gap)+offset, y: rowHeader, text: "Wall", alignment: .right)
+        // let _ = showText(CGFloat(20*gap)+offset, y: rowHeader, text: "Wall", alignment: .right)
         showCounts(maj: maj)
     }
     
@@ -150,7 +150,7 @@ class DiscardTableView {
         showWinds(maj: maj)
         showJokerCount(maj: maj)
         showFlowerCount(maj: maj)
-        showWallCount(maj: maj)
+        // showWallCount(maj: maj)
     }
     
     private func showWinds(maj: Maj) {
@@ -240,18 +240,18 @@ class DiscardTableView {
         default:
             break
         }
-        showWallCount(maj: maj)
+        // showWallCount(maj: maj)
         let totalCount = maj.wall.tiles.count + maj.discardTable.getCount()
         print(totalCount)
     }
     
-    func showWallCount(maj: Maj) {
-        let wallCount =  maj.wall.tiles.count
-        wallCountView.removeFromSuperview()
-        let v = showText(CGFloat(20*gap)+offset, y: row1(), text: "\(wallCount)", alignment: .right)
-        wallCountView = v
+    //func showWallCount(maj: Maj) {
+    //    let wallCount =  maj.wall.tiles.count
+    //    wallCountView.removeFromSuperview()
+    //    let v = showText(CGFloat(20*gap)+offset, y: row1(), text: "\(wallCount)", alignment: .right)
+    //    wallCountView = v
         
         //print("TotalCount \(wallCount) + \(maj.discardTable.getCount()) = \(wallCount + maj.discardTable.getCount())")
-    }
+    //}
     
 }
