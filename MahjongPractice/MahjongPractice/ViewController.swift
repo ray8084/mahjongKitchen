@@ -971,6 +971,11 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             self.showGame()
         }));
         
+        alert.addAction(UIAlertAction(title: "Light Tiles", style: .default, handler: {(action:UIAlertAction) in
+            self.maj.setDotTileStyle(style: TileStyle.light)
+            self.showGame()
+        }));
+        
         alert.addAction(UIAlertAction(title: "Solid Color Tiles", style: .default, handler: {(action:UIAlertAction) in
             self.maj.setDotTileStyle(style: TileStyle.solid)
             self.showGame()

@@ -116,6 +116,7 @@ class Tile {
         var image = ""
         switch (maj.dotTileStyle) {
         case TileStyle.largeFont: image = Tile.getImageNew(id)
+        case TileStyle.light: image = Tile.getImageLight(id)
         case TileStyle.solid: image = Tile.getImageSolidColor(id)
         default: image = name
         }
@@ -129,6 +130,7 @@ class Tile {
         var image = ""
         switch(maj.dotTileStyle) {
         case TileStyle.largeFont: image = Tile.getImageNew(id)
+        case TileStyle.light: image = Tile.getImageLight(id)
         case TileStyle.solid: image = Tile.getImageSolidColor(id)
         default: image = Tile.getImage(id)
         }
@@ -181,6 +183,51 @@ class Tile {
         }
         return image
     }
+    
+    static func getImageLight(_ id: Int) -> String {
+        var image = ""
+        switch(id) {
+        case 1: image = "1d.png"
+        case 2: image = "2d.png"
+        case 3: image = "3d.png"
+        case 4: image = "4d.png"
+        case 5: image = "5d.png"
+        case 6: image = "6d.png"
+        case 7: image = "7d.png"
+        case 8: image = "8d.png"
+        case 9: image = "9d.png"
+        case 10: image = "0.png"
+        case 11: image = "1b.png"
+        case 12: image = "2b.png"
+        case 13: image = "3b.png"
+        case 14: image = "4b.png"
+        case 15: image = "5b.png"
+        case 16: image = "6b.png"
+        case 17: image = "7b.png"
+        case 18: image = "8b.png"
+        case 19: image = "9b.png"
+        case 20: image = "g.png"
+        case 21: image = "1c.png"
+        case 22: image = "2c.png"
+        case 23: image = "3.png"
+        case 24: image = "4c.png"
+        case 25: image = "5c.png"
+        case 26: image = "6c.png"
+        case 27: image = "7c.png"
+        case 28: image = "8c.png"
+        case 29: image = "9c.png"
+        case 30: image = "r.png"
+        case 31: image = "n.png"
+        case 32: image = "s.png"
+        case 33: image = "w.png"
+        case 34: image = "e.png"
+        case 35: image = "f.png"
+        case 36: image = "j.png"
+        default: image = ""
+        }
+        return image
+    }
+    
     
     static func getImageSolidColor(_ id: Int) -> String {
         var image = ""
