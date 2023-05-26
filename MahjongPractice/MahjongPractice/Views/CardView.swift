@@ -158,6 +158,10 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         } else {
             col3?.text = maj.card.matchCountText(index).string
         }
+        
+        // column 4 wins
+        let col4 = getLabel(cell, x: col1Width() + col2Width() + col3Width() + 5, width: col4Width(), tag: 4)
+        col4?.text =  maj.card.winCountText(index).string
            
         let selected = allFiltersAreOn() ? getSelectedPattern(index).selected : maj.card.letterPatterns[index].selected
         if selected {
