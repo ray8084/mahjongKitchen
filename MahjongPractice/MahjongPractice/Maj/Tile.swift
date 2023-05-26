@@ -115,7 +115,7 @@ class Tile {
     func getImage(maj: Maj) -> String {
         var image = ""
         switch (maj.dotTileStyle) {
-        case TileStyle.largeFont: image = Tile.getImageNew(id)
+        case TileStyle.largeFont: image = Tile.getImageLightXL(id)
         case TileStyle.light: image = Tile.getImageLight(id)
         case TileStyle.solid: image = Tile.getImageSolidColor(id)
         default: image = name
@@ -129,7 +129,7 @@ class Tile {
     static func getImage(id: Int, maj: Maj) -> String {
         var image = ""
         switch(maj.dotTileStyle) {
-        case TileStyle.largeFont: image = Tile.getImageNew(id)
+        case TileStyle.largeFont: image = Tile.getImageLightXL(id)
         case TileStyle.light: image = Tile.getImageLight(id)
         case TileStyle.solid: image = Tile.getImageSolidColor(id)
         default: image = Tile.getImage(id)
@@ -228,6 +228,49 @@ class Tile {
         return image
     }
     
+    static func getImageLightXL(_ id: Int) -> String {
+        var image = ""
+        switch(id) {
+        case 1: image = "1d-xl.png"
+        case 2: image = "2d-xl.png"
+        case 3: image = "3d-xl.png"
+        case 4: image = "4d-xl.png"
+        case 5: image = "5d-xl.png"
+        case 6: image = "6d-xl.png"
+        case 7: image = "7d-xl.png"
+        case 8: image = "8d-xl.png"
+        case 9: image = "9d-xl.png"
+        case 10: image = "0-xl.png"
+        case 11: image = "1b-xl.png"
+        case 12: image = "2b-xl.png"
+        case 13: image = "3b-xl.png"
+        case 14: image = "4b-xl.png"
+        case 15: image = "5b-xl.png"
+        case 16: image = "6b-xl.png"
+        case 17: image = "7b-xl.png"
+        case 18: image = "8b-xl.png"
+        case 19: image = "9b-xl.png"
+        case 20: image = "g-xl.png"
+        case 21: image = "1c-xl.png"
+        case 22: image = "2c-xl.png"
+        case 23: image = "3c-xl.png"
+        case 24: image = "4c-xl.png"
+        case 25: image = "5c-xl.png"
+        case 26: image = "6c-xl.png"
+        case 27: image = "7c-xl.png"
+        case 28: image = "8c-xl.png"
+        case 29: image = "9c-xl.png"
+        case 30: image = "r-xl.png"
+        case 31: image = "n-xl.png"
+        case 32: image = "s-xl.png"
+        case 33: image = "w-xl.png"
+        case 34: image = "e-xl.png"
+        case 35: image = "f-xl.png"
+        case 36: image = "j-xl.png"
+        default: image = ""
+        }
+        return image
+    }
     
     static func getImageSolidColor(_ id: Int) -> String {
         var image = ""
