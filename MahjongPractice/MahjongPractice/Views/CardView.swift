@@ -112,7 +112,8 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
             count = 0
         }
         
-        if maj.east.filterOutYears && maj.east.filterOut2468 {
+        if allFiltersAreOn() {
+            count = 0
             for lp in maj.card.letterPatterns {
                 if lp.selected == true {
                     count += 1
