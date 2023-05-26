@@ -47,7 +47,7 @@ class Card2023 : Card {
         p2.add([35,35, 22,10,22,23, 2,2,2,2, 13,13,13,13])
         p2.add([35,35, 22,10,22,23, 12,12,12,12, 3,3,3,3])
         
-        let p3 = add("FFFF DDD 2023 DDD", mask: "0000 ggg rrrr 000", note: "2023 Any Suit, Pungs Any Dragons",  family: Family.year, concealed: false, points: 25)
+        let p3 = add("FFFF DDD 2023 DDD", mask: "0000 ggg rrrr 000", note: "2023 Any Suit, Any Dragons",  family: Family.year, concealed: false, points: 25)
         p3.add([35,35,35,35, 10,10,10, 2,10,2,3, 20,20,20])     // 2 suits
         p3.add([35,35,35,35, 10,10,10, 2,10,2,3, 30,30,30])     // 2 suits
         p3.add([35,35,35,35, 20,20,20, 2,10,2,3, 30,30,30])     // 3 suits
@@ -58,7 +58,7 @@ class Card2023 : Card {
         p3.add([35,35,35,35, 30,30,30, 22,10,22,23, 10,10,10])  // 2 suits
         p3.add([35,35,35,35, 10,10,10, 22,10,22,23, 20,20,20])  // 3 suits
 
-        let p4 = add("22 000 NEWS 222 33 (C)", mask: "gg 000 0000 rrr rr", note: "Any 2 Suits - Pair of 2s May Be In Any Suit",  family: Family.year, concealed: true, points: 30)
+        let p4 = add("22 000 NEWS 222 33 (C)", mask: "gg 000 0000 rrr rr", note: "Any 2 Suits",  family: Family.year, concealed: true, points: 30)
         p4.add([2,2, 10,10,10, 31,34,33,32, 12,12,12, 13,13])
         p4.add([2,2, 10,10,10, 31,34,33,32, 22,22,22, 23,23])
         p4.add([12,12, 10,10,10, 31,34,33,32, 2,2,2, 3,3])
@@ -71,7 +71,7 @@ class Card2023 : Card {
         let p1 = add("FFFF 2222 46 8888", mask: "0000 0000 00 0000", note: "Any 1 Suit",  family: Family.f2468, concealed: false, points: 25)
         p1.generateList()
         
-        let p2 = add("22 46 88 2222 2222", mask: "gg gg gg rrrr 0000", note: "Any 3 Suits, Kongs Any Like Even No",  family: Family.f2468, concealed: false, points: 25)
+        let p2 = add("22 46 88 2222 2222", mask: "gg gg gg rrrr 0000", note: "Kongs Any Like Even No",  family: Family.f2468, concealed: false, points: 25)
         p2.add([2,2, 4,6, 8,8, 12,12,12,12, 22,22,22,22])
         p2.add([2,2, 4,6, 8,8, 14,14,14,14, 24,24,24,24])
         p2.add([2,2, 4,6, 8,8, 16,16,16,16, 26,26,26,26])
@@ -99,7 +99,7 @@ class Card2023 : Card {
         p6.add([12,12,12, 18,18,18, 10,10,10,10, 30,30,30,30])
         p6.add([22,22,22, 28,28,28, 10,10,10,10, 20,20,20,20])
         
-        let p7 = add("FF 222 44 66 888 DD (C)", mask: "00 000 00 00 000 00", note: "Any 1 Suit with Matching Dragons",  family: Family.f2468, concealed: true, points: 30)
+        let p7 = add("FF 222 44 66 888 DD (C)", mask: "00 000 00 00 000 00", note: "Any 1 Suit, Matching Dragons",  family: Family.f2468, concealed: true, points: 30)
         p7.generateList()
     }
     
@@ -138,7 +138,7 @@ class Card2023 : Card {
     }
     
     func addQuints() {
-        let p1 = add("11111 NNNN 11111", mask: "ggggg 0000 rrrrr", note: "Any 2 Suits, Any Like Nos, Any Wind",  family: Family.quints, concealed: false, points: 45)
+        let p1 = add("11111 NNNN 11111", mask: "ggggg 0000 rrrrr", note: "2 Suits, Like Nos, Any Wind",  family: Family.quints, concealed: false, points: 45)
         for w in 31...34 {
             for i in 1...9 {
                 let d = i
@@ -183,7 +183,7 @@ class Card2023 : Card {
         
         add1234_3434_2()
         
-        let p5 = add("FF 1111 2222 DDDD", mask: "00 0000 0000 0000", note: "Any 1 Suit, Any Run, Matching Dragons",  family: Family.run, concealed: false, points: 25)
+        let p5 = add("FF 1111 2222 DDDD", mask: "00 0000 0000 0000", note: "Any Run, Matching Dragons",  family: Family.run, concealed: false, points: 25)
         for i in 1...8 {
             let d = i
             let b = i+10
@@ -229,7 +229,7 @@ class Card2023 : Card {
             p10.add([35,35,35,35, c,c, c+1,c+1, d+2,d+2,d+2, b+2,b+2,b+2])
         }
 
-        let p11 = add("FF 111 22 33 444 DD (C)", mask: "00 000 00 00 000 00", note: "Any 1 Suit, Any Run, Matching Dragons",  family: Family.run, concealed: true, points: 30)
+        let p11 = add("FF 111 22 33 444 DD (C)", mask: "00 000 00 00 000 00", note: "Any Run, Matching Dragons",  family: Family.run, concealed: true, points: 30)
         for i in 1...6 {
             let d = i
             let b = i+10
@@ -374,7 +374,7 @@ class Card2023 : Card {
         p6.add([13, 16,16, 19,19,19, 9,9,9,9, 29,29,29,29])
         p6.add([23, 26,26, 29,29,29, 9,9,9,9, 19,19,19,19])
         
-        let p7 = add("3333 666 9999 DDD", mask: "gggg rrr gggg rrr", note: "Any 2 Suits, 6s and Dragons Match",  family: Family.f369, concealed: false, points: 25)
+        let p7 = add("3333 666 9999 DDD", mask: "gggg rrr gggg rrr", note: "Any 2 Suits",  family: Family.f369, concealed: false, points: 25)
         p7.generateList()
         
         let p8 = add("333 6 999 333 6 999 (C)", mask: "ggg g ggg rrr r rrr", note: "Any 2 Suits",  family: Family.f369, concealed: true, points: 30)
