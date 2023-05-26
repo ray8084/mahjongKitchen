@@ -812,9 +812,9 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             suggestedHand2?.removeFromSuperview()
             suggestedHandAlt?.removeFromSuperview()
             let selectedPatterns = maj.getSelectedPatterns()
+            let width = view.frame.width - 250
             
             if selectedPatterns.count > 0 {
-                let width: CGFloat = 500
                 let height: CGFloat = 25
                 let x = cardMarginX()
                 let y: CGFloat = tableLocation()
@@ -822,9 +822,9 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
                 suggestedHand1 = UILabel(frame: labelFrame)
                 let text1 = NSMutableAttributedString(string: "")
                 selectedPatterns[0].match(allTiles(), ignoreFilters: true)
-                text1.append(NSMutableAttributedString(string: "\(selectedPatterns[0].matchCount)  -  "))
+                text1.append(NSMutableAttributedString(string: "\(selectedPatterns[0].matchCount)     "))
                 text1.append(selectedPatterns[0].getDarkModeString())
-                text1.append(NSMutableAttributedString(string: "  "))
+                text1.append(NSMutableAttributedString(string: "     "))
                 text1.append(selectedPatterns[0].note)
                 suggestedHand1.attributedText = text1
                 suggestedHand1.frame = labelFrame
@@ -834,7 +834,6 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             }
             
             if selectedPatterns.count > 1 {
-                let width: CGFloat = 500
                 let height: CGFloat = 25
                 let x = cardMarginX()
                 let y: CGFloat = tableLocation() + 25
@@ -842,9 +841,9 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
                 suggestedHand2 = UILabel(frame: labelFrame)
                 let text2 = NSMutableAttributedString(string: "")
                 selectedPatterns[1].match(allTiles(), ignoreFilters: true)
-                text2.append(NSMutableAttributedString(string: "\(selectedPatterns[1].matchCount)  -  "))
+                text2.append(NSMutableAttributedString(string: "\(selectedPatterns[1].matchCount)     "))
                 text2.append(selectedPatterns[1].getDarkModeString())
-                text2.append(NSMutableAttributedString(string: "  "))
+                text2.append(NSMutableAttributedString(string: "     "))
                 text2.append(selectedPatterns[1].note)
                 suggestedHand2.attributedText = text2
                 suggestedHand2.frame = labelFrame
@@ -854,7 +853,6 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             }
             
             if selectedPatterns.count > 2 {
-                let width: CGFloat = 500
                 let height: CGFloat = 25
                 let x = cardMarginX()
                 let y: CGFloat = tableLocation() + 50
@@ -862,9 +860,9 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
                 suggestedHandAlt = UILabel(frame: labelFrame)
                 let text3 = NSMutableAttributedString(string: "")
                 selectedPatterns[2].match(allTiles(), ignoreFilters: true)
-                text3.append(NSMutableAttributedString(string: "\(selectedPatterns[2].matchCount)  -  "))
+                text3.append(NSMutableAttributedString(string: "\(selectedPatterns[2].matchCount)     "))
                 text3.append(selectedPatterns[2].getDarkModeString())
-                text3.append(NSMutableAttributedString(string: "  "))
+                text3.append(NSMutableAttributedString(string: "     "))
                 text3.append(selectedPatterns[2].note)
                 suggestedHandAlt.attributedText = text3
                 suggestedHandAlt.frame = labelFrame
@@ -874,12 +872,11 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             }
             
             if selectedPatterns.count == 0 {
-                let width: CGFloat = 400
                 let height: CGFloat = 60
                 let x = cardMarginX()
                 let y: CGFloat = tableLocation()
                 
-                let labelFrame = CGRect(x: x, y: y, width: width, height: height)
+                let labelFrame = CGRect(x: x, y: y, width: width - 100, height: height)
                 suggestedHand1 = UILabel(frame: labelFrame)
                 suggestedHand1.font = UIFont(name: "Chalkduster", size: 16)!
                 suggestedHand1.text = "Use the toolbar to the right to select hands to see here"
