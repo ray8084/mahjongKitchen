@@ -117,6 +117,7 @@ class Tile {
         switch (maj.dotTileStyle) {
         case TileStyle.largeFont: image = Tile.getImageLightXL(id)
         case TileStyle.light: image = Tile.getImageLight(id)
+        case TileStyle.dark: image = Tile.getImageDarkXL(id)
         case TileStyle.solid: image = Tile.getImageSolidColor(id)
         default: image = name
         }
@@ -131,6 +132,7 @@ class Tile {
         switch(maj.dotTileStyle) {
         case TileStyle.largeFont: image = Tile.getImageLightXL(id)
         case TileStyle.light: image = Tile.getImageLight(id)
+        case TileStyle.dark: image = Tile.getImageDarkXL(id)
         case TileStyle.solid: image = Tile.getImageSolidColor(id)
         default: image = Tile.getImage(id)
         }
@@ -267,6 +269,50 @@ class Tile {
         case 34: image = "e-xl.png"
         case 35: image = "f-xl.png"
         case 36: image = "j-xl.png"
+        default: image = ""
+        }
+        return image
+    }
+    
+    static func getImageDarkXL(_ id: Int) -> String {
+        var image = ""
+        switch(id) {
+        case 1: image = "1d-xl-dark.png"
+        case 2: image = "2d-xl-dark.png"
+        case 3: image = "3d-xl-dark.png"
+        case 4: image = "4d-xl-dark.png"
+        case 5: image = "5d-xl-dark.png"
+        case 6: image = "6d-xl-dark.png"
+        case 7: image = "7d-xl-dark.png"
+        case 8: image = "8d-xl-dark.png"
+        case 9: image = "9d-xl-dark.png"
+        case 10: image = "0-xl-dark.png"
+        case 11: image = "1b-xl-dark.png"
+        case 12: image = "2b-xl-dark.png"
+        case 13: image = "3b-xl-dark.png"
+        case 14: image = "4b-xl-dark.png"
+        case 15: image = "5b-xl-dark.png"
+        case 16: image = "6b-xl-dark.png"
+        case 17: image = "7b-xl-dark.png"
+        case 18: image = "8b-xl-dark.png"
+        case 19: image = "9b-xl-dark.png"
+        case 20: image = "g-xl-dark.png"
+        case 21: image = "1c-xl-dark.png"
+        case 22: image = "2c-xl-dark.png"
+        case 23: image = "3c-xl-dark.png"
+        case 24: image = "4c-xl-dark.png"
+        case 25: image = "5c-xl-dark.png"
+        case 26: image = "6c-xl-dark.png"
+        case 27: image = "7c-xl-dark.png"
+        case 28: image = "8c-xl-dark.png"
+        case 29: image = "9c-xl-dark.png"
+        case 30: image = "r-xl-dark.png"
+        case 31: image = "n-xl-dark.png"
+        case 32: image = "s-xl-dark.png"
+        case 33: image = "w-xl-dark.png"
+        case 34: image = "e-xl-dark.png"
+        case 35: image = "f-xl-dark.png"
+        case 36: image = "j-xl-dark.png"
         default: image = ""
         }
         return image

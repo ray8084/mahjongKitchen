@@ -41,7 +41,8 @@ class TileStyle {
     static let classic = 0
     static let light = 1
     static let largeFont = 2
-    static let solid = 3
+    static let dark = 3
+    static let solid = 4
 }
 
 class SortStyle {

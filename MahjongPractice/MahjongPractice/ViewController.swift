@@ -976,8 +976,13 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             self.showGame()
         }));
         
-        alert.addAction(UIAlertAction(title: "Larg Font Tiles", style: .default, handler: {(action:UIAlertAction) in
+        alert.addAction(UIAlertAction(title: "Large Font Tiles", style: .default, handler: {(action:UIAlertAction) in
             self.maj.setDotTileStyle(style: TileStyle.largeFont)
+            self.showGame()
+        }));
+        
+        alert.addAction(UIAlertAction(title: "Dark Tiles", style: .default, handler: {(action:UIAlertAction) in
+            self.maj.setDotTileStyle(style: TileStyle.dark)
             self.showGame()
         }));
         
