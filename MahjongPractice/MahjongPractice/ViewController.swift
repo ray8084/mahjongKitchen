@@ -69,6 +69,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     let handRow2 = 3
     let discardRow = 4
     var firstMahjong = false
+    var secondMahjong = false
     var firstMahjongRack1 = false
     var firstMahjongRack2 = false
     var firstMahjongHand1 = false
@@ -673,6 +674,33 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
          
     }
     
+    func declareMahjong() {
+        if firstMahjong == false {
+            if isDeclareFirstMahjong(hand: maj.east) {
+                firstMahjong = true
+                firstMahjongHand1 = true
+            } else if isDeclareFirstMahjong(hand: maj.south) {
+                firstMahjong = true
+                firstMahjongHand2 = true
+            }
+        } else {
+            if firstMahjongHand1 == false {
+                checkSecondMahjong(hand: maj.east)
+            }
+            if firstMahjongHand2 == false {
+               checkSecondMahjong(hand: maj.south)
+            }
+        }
+        
+        if firstMahjong == false && secondMahjong == false {
+            let message = "Move each hand into its own row."
+            let alert = UIAlertController(title: "Hand not recognized", message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
+            }));
+            present(alert, animated: true, completion: nil)
+        }
+    }
+    
     func isFirstMahjong(hand: Hand) -> Bool {
         var mahj = false
         let highest = maj.card.getClosestPattern(tiles: hand.tiles)
@@ -684,9 +712,21 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         return mahj
     }
     
+    func isDeclareFirstMahjong(hand: Hand) -> Bool {
+        var mahj = false
+        let highest = maj.card.getClosestPattern(tiles: hand.tiles)
+        if highest.matchCount == 14 {
+            maj.card.saveFirstWin(pattern: highest)
+            showDeclareFirstMahjong(pattern: highest)
+            mahj = true
+        }
+        return mahj
+    }
+        
     func checkSecondMahjong(hand: Hand) {
         let highest = maj.card.getClosestPattern(tiles: hand.tiles)
         if highest.matchCount == 14 {
+            secondMahjong = true
             maj.card.saveSecondWin(pattern: highest)
             showSecondMahjong(pattern: highest)
         }
@@ -698,6 +738,23 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         let alert = UIAlertController(title: "First Mahjong!", message: message, preferredStyle: .alert)
                 
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
+        }));
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func showDeclareFirstMahjong(pattern: LetterPattern) {
+        let message = pattern.text.string + " " + pattern.note.string
+        
+        let alert = UIAlertController(title: "First Mahjong!", message: message, preferredStyle: .alert)
+                
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
+            if self.firstMahjongHand1 == false {
+                self.checkSecondMahjong(hand: self.maj.east)
+            }
+            if self.firstMahjongHand2 == false {
+                self.checkSecondMahjong(hand: self.maj.south)
+            }
         }));
         
         present(alert, animated: true, completion: nil)
@@ -879,7 +936,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
                 let labelFrame = CGRect(x: x, y: y, width: width - 100, height: height)
                 suggestedHand1 = UILabel(frame: labelFrame)
                 suggestedHand1.font = UIFont(name: "Chalkduster", size: 16)!
-                suggestedHand1.text = "Use the toolbar to the right to select hands to see here"
+                suggestedHand1.text = "Use the toolbar to the right to select hands to see here, or use your card."
                 suggestedHand1.frame = labelFrame
                 suggestedHand1.textAlignment = .left
                 suggestedHand1.numberOfLines = 2
@@ -893,7 +950,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         suggestedHand2?.removeFromSuperview()
         suggestedHandAlt?.removeFromSuperview()
     }
-    
+        
     
     // -----------------------------------------------------------------------------------------
     //
@@ -956,7 +1013,11 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             let history = HistoryController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self)
             self.show(history, sender: self)
         }));
-                
+        
+        alert.addAction(UIAlertAction(title: "Declare Mahjong", style: .default, handler: {(action:UIAlertAction) in
+            self.declareMahjong()
+        }));
+                        
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action:UIAlertAction) in
         }));
         
