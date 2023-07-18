@@ -464,9 +464,9 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     
     func checkDiscard(end: CGPoint) -> Bool {
         let endIndex = getTileIndex(end)
-        if endIndex > 13 {
+        if endIndex >= 14 {
             return discard()
-        } else if endIndex < 13 {
+        } else if endIndex < 14 {
             return undoDiscard()
         }
         return false
