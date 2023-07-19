@@ -518,8 +518,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1426"
             endingLineNumber = "1426"
-            landmarkName = "tileHeight()"
-            landmarkType = "7">
+            landmarkName = "ViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -646,8 +646,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "763"
             endingLineNumber = "763"
-            landmarkName = "ViewController"
-            landmarkType = "3">
+            landmarkName = "showSecondMahjong(pattern:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -662,8 +662,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "762"
             endingLineNumber = "762"
-            landmarkName = "showDeclareFirstMahjong(pattern:)"
-            landmarkType = "7">
+            landmarkName = "ViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -710,8 +710,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1489"
             endingLineNumber = "1489"
-            landmarkName = "ViewController"
-            landmarkType = "3">
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
