@@ -20,7 +20,8 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var lp: UILongPressGestureRecognizer! = nil
     let cellHeight: CGFloat = 20.0
     var root: UIViewController!
-    var maxRows = 5
+    var maxRows = 3
+    var maxRowsAll = 5
     var isHidden = true
     let darkBamboo:UIColor = UIColor(red: 114/255, green: 123/255, blue: 102/255, alpha: 1.0)
     var cardViewDelegate: CardViewDelegate!
@@ -31,7 +32,7 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if location != y {
             location = y
             var cardHeight = height
-            let maxHeight = CGFloat(maxRows) * cellHeight
+            let maxHeight = CGFloat(maxRowsAll) * cellHeight
             if cardHeight > maxHeight {
                 cardHeight = maxHeight
             }
@@ -105,9 +106,12 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 count+=1
             }
         }
-        if count > maxRows {
+        if allFiltersAreOff() {
+            count = maxRowsAll
+        } else if count > maxRows {
             count = maxRows
         }
+
         if maj.isGameOver() {
             count = 0
         }
@@ -177,6 +181,10 @@ class CardView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
     func allFiltersAreOn() -> Bool {
         return maj.east.filterOutYears && maj.east.filterOut2468 && maj.east.filterOutLikeNumbers && maj.east.filterOutAdditionHands && maj.east.filterOutQuints && maj.east.filterOutRuns && maj.east.filterOut13579 && maj.east.filterOutWinds && maj.east.filterOut369 && maj.east.filterOutPairs
+    }
+    
+    func allFiltersAreOff() -> Bool {
+        return !maj.east.filterOutYears && !maj.east.filterOut2468 && !maj.east.filterOutLikeNumbers && !maj.east.filterOutAdditionHands && !maj.east.filterOutQuints && !maj.east.filterOutRuns && !maj.east.filterOut13579 && !maj.east.filterOutWinds && !maj.east.filterOut369 && !maj.east.filterOutPairs
     }
     
     func getSelectedPattern(_ index: Int) -> LetterPattern {

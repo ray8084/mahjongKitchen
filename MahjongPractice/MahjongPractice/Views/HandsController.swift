@@ -50,9 +50,9 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         cardView.cardView.selectRow(at: IndexPath(row: 0, section: 0), animated: false, scrollPosition: .bottom)
         
         y = y + 100
-        let frame = CGRect(x: x, y: y, width: 600, height: 50)
+        let frame = CGRect(x: x, y: y, width: 600, height: 75)
         let note = UILabel(frame: frame)
-        note.text =  "Select up to 3 hands to see under your tiles while you are playing."
+        note.text =  "Select up to 3 hands to see under your tiles while you are playing. Only the top 3 matching hands are shown in the individual sections. Use your mahjong card to see other hands."
         note.frame = frame
         note.textAlignment = .left
         note.font = UIFont(name: "Chalkduster", size: 15)
