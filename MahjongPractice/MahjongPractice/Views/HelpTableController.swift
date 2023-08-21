@@ -53,17 +53,10 @@ class HelpTableController: NarrowViewController, UITableViewDelegate, UITableVie
             table.frame = CGRect(x: CGFloat(xOffset) - 20, y: CGFloat(yOffset), width: CGFloat(width), height: height)
         } else {
             table.backgroundColor = .white
-            let width = maxWidth + 160
-            let narrow = parentWidth - width
-             if narrow >= 20 {
-                table.frame = CGRect(x:narrow/2, y:10, width:parentWidth - narrow, height: parentHeight - 20)
-                table.layer.cornerRadius = 10
-                setBackgroundImage()
-            } else {
-                let height = view.frame.height
-                let width = view.frame.width
-                table.frame = CGRect(x: 0, y: 20, width: width, height: height)
-            }
+            let height = view.frame.height
+            let width = view.frame.width - 80
+            table.frame = CGRect(x: 40, y: 20, width: width, height: height)
+            table.layer.cornerRadius = 10
         }
         table.delegate = self
         table.dataSource = self
