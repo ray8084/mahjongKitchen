@@ -29,6 +29,9 @@ class HelpTableController: NarrowViewController, UITableViewDelegate, UITableVie
         addPassing()
         addCalling()
         addWinning()
+        addHands()
+        addHistory()
+        addTips()
         addEndCap()
     }
     
@@ -176,7 +179,7 @@ class HelpTableController: NarrowViewController, UITableViewDelegate, UITableVie
     
     private func addIntro() {
         let intro = HelpChapter("Two Handed American Mahjong Practice", xOffset: xOffset, yOffset: 30, width: view.frame.width)
-        intro.addLabel("Advanced practice for experienced players. You must know the rules of 2 handed mahjong before playing. Rules are not enforced. If you are a beginning player you should start with the American Mahjong Practice app.\n\nContact support@eightbam.com for help.")
+        intro.addLabel("Advanced practice for experienced players. Play two hands of Mahjong at the same time. No Charleston. Move tiles between hands. Rules are not enforced. If you are a beginning player you should start with the American Mahjong Practice app.\n\nContact support@eightbam.com for help.")
         intro.expand()
         chapters.append(intro)
     }
@@ -259,13 +262,54 @@ class HelpTableController: NarrowViewController, UITableViewDelegate, UITableVie
     
     private func addWinning() {
         let chapter = HelpChapter("Winning", xOffset: xOffset, width: view.frame.width)
-        chapter.addLabel("Expose winning hands on the rows above your hand.")
+        chapter.addLabel("Expose winning hands on the two rows above your two hands.")
         chapter.addScreenShot("doublesmaj1.png")
         chapter.addScreenShot("doublesmaj2.png")
         
         chapters.append(chapter)
     }
     
+    
+    // -----------------------------------------------------------------------------------------
+    //
+    //  Hands
+    //
+    // -----------------------------------------------------------------------------------------
+    
+    private func addHands() {
+        let hands = HelpChapter("Hands", xOffset: xOffset, width: view.frame.width)
+        hands.addLabel("Use your 2023 mahjong card to select hands to play, or use the Hands option on the toolbar to the right.")
+        hands.addLabel("With the Hands option you can see how many tiles from your 2 hands together match hands on the mahjong card. The Hands features does not account for overlapping tiles between hands, that's your challenge. Select up to 3 hands to see below your tiles. The entire 2023 card is not shown at once, only the highesst matching hands. This feature works best for the first hand.")
+        chapters.append(hands)
+    }
+    
+    
+    // -----------------------------------------------------------------------------------------
+    //
+    //  History
+    //
+    // -----------------------------------------------------------------------------------------
+    
+    private func addHistory() {
+        let history = HelpChapter("History", xOffset: xOffset, width: view.frame.width)
+        history.addLabel("There is a great history feature from the Game button on the toolbar. See your progress completing the card.")
+        chapters.append(history)
+    }
+    
+    
+    // -----------------------------------------------------------------------------------------
+    //
+    //  Tips
+    //
+    // -----------------------------------------------------------------------------------------
+    
+    private func addTips() {
+        let tips = HelpChapter("Tips", xOffset: xOffset, width: view.frame.width)
+        tips.addLabel("Because there is no rule enforcement you can organize your tiles among 3 or 4 rows. When you are ready to call tiles consolidate to 2 or 3 rows.")
+        tips.addLabel("Or follow the live game rules if you prefer to play that way.")
+        chapters.append(tips)
+    }
+       
     
     // -----------------------------------------------------------------------------------------
     //

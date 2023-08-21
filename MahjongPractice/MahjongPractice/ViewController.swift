@@ -318,6 +318,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         discardTableView.hide()
         maj.card.clearRackFilter()
         showGame()
+        showSuggestedHands()
     }
     
     
@@ -332,6 +333,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         newDeal = true
         resetMaj()
         showGame()
+        showSuggestedHands()
     }
     
     func resetMaj() {
@@ -1014,9 +1016,9 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             self.show(history, sender: self)
         }));
         
-        alert.addAction(UIAlertAction(title: "Declare Mahjong", style: .default, handler: {(action:UIAlertAction) in
-            self.declareMahjong()
-        }));
+        //alert.addAction(UIAlertAction(title: "Declare Mahjong", style: .default, handler: {(action:UIAlertAction) in
+        //    self.declareMahjong()
+        //}));
                         
         alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: {(action:UIAlertAction) in
         }));
