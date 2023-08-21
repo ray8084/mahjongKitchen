@@ -145,6 +145,13 @@ class HandsController: NarrowViewController, CardViewDelegate  {
         filterSegmentControl.selectedSegmentIndex = 10
         filterSegmentControl.frame = CGRect(x: offset, y: Int(tileHeight() * 2) + 40, width: Int(view.frame.width - 100), height: Int(filterSegmentControl.frame.height))
         filterSegmentControl.addTarget(self, action: #selector(changeFilter), for: .valueChanged)
+        
+        if #available(iOS 13.0, *) {
+        } else {
+            filterSegmentControl.tintColor = UIColor.black
+            filterSegmentControl.alpha = 0.9
+        }
+        
         view.addSubview(filterSegmentControl)
     }
     

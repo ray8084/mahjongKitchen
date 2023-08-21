@@ -796,6 +796,13 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             discardTableSegmentControl.selectedSegmentIndex = 1
             discardTableSegmentControl.frame = CGRect(x: cardMarginX(), y: view.frame.height - 40 , width: 130, height: 30)
             discardTableSegmentControl.addTarget(self, action: #selector(changeDiscardTableSegmentControl), for: .valueChanged)
+            
+            if #available(iOS 13.0, *) {
+            } else {
+                discardTableSegmentControl.tintColor = UIColor.black
+                discardTableSegmentControl.alpha = 0.7
+            }
+            
             view.addSubview(discardTableSegmentControl)
         }
     }

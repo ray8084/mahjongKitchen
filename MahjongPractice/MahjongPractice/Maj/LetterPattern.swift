@@ -274,7 +274,7 @@ class LetterPattern {
     func getDarkModeString() -> NSMutableAttributedString {
         let red = [NSAttributedString.Key.foregroundColor: UIColor.red]
         let green = [NSAttributedString.Key.foregroundColor: UIColor(red: 0.0, green: 0.5, blue: 0.0, alpha: 1.0)  ]
-        var color = [NSAttributedString.Key.foregroundColor: UIColor.gray]
+        var color = [NSAttributedString.Key.foregroundColor: UIColor.black]
         if #available(iOS 13.0, *) { color = [NSAttributedString.Key.foregroundColor: UIColor.label] }
         let darkModeString = NSMutableAttributedString(string: text.string)
         var index = 0

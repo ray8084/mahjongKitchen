@@ -292,7 +292,7 @@ class HelpTableController: NarrowViewController, UITableViewDelegate, UITableVie
     
     private func addHistory() {
         let history = HelpChapter("History", xOffset: xOffset, width: view.frame.width)
-        history.addLabel("There is a great history feature from the Game button on the toolbar. See your progress completing the card.")
+        history.addLabel("See your progress completing the card with the History page on the Game menu.")
         chapters.append(history)
     }
     

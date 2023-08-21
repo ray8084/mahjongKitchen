@@ -77,7 +77,7 @@ class DiscardTableView {
         if #available(iOS 13.0, *) {
             return showTextColor(x, y:y, text: text, alignment: alignment, color: UIColor.label)
         } else {
-            return showTextColor(x, y:y, text: text, alignment: alignment, color: UIColor.gray)
+            return showTextColor(x, y:y, text: text, alignment: alignment, color: UIColor.black)
         }
     }
     
