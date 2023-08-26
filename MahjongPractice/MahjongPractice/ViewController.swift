@@ -111,6 +111,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             redeal()
             viewDidAppear = true
             // buildIcon()
+            showExperiencedPlayerAlert()
         }
     }
     
@@ -154,7 +155,25 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     //
     // -----------------------------------------------------------------------------------------
     
+    func showExperiencedPlayerAlert() {
+        if maj.hideIntroduction == false {
+            let message = "Experienced players only, please.\n\nRules are not enforced."
+            let alert = UIAlertController(title: message, message: "", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Accept", style: .default, handler: {(action:UIAlertAction) in
+                self.showUseYourCardAlert()
+            }));
+            present(alert, animated: true, completion: nil)
+        }
+    }
     
+    func showUseYourCardAlert() {
+        let message = "Use your card or enable Suggested Hands in Settings."
+        let alert = UIAlertController(title: message, message: "", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
+            self.maj.setHideIntroduction()
+        }));
+        present(alert, animated: true, completion: nil)
+    }
     
     
     // -----------------------------------------------------------------------------------------

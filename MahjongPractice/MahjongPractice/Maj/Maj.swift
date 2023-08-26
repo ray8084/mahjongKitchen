@@ -119,6 +119,7 @@ class Maj {
     var dotTileStyle = TileStyle.classic
     var bamTileStyle = TileStyle.classic
     var alternateRedDragon = false
+    var hideIntroduction = false
     
     
     // --------------------------------------------------------------
@@ -179,6 +180,7 @@ class Maj {
         disableAutomaj = copy.disableAutomaj
         specialCase2022Rack = copy.specialCase2022Rack
         cardSettings = copy.cardSettings
+        hideIntroduction = copy.hideIntroduction
      }
     
   
@@ -249,6 +251,8 @@ class Maj {
         techSupportDebug = defaults.bool(forKey: "techSupportDebug")
         hideSortMessage = defaults.bool(forKey: "hideSortMessage")
         disableAutomaj = defaults.bool(forKey: "disableAutomaj")
+        hideIntroduction = defaults.bool(forKey: "hideIntroduction")
+        print("hideIntroduction \(hideIntroduction)")
     }
     
     func loadPatterns(_ letterPatterns: [LetterPattern]) {
@@ -512,6 +516,11 @@ class Maj {
     func setTechSupportDebug(_ enable: Bool) {
         techSupportDebug = enable
         defaults.set(techSupportDebug, forKey: "techSupportDebug")
+    }
+    
+    func setHideIntroduction() {
+        hideIntroduction = true
+        defaults.set(hideIntroduction, forKey: "hideIntroduction")
     }
     
     
