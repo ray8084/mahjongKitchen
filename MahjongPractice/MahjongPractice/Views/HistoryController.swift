@@ -31,7 +31,7 @@ class HistoryController: NarrowViewController, UITableViewDelegate, UITableViewD
         narrowView()
         xOffset = (Int(view.frame.width) - maxWidth) / 2
         addSummary()
-        addChapters()
+        // addChapters()
         addTableView()
         addCloseButton()
     }
