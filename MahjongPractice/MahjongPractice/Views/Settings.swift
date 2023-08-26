@@ -8,11 +8,12 @@
 import UIKit
 
 protocol SettingsDelegate {
-    func updateViews()
+    func showGame()
 }
 
 class SettingsController: NarrowViewController  {
     private var maj: Maj!
+    private var settingsDelegate: SettingsDelegate!
     var tileImages: [UIImageView] = []
         
     // -----------------------------------------------------------------------------------------
@@ -21,8 +22,9 @@ class SettingsController: NarrowViewController  {
     //
     // -----------------------------------------------------------------------------------------
     
-    init(maj: Maj, frame: CGRect, narrowViewDelegate: NarrowViewDelegate, backgroundColor: UIColor) {
+    init(maj: Maj, frame: CGRect, narrowViewDelegate: NarrowViewDelegate, settingsDelegate: SettingsDelegate, backgroundColor: UIColor) {
         self.maj = maj
+        self.settingsDelegate = settingsDelegate
         super.init(frame: frame, narrowViewDelegate: narrowViewDelegate)
         view.backgroundColor = backgroundColor
     }
@@ -149,8 +151,7 @@ class SettingsController: NarrowViewController  {
             case 4: maj.setDotTileStyle(style: TileStyle.solid)
             default: break
         }
-        //settingsDelegate.changeTileImages()
-        //settingsDelegate.updateViews()
+        settingsDelegate.showGame()
         updateTileImages()
     }
     

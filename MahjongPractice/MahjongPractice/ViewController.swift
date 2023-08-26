@@ -9,7 +9,7 @@ import UIKit
 
 enum ErrorId: Int { case swapInHand = 8001, toCharlestonOut, swapInRack, toRack, toDiscard, charlestonToHand, rackToDiscard }
 
-class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDelegate  {
+class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDelegate, SettingsDelegate  {
     
     var backgroundImageView: UIImageView!
     var viewDidAppear = false
@@ -261,7 +261,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     @objc func settingsButtonAction(sender: UIButton!) {
         //showSettingsMenu()
         
-        let settings = SettingsController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self, backgroundColor: self.getBackgroundColor())
+        let settings = SettingsController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self, settingsDelegate: self, backgroundColor: self.getBackgroundColor())
         self.show(settings, sender: self)
     }
     
