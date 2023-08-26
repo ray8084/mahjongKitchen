@@ -346,8 +346,8 @@
             filePath = "MahjongPractice/Maj/Maj.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "754"
-            endingLineNumber = "754"
+            startingLineNumber = "771"
+            endingLineNumber = "771"
             landmarkName = "nextState()"
             landmarkType = "7">
          </BreakpointContent>
@@ -362,8 +362,8 @@
             filePath = "MahjongPractice/Maj/Maj.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "759"
-            endingLineNumber = "759"
+            startingLineNumber = "776"
+            endingLineNumber = "776"
             landmarkName = "nextState()"
             landmarkType = "7">
          </BreakpointContent>
@@ -378,8 +378,8 @@
             filePath = "MahjongPractice/Maj/Maj.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "748"
-            endingLineNumber = "748"
+            startingLineNumber = "765"
+            endingLineNumber = "765"
             landmarkName = "nextState()"
             landmarkType = "7">
          </BreakpointContent>
@@ -410,8 +410,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1168"
             endingLineNumber = "1168"
-            landmarkName = "ViewController"
-            landmarkType = "3">
+            landmarkName = "addBlanks(tileView:col:row:count:addGestures:color:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -502,8 +502,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1447"
             endingLineNumber = "1447"
-            landmarkName = "isNarrow()"
-            landmarkType = "7">
+            landmarkName = "ViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -518,8 +518,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1438"
             endingLineNumber = "1438"
-            landmarkName = "notch()"
-            landmarkType = "7">
+            landmarkName = "ViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -662,8 +662,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "767"
             endingLineNumber = "767"
-            landmarkName = "showSecondMahjong(pattern:)"
-            landmarkType = "7">
+            landmarkName = "ViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -996,8 +996,8 @@
             filePath = "MahjongPractice/Maj/Maj.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1100"
-            endingLineNumber = "1100"
+            startingLineNumber = "1117"
+            endingLineNumber = "1117"
             landmarkName = "doubleCheckRack(_:pattern:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1012,8 +1012,8 @@
             filePath = "MahjongPractice/Maj/Maj.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1109"
-            endingLineNumber = "1109"
+            startingLineNumber = "1126"
+            endingLineNumber = "1126"
             landmarkName = "doubleCheckRack(_:pattern:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1042,8 +1042,8 @@
             filePath = "MahjongPractice/Maj/Maj.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1109"
-            endingLineNumber = "1109"
+            startingLineNumber = "1126"
+            endingLineNumber = "1126"
             landmarkName = "doubleCheckRack(_:pattern:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -1386,8 +1386,8 @@
             filePath = "MahjongPractice/Views/Settings.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
             landmarkName = "addControls()"
             landmarkType = "7">
          </BreakpointContent>

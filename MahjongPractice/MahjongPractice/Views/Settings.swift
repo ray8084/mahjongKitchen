@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol SettingsDelegate {
+    func updateViews()
+}
+
 class SettingsController: NarrowViewController  {
     private var maj: Maj!
     var tileImages: [UIImageView] = []
@@ -32,9 +36,11 @@ class SettingsController: NarrowViewController  {
         narrowView()
         xOffset = (Int(view.frame.width) - maxWidth) / 2
         addScrollView()
+        addOptions()
         addTileImages()
         addCloseButton()
     }
+    
     
     // -----------------------------------------------------------------------------------------
     //
@@ -59,6 +65,34 @@ class SettingsController: NarrowViewController  {
     
     // -----------------------------------------------------------------------------------------
     //
+    //  Options
+    //
+    // -----------------------------------------------------------------------------------------
+       
+    private func addOptions() {
+        var top = 20
+        addTitle("Settings", y: top)
+        top = top + 55
+        let items = ["Use Your Card", "Suggested Hands"]
+        let segmentControl = UISegmentedControl(items: items)
+        segmentControl.selectedSegmentIndex = maj.cardSettings
+        segmentControl.frame = CGRect(x: xOffset, y: top, width: 300, height: Int(segmentControl.frame.height))
+        segmentControl.addTarget(self, action: #selector(changeCardSettings), for: .valueChanged)
+        scrollView.addSubview(segmentControl)
+                
+        if #available(iOS 13.0, *) {
+            // default
+        } else {
+            segmentControl.tintColor = .black
+        }
+    }
+    
+    @objc private func changeCardSettings(sender: UISegmentedControl) {
+        maj.setCardSettings(segment: sender.selectedSegmentIndex)
+    }
+    
+    // -----------------------------------------------------------------------------------------
+    //
     //  Tile Images
     //
     // -----------------------------------------------------------------------------------------
@@ -71,9 +105,10 @@ class SettingsController: NarrowViewController  {
     }
     
     private func addTileImages() {
-        addTitle("Tile Images", y: 20)
+        let top = 125
+        addTitle("Tiles", y: top)
            
-        let switchOffset = 75
+        let switchOffset = top + 55
         let items = ["Classic", "Light", "Large", "Dark", "Solid"]
         
         let segment = UISegmentedControl(items: items)
@@ -81,7 +116,6 @@ class SettingsController: NarrowViewController  {
         segment.frame = setOriginWithOffset(segment.frame, x: 0, y: switchOffset)
         segment.addTarget(self, action: #selector(changeTileImages), for: .valueChanged)
         scrollView.addSubview(segment)
-        // view.addSubview(segment)
         
         let tilesOffset = switchOffset + 45
         addTile(Tile.getImage(id: 1, maj: maj), x: 0, y: tilesOffset)
@@ -93,21 +127,15 @@ class SettingsController: NarrowViewController  {
         addTile(Tile.getImage(id: 31, maj: maj), x: 54*6, y: tilesOffset)
         addTile(Tile.getImage(id: 35, maj: maj), x: 54*7, y: tilesOffset)
         addTile(Tile.getImage(id: 30, maj: maj), x: 54*8, y: tilesOffset)
-               
-        //let tilesBottom = tilesOffset + tileHeight + 50
-        //let line  = addLine(x: xOffset, y: tilesBottom + 30)
-        // tilesBottom = Int(line.frame.origin.y + line.frame.height)
     }
     
     private func getTileSegment() -> Int {
         switch(maj.dotTileStyle) {
         case TileStyle.classic: return 0
-        //case TileStyle.designer: return 1
+        case TileStyle.light: return 1
         case TileStyle.largeFont: return 2
-        //case TileStyle.designerLargeFont: return 2
-        //case TileStyle.darkModeLargeFont: return 3
-        //case TileStyle.solidDesigner: return 4
-        //case TileStyle.argon: return 5
+        case TileStyle.dark: return 3
+        case TileStyle.solid: return 4
         default: return 0
         }
     }

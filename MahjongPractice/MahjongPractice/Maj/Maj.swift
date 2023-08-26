@@ -50,6 +50,11 @@ class SortStyle {
     static let num = 1
 }
 
+class CardSettings {
+    static let yourCard = 0
+    static let suggestedHands = 1
+}
+
 class Maj {
     var override2020 = false   // make this false for release
     var override2021 = false   // make this false for release
@@ -77,6 +82,7 @@ class Maj {
     var sortStyle = SortStyle.suits
     var hideSortMessage = false
     var techSupportDebug = false
+    var cardSettings = CardSettings.yourCard
             
     var wall = Deck()
     var replayWall = Deck()
@@ -172,6 +178,7 @@ class Maj {
         alternateRedDragon = copy.alternateRedDragon
         disableAutomaj = copy.disableAutomaj
         specialCase2022Rack = copy.specialCase2022Rack
+        cardSettings = copy.cardSettings
      }
     
   
@@ -210,6 +217,7 @@ class Maj {
     
     func loadSavedValues() {
         year = defaults.integer(forKey: "year")
+        cardSettings = defaults.integer(forKey: "cardSettings")
         if year == Year.uninitialized {year = Year.y2017}
         if override2021 { year = Year.y2021 }
         winBotEnabled = defaults.bool( forKey: "winBotEnable" )
@@ -411,6 +419,15 @@ class Maj {
         card.loadSavedValues()
         card.showLosses = showLosses
         defaults.set(year, forKey: "year")
+    }
+    
+    func setCardSettings(segment: Int) {
+        switch segment {
+        case 0: cardSettings = CardSettings.yourCard
+        case 1: cardSettings = CardSettings.suggestedHands
+        default: cardSettings = CardSettings.yourCard
+        }
+        defaults.set(cardSettings, forKey: "cardSettings")
     }
     
     func getYearSegment() -> Int {
