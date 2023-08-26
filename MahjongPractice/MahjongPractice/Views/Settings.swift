@@ -91,6 +91,7 @@ class SettingsController: NarrowViewController  {
     
     @objc private func changeCardSettings(sender: UISegmentedControl) {
         maj.setCardSettings(segment: sender.selectedSegmentIndex)
+        settingsDelegate.showGame()
     }
     
     // -----------------------------------------------------------------------------------------

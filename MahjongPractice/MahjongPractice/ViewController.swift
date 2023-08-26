@@ -58,6 +58,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     var discardIndex = 14
     var gameButton: UIButton!
     var filterButton: UIButton!
+    var handsToolbarButton: UIButton!
+    var handsToolbarLabel: UILabel!
     var gameView = true
     var newDeal = true
     var validatePending = false
@@ -218,19 +220,19 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             helpLabel.alpha = 0.9
             toolbar.addSubview(helpLabel)
             
-            let button1 = UIButton(frame: CGRect(x: offset, y: view.frame.height - 140.0, width: 40, height: 40))
+            handsToolbarButton = UIButton(frame: CGRect(x: offset, y: view.frame.height - 140.0, width: 40, height: 40))
             let cardImage = UIImage(named: "card")
-            button1.setImage(cardImage, for: .normal)
-            button1.alpha = 0.8
-            button1.addTarget(self, action: #selector(cardButtonAction), for: .touchUpInside)
-            toolbar.addSubview(button1)
-            let label1 = UILabel(frame: CGRect(x: 0, y: view.frame.height - 103.0, width: width, height: 20))
-            label1.text = "Hands"
-            label1.textAlignment = .center
-            label1.font = UIFont.systemFont(ofSize: 12.0)
-            label1.textColor = ToolbarTextColor
-            label1.alpha = 0.9
-            toolbar.addSubview(label1)
+            handsToolbarButton.setImage(cardImage, for: .normal)
+            handsToolbarButton.alpha = 0.8
+            handsToolbarButton.addTarget(self, action: #selector(cardButtonAction), for: .touchUpInside)
+            toolbar.addSubview(handsToolbarButton)
+            handsToolbarLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height - 103.0, width: width, height: 20))
+            handsToolbarLabel.text = "Hands"
+            handsToolbarLabel.textAlignment = .center
+            handsToolbarLabel.font = UIFont.systemFont(ofSize: 12.0)
+            handsToolbarLabel.textColor = ToolbarTextColor
+            handsToolbarLabel.alpha = 0.9
+            toolbar.addSubview(handsToolbarLabel)
             
             let settingsButton = UIButton(frame: CGRect(x: offset, y: view.frame.height - 80.0, width: 40, height: 40))
             let settingsImage = UIImage(named: "settings")
@@ -246,6 +248,9 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             settingsLabel.alpha = 0.9
             toolbar.addSubview(settingsLabel)
         }
+        
+        handsToolbarLabel.isHidden = maj.cardSettings == 0 ? true : false
+        handsToolbarButton.isHidden = maj.cardSettings == 0 ? true : false
     }
 
     @objc func gameButtonAction(sender: UIButton!) {
@@ -295,6 +300,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         view.backgroundColor = getBackgroundColor()
         showToolbar()
         showDiscardTable()
+        showButtons()
     }
            
     func showGameMenu(title: String, message: String, win: Bool) {
@@ -613,16 +619,16 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     
     func showVersionLabel() {
         if versionLabel == nil {
-            let width: CGFloat = 250
+            let width: CGFloat = view.frame.width
             let height: CGFloat = 30
-            let x = discardTableSegmentControl.frame.origin.x + discardTableSegmentControl.frame.width + 10
+            let x = 0.0
             let y: CGFloat = view.frame.height - 40
             
             let labelFrame = CGRect(x: x, y: y, width: width, height: height)
             versionLabel = UILabel(frame: labelFrame)
             versionLabel.text =  "v \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] ?? "") support@eightbam.com"
             versionLabel.frame = labelFrame
-            versionLabel.textAlignment = .left
+            versionLabel.textAlignment = .center
             versionLabel.numberOfLines = 0
             view.addSubview(versionLabel)
         }
@@ -808,6 +814,16 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             
             view.addSubview(discardTableSegmentControl)
         }
+        if maj.cardSettings == 0 {
+            discardTableSegmentControl.isHidden = true
+            discardTableSegmentControl.selectedSegmentIndex = 1
+            hideSuggestedHands()
+            showDiscardTable()
+            suggestedHand1?.text = ""
+        } else {
+            discardTableSegmentControl.isHidden = false
+            showSuggestedHands()
+        }
     }
     
     @objc private func changeDiscardTableSegmentControl(sender: UISegmentedControl) {
@@ -948,7 +964,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
                 let labelFrame = CGRect(x: x, y: y, width: width - 100, height: height)
                 suggestedHand1 = UILabel(frame: labelFrame)
                 suggestedHand1.font = UIFont(name: "Chalkduster", size: 16)!
-                suggestedHand1.text = "Use the toolbar to the right to select hands to see here, or use your card."
+                suggestedHand1.text = maj.cardSettings == 0 ? "" : "Use the toolbar to the right to select hands to see here, or use your card."
                 suggestedHand1.frame = labelFrame
                 suggestedHand1.textAlignment = .left
                 suggestedHand1.numberOfLines = 2
