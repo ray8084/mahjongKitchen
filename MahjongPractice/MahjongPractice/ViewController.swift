@@ -259,7 +259,10 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     }
     
     @objc func settingsButtonAction(sender: UIButton!) {
-        showSettingsMenu()
+        //showSettingsMenu()
+        
+        let settings = SettingsController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self, backgroundColor: self.getBackgroundColor())
+        self.show(settings, sender: self)
     }
     
     @objc func helpButtonAction(sender: UIButton!) {

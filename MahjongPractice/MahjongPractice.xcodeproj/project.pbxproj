@@ -16,6 +16,7 @@
 		7128C7EB2A0FE1F8008564D1 /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 7128C7EA2A0FE1F8008564D1 /* settings.png */; };
 		7128C7ED2A0FE405008564D1 /* help.png in Resources */ = {isa = PBXBuildFile; fileRef = 7128C7EC2A0FE405008564D1 /* help.png */; };
 		712AEB812745D8AE006C8D4B /* redAlt.png in Resources */ = {isa = PBXBuildFile; fileRef = 712AEB802745D8AD006C8D4B /* redAlt.png */; };
+		7135B88D2A998B4400FA2593 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7135B88C2A998B4400FA2593 /* Settings.swift */; };
 		713B12502A2160C1002EAEBA /* 6d.png in Resources */ = {isa = PBXBuildFile; fileRef = 713B122B2A2160BD002EAEBA /* 6d.png */; };
 		713B12512A2160C1002EAEBA /* 5b.png in Resources */ = {isa = PBXBuildFile; fileRef = 713B122C2A2160BD002EAEBA /* 5b.png */; };
 		713B12522A2160C1002EAEBA /* 3d.png in Resources */ = {isa = PBXBuildFile; fileRef = 713B122D2A2160BD002EAEBA /* 3d.png */; };
@@ -375,6 +376,7 @@
 		7128C7EA2A0FE1F8008564D1 /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		7128C7EC2A0FE405008564D1 /* help.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help.png; sourceTree = "<group>"; };
 		712AEB802745D8AD006C8D4B /* redAlt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redAlt.png; sourceTree = "<group>"; };
+		7135B88C2A998B4400FA2593 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		713B122B2A2160BD002EAEBA /* 6d.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 6d.png; sourceTree = "<group>"; };
 		713B122C2A2160BD002EAEBA /* 5b.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 5b.png; sourceTree = "<group>"; };
 		713B122D2A2160BD002EAEBA /* 3d.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 3d.png; sourceTree = "<group>"; };
@@ -822,6 +824,7 @@
 				714252C72707A04B001AE6F0 /* HelpTableController.swift */,
 				71F64DBE29F314B4002F29C4 /* HistoryController.swift */,
 				714252C62707A04B001AE6F0 /* NarrowViewController.swift */,
+				7135B88C2A998B4400FA2593 /* Settings.swift */,
 				71F64DC629F5F5CA002F29C4 /* TileMatchView.swift */,
 			);
 			path = Views;
@@ -1730,6 +1733,7 @@
 				714252D22707A04C001AE6F0 /* HelpTableController.swift in Sources */,
 				7182A9DD2997F3660043A3EA /* Card2023.swift in Sources */,
 				71AA192B29EB995200BC3CD0 /* Card2016.swift in Sources */,
+				7135B88D2A998B4400FA2593 /* Settings.swift in Sources */,
 				714252D12707A04B001AE6F0 /* NarrowViewController.swift in Sources */,
 				71AA192C29EB995200BC3CD0 /* Card2020.swift in Sources */,
 				71F64DC529F5DE18002F29C4 /* CardView.swift in Sources */,
