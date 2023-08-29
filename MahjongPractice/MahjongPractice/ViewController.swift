@@ -156,8 +156,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     // -----------------------------------------------------------------------------------------
     
     func showExperiencedPlayerAlert() {
-        if maj.hideIntroduction == false {
-            let message = "Experienced players only, please.\n\nRules are not enforced."
+        if maj.hideIntroduction < 2 {
+            let message = "This two handed Mahjong is for experienced players only.\n\nThere is no rule enforcement in this fun practice game. You play by your own rules.\n\nEnjoy!"
             let alert = UIAlertController(title: message, message: "", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Accept", style: .default, handler: {(action:UIAlertAction) in
                 self.showUseYourCardAlert()
@@ -167,10 +167,10 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     }
     
     func showUseYourCardAlert() {
-        let message = "Use your card or enable Suggested Hands in Settings."
+        let message = "Use your card or enable Suggested Hands in Settings.\n\nSend feedback to support@eightbam.com."
         let alert = UIAlertController(title: message, message: "", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
-            self.maj.setHideIntroduction()
+            self.maj.incrementHideIntroduction()
         }));
         present(alert, animated: true, completion: nil)
     }

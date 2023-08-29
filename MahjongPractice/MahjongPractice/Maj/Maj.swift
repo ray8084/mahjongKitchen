@@ -119,7 +119,7 @@ class Maj {
     var dotTileStyle = TileStyle.classic
     var bamTileStyle = TileStyle.classic
     var alternateRedDragon = false
-    var hideIntroduction = false
+    var hideIntroduction = 0
     
     
     // --------------------------------------------------------------
@@ -251,7 +251,7 @@ class Maj {
         techSupportDebug = defaults.bool(forKey: "techSupportDebug")
         hideSortMessage = defaults.bool(forKey: "hideSortMessage")
         disableAutomaj = defaults.bool(forKey: "disableAutomaj")
-        hideIntroduction = defaults.bool(forKey: "hideIntroduction")
+        hideIntroduction = defaults.integer(forKey: "hideIntroduction")
         print("hideIntroduction \(hideIntroduction)")
     }
     
@@ -518,8 +518,8 @@ class Maj {
         defaults.set(techSupportDebug, forKey: "techSupportDebug")
     }
     
-    func setHideIntroduction() {
-        hideIntroduction = true
+    func incrementHideIntroduction() {
+        hideIntroduction = hideIntroduction + 1
         defaults.set(hideIntroduction, forKey: "hideIntroduction")
     }
     

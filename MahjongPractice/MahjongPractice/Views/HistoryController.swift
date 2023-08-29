@@ -195,7 +195,9 @@ class HistoryController: NarrowViewController, UITableViewDelegate, UITableViewD
     // -----------------------------------------------------------------------------------------
     
     private func addHeader() {
-        let chapter = HelpChapter("Wins:   Singles \(maj.card.singleWins)    Doubles \(maj.card.doubleWins)", xOffset: xOffset, yOffset: 30, width: view.frame.width)
+        let chapter = HelpChapter("Wins:   Singles \(maj.card.singleWins)    Doubles \(maj.card.doubleWins)", xOffset: xOffset, yOffset: 50, width: view.frame.width)
+        chapter.addLabel("")
+        chapter.addLabel("")
         chapter.addLabel("2023 \(maj.card.singleWins)             Quints \(maj.card.doubleWins)       Winds \(maj.card.doubleWins)")
         chapter.addLabel("2468 \(maj.card.singleWins)             Runs \(maj.card.doubleWins)         369 \(maj.card.doubleWins)")
         chapter.addLabel("LikeNum \(maj.card.singleWins)        13579 \(maj.card.doubleWins)       S&P \(maj.card.doubleWins)")

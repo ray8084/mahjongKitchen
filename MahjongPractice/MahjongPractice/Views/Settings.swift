@@ -36,7 +36,7 @@ class SettingsController: NarrowViewController  {
     override func addControls() {
         maxWidth = 700
         narrowView()
-        xOffset = (Int(view.frame.width) - maxWidth) / 2
+        xOffset = (Int(view.frame.width) - maxWidth) / 2 + 40
         addScrollView()
         addOptions()
         addTileImages()
@@ -119,6 +119,12 @@ class SettingsController: NarrowViewController  {
         segment.frame = setOriginWithOffset(segment.frame, x: 0, y: switchOffset)
         segment.addTarget(self, action: #selector(changeTileImages), for: .valueChanged)
         scrollView.addSubview(segment)
+        
+        if #available(iOS 13.0, *) {
+            // default
+        } else {
+            segment.tintColor = .black
+        }
         
         let tilesOffset = switchOffset + 45
         addTile(Tile.getImage(id: 1, maj: maj), x: 0, y: tilesOffset)
