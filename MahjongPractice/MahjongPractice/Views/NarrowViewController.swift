@@ -49,7 +49,7 @@ class NarrowViewController: UIViewController {
             view.backgroundColor = .systemBackground
         } else {
             view.backgroundColor = narrowViewDelegate.getBackgroundColor()
-            setBackgroundImage()
+            // setBackgroundImage()
         }
     }
 

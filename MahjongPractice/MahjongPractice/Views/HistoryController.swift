@@ -34,6 +34,11 @@ class HistoryController: NarrowViewController, UITableViewDelegate, UITableViewD
         // addChapters()
         addTableView()
         addCloseButton()
+        if #available(iOS 13.0, *) {
+            view.backgroundColor = .systemBackground
+        } else {
+            view.backgroundColor = .white
+        }
     }
     
     func addChapters() {

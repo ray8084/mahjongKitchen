@@ -167,7 +167,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     }
     
     func showUseYourCardAlert() {
-        let message = "Use your card or enable Suggested Hands in Settings.\n\nSend feedback to support@eightbam.com."
+        let message = "Use your 2023 card.\n\nSend feedback to support@eightbam.com."
         let alert = UIAlertController(title: message, message: "", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
             self.maj.incrementHideIntroduction()
