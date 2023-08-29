@@ -38,7 +38,7 @@ class SettingsController: NarrowViewController  {
         narrowView()
         xOffset = (Int(view.frame.width) - maxWidth) / 2 + 40
         addScrollView()
-        addOptions()
+        // addOptions()
         addTileImages()
         addCloseButton()
     }
@@ -108,7 +108,7 @@ class SettingsController: NarrowViewController  {
     }
     
     private func addTileImages() {
-        let top = 125
+        let top = 40
         addTitle("Tiles", y: top)
            
         let switchOffset = top + 55

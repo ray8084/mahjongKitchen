@@ -271,8 +271,9 @@ class HelpTableController: NarrowViewController, UITableViewDelegate, UITableVie
     
     private func addHands() {
         let hands = HelpChapter("Hands", xOffset: xOffset, width: view.frame.width)
-        hands.addLabel("Use your 2023 mahjong card to select hands to play, or use the Hands option on the toolbar to the right.")
-        hands.addLabel("With the Hands option you can see how many tiles from your 2 hands together match hands on the mahjong card. The Hands features does not account for overlapping tiles between hands, that's your challenge. Select up to 3 hands to see below your tiles. The entire 2023 card is not shown at once, only the highesst matching hands. This feature works best for the first hand.")
+        /*hands.addLabel("Use your 2023 mahjong card to select hands to play, or use the Hands option on the toolbar to the right.")
+        hands.addLabel("With the Hands option you can see how many tiles from your 2 hands together match hands on the mahjong card. The Hands features does not account for overlapping tiles between hands, that's your challenge. Select up to 3 hands to see below your tiles. The entire 2023 card is not shown at once, only the highesst matching hands. This feature works best for the first hand.")*/
+        hands.addLabel("Use your 2023 mahjong card to select hands to play.")
         chapters.append(hands)
     }
     
@@ -299,7 +300,7 @@ class HelpTableController: NarrowViewController, UITableViewDelegate, UITableVie
     private func addTips() {
         let tips = HelpChapter("Tips", xOffset: xOffset, width: view.frame.width)
         tips.addLabel("Because there is no rule enforcement you can organize your tiles among 3 or 4 rows. When you are ready to call tiles consolidate to 2 or 3 rows.")
-        tips.addLabel("Or follow the live game rules if you prefer to play that way.")
+        tips.addLabel("Or follow any live game rules you prefer.")
         chapters.append(tips)
     }
        
