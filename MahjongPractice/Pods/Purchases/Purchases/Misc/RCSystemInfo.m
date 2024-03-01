@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, copy, nullable) NSString *platformFlavor;
 @property(nonatomic, copy, nullable) NSString *platformFlavorVersion;
+@property(nonatomic, readwrite) RCDangerousSettings *dangerousSettings;
 
 @end
 
@@ -27,6 +28,16 @@ static BOOL _forceUniversalAppStore = NO;
 - (instancetype)initWithPlatformFlavor:(nullable NSString *)platformFlavor
                  platformFlavorVersion:(nullable NSString *)platformFlavorVersion
                     finishTransactions:(BOOL)finishTransactions {
+    return [self initWithPlatformFlavor:platformFlavor
+                  platformFlavorVersion:platformFlavorVersion
+                     finishTransactions:finishTransactions
+                      dangerousSettings:nil];
+}
+
+- (instancetype)initWithPlatformFlavor:(nullable NSString *)platformFlavor
+                 platformFlavorVersion:(nullable NSString *)platformFlavorVersion
+                    finishTransactions:(BOOL)finishTransactions
+                     dangerousSettings:(nullable RCDangerousSettings *)dangerousSettings {
     if (self = [super init]) {
         NSAssert((platformFlavor && platformFlavorVersion) || (!platformFlavor && !platformFlavorVersion),
             @"RCSystemInfo initialized with non-matching platform flavor and platform flavor versions!");
@@ -38,18 +49,47 @@ static BOOL _forceUniversalAppStore = NO;
         self.platformFlavor = platformFlavor;
         self.platformFlavorVersion = platformFlavorVersion;
         self.finishTransactions = finishTransactions;
+        if (!dangerousSettings) {
+            dangerousSettings = [[RCDangerousSettings alloc] init];
+        }
+        self.dangerousSettings = dangerousSettings;
     }
     return self;
 }
 
 + (BOOL)isSandbox {
-    NSURL *url = NSBundle.mainBundle.appStoreReceiptURL;
+    NSBundle *bundle = NSBundle.mainBundle;
+
+#if TARGET_OS_SIMULATOR
+    return [self isSandboxWithBundle:bundle inSimulator:true];
+#else
+    return [self isSandboxWithBundle:bundle inSimulator:false];
+#endif
+}
+
++ (BOOL)isSandboxWithBundle:(NSBundle *)bundle inSimulator:(BOOL)simulator {
+    if (simulator) {
+        return true;
+    }
+
+    NSURL *url = bundle.appStoreReceiptURL;
     NSString *receiptURLString = url.path;
-    return ([receiptURLString rangeOfString:@"sandboxReceipt"].location != NSNotFound);
+
+    if (receiptURLString == nil) {
+        return false;
+    }
+
+    // `true` for either `macOS` or `Catalyst`
+    const BOOL isMASReceipt = [receiptURLString containsString:@"MASReceipt/receipt"];
+    if (isMASReceipt) {
+        return [receiptURLString containsString:@"Xcode/DerivedData"];
+    } else {
+        return [receiptURLString containsString:@"sandboxReceipt"];
+    }
 }
 
 + (NSString *)frameworkVersion {
-    return @"3.12.4";
+    return @"3.14.4";
 }
 
 + (NSString *)systemVersion {

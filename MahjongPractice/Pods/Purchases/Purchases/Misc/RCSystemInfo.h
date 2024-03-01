@@ -7,23 +7,32 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-
+@class RCDangerousSettings;
 @interface RCSystemInfo : NSObject
 
 - (instancetype)initWithPlatformFlavor:(nullable NSString *)platformFlavor
                  platformFlavorVersion:(nullable NSString *)platformFlavorVersion
-                    finishTransactions:(BOOL)finishTransactions NS_DESIGNATED_INITIALIZER;
+                    finishTransactions:(BOOL)finishTransactions;
+
+- (instancetype)initWithPlatformFlavor:(nullable NSString *)platformFlavor
+                 platformFlavorVersion:(nullable NSString *)platformFlavorVersion
+                    finishTransactions:(BOOL)finishTransactions
+                     dangerousSettings:(nullable RCDangerousSettings *)dangerousSettings NS_DESIGNATED_INITIALIZER;
+
 - (instancetype)init NS_UNAVAILABLE;
 
 @property(nonatomic, assign) BOOL finishTransactions;
 @property(nonatomic, copy, readonly) NSString *platformFlavor;
 @property(nonatomic, copy, readonly) NSString *platformFlavorVersion;
 @property(class, nonatomic, assign) BOOL forceUniversalAppStore;
+@property(nonatomic, readonly) RCDangerousSettings *dangerousSettings;
 
 - (void)isApplicationBackgroundedWithCompletion:(void(^)(BOOL))completion; // calls completion on the main thread
 - (BOOL)isOperatingSystemAtLeastVersion:(NSOperatingSystemVersion)version;
 
 + (BOOL)isSandbox;
++ (BOOL)isSandboxWithBundle:(NSBundle *)bundle inSimulator:(BOOL)simulator;
+
 + (NSString *)frameworkVersion;
 + (NSString *)systemVersion;
 + (NSString *)appVersion;

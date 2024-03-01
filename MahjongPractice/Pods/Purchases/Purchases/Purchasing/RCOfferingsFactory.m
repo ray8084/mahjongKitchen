@@ -7,13 +7,15 @@
 //
 
 #import <StoreKit/StoreKit.h>
+#import "RCLogUtils.h"
 #import "RCOfferingsFactory.h"
 #import "RCOffering.h"
 #import "RCPackage.h"
+#import "RCPackage+Protected.h"
 #import "RCOfferings.h"
 #import "RCOfferings+Protected.h"
-#import "RCPackage+Protected.h"
 #import "RCOffering+Protected.h"
+@import PurchasesCoreSwift;
 
 
 @interface RCOfferingsFactory ()
@@ -32,9 +34,14 @@
             RCOffering *offering = [self createOfferingWithProducts:products offeringData:offeringData];
             if (offering) {
                 offerings[offering.identifier] = offering;
+                if (offering.availablePackages.count == 0) {
+                    RCWarnLog(RCStrings.offering.offering_empty, offering.identifier);
+                }
             }
         }
-        
+        if (offerings.count == 0) {
+            return nil;
+        }
         return [[RCOfferings alloc] initWithOfferings:[NSDictionary dictionaryWithDictionary:offerings] currentOfferingID:currentOfferingID];
     }
     return nil;

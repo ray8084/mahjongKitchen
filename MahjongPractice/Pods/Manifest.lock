@@ -1,7 +1,7 @@
 PODS:
-  - Purchases (3.12.4):
-    - PurchasesCoreSwift (= 3.12.4)
-  - PurchasesCoreSwift (3.12.4)
+  - Purchases (3.14.4):
+    - PurchasesCoreSwift (= 3.14.4)
+  - PurchasesCoreSwift (3.14.4)
 
 DEPENDENCIES:
   - Purchases
@@ -12,9 +12,9 @@ SPEC REPOS:
     - PurchasesCoreSwift
 
 SPEC CHECKSUMS:
-  Purchases: c451e29e3ceefaa8e7926a0d0d831b0f0ff39e32
-  PurchasesCoreSwift: c276d8c8df495271afebb0b090ec35117a0a827f
+  Purchases: 2c326c3a0a93445db8fe194d4938fc001e2cec1c
+  PurchasesCoreSwift: 00f41d415f3fb701a5c4bc9909bcbbcf1b1c4b05
 
 PODFILE CHECKSUM: 47279092de73d32f99a28e4815ce700bff61f305
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.15.2
