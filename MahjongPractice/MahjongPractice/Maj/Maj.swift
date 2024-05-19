@@ -421,7 +421,7 @@ class Maj {
             card = Card2023()
         case YearSegment.segment2024:
             year = Year.y2024
-            card = Card2024()
+            card = Card2024Combo()
         default:
             year = Year.y2017
             card = Card2017()
@@ -434,12 +434,21 @@ class Maj {
     
     func setCardSettings(segment: Int) {
         switch segment {
-        case 0: cardSettings = CardSettings.bothCards
-        case 1: cardSettings = CardSettings.nmjlCard
-        case 2: cardSettings = CardSettings.siameseCard
-        default: cardSettings = CardSettings.bothCards
+        case 0: 
+            cardSettings = CardSettings.bothCards
+            card = Card2024Combo()
+        case 1:
+            cardSettings = CardSettings.nmjlCard
+            card = Card2024()
+        case 2:
+            cardSettings = CardSettings.siameseCard
+            card = Card2024Siamese()
+        default:
+            cardSettings = CardSettings.bothCards
+            card = Card2024Combo()
         }
         defaults.set(cardSettings, forKey: "cardSettings")
+        card.loadSavedValues()
     }
     
     func getYearSegment() -> Int {
