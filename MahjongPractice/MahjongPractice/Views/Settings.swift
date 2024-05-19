@@ -38,7 +38,7 @@ class SettingsController: NarrowViewController  {
         narrowView()
         xOffset = (Int(view.frame.width) - maxWidth) / 2 + 40
         addScrollView()
-        // addOptions()
+        addOptions()
         addTileImages()
         addCloseButton()
     }
@@ -73,9 +73,9 @@ class SettingsController: NarrowViewController  {
        
     private func addOptions() {
         var top = 20
-        addTitle("Settings", y: top)
+        addTitle("Card", y: top)
         top = top + 55
-        let items = ["Use Your Card", "Suggested Hands"]
+        let items = ["Both", "NMJL", "Siamese"]
         let segmentControl = UISegmentedControl(items: items)
         segmentControl.selectedSegmentIndex = maj.cardSettings
         segmentControl.frame = CGRect(x: xOffset, y: top, width: 300, height: Int(segmentControl.frame.height))
@@ -108,7 +108,7 @@ class SettingsController: NarrowViewController  {
     }
     
     private func addTileImages() {
-        let top = 40
+        let top = 140
         addTitle("Tiles", y: top)
            
         let switchOffset = top + 55

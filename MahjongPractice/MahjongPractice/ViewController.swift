@@ -223,13 +223,15 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             view.addSubview(toolbar)
             
             let offset = (width - 40) / 2
-            let gameButton = UIButton(frame: CGRect(x: offset, y: 20, width: 40, height: 40))
+            // let gameButton = UIButton(frame: CGRect(x: offset, y: 20, width: 40, height: 40))
+            let gameButton = UIButton(frame: CGRect(x: offset, y: view.frame.height - 80.0, width: 40, height: 40))
             let gameImage = UIImage(named: "play")
             gameButton.setImage(gameImage, for: .normal)
             gameButton.alpha = 0.8
             gameButton.addTarget(self, action: #selector(gameButtonAction), for: .touchUpInside)
             toolbar.addSubview(gameButton)
-            let gameLabel = UILabel(frame: CGRect(x: 0, y: 57, width: width, height: 20))
+            //let gameLabel = UILabel(frame: CGRect(x: 0, y: 57, width: width, height: 20))
+            let gameLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height - 80.0 + 37.0, width: width, height: 20))
             gameLabel.text = "Game"
             gameLabel.textAlignment = .center
             gameLabel.font = UIFont.systemFont(ofSize: 12.0)
@@ -265,13 +267,15 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             handsToolbarLabel.alpha = 0.9
             toolbar.addSubview(handsToolbarLabel)
             
-            let settingsButton = UIButton(frame: CGRect(x: offset, y: view.frame.height - 80.0, width: 40, height: 40))
+            // let settingsButton = UIButton(frame: CGRect(x: offset, y: view.frame.height - 80.0, width: 40, height: 40))
+            let settingsButton = UIButton(frame: CGRect(x: offset, y: 20, width: 40, height: 40))
             let settingsImage = UIImage(named: "settings")
             settingsButton.setImage(settingsImage, for: .normal)
             settingsButton.alpha = 0.8
             settingsButton.addTarget(self, action: #selector(settingsButtonAction), for: .touchUpInside)
             toolbar.addSubview(settingsButton)
-            let settingsLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height - 80.0 + 37.0, width: width, height: 20))
+            //let settingsLabel = UILabel(frame: CGRect(x: 0, y: view.frame.height - 80.0 + 37.0, width: width, height: 20))
+            let settingsLabel = UILabel(frame: CGRect(x: 0, y: 57, width: width, height: 20))
             settingsLabel.text = "Settings"
             settingsLabel.textAlignment = .center
             settingsLabel.font = UIFont.systemFont(ofSize: 12.0)
@@ -280,8 +284,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             toolbar.addSubview(settingsLabel)
         }
         
-        handsToolbarLabel.isHidden = maj.cardSettings == 0 ? true : false
-        handsToolbarButton.isHidden = maj.cardSettings == 0 ? true : false
+        handsToolbarLabel.isHidden = maj.cardSettings != 99 ? true : false
+        handsToolbarButton.isHidden = maj.cardSettings != 99 ? true : false
     }
 
     @objc func gameButtonAction(sender: UIButton!) {
@@ -592,8 +596,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     // -----------------------------------------------------------------------------------------
     
     func showDiscardTable() {
-        print(discardTableSegmentControl.selectedSegmentIndex)
-        if discardTableSegmentControl.selectedSegmentIndex == 1 {
+        if discardTableSegmentControl.selectedSegmentIndex != 99 {
             discardTableView.isHidden = false
             let margin = cardMarginX() - 15
             discardTableView.show(parent: view, rowHeader: tableLocation(), maj: maj, margin: margin)
@@ -850,7 +853,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             
             view.addSubview(discardTableSegmentControl)
         }
-        if maj.cardSettings == 0 {
+        if maj.cardSettings != 99 {
             discardTableSegmentControl.isHidden = true
             discardTableSegmentControl.selectedSegmentIndex = 1
             hideSuggestedHands()
@@ -927,7 +930,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     }
     
     func showSuggestedHands() {
-        if discardTableSegmentControl.selectedSegmentIndex == 0 {
+        if discardTableSegmentControl.selectedSegmentIndex == 99 {
             hideDiscardTable()
             suggestedHand1?.removeFromSuperview()
             suggestedHand2?.removeFromSuperview()
@@ -1073,10 +1076,10 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             self.replay()
         }));
                 
-        alert.addAction(UIAlertAction(title: "History", style: .default, handler: {(action:UIAlertAction) in
-            let history = HistoryController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self)
-            self.show(history, sender: self)
-        }));
+        //alert.addAction(UIAlertAction(title: "History", style: .default, handler: {(action:UIAlertAction) in
+        //    let history = HistoryController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self)
+        //    self.show(history, sender: self)
+        //}));
         
         //alert.addAction(UIAlertAction(title: "Declare Mahjong", style: .default, handler: {(action:UIAlertAction) in
         //    self.declareMahjong()

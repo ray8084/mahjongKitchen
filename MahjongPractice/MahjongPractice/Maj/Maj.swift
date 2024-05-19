@@ -53,8 +53,9 @@ class SortStyle {
 }
 
 class CardSettings {
-    static let yourCard = 0
-    static let suggestedHands = 1
+    static let bothCards = 0
+    static let nmjlCard = 1
+    static let siameseCard = 2
 }
 
 class Maj {
@@ -85,7 +86,7 @@ class Maj {
     var sortStyle = SortStyle.suits
     var hideSortMessage = false
     var techSupportDebug = false
-    var cardSettings = CardSettings.yourCard
+    var cardSettings = CardSettings.bothCards
             
     var wall = Deck()
     var replayWall = Deck()
@@ -433,9 +434,10 @@ class Maj {
     
     func setCardSettings(segment: Int) {
         switch segment {
-        case 0: cardSettings = CardSettings.yourCard
-        case 1: cardSettings = CardSettings.suggestedHands
-        default: cardSettings = CardSettings.yourCard
+        case 0: cardSettings = CardSettings.bothCards
+        case 1: cardSettings = CardSettings.nmjlCard
+        case 2: cardSettings = CardSettings.siameseCard
+        default: cardSettings = CardSettings.bothCards
         }
         defaults.set(cardSettings, forKey: "cardSettings")
     }
