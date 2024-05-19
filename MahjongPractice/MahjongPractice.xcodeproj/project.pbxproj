@@ -344,6 +344,7 @@
 		71F64DC129F5DB84002F29C4 /* HandsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F64DC029F5DB84002F29C4 /* HandsController.swift */; };
 		71F64DC529F5DE18002F29C4 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F64DC429F5DE18002F29C4 /* CardView.swift */; };
 		71F64DC729F5F5CA002F29C4 /* TileMatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F64DC629F5F5CA002F29C4 /* TileMatchView.swift */; };
+		8E7996212BF9B44F00AFC7B4 /* Card2024.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E7996202BF9B44F00AFC7B4 /* Card2024.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -710,6 +711,7 @@
 		71F64DC429F5DE18002F29C4 /* CardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		71F64DC629F5F5CA002F29C4 /* TileMatchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileMatchView.swift; sourceTree = "<group>"; };
 		8A035980D389C5C22DDD03CB /* Pods-MahjongPractice.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MahjongPractice.release.xcconfig"; path = "Target Support Files/Pods-MahjongPractice/Pods-MahjongPractice.release.xcconfig"; sourceTree = "<group>"; };
+		8E7996202BF9B44F00AFC7B4 /* Card2024.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card2024.swift; sourceTree = "<group>"; };
 		A668A2FB6B118FAF6D0F3252 /* Pods_MahjongPractice_MahjongPracticeUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MahjongPractice_MahjongPracticeUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3B66BE8F9ED207F6CA2AB29 /* Pods-MahjongPractice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MahjongPractice.debug.xcconfig"; path = "Target Support Files/Pods-MahjongPractice/Pods-MahjongPractice.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -842,6 +844,7 @@
 				71AA192129EB995200BC3CD0 /* Card2021.swift */,
 				716E74E727C44CFC0031145C /* Card2022.swift */,
 				7182A9DC2997F3660043A3EA /* Card2023.swift */,
+				8E7996202BF9B44F00AFC7B4 /* Card2024.swift */,
 				714252A22707A023001AE6F0 /* Deck.swift */,
 				714252AE2707A023001AE6F0 /* DiscardTable.swift */,
 				714252AD2707A023001AE6F0 /* Hand.swift */,
@@ -1723,6 +1726,7 @@
 				71AA192A29EB995200BC3CD0 /* Card2019.swift in Sources */,
 				71AA192829EB995200BC3CD0 /* Card2017.swift in Sources */,
 				716E74E827C44CFC0031145C /* Card2022.swift in Sources */,
+				8E7996212BF9B44F00AFC7B4 /* Card2024.swift in Sources */,
 				714252D62707A04C001AE6F0 /* HelpChapter.swift in Sources */,
 				714252C12707A024001AE6F0 /* TileIdMapList.swift in Sources */,
 				7142519E27078624001AE6F0 /* AppDelegate.swift in Sources */,

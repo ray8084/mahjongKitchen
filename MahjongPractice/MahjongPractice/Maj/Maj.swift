@@ -25,6 +25,7 @@ class Year {
     static let y2021 = 5
     static let y2022 = 6
     static let y2023 = 7
+    static let y2024 = 8
 }
 
 class YearSegment {
@@ -35,6 +36,7 @@ class YearSegment {
     static let segment2021 = 4
     static let segment2022 = 5
     static let segment2023 = 6
+    static let segment2024 = 7
 }
 
 class TileStyle {
@@ -75,6 +77,7 @@ class Maj {
     var enable2021 = false
     var enable2022 = false
     var enable2023 = false
+    var enable2024 = false
     var shuffleWithSeed = false
     var shuffleSeed = ""
     var disableAutomaj = false
@@ -415,6 +418,9 @@ class Maj {
         case YearSegment.segment2023:
             year = Year.y2023
             card = Card2023()
+        case YearSegment.segment2024:
+            year = Year.y2024
+            card = Card2024()
         default:
             year = Year.y2017
             card = Card2017()
@@ -444,6 +450,7 @@ class Maj {
         case Year.y2021: segment = YearSegment.segment2021
         case Year.y2022: segment = YearSegment.segment2022
         case Year.y2023: segment = YearSegment.segment2023
+        case Year.y2024: segment = YearSegment.segment2024
         default: segment = YearSegment.segment2017
         }
         print("maj.getYearSegment \(segment)")
@@ -459,6 +466,7 @@ class Maj {
         case Year.y2021: return "2021"
         case Year.y2022: return "2022"
         case Year.y2023: return "2023"
+        case Year.y2024: return "2024"
         default: return ""
         }
     }

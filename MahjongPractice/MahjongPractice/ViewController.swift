@@ -105,8 +105,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     override func viewDidAppear(_ animated: Bool) {
         if viewDidAppear == false {
             setBackground()
-            enable2023(true)
-            load2023()
+            enable2024(true)
+            load2024()
             redeal()
             viewDidAppear = true
             // buildIcon()
@@ -318,13 +318,13 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     //
     // -----------------------------------------------------------------------------------------
        
-    func load2023() {
-        maj.setYearSegment(segment: YearSegment.segment2023)
+    func load2024() {
+        maj.setYearSegment(segment: YearSegment.segment2024)
         redeal()
     }
     
-    func enable2023(_ enable: Bool) {
-        maj.enable2023 = enable
+    func enable2024(_ enable: Bool) {
+        maj.enable2024 = enable
     }
     
     func showGame() {
