@@ -299,8 +299,7 @@ class HelpTableController: NarrowViewController, UITableViewDelegate, UITableVie
     
     private func addTips() {
         let tips = HelpChapter("Tips", xOffset: xOffset, width: view.frame.width)
-        tips.addLabel("Because there is no rule enforcement you can organize your tiles among 3 or 4 rows. When you are ready to call tiles consolidate to 2 or 3 rows.")
-        tips.addLabel("Or follow any live game rules you prefer.")
+        tips.addLabel("Because there is no rule enforcement you can organize your tiles among 3 or 4 rows. When you are ready to declare mahjong consolidate to 2 or 3 rows.")
         chapters.append(tips)
     }
        

@@ -17,10 +17,9 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     let HandColor = UIColor(white: 0.99, alpha: 0.9)
     let BlankColor = UIColor(white: 0.95, alpha: 0.7)
     let BlankColorDarkMode = UIColor(white: 0.95, alpha: 0.1)
-    // let BackgroundColor = UIColor.init(red: 185.0/255.0, green: 190.0/255.0, blue: 183.0/255.0, alpha: 1)
-    let BackgroundColor = UIColor.init(red: 203.0/255.0, green: 200.0/255.0, blue: 197.0/255.0, alpha: 1)
+    let BackgroundColor = UIColor.init(red: 221.0/255.0, green: 226.0/255.0, blue: 219.0/255.0, alpha: 1)
+    let BackgroundColorGray = UIColor.init(red: 203.0/255.0, green: 200.0/255.0, blue: 197.0/255.0, alpha: 1)
     let BackgroundColorDarkMode = UIColor.init(red: 39.0/255.0, green: 39.0/255.0, blue: 41.0/255.0, alpha: 1)
-    let BackgroundColorDefense = UIColor.init(red: 74.0/255.0, green: 96.0/255.0, blue: 42.0/255.0, alpha: 1)
     let BackgroundColorIconRed = UIColor.init(red: 232.0/255.0, green: 54.0/255.0, blue: 49.0/255.0, alpha: 1)
     let BackgroundColorIconRedOrange = UIColor.init(red: 241.0/255.0, green: 98.0/255.0, blue: 72.0/255.0, alpha: 1)
     let ToolbarTextColor = UIColor.init(red: 95.0/255.0, green: 95.0/255.0, blue: 94.0/255.0, alpha: 1)
@@ -157,17 +156,17 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     
     func showExperiencedPlayerAlert() {
         if maj.hideIntroduction < 2 {
-            let message = "This two handed Mahjong is for experienced players only.\n\nThere is no rule enforcement in this fun practice game. You play by your own rules.\n\nEnjoy!"
+            let message = "Solo Practice with No Bots\nRules are NOT Enforced\nExperienced Players Only\n\nPlay two hands of Mahjong at the same time. Move tiles between hands.\n\nsupport@eightbam.com"
             let alert = UIAlertController(title: message, message: "", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Accept", style: .default, handler: {(action:UIAlertAction) in
-                self.showUseYourCardAlert()
+                //self.showUseYourCardAlert()
             }));
             present(alert, animated: true, completion: nil)
         }
     }
     
     func showUseYourCardAlert() {
-        let message = "Use your 2023 card.\n\nSend feedback to support@eightbam.com."
+        let message = "Send feedback to support@eightbam.com"
         let alert = UIAlertController(title: message, message: "", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
             self.maj.incrementHideIntroduction()
@@ -184,7 +183,11 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     
     func getBackgroundColor() -> UIColor {
         if #available(iOS 12.0, *) {
-            return traitCollection.userInterfaceStyle == .light ? BackgroundColor : BackgroundColorDarkMode
+            if traitCollection.userInterfaceStyle == .light {
+                return maj.dotTileStyle == TileStyle.classic ? BackgroundColor : BackgroundColorGray
+            } else {
+                return BackgroundColorDarkMode
+            }
         } else {
             return BackgroundColor
         }
@@ -292,10 +295,15 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     }
     
     @objc func settingsButtonAction(sender: UIButton!) {
-        //showSettingsMenu()
-        
-        let settings = SettingsController(maj: self.maj, frame: self.view.frame, narrowViewDelegate: self, settingsDelegate: self, backgroundColor: self.getBackgroundColor())
-        self.show(settings, sender: self)
+        if #available(iOS 12.0, *) {
+            let backgroundColor = traitCollection.userInterfaceStyle == .light ? .white : BackgroundColorDarkMode
+            let settings = SettingsController(maj: maj, frame: view.frame, narrowViewDelegate: self, settingsDelegate: self, backgroundColor: backgroundColor)
+            self.show(settings, sender: self)
+        } else {
+            let settings = SettingsController(maj: maj, frame: view.frame, narrowViewDelegate: self, settingsDelegate: self, backgroundColor: BackgroundColor)
+            self.show(settings, sender: self)
+        }
+
     }
     
     @objc func helpButtonAction(sender: UIButton!) {
@@ -623,7 +631,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         stateLabel.text =  getStateLabel()
         stateLabel.frame = labelFrame
         stateLabel.textAlignment = .right
-        stateLabel.font = UIFont(name: "Chalkduster", size: 15)
+        stateLabel.font = UIFont(name: "Marker Felt", size: 18)
         stateLabel.numberOfLines = 0
         view.addSubview(stateLabel)
     }

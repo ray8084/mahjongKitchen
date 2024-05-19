@@ -147,6 +147,7 @@ class SettingsController: NarrowViewController  {
         case TileStyle.solid: return 4
         default: return 0
         }
+        //view.backgroundColor = settingsDelegate.getBackgroundColor()
     }
     
     @objc private func changeTileImages(sender: UISegmentedControl) {
