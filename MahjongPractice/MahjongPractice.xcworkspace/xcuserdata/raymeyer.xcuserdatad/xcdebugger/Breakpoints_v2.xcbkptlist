@@ -146,36 +146,6 @@
             endingLineNumber = "445"
             landmarkName = "setCardSettings(segment:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "B3445687-B1C0-4A3D-9D51-506D596FF701 - aa0cb4a40737999c"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MahjongPractice.Maj.setCardSettings(segment: Swift.Int) -&gt; ()"
-                  moduleName = "MahjongPractice"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/raymeyer/Documents/GitHub/mahjongPractice22/MahjongPractice/MahjongPractice/Maj/Maj.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "446"
-                  endingLineNumber = "446">
-               </Location>
-               <Location
-                  uuid = "B3445687-B1C0-4A3D-9D51-506D596FF701 - aa0cb4a4073799fd"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "MahjongPractice.Maj.setCardSettings(segment: Swift.Int) -&gt; ()"
-                  moduleName = "MahjongPractice"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/raymeyer/Documents/GitHub/mahjongPractice22/MahjongPractice/MahjongPractice/Maj/Maj.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "445"
-                  endingLineNumber = "445">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
