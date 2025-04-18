@@ -105,8 +105,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     override func viewDidAppear(_ animated: Bool) {
         if viewDidAppear == false {
             setBackground()
-            enable2024(true)
-            load2024()
+            enable2025(true)
+            load2025()
             redeal()
             viewDidAppear = true
             // buildIcon()
@@ -322,13 +322,13 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     //
     // -----------------------------------------------------------------------------------------
        
-    func load2024() {
-        maj.setYearSegment(segment: YearSegment.segment2024)
+    func load2025() {
+        maj.setYearSegment(segment: YearSegment.segment2025)
         redeal()
     }
     
-    func enable2024(_ enable: Bool) {
-        maj.enable2024 = enable
+    func enable2025(_ enable: Bool) {
+        maj.enable2025 = enable
     }
     
     func showGame() {
@@ -665,7 +665,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             
             let labelFrame = CGRect(x: x, y: y, width: width, height: height)
             versionLabel = UILabel(frame: labelFrame)
-            versionLabel.text =  "v \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] ?? "") support@eightbam.com"
+            versionLabel.text =  "v\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] ?? "") 2025"
             versionLabel.frame = labelFrame
             versionLabel.textAlignment = .center
             versionLabel.numberOfLines = 0

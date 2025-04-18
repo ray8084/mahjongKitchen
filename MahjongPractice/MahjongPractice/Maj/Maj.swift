@@ -26,6 +26,7 @@ class Year {
     static let y2022 = 6
     static let y2023 = 7
     static let y2024 = 8
+    static let y2025 = 9
 }
 
 class YearSegment {
@@ -37,6 +38,7 @@ class YearSegment {
     static let segment2022 = 5
     static let segment2023 = 6
     static let segment2024 = 7
+    static let segment2025 = 8
 }
 
 class TileStyle {
@@ -79,6 +81,7 @@ class Maj {
     var enable2022 = false
     var enable2023 = false
     var enable2024 = false
+    var enable2025 = true
     var shuffleWithSeed = false
     var shuffleSeed = ""
     var disableAutomaj = false
@@ -422,6 +425,9 @@ class Maj {
         case YearSegment.segment2024:
             year = Year.y2024
             card = Card2024Combo()
+        case YearSegment.segment2025:
+            year = Year.y2025
+            card = Card2025()
         default:
             year = Year.y2017
             card = Card2017()
@@ -444,8 +450,8 @@ class Maj {
             cardSettings = CardSettings.siameseCard
             card = Card2024Siamese()
         default:
-            cardSettings = CardSettings.bothCards
-            card = Card2024Combo()
+            cardSettings = CardSettings.nmjlCard
+            card = Card2025()
         }
         defaults.set(cardSettings, forKey: "cardSettings")
         card.loadSavedValues()
@@ -462,6 +468,7 @@ class Maj {
         case Year.y2022: segment = YearSegment.segment2022
         case Year.y2023: segment = YearSegment.segment2023
         case Year.y2024: segment = YearSegment.segment2024
+        case Year.y2025: segment = YearSegment.segment2025
         default: segment = YearSegment.segment2017
         }
         print("maj.getYearSegment \(segment)")
@@ -478,6 +485,7 @@ class Maj {
         case Year.y2022: return "2022"
         case Year.y2023: return "2023"
         case Year.y2024: return "2024"
+        case Year.y2025: return "2025"
         default: return ""
         }
     }

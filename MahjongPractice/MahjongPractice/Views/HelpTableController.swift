@@ -30,7 +30,7 @@ class HelpTableController: NarrowViewController, UITableViewDelegate, UITableVie
         addCalling()
         addWinning()
         addHands()
-        addHistory()
+        //addHistory()
         addTips()
         addEndCap()
     }
