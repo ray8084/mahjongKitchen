@@ -1,1 +1,1 @@
-# mahjongPractice22
+# mahjongKitchen

@@ -1,6 +1,0 @@
-framework module Pods_MahjongPractice_MahjongPracticeUITests {
-  umbrella header "Pods-MahjongPractice-MahjongPracticeUITests-umbrella.h"
-
-  export *
-  module * { export * }
-}
