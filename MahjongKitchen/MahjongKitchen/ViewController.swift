@@ -497,10 +497,15 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         maj.discardLastDiscard()
         switch(maj.state) {
         case State.east:
-            maj.discardTile = maj.west.getRandomDiscard(withFlowers: true)
-            if maj.wall.tiles.count > 0 {
-                maj.west.draw(maj)
-                maj.state = State.west
+            // Skip west's turn - go directly to player
+            if maj.wall.tiles.count > 0 && maj.east.tiles.count < 15 {
+                maj.east.draw(maj)
+                checkForMahjong()
+                maj.state = State.east
+            } else if maj.wall.tiles.count > 0 && maj.south.tiles.count < 15 {
+                maj.south.draw(maj)
+                checkForMahjong()
+                maj.state = State.east
             } else {
                 showGameMenu(title: "Game Over", message: "Wall hand.  No tiles left.", win: false);
             }
