@@ -1224,81 +1224,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         let endRow = getRow(end.y)
         var handled = false
         
-        // Check if wall tile (row 5) is dragged off screen
-        if row == 5 && maj.wallTile != nil {
-            let endPoint = sender.location(in: view)
-            // Check if dragged outside view bounds
-            if endPoint.x < 0 || endPoint.x > view.frame.width || 
-               endPoint.y < 0 || endPoint.y > view.frame.height {
-                // Add wall tile to discard table
-                lastMaj.copy(maj)
-                let discardedTile = maj.wallTile
-                maj.lastDiscard = discardedTile
-                maj.discardTable.countTile(discardedTile!, increment: 1)
-                // Replace with next tile from wall
-                if maj.wall.tiles.count > 0 {
-                    let newTiles = maj.wall.pullTiles(count: 1)
-                    maj.wallTile = newTiles.first
-                } else {
-                    maj.wallTile = nil
-                }
-                // Show it in the UIView for the wallTile
-                showDiscard()
-                showHand()
-                showLabels()
-                showDiscardTable()
-                showSuggestedHands()
-                handled = true
-            }
-        }
-        
-        // If dropped on discard table (row 5), discard directly to the discard table
-        if endRow == 5 && row != 5 && !handled {
-            var tileToDiscard: Tile? = nil
-            switch(row) {
-            case 1: // east rack
-                let index = getTileColIndex(tag: startTag)
-                if index < maj.east.rack!.tiles.count {
-                    tileToDiscard = maj.east.rack!.tiles[index]
-                    maj.east.rack!.tiles.remove(at: index)
-                }
-            case 2: // south rack
-                let index = getTileColIndex(tag: startTag)
-                if index < maj.south.rack!.tiles.count {
-                    tileToDiscard = maj.south.rack!.tiles[index]
-                    maj.south.rack!.tiles.remove(at: index)
-                }
-            case 3: // east hand
-                let index = getTileColIndex(tag: startTag)
-                if index < maj.east.tiles.count {
-                    tileToDiscard = maj.east.tiles[index]
-                    maj.east.tiles.remove(at: index)
-                }
-            case 4: // south hand
-                let index = getTileColIndex(tag: startTag)
-                if index < maj.south.tiles.count {
-                    tileToDiscard = maj.south.tiles[index]
-                    maj.south.tiles.remove(at: index)
-                }
-            default:
-                break
-            }
-            // If successfully got a tile, add it directly to the discard table without changing wallTile
-            if tileToDiscard != nil {
-                lastMaj.copy(maj)
-                maj.lastDiscard = tileToDiscard
-                maj.discardTable.countTile(tileToDiscard!, increment: 1)
-                showRack()
-                showHand()
-                showDiscard()
-                showDiscardTable()
-                showLabels()
-                showSuggestedHands()
-                handled = true
-            }
-        } else {
-            // Normal drop handling
-            switch(row) {
+        // Normal drop handling
+        switch(row) {
             case 1:
                 switch(endRow) {
                 case 1: handled = swapInHand(hand: maj.east.rack!, end: end, startTag: startTag)
@@ -1341,7 +1268,6 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
                 default: handled = false }
             default:
                 print("todo")
-            }
         }
 
         if !handled {
@@ -1427,16 +1353,17 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         var moved = false
         let index = getTileColIndex(tag: startTag)
         if index < hand.tiles.count {
-            // If there's already a tile in the discard position, process it into the discard table first
-            if maj.wallTile != nil {
-                maj.discardLastDiscard()
-            }
-            maj.wallTile = hand.tiles[index]
+            // Immediately put the tile into the discard table, don't put it in the wall tile position
+            let tileToDiscard = hand.tiles[index]
             hand.tiles.remove(at: index)
+            lastMaj.copy(maj)
+            maj.lastDiscard = tileToDiscard
+            maj.discardTable.countTile(tileToDiscard, increment: 1)
             showRack()
             showHand()
             showDiscard()
             showLabels()
+            showDiscardTable()
             showSuggestedHands()
             moved = true
         }
