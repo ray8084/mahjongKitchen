@@ -1254,49 +1254,72 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         let end = sender.location(in: sender.view!.superview!)
         let endRow = getRow(end.y)
         var handled = false
-        switch(row) {
-        case 1:
-            switch(endRow) {
-            case 1: handled = swapInHand(hand: maj.east.rack!, end: end, startTag: startTag)
-            case 2: handled = swapBetweenHands(startHand: maj.east.rack!, endHand: maj.south.rack!, end: end, startTag: startTag)
-            case 3: handled = swapBetweenHands(startHand: maj.east.rack!, endHand: maj.east, end: end, startTag: startTag)
-            case 4: handled = swapBetweenHands(startHand: maj.east.rack!, endHand: maj.south, end: end, startTag: startTag)
-            case 5: handled = moveToDiscard(hand: maj.east.rack!, startTag: startTag)
-            default: handled = false }
-        case 2:
-            switch(endRow) {
-            case 1: handled = swapBetweenHands(startHand: maj.south.rack!, endHand: maj.east.rack!, end: end, startTag: startTag)
-            case 2: handled = swapBetweenHands(startHand: maj.south.rack!, endHand: maj.south.rack!, end: end, startTag: startTag)
-            case 3: handled = swapBetweenHands(startHand: maj.south.rack!, endHand: maj.east, end: end, startTag: startTag)
-            case 4: handled = swapBetweenHands(startHand: maj.south.rack!, endHand: maj.south, end: end, startTag: startTag)
-            case 5: handled = moveToDiscard(hand: maj.south.rack!, startTag: startTag)
-            default: handled = false }
-        case 3:
-            switch(endRow) {
-            case 1: handled = moveToRack(hand: maj.east, rack: maj.east.rack!, end: end, startTag: startTag)
-            case 2: handled = moveToRack(hand: maj.east, rack: maj.south.rack!, end: end, startTag: startTag)
-            case 3: handled = swapInHand(hand: maj.east, end: end, startTag: startTag)
-            case 4: handled = swapBetweenHands(startHand: maj.east, endHand: maj.south, end: end, startTag: startTag)
-            case 5: handled = moveToDiscard(hand: maj.east, startTag: startTag)
-            default: handled = false }
-        case 4:
-            switch(endRow) {
-            case 1: handled = moveToRack(hand: maj.south, rack: maj.east.rack!, end: end, startTag: startTag)
-            case 2: handled = moveToRack(hand: maj.south, rack: maj.south.rack!, end: end, startTag: startTag)
-            case 3: handled = swapBetweenHands(startHand: maj.south, endHand: maj.east, end: end, startTag: startTag)
-            case 4: handled = swapInHand(hand: maj.south, end: end, startTag: startTag)
-            case 5: handled = moveToDiscard(hand: maj.south, startTag: startTag)
-            default: handled = false }
-        case 5:
-            switch(endRow) {
-            case 1: handled = discardToHand(hand: maj.east.rack!, end: end)
-            case 2: handled = discardToHand(hand: maj.south.rack!, end: end)
-            case 3: handled = discardToHand(hand: maj.east, end: end)
-            case 4: handled = discardToHand(hand: maj.south, end: end)
-            case 5: handled = checkDiscard(end: end)
-            default: handled = false }
-        default:
-            print("todo")
+        
+        // If dropped on discard table (row 5), move to discard and immediately process it
+        if endRow == 5 && row != 5 {
+            var moved = false
+            switch(row) {
+            case 1: // east rack
+                moved = moveToDiscard(hand: maj.east.rack!, startTag: startTag)
+            case 2: // south rack
+                moved = moveToDiscard(hand: maj.south.rack!, startTag: startTag)
+            case 3: // east hand
+                moved = moveToDiscard(hand: maj.east, startTag: startTag)
+            case 4: // south hand
+                moved = moveToDiscard(hand: maj.south, startTag: startTag)
+            default:
+                break
+            }
+            // If successfully moved to discard, immediately process it into the discard table
+            if moved && maj.discardTile != nil {
+                handled = discard()
+            }
+        } else {
+            // Normal drop handling
+            switch(row) {
+            case 1:
+                switch(endRow) {
+                case 1: handled = swapInHand(hand: maj.east.rack!, end: end, startTag: startTag)
+                case 2: handled = swapBetweenHands(startHand: maj.east.rack!, endHand: maj.south.rack!, end: end, startTag: startTag)
+                case 3: handled = swapBetweenHands(startHand: maj.east.rack!, endHand: maj.east, end: end, startTag: startTag)
+                case 4: handled = swapBetweenHands(startHand: maj.east.rack!, endHand: maj.south, end: end, startTag: startTag)
+                case 5: handled = moveToDiscard(hand: maj.east.rack!, startTag: startTag)
+                default: handled = false }
+            case 2:
+                switch(endRow) {
+                case 1: handled = swapBetweenHands(startHand: maj.south.rack!, endHand: maj.east.rack!, end: end, startTag: startTag)
+                case 2: handled = swapBetweenHands(startHand: maj.south.rack!, endHand: maj.south.rack!, end: end, startTag: startTag)
+                case 3: handled = swapBetweenHands(startHand: maj.south.rack!, endHand: maj.east, end: end, startTag: startTag)
+                case 4: handled = swapBetweenHands(startHand: maj.south.rack!, endHand: maj.south, end: end, startTag: startTag)
+                case 5: handled = moveToDiscard(hand: maj.south.rack!, startTag: startTag)
+                default: handled = false }
+            case 3:
+                switch(endRow) {
+                case 1: handled = moveToRack(hand: maj.east, rack: maj.east.rack!, end: end, startTag: startTag)
+                case 2: handled = moveToRack(hand: maj.east, rack: maj.south.rack!, end: end, startTag: startTag)
+                case 3: handled = swapInHand(hand: maj.east, end: end, startTag: startTag)
+                case 4: handled = swapBetweenHands(startHand: maj.east, endHand: maj.south, end: end, startTag: startTag)
+                case 5: handled = moveToDiscard(hand: maj.east, startTag: startTag)
+                default: handled = false }
+            case 4:
+                switch(endRow) {
+                case 1: handled = moveToRack(hand: maj.south, rack: maj.east.rack!, end: end, startTag: startTag)
+                case 2: handled = moveToRack(hand: maj.south, rack: maj.south.rack!, end: end, startTag: startTag)
+                case 3: handled = swapBetweenHands(startHand: maj.south, endHand: maj.east, end: end, startTag: startTag)
+                case 4: handled = swapInHand(hand: maj.south, end: end, startTag: startTag)
+                case 5: handled = moveToDiscard(hand: maj.south, startTag: startTag)
+                default: handled = false }
+            case 5:
+                switch(endRow) {
+                case 1: handled = discardToHand(hand: maj.east.rack!, end: end)
+                case 2: handled = discardToHand(hand: maj.south.rack!, end: end)
+                case 3: handled = discardToHand(hand: maj.east, end: end)
+                case 4: handled = discardToHand(hand: maj.south, end: end)
+                case 5: handled = checkDiscard(end: end)
+                default: handled = false }
+            default:
+                print("todo")
+            }
         }
 
         if !handled {
@@ -1511,6 +1534,10 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     func isHand(tag: Int) -> Bool { return tag / 100 == 2 }
     func isHand1(tag: Int) -> Bool { return tag / 100 == 3 }
     func isHand2(tag: Int) -> Bool { return tag / 100 == 4 }
+    func isOverDiscardTable(_ location: CGPoint) -> Bool {
+        // Discard table area is from hand2Bottom() to discardTableBottom()
+        return location.y >= hand2Bottom() && location.y <= discardTableBottom()
+    }
     func controlPanelHeight() -> CGFloat { return isTall() ? 45 : 32 }
     func controlPanelLocationX() -> CGFloat { return cardMarginX() }
     func controlPanelLocationY() -> CGFloat{ return cardLocationY() + cardHeight() + 5 }
