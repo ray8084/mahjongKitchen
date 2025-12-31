@@ -1933,7 +1933,7 @@
 				DEVELOPMENT_TEAM = 26UUUMB93E;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MahjongKitchen/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Two Hand";
+				INFOPLIST_KEY_CFBundleDisplayName = "Mahjong";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -1966,7 +1966,7 @@
 				DEVELOPMENT_TEAM = 26UUUMB93E;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MahjongKitchen/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Two Hand";
+				INFOPLIST_KEY_CFBundleDisplayName = "Mahjong";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

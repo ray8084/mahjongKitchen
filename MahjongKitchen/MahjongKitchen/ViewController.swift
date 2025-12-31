@@ -217,7 +217,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     func showToolbar() {
         if toolbar == nil {
             let width = isNarrow() ? 60.0 : 80.0
-            toolbar = UIView(frame: CGRect(x: view.frame.width - width, y: 0, width: width, height: view.frame.height))
+            let maxDimension = max(view.frame.width, view.frame.height)
+            toolbar = UIView(frame: CGRect(x: maxDimension - width, y: 0, width: width, height: view.frame.height))
             toolbar.backgroundColor = .white
             toolbar.alpha = 0.9
             view.addSubview(toolbar)
