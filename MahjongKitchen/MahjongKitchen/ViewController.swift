@@ -652,7 +652,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         case State.west: state = "Discard from West"
         default:
             if maj.discardTile == nil {
-                state = "Drag discard tile here >"
+                state = "Draw from wall"
             } else {
                 state = "Drag right to discard"
             }

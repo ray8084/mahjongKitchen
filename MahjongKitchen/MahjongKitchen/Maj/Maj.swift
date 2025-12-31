@@ -563,6 +563,10 @@ class Maj {
         south.tiles = wall.pullTiles(count: 14)
         west.tiles = wall.pullTiles(count: 13)
         north.tiles = wall.pullTiles(count: 13)
+        // Start with one tile in the discard position (wall)
+        if wall.tiles.count > 0 {
+            discardTile = wall.pullTiles(count: 1).first
+        }
         east.sort()
         south.sort()
         west.sort()
