@@ -1242,26 +1242,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
                 } else {
                     maj.wallTile = nil
                 }
-                // Explicitly create and display the new wall tile
-                clearDiscard()
-                if maj.wallTile != nil {
-                    let x = CGFloat(discardIndex) * (tileWidth() + space) + margin + notch()
-                    let y = hand2Bottom() + margin
-                    let v = UIImageView(frame: CGRect(x: x, y: y, width: tileWidth(), height: tileHeight()))
-                    v.contentMode = .scaleAspectFit
-                    v.layer.masksToBounds = true
-                    v.layer.cornerRadius = tileWidth() / 8
-                    v.image = UIImage(named: maj.wallTile!.getImage(maj: maj))
-                    v.isUserInteractionEnabled = true
-                    v.tag = ((discardRow + 1) * 100) + (discardIndex + 1)
-                    let g = UIPanGestureRecognizer(target: self, action: #selector(handlePanGestures))
-                    g.minimumNumberOfTouches = 1
-                    g.maximumNumberOfTouches = 1
-                    v.addGestureRecognizer(g)
-                    view.addSubview(v)
-                    discardView.append(v)
-                    addTapGestureDiscard(v)
-                }
+                // Show it in the UIView for the wallTile
+                showDiscard()
                 showHand()
                 showLabels()
                 showDiscardTable()
