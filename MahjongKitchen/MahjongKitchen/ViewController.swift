@@ -494,10 +494,13 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     func discard() -> Bool {
         lastMaj.copy(maj)
         maj.lastDiscard = maj.wallTile
-        // Just add the tile to the discard table and stop
         if maj.wallTile != nil {
             maj.discardTable.countTile(maj.wallTile, increment: 1)
             maj.wallTile = nil
+        }
+        // Add another tile from the wall to the wallTile position
+        if maj.wall.tiles.count > 0 {
+            maj.wallTile = maj.wall.pullTiles(count: 1).first
         }
         showHand()
         showLabels()
