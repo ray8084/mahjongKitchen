@@ -109,7 +109,7 @@ class Maj {
     var bots: [Hand] = []
     var specialCase2022Rack: [Tile] = []
 
-    var discardTile: Tile!
+    var wallTile: Tile!
     var lastDiscard: Tile!
     var discardCalled = false
     var lastHandName = ""
@@ -150,10 +150,10 @@ class Maj {
         south.copy(copy.south)
         west.copy(copy.west)
         north.copy(copy.north)
-        if copy.discardTile == nil {
-            discardTile = nil
+        if copy.wallTile == nil {
+            wallTile = nil
         } else {
-            discardTile = Tile(copy.discardTile)
+            wallTile = Tile(copy.wallTile)
         }
         if copy.lastDiscard == nil {
             lastDiscard = nil
@@ -565,7 +565,7 @@ class Maj {
         north.tiles = wall.pullTiles(count: 13)
         // Start with one tile in the discard position (wall)
         if wall.tiles.count > 0 {
-            discardTile = wall.pullTiles(count: 1).first
+            wallTile = wall.pullTiles(count: 1).first
         }
         east.sort()
         south.sort()
@@ -610,7 +610,7 @@ class Maj {
         north.tiles = replayNorth.tiles
         charlestonState = 0
         state = State.east
-        discardTile = nil
+        wallTile = nil
         charleston.tiles = []
         east.rack?.tiles = []
         south.rack?.tiles = []
@@ -757,7 +757,7 @@ class Maj {
     
     func nextState() -> String {
         lastState = state
-        lastDiscard = discardTile
+        lastDiscard = wallTile
         switch state {
         case State.north:
             state = State.east
@@ -820,8 +820,8 @@ class Maj {
     
     func takeTurnEast() {
         // print("Turn \(east.name)")
-        discardTable.countTile(discardTile, increment: 1)
-        discardTile = nil
+        discardTable.countTile(wallTile, increment: 1)
+        wallTile = nil
         east.draw(self)
     }
     
@@ -851,8 +851,8 @@ class Maj {
             hand.tileMatches.countMatches(hand: hand, rack: rack)
             hand.tileMatches.sort()
         }
-        discardTable.countTile(discardTile, increment: 1)
-        discardTile = hand.getDiscard(maj: self, rack: rack, withFlowers: wall.tiles.count < 50)
+        discardTable.countTile(wallTile, increment: 1)
+        wallTile = hand.getDiscard(maj: self, rack: rack, withFlowers: wall.tiles.count < 50)
         hand.tileMatches.countMatches(hand: hand, rack: rack)
         hand.tileMatches.sort()
     }
@@ -994,9 +994,9 @@ class Maj {
     }
  
     func discardLastDiscard(){
-        if discardTile != nil {
-            discardTable.countTile(discardTile, increment: 1)
-            discardTile = nil
+        if wallTile != nil {
+            discardTable.countTile(wallTile, increment: 1)
+            wallTile = nil
         }
     }
         
@@ -1082,8 +1082,8 @@ class Maj {
         let remainderMap = TileIdMap(remainder)
         print(remainderMap.map)
         let handMap = TileIdMap(tiles: east.tiles)
-        if discardTile != nil && !discardTile.isJoker() {
-            handMap.map[discardTile.id] += 1
+        if wallTile != nil && !wallTile.isJoker() {
+            handMap.map[wallTile.id] += 1
         }
         print(handMap.map)
         

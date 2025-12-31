@@ -472,9 +472,9 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     
     func showDiscard() {
         clearDiscard()
-        if maj.discardTile != nil {
+        if maj.wallTile != nil {
             let discard = Hand("Discard")
-            discard.tiles.append(maj.discardTile)
+            discard.tiles.append(maj.wallTile)
             addTiles( tileView: &discardView, hand: discard, col: discardIndex, row: discardRow)
         } else {
             addBlanks( tileView: &discardView, col: discardIndex, row: discardRow, count: 0, addGestures: false, color: RackColor)
@@ -493,11 +493,11 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         
     func discard() -> Bool {
         lastMaj.copy(maj)
-        maj.lastDiscard = maj.discardTile
+        maj.lastDiscard = maj.wallTile
         // Just add the tile to the discard table and stop
-        if maj.discardTile != nil {
-            maj.discardTable.countTile(maj.discardTile, increment: 1)
-            maj.discardTile = nil
+        if maj.wallTile != nil {
+            maj.discardTable.countTile(maj.wallTile, increment: 1)
+            maj.wallTile = nil
         }
         showHand()
         showLabels()
@@ -1224,8 +1224,54 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         let endRow = getRow(end.y)
         var handled = false
         
+        // Check if wall tile (row 5) is dragged off screen
+        if row == 5 && maj.wallTile != nil {
+            let endPoint = sender.location(in: view)
+            // Check if dragged outside view bounds
+            if endPoint.x < 0 || endPoint.x > view.frame.width || 
+               endPoint.y < 0 || endPoint.y > view.frame.height {
+                // Add wall tile to discard table
+                lastMaj.copy(maj)
+                let discardedTile = maj.wallTile
+                maj.lastDiscard = discardedTile
+                maj.discardTable.countTile(discardedTile!, increment: 1)
+                // Replace with next tile from wall
+                if maj.wall.tiles.count > 0 {
+                    let newTiles = maj.wall.pullTiles(count: 1)
+                    maj.wallTile = newTiles.first
+                } else {
+                    maj.wallTile = nil
+                }
+                // Explicitly create and display the new wall tile
+                clearDiscard()
+                if maj.wallTile != nil {
+                    let x = CGFloat(discardIndex) * (tileWidth() + space) + margin + notch()
+                    let y = hand2Bottom() + margin
+                    let v = UIImageView(frame: CGRect(x: x, y: y, width: tileWidth(), height: tileHeight()))
+                    v.contentMode = .scaleAspectFit
+                    v.layer.masksToBounds = true
+                    v.layer.cornerRadius = tileWidth() / 8
+                    v.image = UIImage(named: maj.wallTile!.getImage(maj: maj))
+                    v.isUserInteractionEnabled = true
+                    v.tag = ((discardRow + 1) * 100) + (discardIndex + 1)
+                    let g = UIPanGestureRecognizer(target: self, action: #selector(handlePanGestures))
+                    g.minimumNumberOfTouches = 1
+                    g.maximumNumberOfTouches = 1
+                    v.addGestureRecognizer(g)
+                    view.addSubview(v)
+                    discardView.append(v)
+                    addTapGestureDiscard(v)
+                }
+                showHand()
+                showLabels()
+                showDiscardTable()
+                showSuggestedHands()
+                handled = true
+            }
+        }
+        
         // If dropped on discard table (row 5), discard directly to the discard table
-        if endRow == 5 && row != 5 {
+        if endRow == 5 && row != 5 && !handled {
             var tileToDiscard: Tile? = nil
             switch(row) {
             case 1: // east rack
@@ -1255,7 +1301,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             default:
                 break
             }
-            // If successfully got a tile, add it directly to the discard table without changing discardTile
+            // If successfully got a tile, add it directly to the discard table without changing wallTile
             if tileToDiscard != nil {
                 lastMaj.copy(maj)
                 maj.lastDiscard = tileToDiscard
@@ -1400,10 +1446,10 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         let index = getTileColIndex(tag: startTag)
         if index < hand.tiles.count {
             // If there's already a tile in the discard position, process it into the discard table first
-            if maj.discardTile != nil {
+            if maj.wallTile != nil {
                 maj.discardLastDiscard()
             }
-            maj.discardTile = hand.tiles[index]
+            maj.wallTile = hand.tiles[index]
             hand.tiles.remove(at: index)
             showRack()
             showHand()
@@ -1436,15 +1482,15 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     func discardToHand(hand: Hand, end: CGPoint) -> Bool {
         let endIndex = getTileIndex(end)
         if endIndex < hand.tiles.count {
-            hand.tiles.insert(maj.discardTile, at: endIndex)
+            hand.tiles.insert(maj.wallTile, at: endIndex)
         } else {
-            hand.tiles.append(maj.discardTile)
+            hand.tiles.append(maj.wallTile)
         }
-        // Replace discardTile with a new tile from the wall
+        // Replace wallTile with a new tile from the wall
         if maj.wall.tiles.count > 0 {
-            maj.discardTile = maj.wall.pullTiles(count: 1).first
+            maj.wallTile = maj.wall.pullTiles(count: 1).first
         } else {
-            maj.discardTile = nil
+            maj.wallTile = nil
         }
         maj.state = State.east
         showDiscard()

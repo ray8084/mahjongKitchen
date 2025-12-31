@@ -506,13 +506,13 @@ class Hand {
     
     func call(maj: Maj, rack: Rack) -> Bool{
         // print("Call \(name)")
-        if maj.discardTile != nil {
-            if maj.discardTile.isJoker() == false {
+        if maj.wallTile != nil {
+            if maj.wallTile.isJoker() == false {
                 let tileMatchItem = getHighestMatch()
                 if skipPattern(patternId: tileMatchItem.letterPatternId) == false {
                     let matchMap = tileMatchItem.map
-                    let matchId = maj.discardTile.id
-                    let tilename = maj.discardTile.getDisplayName()
+                    let matchId = maj.wallTile.id
+                    let tilename = maj.wallTile.getDisplayName()
                     let handMap = TileIdMap(tiles: tiles)
                     let rackMap = TileIdMap(rack: rack)
                     let matchCount = matchMap.map[matchId]
@@ -571,12 +571,12 @@ class Hand {
             if matchCount + rack.tiles.count < 14 {
                 tileMatches.stopSorting = true
                 rackTiles(rack: rack, tileId: matchId, count: handCount)
-                rack.tiles.append(Tile(maj.discardTile))
-                maj.discardTile = getDiscard(maj: maj, rack: rack, withFlowers: true)
+                rack.tiles.append(Tile(maj.wallTile))
+                maj.wallTile = getDiscard(maj: maj, rack: rack, withFlowers: true)
                 called = true
             } else if maj.isWinBotEnabled() {
                 // print("\(name) call for mahjong")
-                rack.tiles.append(Tile(maj.discardTile))
+                rack.tiles.append(Tile(maj.wallTile))
                 rackAllTiles()
                 countMatches()
                 called = true
@@ -591,13 +591,13 @@ class Hand {
             if matchCount + rack.tiles.count < 14 {
                 tileMatches.stopSorting = true
                 rackTiles(rack: rack, tileId: matchId, count: handCount)
-                rackJokers(rack: rack, id: maj.discardTile.id, suit: maj.discardTile.suit, number: maj.discardTile.number, count: 1)
-                rack.tiles.append(Tile(maj.discardTile))
-                maj.discardTile = getDiscard(maj: maj, rack: rack, withFlowers: true)
+                rackJokers(rack: rack, id: maj.wallTile.id, suit: maj.wallTile.suit, number: maj.wallTile.number, count: 1)
+                rack.tiles.append(Tile(maj.wallTile))
+                maj.wallTile = getDiscard(maj: maj, rack: rack, withFlowers: true)
                 called = true
             } else if maj.isWinBotEnabled() {
                 // print("\(name) call for mahjong")
-                rack.tiles.append(Tile(maj.discardTile))
+                rack.tiles.append(Tile(maj.wallTile))
                 rackAllTiles()
                 countMatches()
                 called = true
@@ -612,13 +612,13 @@ class Hand {
             if matchCount + rack.tiles.count < 14 {
                 tileMatches.stopSorting = true
                 rackTiles(rack: rack, tileId: matchId, count: handCount)
-                rackJokers(rack: rack, id: maj.discardTile.id, suit: maj.discardTile.suit, number: maj.discardTile.number, count: 2)
-                rack.tiles.append(Tile(maj.discardTile))
-                maj.discardTile = getDiscard(maj: maj, rack: rack, withFlowers: true)
+                rackJokers(rack: rack, id: maj.wallTile.id, suit: maj.wallTile.suit, number: maj.wallTile.number, count: 2)
+                rack.tiles.append(Tile(maj.wallTile))
+                maj.wallTile = getDiscard(maj: maj, rack: rack, withFlowers: true)
                 called = true
             } else if maj.isWinBotEnabled() {
                 // print("\(name) call for mahjong")
-                rack.tiles.append(Tile(maj.discardTile))
+                rack.tiles.append(Tile(maj.wallTile))
                 rackAllTiles()
                 countMatches()
                 called = true
@@ -631,7 +631,7 @@ class Hand {
         var called = false
         if maj.isWinBotEnabled() && (matchCount + rack.tiles.count == 14) {
             // print("\(name) call for mahjong")
-            rack.tiles.append(Tile(maj.discardTile))
+            rack.tiles.append(Tile(maj.wallTile))
             rackAllTiles()
             countMatches()
             called = true
