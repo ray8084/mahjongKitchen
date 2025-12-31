@@ -500,10 +500,22 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             // Skip west's turn - go directly to player
             if maj.wall.tiles.count > 0 && maj.east.tiles.count < 15 {
                 maj.east.draw(maj)
+                // Replace discardTile with a new tile from the wall
+                if maj.wall.tiles.count > 0 {
+                    maj.discardTile = maj.wall.pullTiles(count: 1).first
+                } else {
+                    maj.discardTile = nil
+                }
                 checkForMahjong()
                 maj.state = State.east
             } else if maj.wall.tiles.count > 0 && maj.south.tiles.count < 15 {
                 maj.south.draw(maj)
+                // Replace discardTile with a new tile from the wall
+                if maj.wall.tiles.count > 0 {
+                    maj.discardTile = maj.wall.pullTiles(count: 1).first
+                } else {
+                    maj.discardTile = nil
+                }
                 checkForMahjong()
                 maj.state = State.east
             } else {
@@ -512,10 +524,22 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         case State.west:
             if maj.wall.tiles.count > 0 && maj.east.tiles.count < 15 {
                 maj.east.draw(maj)
+                // Replace discardTile with a new tile from the wall
+                if maj.wall.tiles.count > 0 {
+                    maj.discardTile = maj.wall.pullTiles(count: 1).first
+                } else {
+                    maj.discardTile = nil
+                }
                 checkForMahjong()
                 maj.state = State.east
             } else if maj.wall.tiles.count > 0 && maj.south.tiles.count < 15 {
                 maj.south.draw(maj)
+                // Replace discardTile with a new tile from the wall
+                if maj.wall.tiles.count > 0 {
+                    maj.discardTile = maj.wall.pullTiles(count: 1).first
+                } else {
+                    maj.discardTile = nil
+                }
                 checkForMahjong()
                 maj.state = State.east
             } else {
@@ -652,9 +676,9 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         case State.west: state = "Discard from West"
         default:
             if maj.discardTile == nil {
-                state = "Draw from wall"
+                state = "Draw from the wall"
             } else {
-                state = "Drag right to discard"
+                state = "Draw from the wall"
             }
         }
 
@@ -1449,7 +1473,12 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         } else {
             hand.tiles.append(maj.discardTile)
         }
-        maj.discardTile = nil
+        // Replace discardTile with a new tile from the wall
+        if maj.wall.tiles.count > 0 {
+            maj.discardTile = maj.wall.pullTiles(count: 1).first
+        } else {
+            maj.discardTile = nil
+        }
         maj.state = State.east
         showDiscard()
         showHand()
