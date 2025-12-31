@@ -494,59 +494,10 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     func discard() -> Bool {
         lastMaj.copy(maj)
         maj.lastDiscard = maj.discardTile
-        maj.discardLastDiscard()
-        switch(maj.state) {
-        case State.east:
-            // Skip west's turn - go directly to player
-            if maj.wall.tiles.count > 0 && maj.east.tiles.count < 15 {
-                maj.east.draw(maj)
-                // Replace discardTile with a new tile from the wall
-                if maj.wall.tiles.count > 0 {
-                    maj.discardTile = maj.wall.pullTiles(count: 1).first
-                } else {
-                    maj.discardTile = nil
-                }
-                checkForMahjong()
-                maj.state = State.east
-            } else if maj.wall.tiles.count > 0 && maj.south.tiles.count < 15 {
-                maj.south.draw(maj)
-                // Replace discardTile with a new tile from the wall
-                if maj.wall.tiles.count > 0 {
-                    maj.discardTile = maj.wall.pullTiles(count: 1).first
-                } else {
-                    maj.discardTile = nil
-                }
-                checkForMahjong()
-                maj.state = State.east
-            } else {
-                showGameMenu(title: "Game Over", message: "Wall hand.  No tiles left.", win: false);
-            }
-        case State.west:
-            if maj.wall.tiles.count > 0 && maj.east.tiles.count < 15 {
-                maj.east.draw(maj)
-                // Replace discardTile with a new tile from the wall
-                if maj.wall.tiles.count > 0 {
-                    maj.discardTile = maj.wall.pullTiles(count: 1).first
-                } else {
-                    maj.discardTile = nil
-                }
-                checkForMahjong()
-                maj.state = State.east
-            } else if maj.wall.tiles.count > 0 && maj.south.tiles.count < 15 {
-                maj.south.draw(maj)
-                // Replace discardTile with a new tile from the wall
-                if maj.wall.tiles.count > 0 {
-                    maj.discardTile = maj.wall.pullTiles(count: 1).first
-                } else {
-                    maj.discardTile = nil
-                }
-                checkForMahjong()
-                maj.state = State.east
-            } else {
-                showGameMenu(title: "Game Over", message: "Wall hand.  No tiles left.", win: false);
-            }
-        default:
-            print("todo discard state")
+        // Just add the tile to the discard table and stop
+        if maj.discardTile != nil {
+            maj.discardTable.countTile(maj.discardTile, increment: 1)
+            maj.discardTile = nil
         }
         showHand()
         showLabels()
@@ -670,19 +621,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     }
         
     func getStateLabel() -> String {
-        var state = ""
-        
-        switch(maj.state) {
-        case State.west: state = "Discard from West"
-        default:
-            if maj.discardTile == nil {
-                state = "Draw from the wall"
-            } else {
-                state = "Draw from the wall"
-            }
-        }
-
-        return state
+        // Hide the state label text
+        return ""
     }
     
     
@@ -1284,24 +1224,49 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         let endRow = getRow(end.y)
         var handled = false
         
-        // If dropped on discard table (row 5), move to discard and immediately process it
+        // If dropped on discard table (row 5), discard directly to the discard table
         if endRow == 5 && row != 5 {
-            var moved = false
+            var tileToDiscard: Tile? = nil
             switch(row) {
             case 1: // east rack
-                moved = moveToDiscard(hand: maj.east.rack!, startTag: startTag)
+                let index = getTileColIndex(tag: startTag)
+                if index < maj.east.rack!.tiles.count {
+                    tileToDiscard = maj.east.rack!.tiles[index]
+                    maj.east.rack!.tiles.remove(at: index)
+                }
             case 2: // south rack
-                moved = moveToDiscard(hand: maj.south.rack!, startTag: startTag)
+                let index = getTileColIndex(tag: startTag)
+                if index < maj.south.rack!.tiles.count {
+                    tileToDiscard = maj.south.rack!.tiles[index]
+                    maj.south.rack!.tiles.remove(at: index)
+                }
             case 3: // east hand
-                moved = moveToDiscard(hand: maj.east, startTag: startTag)
+                let index = getTileColIndex(tag: startTag)
+                if index < maj.east.tiles.count {
+                    tileToDiscard = maj.east.tiles[index]
+                    maj.east.tiles.remove(at: index)
+                }
             case 4: // south hand
-                moved = moveToDiscard(hand: maj.south, startTag: startTag)
+                let index = getTileColIndex(tag: startTag)
+                if index < maj.south.tiles.count {
+                    tileToDiscard = maj.south.tiles[index]
+                    maj.south.tiles.remove(at: index)
+                }
             default:
                 break
             }
-            // If successfully moved to discard, immediately process it into the discard table
-            if moved && maj.discardTile != nil {
-                handled = discard()
+            // If successfully got a tile, add it directly to the discard table without changing discardTile
+            if tileToDiscard != nil {
+                lastMaj.copy(maj)
+                maj.lastDiscard = tileToDiscard
+                maj.discardTable.countTile(tileToDiscard!, increment: 1)
+                showRack()
+                showHand()
+                showDiscard()
+                showDiscardTable()
+                showLabels()
+                showSuggestedHands()
+                handled = true
             }
         } else {
             // Normal drop handling
@@ -1432,18 +1397,20 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     func moveToDiscard(hand: Hand, startTag: Int) -> Bool {
         print("moveToDiscard")
         var moved = false
-        if maj.discardTile == nil {
-            let index = getTileColIndex(tag: startTag)
-            if index < hand.tiles.count {
-                maj.discardTile = hand.tiles[index]
-                hand.tiles.remove(at: index)
-                showRack()
-                showHand()
-                showDiscard()
-                showLabels()
-                showSuggestedHands()
-                moved = true
+        let index = getTileColIndex(tag: startTag)
+        if index < hand.tiles.count {
+            // If there's already a tile in the discard position, process it into the discard table first
+            if maj.discardTile != nil {
+                maj.discardLastDiscard()
             }
+            maj.discardTile = hand.tiles[index]
+            hand.tiles.remove(at: index)
+            showRack()
+            showHand()
+            showDiscard()
+            showLabels()
+            showSuggestedHands()
+            moved = true
         }
         return moved
     }
