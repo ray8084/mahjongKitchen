@@ -559,8 +559,8 @@ class Maj {
     
     func deal() {
         wall.shuffle(withSeed: shuffleWithSeed, seedString: shuffleSeed)
-        east.tiles = wall.pullTiles(count: 14)
-        south.tiles = wall.pullTiles(count: 13)
+        east.tiles = []
+        south.tiles = wall.pullTiles(count: 14)
         west.tiles = wall.pullTiles(count: 13)
         north.tiles = wall.pullTiles(count: 13)
         east.sort()

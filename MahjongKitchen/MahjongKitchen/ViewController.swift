@@ -389,56 +389,22 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     func resetMaj() {
         app.maj = Maj()
         maj = app.maj
-        maj.south.draw(maj)
         maj.discardTable.resetCounts()
         sort()
     }
     
     func sort() {
-        for tile in maj.south.tiles {
-            maj.east.tiles.append(tile)
-        }
-        maj.south.tiles = []
-        
-        maj.east.sort()
-        for _ in 1...14 {
-            let tile = maj.east.tiles.removeLast()
-            maj.south.tiles.append(tile)
-        }
         maj.south.sort()
-    
         showHand()
     }
     
     func sortNumbers() {
-        for tile in maj.south.tiles {
-            maj.east.tiles.append(tile)
-        }
-        maj.south.tiles = []
-        
-        maj.east.sortNumbers()
-        for _ in 1...14 {
-            let tile = maj.east.tiles.removeLast()
-            maj.south.tiles.append(tile)
-        }
         maj.south.sortNumbers()
-        
         showHand()
     }
     
     func sortOddEven() {
-        for tile in maj.south.tiles {
-            maj.east.tiles.append(tile)
-        }
-        maj.south.tiles = []
-        
-        maj.east.sortOddEven()
-        for _ in 1...14 {
-            let tile = maj.east.tiles.removeLast()
-            maj.south.tiles.append(tile)
-        }
         maj.south.sortOddEven()
-        
         showHand()
     }
         
