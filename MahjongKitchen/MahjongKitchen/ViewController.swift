@@ -1260,10 +1260,10 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
                 default: handled = false }
             case 5:
                 switch(endRow) {
-                case 1: handled = discardToHand(hand: maj.east.rack!, end: end)
-                case 2: handled = discardToHand(hand: maj.south.rack!, end: end)
-                case 3: handled = discardToHand(hand: maj.east, end: end)
-                case 4: handled = discardToHand(hand: maj.south, end: end)
+                case 1: handled = wallToHand(hand: maj.east.rack!, end: end)
+                case 2: handled = wallToHand(hand: maj.south.rack!, end: end)
+                case 3: handled = wallToHand(hand: maj.east, end: end)
+                case 4: handled = wallToHand(hand: maj.south, end: end)
                 case 5: handled = checkDiscard(end: end)
                 default: handled = false }
             default:
@@ -1388,7 +1388,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         return moved
     }
     
-    func discardToHand(hand: Hand, end: CGPoint) -> Bool {
+    func wallToHand(hand: Hand, end: CGPoint) -> Bool {
         let endIndex = getTileIndex(end)
         if endIndex < hand.tiles.count {
             hand.tiles.insert(maj.wallTile, at: endIndex)
