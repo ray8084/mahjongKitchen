@@ -368,6 +368,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     
     func replay() {
         clearFirstMahjong()
+        removeGoldStars()
         newDeal = true
         maj.replay()
         maj.south.draw(maj)
@@ -388,6 +389,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     
     @objc func redeal() {
         clearFirstMahjong()
+        removeGoldStars()
         newDeal = true
         resetMaj()
         showGame()
@@ -707,6 +709,21 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             if southRackHasMahjong { southRackMahjongDetected = true }
             if eastHandHasMahjong { eastHandMahjongDetected = true }
             if southHandHasMahjong { southHandMahjongDetected = true }
+            
+            // Add stars to all 4 rows if they don't already have them
+            if view.viewWithTag(9999) == nil {
+                addGoldStarToRow(hand: maj.east.rack!)
+            }
+            if view.viewWithTag(10000) == nil {
+                addGoldStarToRow(hand: maj.south.rack!)
+            }
+            if view.viewWithTag(10001) == nil {
+                addGoldStarToRow(hand: maj.east)
+            }
+            if view.viewWithTag(10002) == nil {
+                addGoldStarToRow(hand: maj.south)
+            }
+            
             // All 4 locations have mahjong - show special menu with New Game/Replay
             showGameMenu(title: "All Mahjong!", message: "All four locations have mahjong!", win: true)
         } else {
@@ -915,6 +932,16 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             starView = starLabel
         }
         blankView.addSubview(starView)
+    }
+    
+    func removeGoldStars() {
+        // Remove all gold star views by finding views with tags 9999-10002 (rows 0-3)
+        for row in 0...3 {
+            let tag = 9999 + row
+            if let starView = view.viewWithTag(tag) {
+                starView.removeFromSuperview()
+            }
+        }
     }
     
     
