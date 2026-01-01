@@ -110,6 +110,7 @@ class Maj {
     var specialCase2022Rack: [Tile] = []
 
     var wallTile: Tile!
+    var replayWallTile: Tile!
     var lastDiscard: Tile!
     var discardCalled = false
     var lastHandName = ""
@@ -576,6 +577,12 @@ class Maj {
         replayWest.tiles = west.tiles
         replayNorth.tiles = north.tiles
         replayWall.tiles = wall.tiles
+        // Save wallTile for replay
+        if wallTile != nil {
+            replayWallTile = Tile(wallTile)
+        } else {
+            replayWallTile = nil
+        }
         // forceDebugHand()
         specialCase2022Rack = []
     }
@@ -610,7 +617,12 @@ class Maj {
         north.tiles = replayNorth.tiles
         charlestonState = 0
         state = State.east
-        wallTile = nil
+        // Restore wallTile from replay state
+        if replayWallTile != nil {
+            wallTile = Tile(replayWallTile)
+        } else {
+            wallTile = nil
+        }
         charleston.tiles = []
         east.rack?.tiles = []
         south.rack?.tiles = []

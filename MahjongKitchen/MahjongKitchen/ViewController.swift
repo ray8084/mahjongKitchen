@@ -114,8 +114,6 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             enable2025(true)
             load2025()
             redeal()
-            // Load test tiles for top row (for testing) - after redeal so it doesn't get overwritten
-            loadTopRowTiles()
             viewDidAppear = true
             // buildIcon()
             showExperiencedPlayerAlert()
@@ -371,7 +369,6 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         removeGoldStars()
         newDeal = true
         maj.replay()
-        maj.south.draw(maj)
         sort()
         maj.discardTable.resetCounts()
         discardTableView.hide()
@@ -406,23 +403,6 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     func sort() {
         maj.south.sort()
         showHand()
-    }
-    
-    func loadTopRowTiles() {
-        // Load tiles: 1 1 2 2 2 3 3 3 4 4 4 5 5 into the top row (east rack)
-        maj.east.rack!.tiles.removeAll()
-        let tileIds: [Int] = [1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5]
-        
-        for tileId in tileIds {
-            // Create tile for dot suit (id 1-9 for numbers 1-9)
-            let sortNum = 7 + (tileId * 3)
-            let sortOddEven = tileId % 2 == 0 ? 10 + tileId : 40 + tileId
-            let tile = Tile(named: "\(tileId)dot", num: tileId, suit: "dot", id: tileId, sortId: tileId + 10, sortNum: sortNum, sortOddEven: sortOddEven)
-            maj.east.rack!.tiles.append(tile)
-        }
-        
-        maj.east.rack!.sort()
-        showRack()
     }
     
     func sortNumbers() {
