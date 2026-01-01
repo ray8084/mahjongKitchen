@@ -663,23 +663,11 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     }
     
     func checkForMahjong() {
-        if firstMahjong == false {
-            if isFirstMahjong(hand: maj.east.rack!) {
-                firstMahjong = true
-                firstMahjongRack1 = true
-            } else if isFirstMahjong(hand: maj.south.rack!) {
-                firstMahjong = true
-                firstMahjongRack2 = true
-            }
-        } else {
-            if firstMahjongRack1 == false {
-                checkSecondMahjong(hand: maj.east.rack!)
-            }
-            if firstMahjongRack2 == false {
-                checkSecondMahjong(hand: maj.south.rack!)
-            }
-        }
-         
+        // Check all four locations for mahjong (both racks and both hands)
+        isFirstMahjong(hand: maj.east.rack!)
+        isFirstMahjong(hand: maj.south.rack!)
+        isFirstMahjong(hand: maj.east)
+        isFirstMahjong(hand: maj.south)
     }
     
     func declareMahjong() {
