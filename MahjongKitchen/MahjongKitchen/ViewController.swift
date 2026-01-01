@@ -830,33 +830,28 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         }
         let x = CGFloat(lastPosition) * (tileWidth() + space) + margin + notch()
         
-        // Create a blank tile view at this position with dimmer appearance
+        // Create a blank tile view with background color so it blends in
         let blankView = UIView(frame: CGRect(x: x, y: y, width: tileWidth(), height: tileHeight()))
-        // Make the blank tile dimmer by reducing alpha
-        var dimmedColor = getBlankColor()
-        if let components = dimmedColor.cgColor.components, components.count >= 4 {
-            dimmedColor = UIColor(red: components[0], green: components[1], blue: components[2], alpha: components[3] * 0.5) // 50% of original alpha
-        } else {
-            dimmedColor = dimmedColor.withAlphaComponent(0.35) // Fallback to 35% opacity
-        }
-        blankView.backgroundColor = dimmedColor
+        blankView.backgroundColor = getBackgroundColor() // Same as background so it blends in
         blankView.layer.masksToBounds = true
         blankView.layer.cornerRadius = tileWidth() / 8
+        // Tag the blankView with a special tag so addBlanks can detect it
+        blankView.tag = 9999 + row // Special tag: 9999 + row number
         view.addSubview(blankView)
         
-        // Add bright gold star to the blank view
+        // Add bright gold star on top of the blank tile
         let starSize = tileWidth() * 0.6
         let starX = (tileWidth() - starSize) / 2
         let starY = (tileHeight() - starSize) / 2
         let starView: UIView
         
         if #available(iOS 13.0, *) {
-            // Use SF Symbols for iOS 13+ with bright gold color
+            // Use SF Symbols for iOS 13+ with black color
             let starImage = UIImage(systemName: "star.fill")
             let imageView = UIImageView(frame: CGRect(x: starX, y: starY, width: starSize, height: starSize))
             imageView.image = starImage
-            // Bright gold color - fully opaque
-            imageView.tintColor = UIColor(red: 1.0, green: 0.843, blue: 0.0, alpha: 1.0) // Bright gold
+            // Black color for visibility testing
+            imageView.tintColor = UIColor.black
             imageView.alpha = 1.0 // Ensure view itself is fully opaque
             imageView.contentMode = .scaleAspectFit
             starView = imageView
@@ -867,7 +862,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             starLabel.textAlignment = .center
             starLabel.font = UIFont.systemFont(ofSize: starSize * 0.8)
             starLabel.adjustsFontSizeToFitWidth = true
-            starLabel.textColor = UIColor(red: 1.0, green: 0.843, blue: 0.0, alpha: 1.0) // Bright gold
+            starLabel.textColor = UIColor.black // Black for visibility testing
             starLabel.alpha = 1.0 // Ensure view itself is fully opaque
             starView = starLabel
         }
@@ -1253,6 +1248,26 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         if start <= end {
             for index in start...end {
                 let x = CGFloat(index) * (tileWidth() + space) + margin + notch()
+                
+                // Skip position 14 (index 14) if there's already a star view there
+                // Check for the special tag (9999 + row) that marks star views
+                if index == 14 {
+                    var hasStar = false
+                    for subview in view.subviews {
+                        // Check if this view is at the same position and has the star tag
+                        if abs(subview.frame.origin.x - x) < 1 && abs(subview.frame.origin.y - y) < 1 {
+                            // Check if it has the special star tag (9999 + row)
+                            let expectedTag = 9999 + row
+                            if subview.tag == expectedTag {
+                                hasStar = true
+                                break
+                            }
+                        }
+                    }
+                    if hasStar {
+                        continue // Skip adding blank tile if star already exists
+                    }
+                }
                 let v = UIView(frame:CGRect(x: x, y: y, width: tileWidth(),height: tileHeight()))
                 v.backgroundColor = getBlankColor()
                 v.layer.masksToBounds = true
