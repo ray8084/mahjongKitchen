@@ -778,18 +778,13 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     func showSecondMahjong(pattern: LetterPattern, hand: Hand) {
         let message = pattern.text.string + " " + pattern.note.string
         
-        let alert = UIAlertController(title: "Second Mahjong - You Win!", message: message, preferredStyle: .alert)
-                
-        alert.addAction(UIAlertAction(title: "New Game", style: .default, handler: {(action:UIAlertAction) in
-            self.redeal()
-        }));
-        
-        alert.addAction(UIAlertAction(title: "Replay", style: .default, handler: {(action:UIAlertAction) in
-            self.replay()
-        }));
+        let alert = UIAlertController(title: "Mahjong!", message: message, preferredStyle: .alert)
         
         // Add gold star to the winning hand/rack's row immediately when alert is presented
         addGoldStarToRow(hand: hand)
+        
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
+        }));
         
         present(alert, animated: true, completion: nil)
     }
