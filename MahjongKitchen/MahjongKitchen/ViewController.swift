@@ -108,6 +108,8 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             enable2025(true)
             load2025()
             redeal()
+            // Load test tiles for top row (for testing) - after redeal so it doesn't get overwritten
+            loadTopRowTiles()
             viewDidAppear = true
             // buildIcon()
             showExperiencedPlayerAlert()
@@ -396,6 +398,23 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     func sort() {
         maj.south.sort()
         showHand()
+    }
+    
+    func loadTopRowTiles() {
+        // Load tiles: 1 1 2 2 2 3 3 3 4 4 4 5 5 into the top row (east rack)
+        maj.east.rack!.tiles.removeAll()
+        let tileIds: [Int] = [1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5]
+        
+        for tileId in tileIds {
+            // Create tile for dot suit (id 1-9 for numbers 1-9)
+            let sortNum = 7 + (tileId * 3)
+            let sortOddEven = tileId % 2 == 0 ? 10 + tileId : 40 + tileId
+            let tile = Tile(named: "\(tileId)dot", num: tileId, suit: "dot", id: tileId, sortId: tileId + 10, sortNum: sortNum, sortOddEven: sortOddEven)
+            maj.east.rack!.tiles.append(tile)
+        }
+        
+        maj.east.rack!.sort()
+        showRack()
     }
     
     func sortNumbers() {
@@ -695,7 +714,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         let highest = maj.card.getClosestPattern(tiles: hand.tiles)
         if highest.matchCount == 14 {
             maj.card.saveFirstWin(pattern: highest)
-            showFirstMahjong(pattern: highest)
+            showFirstMahjong(pattern: highest, hand: hand)
             mahj = true
         }
         return mahj
@@ -706,7 +725,7 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         let highest = maj.card.getClosestPattern(tiles: hand.tiles)
         if highest.matchCount == 14 {
             maj.card.saveFirstWin(pattern: highest)
-            showDeclareFirstMahjong(pattern: highest)
+            showDeclareFirstMahjong(pattern: highest, hand: hand)
             mahj = true
         }
         return mahj
@@ -717,25 +736,29 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         if highest.matchCount == 14 {
             secondMahjong = true
             maj.card.saveSecondWin(pattern: highest)
-            showSecondMahjong(pattern: highest)
+            showSecondMahjong(pattern: highest, hand: hand)
         }
     }
     
-    func showFirstMahjong(pattern: LetterPattern) {
+    func showFirstMahjong(pattern: LetterPattern, hand: Hand) {
         let message = pattern.text.string + " " + pattern.note.string
         
-        let alert = UIAlertController(title: "First Mahjong!", message: message, preferredStyle: .alert)
-                
+        let alert = UIAlertController(title: "Mahjong!", message: message, preferredStyle: .alert)
+        
+        // Add gold star to the winning rack's row immediately when alert is presented
+        // Pass the hand directly so we know exactly which rack won
+        addGoldStarToRow(hand: hand)
+        
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
         }));
         
         present(alert, animated: true, completion: nil)
     }
     
-    func showDeclareFirstMahjong(pattern: LetterPattern) {
+    func showDeclareFirstMahjong(pattern: LetterPattern, hand: Hand) {
         let message = pattern.text.string + " " + pattern.note.string
         
-        let alert = UIAlertController(title: "First Mahjong!", message: message, preferredStyle: .alert)
+        let alert = UIAlertController(title: "Mahjong!", message: message, preferredStyle: .alert)
                 
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {(action:UIAlertAction) in
             if self.firstMahjongHand1 == false {
@@ -746,10 +769,13 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             }
         }));
         
+        // Add gold star to the winning hand's row immediately when alert is presented
+        addGoldStarToRow(hand: hand)
+        
         present(alert, animated: true, completion: nil)
     }
     
-    func showSecondMahjong(pattern: LetterPattern) {
+    func showSecondMahjong(pattern: LetterPattern, hand: Hand) {
         let message = pattern.text.string + " " + pattern.note.string
         
         let alert = UIAlertController(title: "Second Mahjong - You Win!", message: message, preferredStyle: .alert)
@@ -762,7 +788,90 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
             self.replay()
         }));
         
+        // Add gold star to the winning hand/rack's row immediately when alert is presented
+        addGoldStarToRow(hand: hand)
+        
         present(alert, animated: true, completion: nil)
+    }
+    
+    func getRowNumber(for hand: Hand) -> Int? {
+        // Return the row number for a given hand/rack
+        // Row 0: east rack (top row), Row 1: south rack (second row), Row 2: east hand (third row), Row 3: south hand (bottom row)
+        if hand === maj.east.rack! {
+            return 0  // Row 0: east rack (top row)
+        } else if hand === maj.south.rack! {
+            return 1  // Row 1: south rack (second row)
+        } else if hand === maj.east {
+            return 2  // Row 2: east hand (third row)
+        } else if hand === maj.south {
+            return 3  // Row 3: south hand (bottom row)
+        }
+        return nil
+    }
+    
+    func addGoldStarToRow(hand: Hand) {
+        // Determine which row this hand/rack is on
+        // Map: row 0 win -> row 0 star, row 1 win -> row 1 star, row 2 win -> row 2 star, row 3 win -> row 3 star
+        guard let row = getRowNumber(for: hand) else {
+            return // Unknown hand/rack, don't add star
+        }
+        
+        // Calculate position for index 14 (position 15, after the 14 tiles at indices 0-13)
+        // Use the exact same Y position calculation as addTiles and addBlanks
+        let lastPosition = 14
+        var y: CGFloat = 0.0
+        switch(row) {
+            case 0: y = margin  // rackRow1 - matches addTiles/addBlanks row 0
+            case 1: y = handTop()  // rackRow2 - matches addTiles/addBlanks row 1
+            case 2: y = charlestonTop()  // handRow1 - matches addTiles/addBlanks row 2
+            case 3: y = handTop() + charlestonTop() - margin  // handRow2 - matches addTiles/addBlanks row 3
+            case 4: y = hand2Bottom() + margin  // discardRow
+            default: y = 0.0
+        }
+        let x = CGFloat(lastPosition) * (tileWidth() + space) + margin + notch()
+        
+        // Create a blank tile view at this position with dimmer appearance
+        let blankView = UIView(frame: CGRect(x: x, y: y, width: tileWidth(), height: tileHeight()))
+        // Make the blank tile dimmer by reducing alpha
+        var dimmedColor = getBlankColor()
+        if let components = dimmedColor.cgColor.components, components.count >= 4 {
+            dimmedColor = UIColor(red: components[0], green: components[1], blue: components[2], alpha: components[3] * 0.5) // 50% of original alpha
+        } else {
+            dimmedColor = dimmedColor.withAlphaComponent(0.35) // Fallback to 35% opacity
+        }
+        blankView.backgroundColor = dimmedColor
+        blankView.layer.masksToBounds = true
+        blankView.layer.cornerRadius = tileWidth() / 8
+        view.addSubview(blankView)
+        
+        // Add bright gold star to the blank view
+        let starSize = tileWidth() * 0.6
+        let starX = (tileWidth() - starSize) / 2
+        let starY = (tileHeight() - starSize) / 2
+        let starView: UIView
+        
+        if #available(iOS 13.0, *) {
+            // Use SF Symbols for iOS 13+ with bright gold color
+            let starImage = UIImage(systemName: "star.fill")
+            let imageView = UIImageView(frame: CGRect(x: starX, y: starY, width: starSize, height: starSize))
+            imageView.image = starImage
+            // Bright gold color - fully opaque
+            imageView.tintColor = UIColor(red: 1.0, green: 0.843, blue: 0.0, alpha: 1.0) // Bright gold
+            imageView.alpha = 1.0 // Ensure view itself is fully opaque
+            imageView.contentMode = .scaleAspectFit
+            starView = imageView
+        } else {
+            // Fallback to Unicode star for iOS 12
+            let starLabel = UILabel(frame: CGRect(x: starX, y: starY, width: starSize, height: starSize))
+            starLabel.text = "⭐"
+            starLabel.textAlignment = .center
+            starLabel.font = UIFont.systemFont(ofSize: starSize * 0.8)
+            starLabel.adjustsFontSizeToFitWidth = true
+            starLabel.textColor = UIColor(red: 1.0, green: 0.843, blue: 0.0, alpha: 1.0) // Bright gold
+            starLabel.alpha = 1.0 // Ensure view itself is fully opaque
+            starView = starLabel
+        }
+        blankView.addSubview(starView)
     }
     
     
