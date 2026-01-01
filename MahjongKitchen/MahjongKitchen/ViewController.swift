@@ -75,6 +75,12 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
     var firstMahjongRack2 = false
     var firstMahjongHand1 = false
     var firstMahjongHand2 = false
+    
+    // Track which locations have already been detected as having mahjong
+    var eastRackMahjongDetected = false
+    var southRackMahjongDetected = false
+    var eastHandMahjongDetected = false
+    var southHandMahjongDetected = false
         
 
     // -----------------------------------------------------------------------------------------
@@ -660,14 +666,73 @@ class ViewController: UIViewController, NarrowViewDelegate, HandsControllerDeleg
         firstMahjongRack2 = false
         firstMahjongHand1 = false
         firstMahjongHand2 = false
+        
+        // Clear mahjong detection state for all locations
+        eastRackMahjongDetected = false
+        southRackMahjongDetected = false
+        eastHandMahjongDetected = false
+        southHandMahjongDetected = false
     }
     
     func checkForMahjong() {
-        // Check all four locations for mahjong (both racks and both hands)
-        isFirstMahjong(hand: maj.east.rack!)
-        isFirstMahjong(hand: maj.south.rack!)
-        isFirstMahjong(hand: maj.east)
-        isFirstMahjong(hand: maj.south)
+        // Check all four locations to see if they have mahjong (only check if not already detected)
+        var eastRackHasMahjong = false
+        var southRackHasMahjong = false
+        var eastHandHasMahjong = false
+        var southHandHasMahjong = false
+        
+        if !eastRackMahjongDetected {
+            eastRackHasMahjong = hasMahjong(hand: maj.east.rack!)
+        }
+        if !southRackMahjongDetected {
+            southRackHasMahjong = hasMahjong(hand: maj.south.rack!)
+        }
+        if !eastHandMahjongDetected {
+            eastHandHasMahjong = hasMahjong(hand: maj.east)
+        }
+        if !southHandMahjongDetected {
+            southHandHasMahjong = hasMahjong(hand: maj.south)
+        }
+        
+        // Count how many locations have mahjong now (including previously detected ones)
+        let totalDetectedCount = (eastRackMahjongDetected || eastRackHasMahjong ? 1 : 0) +
+                                 (southRackMahjongDetected || southRackHasMahjong ? 1 : 0) +
+                                 (eastHandMahjongDetected || eastHandHasMahjong ? 1 : 0) +
+                                 (southHandMahjongDetected || southHandHasMahjong ? 1 : 0)
+        
+        // If all 4 locations now have mahjong, show special menu
+        if totalDetectedCount == 4 {
+            // Mark newly detected locations
+            if eastRackHasMahjong { eastRackMahjongDetected = true }
+            if southRackHasMahjong { southRackMahjongDetected = true }
+            if eastHandHasMahjong { eastHandMahjongDetected = true }
+            if southHandHasMahjong { southHandMahjongDetected = true }
+            // All 4 locations have mahjong - show special menu with New Game/Replay
+            showGameMenu(title: "All Mahjong!", message: "All four locations have mahjong!", win: true)
+        } else {
+            // Show individual mahjong alerts for each location that has mahjong and hasn't been detected yet
+            if eastRackHasMahjong {
+                eastRackMahjongDetected = true
+                isFirstMahjong(hand: maj.east.rack!)
+            }
+            if southRackHasMahjong {
+                southRackMahjongDetected = true
+                isFirstMahjong(hand: maj.south.rack!)
+            }
+            if eastHandHasMahjong {
+                eastHandMahjongDetected = true
+                isFirstMahjong(hand: maj.east)
+            }
+            if southHandHasMahjong {
+                southHandMahjongDetected = true
+                isFirstMahjong(hand: maj.south)
+            }
+        }
+    }
+    
+    func hasMahjong(hand: Hand) -> Bool {
+        let highest = maj.card.getClosestPattern(tiles: hand.tiles)
+        return highest.matchCount == 14
     }
     
     func declareMahjong() {
